@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "SOR/Lezione 1.md",
+            "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
             "mode": "source",
             "source": false
           }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SOR/Lezione 1.md",
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SOR/Lezione 1.md",
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SOR/Lezione 1.md"
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md"
               }
             }
           },
@@ -140,13 +140,13 @@
   },
   "active": "0fb17a736b58811d",
   "lastOpenFiles": [
+    "SOR/Lezione 1.md",
     "LMP/Lezione 1.md",
     "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
     "ASD/Lezione 1.md",
     "CPS/Lezione 1.md",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
     "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
-    "SOR/Lezione 1.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "README.md",
     "LMP/Capitolo.md"
