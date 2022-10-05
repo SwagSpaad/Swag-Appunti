@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "SOR/Capitolo 0 - Sistemi operativi e reti.md",
+            "file": "SOR/Lezione 1.md",
             "mode": "source",
             "source": false
           }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SOR/Capitolo 0 - Sistemi operativi e reti.md",
+                "file": "SOR/Lezione 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SOR/Capitolo 0 - Sistemi operativi e reti.md",
+                "file": "SOR/Lezione 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SOR/Capitolo 0 - Sistemi operativi e reti.md"
+                "file": "SOR/Lezione 1.md"
               }
             }
           },
@@ -140,15 +140,15 @@
   },
   "active": "0fb17a736b58811d",
   "lastOpenFiles": [
+    "LMP/Lezione 1.md",
+    "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
+    "ASD/Lezione 1.md",
+    "CPS/Lezione 1.md",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
     "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
-    "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
-    "README.md",
-    "LMP/Capitolo.md",
+    "SOR/Lezione 1.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
-    "Introduzione sui sistemi operativi. Struttura della memoria. Struttura I/O..md",
-    "Senza nome.md",
-    "Prova/Senza nomeaaaaa.md",
-    "Senza nome 1.md"
+    "README.md",
+    "LMP/Capitolo.md"
   ]
 }
