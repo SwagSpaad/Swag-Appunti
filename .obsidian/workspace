@@ -7,8 +7,12 @@
         "id": "4a6db47141dc4fb4",
         "type": "leaf",
         "state": {
-          "type": "empty",
-          "state": {}
+          "type": "markdown",
+          "state": {
+            "file": "README.md",
+            "mode": "source",
+            "source": false
+          }
         }
       }
     ],
@@ -73,6 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,6 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -110,7 +116,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "README.md"
+              }
             }
           },
           {
@@ -130,8 +138,13 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "95d0eca7356a3f20",
+  "active": "4a6db47141dc4fb4",
   "lastOpenFiles": [
+    "SOR/Lezione 1.md",
+    "README.md",
+    "Introduzione sui sistemi operativi. Struttura della memoria. Struttura I/O..md",
+    "LMP/Capitolo 0.md",
+    "ASD/Capitolo 0.md",
     "Senza nome.md",
     "Prova/Senza nomeaaaaa.md",
     "Senza nome 1.md"
