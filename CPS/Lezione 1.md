@@ -28,7 +28,7 @@ Sia $\Omega$ un insieme non vuoto e $\mathcal{A} \subset \mathcal{P}(\Omega)$.
 >$\mathcal{A}$ è una **$\sigma$-algebra** di eventi se:  
 >- $\Omega \in \mathcal{A}$
 >- $\forall A \in \mathcal{A} \implies A^{c} \in \mathcal{A}$
->- $\forall\{A_{n}\}_{n\geqslant 1}\implies\bigcup_{n\geqslant 1} A_{n}\in\mathcal{A}$
+>- $\forall \{ A_{n} \}_{n \geqslant 1} \implies \bigcup_{n \geqslant 1} A_{n} \in \mathcal{A}$
 ## Misura di probabilità
 Sia $\Omega$ un insieme non vuoto e $\mathcal{A}$ una $\sigma$-algebra di eventi.
 >**Def.**  
