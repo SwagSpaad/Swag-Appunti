@@ -1,4 +1,5 @@
 # Capitolo 0
-## Algoritmi e strutture dati
+## Algoritmi e strutture dati.
 ---
-- **[[Lezione 1]]** - 
+- **[[ASD/Lezione 1|Lezione 1]]** - Introduzione.
+- 
