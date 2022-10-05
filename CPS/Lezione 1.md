@@ -38,7 +38,7 @@ Sia $\Omega$ un insieme non vuoto e $\mathcal{A}$ una $\sigma$-algebra di eventi
 ### Conseguenze della Def. di misura di probabilità
 1. $\mathcal{P}(\varnothing) = \varnothing$  
 	Infatti, considerando $A_{n} = \varnothing\:\: \forall n \geq 1$ , si ha $A_{m}\cap A_{n} = \varnothing$ per $m \neq n$ da cui segue  
-	![[img0.png]]
+	![[img0.png]]  
 Questa condizione non può essere vera se $\mathcal{P}(\varnothing) >0$; infatti il secondo membro sarebbe infinito (e il primo finito) e per questo l'uguaglianza $0=0$ non risulterebbe.  
 ## Spazio di probabilità
 >**Terminologia**: la terna $(\Omega,\mathcal{A},P)$ è detta **spazio di probabilità**
