@@ -7,12 +7,8 @@
         "id": "4a6db47141dc4fb4",
         "type": "leaf",
         "state": {
-          "type": "markdown",
-          "state": {
-            "file": "Prova/Senza nomeaaaaa.md",
-            "mode": "source",
-            "source": false
-          }
+          "type": "empty",
+          "state": {}
         }
       }
     ],
@@ -77,7 +73,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Prova/Senza nomeaaaaa.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +89,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Prova/Senza nomeaaaaa.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -116,9 +110,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "Prova/Senza nomeaaaaa.md"
-              }
+              "state": {}
             }
           },
           {
@@ -138,9 +130,10 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "4a6db47141dc4fb4",
+  "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
-    "Senza nome 1.md",
-    "Senza nome.md"
+    "Senza nome.md",
+    "Prova/Senza nomeaaaaa.md",
+    "Senza nome 1.md"
   ]
 }
