@@ -34,6 +34,6 @@ Sia $\Omega$ un insieme non vuoto e $\mathcal{A}$ una $\sigma$-algebra di eventi
 >**Def.**
 >Una funzione $P:\mathcal{A}\rightarrow[0,\infty)$ è una **misura di probabilità** se:
 >- $\mathcal{P}(\Omega) = 1$
->- $\forall\{A_{n}\}_{n\geqslant 1}\subset\mathcal{A}$  t.c.  $A_{m}\cap A_{n}\: \forall \: m\neq n$ si ha $P(\bigcup_{n\geq1} A_{n}) = \sum_{n\geq1}P(A_{n})$
+>- $\forall \{A_{n} \}_{n \geqslant 1} \subset \mathcal{A}$  t.c.  $A_{m}\cap A_{n}\: \forall \: m\neq n$ si ha $P(\bigcup_{n\geq1} A_{n}) = \sum_{n\geq1}P(A_{n})$
 ## Spazio di probabilità
 >**Terminologia**: la terna ($\Omega,\mathcal{A},P$) è detta **spazio di probabilità**
