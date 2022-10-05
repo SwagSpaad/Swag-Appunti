@@ -41,4 +41,4 @@ Sia $\Omega$ un insieme non vuoto e $\mathcal{A}$ una $\sigma$-algebra di eventi
 	![[img0.png]]
 Questa condizione non può essere vera se $\mathcal{P}(\varnothing) >0$; infatti il secondo membro sarebbe infinito (e il primo finito) e per questo l'uguaglianza $0=0$ non risulterebbe.  
 ## Spazio di probabilità
->**Terminologia**: la terna ($\Omega,\mathcal{A},P$) è detta **spazio di probabilità**
+>**Terminologia**: la terna $(\Omega,\mathcal{A},P)$ è detta **spazio di probabilità**
