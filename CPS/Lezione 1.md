@@ -32,13 +32,21 @@ Sia $\Omega$ un insieme non vuoto e $\mathcal{A} \subset \mathcal{P}(\Omega)$.
 ## Misura di probabilità
 Sia $\Omega$ un insieme non vuoto e $\mathcal{A}$ una $\sigma$-algebra di eventi.
 >**Def.**  
->Una funzione $P:\mathcal{A}\rightarrow[0,\infty)$ è una **misura di probabilità** se:  
+>Una funzione $P:\mathcal{A}\rightarrow[0,\infty)$ (che in realtà assume valori in $[0, 1]$) è una **misura di probabilità** se:  
 >- $\mathcal{P}(\Omega) = 1$
 >- $\forall \{A_{n} \}_{n \geqslant 1} \subset \mathcal{A}$  t.c.  $A_{m}\cap A_{n}\: \forall \: m\neq n$ si ha $P(\bigcup_{n\geq1} A_{n}) = \sum_{n\geq1}P(A_{n})$
-### Conseguenze della Def. di misura di probabilità
-1. $\mathcal{P}(\varnothing) = \varnothing$  
+### Conseguenze della def. di misura di probabilità
+1. $\mathcal{P}(\varnothing) = 0$
 	Infatti, considerando $A_{n} = \varnothing\:\: \forall n \geq 1$ , si ha $A_{m}\cap A_{n} = \varnothing$ per $m \neq n$ da cui segue  
-	![[img0.png]]  
-Questa condizione non può essere vera se $\mathcal{P}(\varnothing) >0$; infatti il secondo membro sarebbe infinito (e il primo finito) e per questo l'uguaglianza $0=0$ non risulterebbe.  
+![[img0.png]]  
+Questa condizione non può essere vera se $\mathcal{P}(\varnothing) >0$; infatti il secondo membro sarebbe infinito (e il primo membro finito) e per questo l'uguaglianza $n=\infty$ (n finito) non risulterebbe corretta.  
+2. Poniamo $h \geq 1$ e $B_{1},...,B_{h} \in \mathcal{A}$ con $B_{m} \cap B_{n} = \varnothing$ per $m \neq n \: (m, n \in \set{1,..., h})$ allora:  
+$$\mathcal{P}(\bigcup_{n=1}^{h} \: B_{n}) = \sum_{n = 1}^{h} \mathcal{P}(B_{n})$$ -------- aggiungere dimostrazione -------
+
 ## Spazio di probabilità
->**Terminologia**: la terna $(\Omega,\mathcal{A},P)$ è detta **spazio di probabilità**
+>**Terminologia**: la terna $(\Omega,\mathcal{A},P)$ è detta **spazio di probabilità**.  
+### Spazio di probabilità uniforme discreto
+Questa terminologia si utilizza nel caso in cui si ha la seguente situazione:
+- $\Omega$ insieme finito ($\Omega = \set{1, 2,...., n}$)
+- $\mathcal{A} = \mathcal{P}(\Omega)$ 
+- $\forall \: A \in \mathcal{A} \rightarrow P(A) = \frac{|A|}{|\Omega|} = \frac{|A|}{n}$ 
