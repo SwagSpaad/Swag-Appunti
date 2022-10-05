@@ -9,7 +9,7 @@ L'insieme dei possibili esiti di un evento viene indicato con $\Omega$.
 Un fenomeno aleatorio si distingue in:
 - **Discreto**: se $\Omega$ è finito o numerabile.
 	>**Es.**
-	>i.) $\Omega$ finito: risultati del lancio di un dado.$\Omega = \set{1, 2, ..., 6}$
+	>i.) $\Omega$ finito: risultati del lancio di un dado.$\Omega = \set{1, 2, ..., 6}$  
 	>ii.) $\Omega$ numerabile: numero di telefonate ricevute da un centralino in un intervallo di tempo. $\Omega = \set{1, 2, ...}$
 
 - **Continuo**: se $\Omega$ è più che finito.
