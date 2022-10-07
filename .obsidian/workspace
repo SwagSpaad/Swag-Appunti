@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+            "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
             "mode": "source",
             "source": false
           }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+                "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+                "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md"
+                "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md"
               }
             }
           },
@@ -138,17 +138,17 @@
     "direction": "horizontal",
     "width": 296.9446105957031
   },
-  "active": "95d0eca7356a3f20",
+  "active": "bb4eafc6c9dc8f49",
   "lastOpenFiles": [
-    "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
-    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
+    "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",
+    "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
     "ASD/Lezione 1.md",
-    "CPS/img/img0.png",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
-    "SOR/Lezione 1.md",
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
+    "CPS/img/img0.png",
     "LMP/Lezione 1.md",
-    "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
-    "SOR/Capitolo 0 - Sistemi operativi e reti.md"
+    "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md"
   ]
 }
