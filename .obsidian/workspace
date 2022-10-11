@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "bb4eafc6c9dc8f49",
+        "id": "326459158e611c71",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
+            "file": "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
             "mode": "source",
             "source": false
           }
@@ -70,6 +70,7 @@
       {
         "id": "fb5624376e7ba2b5",
         "type": "tabs",
+        "dimension": 63.312368972746334,
         "children": [
           {
             "id": "028dbcaefe0b4db7",
@@ -77,7 +78,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
+                "file": "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +95,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
+                "file": "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +118,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SOR/Lezione 1 - Introduzione sui sistemi operativi.md"
+                "file": "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md"
               }
             }
           },
@@ -133,6 +134,21 @@
           }
         ],
         "currentTab": 4
+      },
+      {
+        "id": "62dea05b88d37169",
+        "type": "tabs",
+        "dimension": 36.68763102725367,
+        "children": [
+          {
+            "id": "bb4eafc6c9dc8f49",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
       }
     ],
     "direction": "horizontal",
@@ -140,15 +156,15 @@
   },
   "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
-    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
-    "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",
+    "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
+    "CPS/img/img1.png",
     "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
     "ASD/Lezione 1.md",
+    "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
-    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
-    "CPS/img/img0.png",
-    "LMP/Lezione 1.md",
-    "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md"
+    "CPS/img/img0.png"
   ]
 }

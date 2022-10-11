@@ -77,5 +77,7 @@ $\forall \omega \in \Omega \longrightarrow P(\{\omega\})$ assume sempre lo stess
 ## Probabilità condizionata di A dato B
 Sia $(\Omega,\mathcal{A},P)$ uno spazio di probabilità. Siano $A, B \in \mathcal{A}$ con $P(B)\neq0$.  
 >**Def.**  
->	Si definisce **"probabilità condizionata di A dato B"** la seguente quantità: $$P(A|B) = \frac{P(A\cap B)}{P(B)}$$
+>Si definisce **"probabilità condizionata di A dato B"** la seguente quantità: $$P(A|B) = \frac{P(A\cap B)}{P(B)}$$
+
+^b2168f
 
