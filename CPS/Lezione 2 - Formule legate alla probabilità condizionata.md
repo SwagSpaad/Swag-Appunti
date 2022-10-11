@@ -1,5 +1,5 @@
 # Lezione 2
-## Formule legate alle [[Lezione 1 - Introduzione alla probabilità#Probabilità condizionata di A dato B|probabilità condizionata]]
+## Formule legate alle [[Lezione 1 - Introduzione alla probabilità#Probabilità condizionata di A dato B|probabilità condizionata]]. Indipendenza tra eventi.
 ---
 ## Regola del prodotto
 A partire da $P(A|B) = \frac{P(A \cap B)}{P(B)}$ si ottiene $P(A\cap B)= P(A|B)\cdot P(B)$. Questa formula è utile quando la probabilità condizionata segue dal testo dell'esercizio e la probabilità dell'intersezione degli eventi è la grandezza da calcolare.  
