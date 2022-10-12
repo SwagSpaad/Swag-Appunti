@@ -100,7 +100,7 @@ Assunzione: ogni pesata richiede un minuto
 >>- $f(n) \ne \mathcal {O} (n)$
 >
 >Definizione insiemistica: 
->$\mathcal {O}(g(n))=\{f(n) \ | \ \exists \ c \geq 0 \ e \ n_{0} \geq 0$ t.c. $0 \leq f(n) \leq c \cdot g(n) \ \forall \ n \geq n_0\}$
+>$\mathcal {O}(g(n))=\{f(n) \ | \ \exists \ c \geq 0 \ e \ n_{0} \geq 0 \ t.c. \ 0 \leq f(n) \leq c \cdot g(n) \ \forall \ n \geq n_0\}$
 >
 >>**Oss.**
 >>La scrittura $2n^2+4= \mathcal {O}(n^3)$ è un abuso di notazione per $2n^2+4 \in \mathcal {O}(n^3)$
@@ -118,7 +118,7 @@ Assunzione: ogni pesata richiede un minuto
 >>- $f(n) \ne \Omega (n^3)$
 >
 >Definizione insiemistica: 
->$\Omega(g(n))=\{f(n) \ | \ \exists \ c > 0 \ e \ n_{0} > 0$ t.c. $0 \leq c \cdot g(n)\leq f(n) \ \forall \ n \geq n_0\}$
+>$\Omega(g(n))=\{f(n) \ | \ \exists \ c > 0 \ e \ n_{0} > 0 \ t.c. \ 0 \leq c \cdot g(n)\leq f(n) \ \forall \ n \geq n_0\}$
 >
 >>**Oss.**
 >>La scrittura: $2n^2+4 = \Omega (n)$ è un abuso di notazione per $2n^2 + 4 \in \Omega (n)$
@@ -128,7 +128,7 @@ Assunzione: ogni pesata richiede un minuto
 ### Notazione Asintotica $\Theta$
 
 >**Def.**
->$f(n) = \Omega(g(n))$ se $\exists$ ***tre costanti*** $c1, c2 > 0$ e $n_0 \geq 0$ t.c $c1 \cdot g(n) \geq f(n) \geq c2 \cdot g(n)$ $\forall$ $n\geq n_0$
+>$f(n) = \Omega(g(n))$ se $\exists$ tre costanti $c1, c2 > 0$ e $n_0 \geq 0$ t.c $c1 \cdot g(n) \geq f(n) \geq c2 \cdot g(n)$ $\forall$ $n\geq n_0$
 >![[img15.png|center|500]]
 >>**Es.**
 >>Sia $f(n) = 2n^2 - 3n$, allora
@@ -137,7 +137,7 @@ Assunzione: ogni pesata richiede un minuto
 >>- $f(n) \ne \Theta (n^3)$
 >
 >Definizione insiemistica: 
->$\Theta(g(n))=\{f(n) \ | \ \exists \ c_{1}, c_{2} > 0 \ e \ n_{0} \geq 0$ t.c. $c_{1}\cdot g(n)\leq f(n)\leq c_{2}\cdot g(n) \ \forall \ n \geq n_0\}$
+>$\Theta(g(n))=\{f(n) \ | \ \exists \ c_{1}, c_{2} > 0 \ e \ n_{0} \geq 0 \ t.c. \ c_{1}\cdot g(n)\leq f(n)\leq c_{2}\cdot g(n) \ \forall \ n \geq n_0\}$
 >
 >>**Oss.**
 >>La scrittura: $2n^2 + 4 = \Theta (n^2)$ è un abuso di notazione per $2n^2 + 4 \in \Theta (n^2)$
@@ -148,9 +148,40 @@ Assunzione: ogni pesata richiede un minuto
 ### Notazione Asintotica $\mathcal {o}$
 
 >**Def.**
->Data una funzione g(n): $N \implies R$, si denota con $\mathcal {o} (g(n))$ l'insieme delle funzioni $f(n): N \implies R:$
-> $\mathcal {o}(g(n))= {f(n):\forall \ c>0, \exists \ n_0 \ t.c \ \forall \ n\geq n_0 \ \ 0 \leq f(n) <c \cdot g(n) }$
->Notare:
-> $\mathcal {o}(g(n)) \subset \mathcal {O}(g(n))$
->Definizione alternativa:
-> $f(n)
+>Data una funzione $g(n): N \rightarrow R$, si denota con $o(g(n))$ l'insieme delle funzioni $f(n): N \rightarrow R:$
+> $$o(g(n))= \{f(n)|\ \forall \ c>0 \ \exists \ n_0 \ t.c \ \forall \ n\geq n_0 \ \ 0 \leq f(n) <c \cdot g(n) \}$$ 
+>> **Oss.** $\mathcal {o}(g(n)) \subset \mathcal {O}(g(n))$
+>
+>Definizione alternativa: $f(n) = o(g(n)) \iff \lim_{n\to \infty}\frac{f(n)}{g(n)}=0$ 
+
+### Notazione asintotica $\omega$
+>**Def.**
+>Data una funzione $g(n): N \rightarrow R$, si denota con $o(g(n))$ l'insieme delle funzioni $f(n)$:
+>$$\omega(g(n))= \{f(n)|\ \forall \ c>0 \ \exists \ n_0 \ t.c \ \forall \ n\geq n_0 \ \ 0 \leq \ c\cdot g(n)<f(n)\}$$ 
+>> **Oss.** $\omega(g(n)) \subset \Omega(g(n))$
+>
+>Definizione alternativa: $f(n) = \omega(g(n)) \iff \lim_{n \to \infty} \frac{f(n)}{g(n)}= \infty$
+
+#### In sintesi...
+>![[img17.png|center|600]] 
+
+### Proprietà della notazione asintotica
+> - Transitività:
+> $f(n) = \Theta(g(n)) \ e \ g(n) = \Theta(h(n)) \implies f(n) = \Theta(h(n))$
+> $f(n) = O(g(n)) \ e \ g(n) = O(h(n)) \implies f(n) = O(h(n))$ 
+> $f(n) = \Omega(g(n)) \ e \ g(n) = \Omega(h(n)) \implies f(n) = \Omega(h(n))$
+> $f(n) = o(g(n)) \ e \ g(n) = o(h(n)) \implies f(n) = o(h(n))$
+> $f(n) = \omega(g(n)) \ e \ g(n) = \omega(h(n)) \implies f(n) = \omega(h(n))$
+> - Riflessività: 
+> $f(n)=\Theta(f(n))$
+> $f(n)=O(f(n))$
+> $f(n)=\Omega(f(n))$
+> - Simmetria:
+> $f(n)=\Theta(g(n)) \iff g(n)= \Theta(f(n))$
+> - Simmetria trasposta: 
+> $f(n)=O(g(n)) \iff g(n)= \Omega(f(n))$
+> $f(n)=(g(n)) \iff g(n)= \omega(f(n))$
+
+
+
+

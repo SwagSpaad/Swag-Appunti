@@ -9,8 +9,8 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
-            "mode": "preview",
+            "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+            "mode": "source",
             "source": false
           }
         }
@@ -78,7 +78,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -95,7 +95,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +118,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md"
+                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md"
               }
             }
           },
@@ -156,9 +156,9 @@
   },
   "active": "326459158e611c71",
   "lastOpenFiles": [
+    "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
     "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
     "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
-    "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",
     "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
     "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
