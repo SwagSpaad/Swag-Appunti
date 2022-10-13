@@ -51,7 +51,7 @@
 >Intuitivamente, $T_{best} \ (n)$ è il tempo di esecuzione sulle istanze di ingresso che comportano meno lavoro per l'algoritmo. Significa davvero qualcosa? (spoiler: no).  
 
 ### Caso medio
->Sia $P(i)$ la probabilità di occorrenza dell'istanza $i$ $$T_{avg} \ (n) = \sum_istanze \ i \ di \ dimensione \ n \ {P(i) \ tempo (i)}$$ 
+>Sia $P(i)$ la probabilità di occorrenza dell'istanza $i$ $$T_{avg} \ (n) = \sum istanze \ i \ di \ dimensione \ n \ {P(i) \ tempo (i)}$$ 
 >Intuitivamente, $T_{avg}(n)$ è il tempo di esecuzione nel caso medio, ovvero sulle istanze di ingresso "tipiche" per il problema.  
 >- Come faccio a conoscere la distribuzione di probbailità sulle istanze?
 >- Semplice: (di solito) non posso conoscerla $\implies$ Assunzione
@@ -182,6 +182,135 @@ Assunzione: ogni pesata richiede un minuto
 > $f(n)=O(g(n)) \iff g(n)= \Omega(f(n))$
 > $f(n)=(g(n)) \iff g(n)= \omega(f(n))$
 
+### Velocità asintotiche di funzioni composte
+>Date $f(n) \ e \ g(n)$ la velocità ad andare ad infinito della funzione $f(n)+g(n)$ è la velocità della più veloce tra $f(n) \ e \ g(n)$.
+>
+>>**Es.**
+>>$n^{3}+n = \Theta(n^{3})$
+>>$n + \log^{10}{n} = \Theta(n)$
+>
+>Date $f(n) \ e \ g(n)$ la velocità ad andare ad infinito della funzione $f(n)\cdot g(n)$ è la velocità di $f(n)$ "sommata" alla velocità di $g(n)$, mentre la velocità ad andare all'infinito della funzione $f(n)/g(n)$ è la velocità di $f(n)$ "meno" la velocità di $g(n)$.
+>
+>>**Es.**
+>>$$\frac{n^{3}\cdot \log{n}+ \sqrt{n}\cdot \log^{3}{n}}{n^2+1} = \Theta(n\cdot \log n)$$ 
 
 
+## Usare la notazione asintotica nelle analisi
+### Analisi complessità [[Capitolo 1 - Un'introduzione informale agli algoritmi#^dd465d|fibonacci3]]: un upper bound
+>Algoritmo**Fibonacci3**$(intero \ n )\rightarrow intero$
+>1. sia Fib un array di n interi
+>2. Fib[1]$\leftarrow$Fib[2]$\leftarrow$ 1
+>3. $for$ i=3 $to$ n $do$ 
+>	4. Fib[i]$\leftarrow$Fib[i-l]+Fib[i-2]
+>5. $return$ Fib[n]
+>
+>$T(n)$: complessità computazionale nel caso peggiore con input n
+>$c_{j}:$ numero di passi eseguiti su una RAM quando è eseguita la linea di codice j
+>
+>- Linea 1, 2, 5 eseguite una volta
+>- Linea 3, 4 eseguite al più n volte
+>
+>$T(n) \leq c_{1}+c_{2}+c_{5}+(c_{3}+c_{4})\cdot n = \Theta(n) \implies T(n) = O(n)$
 
+### Analisi complessità [[Capitolo 1 - Un'introduzione informale agli algoritmi#^dd465d|fibonacci3]]: un lower bound
+>Algoritmo**Fibonacci3**$(intero \ n )\rightarrow intero$
+>1. sia Fib un array di n interi
+>2. Fib[1]$\leftarrow$Fib[2]$\leftarrow$ 1
+>3. $for$ i=3 $to$ n $do$ 
+>	4. Fib[i]$\leftarrow$Fib[i-l]+Fib[i-2]
+>5. $return$ Fib[n]
+>
+>$T(n)$: complessità computazionale nel caso peggiore con input n
+>$c_{j}:$ numero di passi eseguiti su una RAM quando è eseguita la linea di codice j
+>
+>- La linea 4 è eseguita almeno n-3 volte
+>
+>$T(n) \geq c_{4}\cdot (n-3) = \Theta(n) \implies T(n) = \Omega(n)\implies T(n) = \Theta(n)$
+
+### Conclusioni sulla notazione asisntotica
+>- Fornisce una misura indipendente dall'implementazione dell'algoritmo e dalla macchina reale su cui è eseguito. 
+>- Un'analisi dettagliata del numero di passi realmente eseguiti sarebbe difficile e non direbbe molto di più
+>- I dettagli trascurati sono irrilevanti quando n è molto grande
+
+## Esempi di calcolo del caso medio
+### Ricerca di un elemento in una lista non ordinata
+>L'algoritmo restituisce la posizione di x in L se è presente, altrimenti -1
+>Algoritmo**RicercaSequenziale**$(array \ L, \ elem \ x)\rightarrow intero$ 
+>1. n = lunghezza di L
+>2. i = 1
+>3. for i = 1 to n do
+>	4. if (L[i] = x) then return i (trovato)
+>5. return -1 (non trovato)
+>
+>T(n): numero elementi acceduti (linea 4) su un array di dimensione n
+>	$T_{best}(n)=1$ (caso in cui x è in prima posizione)
+>	$T_{worst}(n)=n$ (caso in cui x è in ultima posizione o non è nella lista)
+>	$T_{avg}(n)=(n+1)/2$ (si assume che $x \in L$ e che si trovi con la stessa probabilità in una qualsiasi posizione). 
+>	
+>T(n): numero di operazioni RAM su array di dimensione n
+>	$T_{best}(n)=O(1)$ (caso in cui x è in prima posizione)
+>	$T_{worst}(n)=\Theta(n)$ (caso in cui x è in ultima posizione o non è nella lista)
+>	$T_{avg}(n)=\Theta(n)$ (si assume che $x \in L$ e che si trovi con la stessa probabilità in una qualsiasi posizione). 
+### Ricerca di un elemento in una lista ordinata
+>Algoritmo di ricerca binaria (binary search); gli indici i e j indicano la porzione di L in cui si vuole cercare x. 
+>algoritmo**RicercaBinaria**$(array\ L,\ elem \ x,\ int \ i,\ int \ j )\rightarrow intero$ 
+>	1. if$(i > j)$ return -1
+>	2. m = $(i+j)/2$
+>	3. if (L[m] = x) then return m
+>	4. if (L[m] > x) then return **RicercaBinaria**$(L,\ x,\ i,\ m-1)$
+>		else return **RicercaBinaria**$(L,\ x,\ m+1,\ j)$
+>
+>$T(n) = T(n/2)+O(1) \implies T(n)=O(\log n)$  
+>
+>![[img18.png|center|500]]
+
+## Ricorsione, tecniche di progettazione ed equazioni di ricorrenza
+### Algoritmi ricorsivi: come analizzarli?
+>$Algoritmo$ Fibonacci2$(intero\ n)\rightarrow intero$
+> 1. $if (n\geq 2) then\ return 1$ 
+> 2. $else return$ Fibonacci2$(n-1)$ + Fibonacci2$(n-2)$
+> 
+> $T(n)= T(n-1)+T(n-2)+O(1)$
+>
+> algoritmo**RicercaBinaria**$(array\ L,\ elem \ x,\ int \ i,\ int \ j )\rightarrow intero$ 
+>1. if$(i > j)$ return -1
+>2. m = $(i+j)/2$
+>3. if (L[m] = x) then return m
+>4. if (L[m] > x) then return **RicercaBinaria**$(L,\ x,\ i,\ m-1)$
+>	else return **RicercaBinaria**$(L,\ x,\ m+1,\ j)$
+>
+>$T(n)=T(n/2)+O(1)$
+
+### Equazioni di ricorrenza
+>La complessità computazionale di un algoritmo ricorsivo può essere espressa in modo naturale attraverso una equazione di ricorrenza.
+>>**Es.**
+>>$T(n)=T(n/3)+2T(n/4)+O(n\log n)$
+>>$T(n)=T(n-1)+O(1)$
+>>$T(n)=T(n/3)+T(2n/3)+O(n)$
+>
+>Come troviamo il caso base di queste equazioni?
+
+#### Metodo di iterazione
+>Idea: srotolare la ricorsione, ottenendo una sommatoria dipendente dalla dimensione n del problema iniziale
+>>**Es. 1**
+>>$\begin{align}T(n)&= c+T(n/2) \\ &= 2c+T(n/4)\\ &= 3c+T(n/8)\\&...\\&= i\cdot c+ T(n/2^i)\end{align}$
+>>Per $i = \log_{2}n: \ T(n)=c\cdot \log_{2}n+T(1)=\Theta(\log n)$  
+>
+>
+>>**Es.2**
+>>$\begin{align}T(n)&= T(n-1) +1 \\ &= T(n-2)+2\\ &= T(n-3)+3\\&...\\&= T(n-i)+i\end{align}$
+>>Per $i= n-1:\ T(n)=T(1)+n-1=\Theta(n)$ 
+>
+>>**Es.3**
+>>$\begin{align}T(n)&= 2T(n-1) +1 \\ &= 4T(n-2)+2+1\\ &= 8T(n-3)+4+2+1\\&...\\&= 2^i\cdot T(n-i)+\sum_{j=0}^{i-1}2^j\end{align}$
+>>Per $i= n-1:\ T(n)=2^{n-1}T(1)+\sum_{j=0}^{n-2}2^j=\Theta(2^n)$ 
+>
+>.
+>>**Es.4**
+>>$\begin{align}T(n)&= T(n-1)+T(n-2) +1 \\ &= T(n-2)+2T(n-3)+T(n-4)+3\\ &= T(n-3)+3T(n-4)+3T(n-5)+T(n-6)+7\\&...\end{align}$
+>
+>Questa è un po' tosta da risolvere col metodo dell'iterazione, vediamo un nuovo metodo.  
+>
+
+#### Albero della ricorsione
+>Idea: 

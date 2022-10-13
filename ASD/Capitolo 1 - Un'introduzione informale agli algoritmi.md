@@ -33,7 +33,7 @@ F_{n-1}+F_{n-2}&se\ \ n\geq3\\
 \end{cases}$$
 
 #### Algoritmo Fibonacci 1
->Algoritmo**Fibonacci1**$(intero\ n)\implies intero$
+>Algoritmo**Fibonacci1**$(intero\ n)\rightarrow intero$
 > 1. $return \frac{1}{\sqrt5}\cdot(\phi^n - \hat{\phi}^n)$
 
 ##### Correttezza?
@@ -43,7 +43,7 @@ F_{n-1}+F_{n-2}&se\ \ n\geq3\\
 
 #### Algoritmo Fibonacci 2
 >Utilizzare direttamente la definizione ricorsiva
->$Algoritmo$ Fibonacci2$(intero\ n)\implies intero$
+>$Algoritmo$ Fibonacci2$(intero\ n)\rightarrow intero$
 > 1. $if (n\geq 2) then\ return 1$ 
 > 2. $else return$ Fibonacci2$(n-1)$ + Fibonacci2$(n-2)$
 
@@ -97,14 +97,19 @@ F_{n-1}+F_{n-2}&se\ \ n\geq3\\
 >![[ASD/img/img3.png|center|500]]
 
 #### Algoritmo Fibonacci 3
->Perchè l'algoritmo $Fibonacci2$ è lento? Perchè continua a ricalcolare ripetutamente la soluzione dello stesso sottoproblema. Perchè non memorizzare allora in un array le soluzioni dei sottoproblemi?
+
+>Perchè l'algoritmo $Fibonacci2$ è lento? Perchè continua a ricalcolare ripetutamente la soluzione dello stesso sottoproblema. Perchè non memorizzare allora in un array le soluzioni dei sottoproblemi?  
 >
->Algoritmo**Fibonacci3**$(intero \ n )\implies intero$
+>Algoritmo**Fibonacci3**$(intero \ n )\rightarrow intero$
 > |sia Fib un array di n interi|
 > |Fib[1]$\leftarrow$Fib[2]$\leftarrow$ 1|
 > 1.$for$ i=3 $to$ n $do$
 > |Fib[i]$\leftarrow$Fib[i-l]+Fib[i-2]|
-> 2.$return$ Fib[n]
+> 2.$return$ Fib[n]  
+
+^dd465d
+
+
 
 ##### Calcolo del tempo di esecuzione
 > - Linee 1,2 e 5 eseguite una sola volta
@@ -125,7 +130,7 @@ F_{n-1}+F_{n-2}&se\ \ n\geq3\\
 >-Ma se un algoritmo richiede più spazio di quello a disposizione, non otterremo mai la soluzione, indipendentemente da quanto attendiamo!
 
 #### Algoritmo Fibonacci 4
->Algoritm***Fibonacci4**$(intero \ n)\implies intero$
+>Algoritm***Fibonacci4**$(intero \ n)\rightarrow intero$
 > |a$\leftarrow$b$\leftarrow$ 1|
 > 1. $for$ i=3 $to$ n $do$
 > c $\leftarrow$ a+b
@@ -137,7 +142,7 @@ F_{n-1}+F_{n-2}&se\ \ n\geq3\\
 > due, riducendo lo spazio a poche variabili in tutto
 
 #### Algoritmo Fibonacci 5
->Algoritmo**Fibonacci5**$(intero \ n)\implies intero$
+>Algoritmo**Fibonacci5**$(intero \ n)\rightarrow intero$
 > $for$ i=1 $to$ n-1 $do$
 > $return$ M [0], [0]
 >- Il tempo di esecuzione è ancora O(n)
@@ -147,12 +152,11 @@ F_{n-1}+F_{n-2}&se\ \ n\geq3\\
 >- Se n è dispari eseguiamo un'ulteriore moltiplicazione
 
 ##### Esempio
->$3^2=9$ $3^4=9^2=81$ $3^8=81^2=6561$ $\implies$
->$\implies$ Si eseguono solo 3 prodotti invece di 7
+>$3^2=9$ $3^4=9^2=81$ $3^8=81^2=6561$ $\implies$Si eseguono solo 3 prodotti invece di 7
 > 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 = $3^8$
 
 #### Algoritmo Fibonacci 6
->Algoritmo**Fibonacci6**$(intero \ n )\implies intero$
+>Algoritmo**Fibonacci6**$(intero \ n )\rightarrow intero$
 > $A \leftarrow$ $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
 > $M \leftarrow potenzadiMatrice(A,n-1)$
 > Return M [0] [0]
