@@ -41,8 +41,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -188,7 +187,7 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "e5500a5753e59104",
+  "active": "326459158e611c71",
   "lastOpenFiles": [
     "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
     "FI/Capitolo 0 - Fondamenti di informatica.md",

@@ -3,5 +3,6 @@
   "enabledCssSnippets": [
     "center"
   ],
-  "accentColor": ""
+  "accentColor": "",
+  "cssTheme": "Atom"
 }

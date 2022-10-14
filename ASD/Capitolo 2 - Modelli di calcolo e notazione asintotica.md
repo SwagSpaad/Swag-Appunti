@@ -298,7 +298,7 @@ Assunzione: ogni pesata richiede un minuto
 >
 >
 >>**Es.2**
->>$\begin{align}T(n)&= T(n-1) +1 \\ &= T(n-2)+2\\ &= T(n-3)+3\\&\vdots\\&= T(n-i)+i\end{align}$
+>>$\begin{align}T(n)&= T(n-1) +1 \\ &= T(n-2)+2\\ &= T(n-3)+3\\&\vdot\\&= T(n-i)+i\end{align}$
 >>Per $i= n-1:\ T(n)=T(1)+n-1=\Theta(n)$ 
 >
 >>**Es.3**
