@@ -356,3 +356,4 @@ Assunzione: ogni pesata richiede un minuto
 >>$T(n)=T(n/3)+T(2/3\cdot n)+n$
 >>$T(1)=1$
 >>![[img22.png|center|500]] 
+
