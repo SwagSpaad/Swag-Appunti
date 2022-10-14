@@ -283,7 +283,7 @@ Assunzione: ogni pesata richiede un minuto
 
 ### Equazioni di ricorrenza
 >La complessità computazionale di un algoritmo ricorsivo può essere espressa in modo naturale attraverso una equazione di ricorrenza.
->>**Es.**
+>>**Es.**  
 >>$T(n)=T(n/3)+2T(n/4)+O(n\log n)$
 >>$T(n)=T(n-1)+O(1)$
 >>$T(n)=T(n/3)+T(2n/3)+O(n)$
@@ -292,21 +292,21 @@ Assunzione: ogni pesata richiede un minuto
 
 #### Metodo di iterazione
 >Idea: srotolare la ricorsione, ottenendo una sommatoria dipendente dalla dimensione n del problema iniziale
->>**Es. 1**
+>>**Es. 1**  
 >>$\begin{align}T(n)&= c+T(n/2) \\ &= 2c+T(n/4)\\ &= 3c+T(n/8)\\&\vdots\\&= i\cdot c+ T(n/2^i)\end{align}$
 >>Per $i = \log_{2}n: \ T(n)=c\cdot \log_{2}n+T(1)=\Theta(\log n)$  
 >
 >
->>**Es.2**
+>>**Es.2**  
 >>$\begin{align}T(n)&= T(n-1) +1 \\ &= T(n-2)+2\\ &= T(n-3)+3\\&\vdots\\&= T(n-i)+i\end{align}$
 >>Per $i= n-1:\ T(n)=T(1)+n-1=\Theta(n)$ 
 >
->>**Es.3**
+>>**Es.3**  
 >>$\begin{align}T(n)&= 2T(n-1) +1 \\ &= 4T(n-2)+2+1\\ &= 8T(n-3)+4+2+1\\&\vdots\\&= 2^i\cdot T(n-i)+\sum_{j=0}^{i-1}2^j\end{align}$
 >>Per $i= n-1:\ T(n)=2^{n-1}T(1)+\sum_{j=0}^{n-2}2^j=\Theta(2^n)$ 
 >
 >
->>**Es.4**
+>>**Es.4**  
 >>$\begin{align}T(n)&= T(n-1)+T(n-2) +1 \\ &= T(n-2)+2T(n-3)+T(n-4)+3\\ &= T(n-3)+3T(n-4)+3T(n-5)+T(n-6)+7\\&\vdots\end{align}$
 >
 >Questa è un po' tosta da risolvere col metodo dell'iterazione, vediamo un nuovo metodo.  
@@ -321,7 +321,7 @@ Assunzione: ogni pesata richiede un minuto
 >>Se il tempo speso da ogni nodo è costante allora T(n) è proporzionale al numero di nodi
 >
 >
->>**Es.1**
+>>**Es.1**  
 >>$T(n) = T(n-1)+1$
 >>$T(1) = 1$ 
 >>![[img19.png|60]]
@@ -330,7 +330,7 @@ Assunzione: ogni pesata richiede un minuto
 >>$\implies T(n)=\Theta(n)$ 
 >
 >
->>**Es.2**
+>>**Es.2**  
 >>$T(n) = T(n-1)+n$
 >>$T(1) = 1$ 
 >>![[img19.png|60]]
@@ -341,8 +341,8 @@ Assunzione: ogni pesata richiede un minuto
 >>![[img20.png|300]]
 >>Dato che $T(n)$ è sia $\Omega(n^2)$ che $O(n^2)$ allora $T(n)=\Theta(n^2)$
 >
->.
->>**Es.3**
+>
+>>**Es.3**  
 >>$T(n)=2T(n-1)+n$
 >>$T(1)=1$
 >>![[img21.png|center|500]]
@@ -352,7 +352,7 @@ Assunzione: ogni pesata richiede un minuto
 >>$\implies T(n)\leq n2^n=\Theta(n2^n)$ 
 >
 >.
->>**Es.4**
+>>**Es.4**  
 >>$T(n)=T(n/3)+T(2/3\cdot n)+n$
 >>$T(1)=1$
 >>![[img22.png|center|500]] 
