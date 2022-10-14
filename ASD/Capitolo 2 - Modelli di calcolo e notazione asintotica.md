@@ -293,21 +293,21 @@ Assunzione: ogni pesata richiede un minuto
 #### Metodo di iterazione
 >Idea: srotolare la ricorsione, ottenendo una sommatoria dipendente dalla dimensione n del problema iniziale
 >>**Es. 1**
->>$\begin{align}T(n)&= c+T(n/2) \\ &= 2c+T(n/4)\\ &= 3c+T(n/8)\\&...\\&= i\cdot c+ T(n/2^i)\end{align}$
+>>$\begin{align}T(n)&= c+T(n/2) \\ &= 2c+T(n/4)\\ &= 3c+T(n/8)\\&\vdots\\&= i\cdot c+ T(n/2^i)\end{align}$
 >>Per $i = \log_{2}n: \ T(n)=c\cdot \log_{2}n+T(1)=\Theta(\log n)$  
 >
 >
 >>**Es.2**
->>$\begin{align}T(n)&= T(n-1) +1 \\ &= T(n-2)+2\\ &= T(n-3)+3\\&...\\&= T(n-i)+i\end{align}$
+>>$\begin{align}T(n)&= T(n-1) +1 \\ &= T(n-2)+2\\ &= T(n-3)+3\\&\vdots\\&= T(n-i)+i\end{align}$
 >>Per $i= n-1:\ T(n)=T(1)+n-1=\Theta(n)$ 
 >
 >>**Es.3**
->>$\begin{align}T(n)&= 2T(n-1) +1 \\ &= 4T(n-2)+2+1\\ &= 8T(n-3)+4+2+1\\&...\\&= 2^i\cdot T(n-i)+\sum_{j=0}^{i-1}2^j\end{align}$
+>>$\begin{align}T(n)&= 2T(n-1) +1 \\ &= 4T(n-2)+2+1\\ &= 8T(n-3)+4+2+1\\&\vdots\\&= 2^i\cdot T(n-i)+\sum_{j=0}^{i-1}2^j\end{align}$
 >>Per $i= n-1:\ T(n)=2^{n-1}T(1)+\sum_{j=0}^{n-2}2^j=\Theta(2^n)$ 
 >
 >
 >>**Es.4**
->>$\begin{align}T(n)&= T(n-1)+T(n-2) +1 \\ &= T(n-2)+2T(n-3)+T(n-4)+3\\ &= T(n-3)+3T(n-4)+3T(n-5)+T(n-6)+7\\&...\end{align}$
+>>$\begin{align}T(n)&= T(n-1)+T(n-2) +1 \\ &= T(n-2)+2T(n-3)+T(n-4)+3\\ &= T(n-3)+3T(n-4)+3T(n-5)+T(n-6)+7\\&\vdots\end{align}$
 >
 >Questa è un po' tosta da risolvere col metodo dell'iterazione, vediamo un nuovo metodo.  
 >

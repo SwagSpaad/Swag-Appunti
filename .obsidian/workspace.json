@@ -20,6 +20,18 @@
             }
           },
           {
+            "id": "e5500a5753e59104",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
             "id": "a543f3d9f9f3d87b",
             "type": "leaf",
             "state": {
@@ -29,7 +41,8 @@
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -175,17 +188,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "326459158e611c71",
+  "active": "e5500a5753e59104",
   "lastOpenFiles": [
     "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
-    "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+    "FI/Capitolo 0 - Fondamenti di informatica.md",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+    "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
     "SOR/Lezione 2 - Tipologie di sistemi.md",
     "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",
-    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
-    "francesco totti.md"
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md"
   ]
 }
