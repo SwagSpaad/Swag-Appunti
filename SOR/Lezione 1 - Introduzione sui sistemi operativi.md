@@ -2,7 +2,7 @@
 ## Introduzione al corso. Introduzione sui sistemi operativi. Struttura della memoria. Struttura di I/O.
 ---
 ## I sistemi operativi
-Un sistema operativo è un software che gestisce l'hardware di un computer  fornendo un interfaccia di comunicazione tra l'utente e il computer. Nel tempo sono stati progettati diverse tipologie di sistemi operativi, come quello per mainframe, progettato per ottimizzare l'utilizzo dell'hardware; i sistemi time-sharing, nati per consentire l'uso del calcolatore a più utenti in contemporanea ecc.  
+Un sistema operativo è un software che gestisce l'hardware di un computer  fornendo un interfaccia di comunicazione tra l'utente e il computer. Nel tempo sono stati progettati diverse tipologie di sistemi operativi, come quello per mainframe, progettato per ottimizzare l'utilizzo dell'hardware; i [[Lezione 2 - Tipologie di sistemi#Sistemi operativi time-sharing|sistemi time-sharing]], nati per consentire l'uso del calcolatore a più utenti in contemporanea ecc.  
 Un sistema operativo è un software molto complesso e quindi è realizzato in moduli, ciascuno dei quali svolge un compito ben preciso.  
 Un sistema di elaborazione può essere seguito nel seguente modo:  
 ![[SOR/img/img0.png|center|500]]  

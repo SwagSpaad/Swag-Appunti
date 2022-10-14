@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+                "file": "SOR/Lezione 2 - Tipologie di sistemi.md",
                 "mode": "source",
                 "source": false
               }
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+                "file": "SOR/Lezione 2 - Tipologie di sistemi.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+                "file": "SOR/Lezione 2 - Tipologie di sistemi.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md"
+                "file": "SOR/Lezione 2 - Tipologie di sistemi.md"
               }
             }
           },
@@ -167,15 +167,15 @@
   },
   "active": "326459158e611c71",
   "lastOpenFiles": [
-    "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
+    "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
+    "SOR/Lezione 2 - Tipologie di sistemi.md",
+    "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
+    "FI/Capitolo 0 - Fondamenti di informatica.md",
+    "CPS/Lezione 1 - Introduzione alla probabilità.md",
     "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+    "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
     "LMP/Lezione 1.md",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
-    "FI/Capitolo 0 - Fondamenti di informatica.md",
-    "SOR/Lezione 2 - Tipologie di sistemi.md",
-    "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
-    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
-    "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
-    "CPS/Lezione 1 - Introduzione alla probabilità.md"
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md"
   ]
 }
