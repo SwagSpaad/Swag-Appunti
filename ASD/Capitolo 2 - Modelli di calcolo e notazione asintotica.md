@@ -314,3 +314,45 @@ Assunzione: ogni pesata richiede un minuto
 
 #### Albero della ricorsione
 >Idea: 
+>- Disegnare l'albero delle chiamate ricorsive indicando la dimensione di ogni nodo
+>- Stimare il tempo speso da ogni nodo dell'albero
+>- Stimare il tempo complessivo "sommando" il tempo speso da ogni nodo
+>>**Oss.**
+>>Se il tempo speso da ogni nodo è costante allora T(n) è proporzionale al numero di nodi
+>
+>
+>>**Es.1**
+>>$T(n) = T(n-1)+1$
+>>$T(1) = 1$ 
+>>![[img19.png|60]]
+>>Quanto costa ogni nodo? uno
+>>Quanti nodi ci sono? n
+>>$\implies T(n)=\Theta(n)$ 
+>
+>
+>>**Es.2**
+>>$T(n) = T(n-1)+n$
+>>$T(1) = 1$ 
+>>![[img19.png|60]]
+>>Quanto costa ogni nodo? al più n
+>>Quanti nodi ci sono? n
+>>$\implies T(n)=O(n^2)$ 
+>>La ricorsione $T(n)$ vale $\Theta(n^2)$? Verifichiamo.
+>>![[img20.png|300]]
+>>Dato che $T(n)$ è sia $\Omega(n^2)$ che $O(n^2)$ allora $T(n)=\Theta(n^2)$
+>
+>.
+>>**Es.3**
+>>$T(n)=2T(n-1)+n$
+>>$T(1)=1$
+>>![[img21.png|center|500]]
+>>Quanto costa ogni nodo? ...al più n
+>>Quanto è alto l'albero? n-1
+>>Quanto nodi ha un albero binario completo di altezza h? $\sum_{i=0}^h 2^i$ 
+>>$\implies T(n)\leq n2^n=\Theta(n2^n)$ 
+>
+>.
+>>**Es.4**
+>>$T(n)=T(n/3)+T(2/3\cdot n)+n$
+>>$T(1)=1$
+>>![[img22.png|center|500]] 

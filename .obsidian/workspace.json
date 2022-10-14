@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -86,6 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,6 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +125,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md"
+              }
             }
           },
           {
@@ -161,12 +165,12 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "bb4eafc6c9dc8f49",
+  "active": "326459158e611c71",
   "lastOpenFiles": [
     "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
     "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
-    "FI/Capitolo 0 - Fondamenti di informatica.md",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+    "FI/Capitolo 0 - Fondamenti di informatica.md",
     "SOR/Lezione 2 - Tipologie di sistemi.md",
     "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
