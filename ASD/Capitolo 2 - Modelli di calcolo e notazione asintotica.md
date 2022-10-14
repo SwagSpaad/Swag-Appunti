@@ -305,7 +305,7 @@ Assunzione: ogni pesata richiede un minuto
 >>$\begin{align}T(n)&= 2T(n-1) +1 \\ &= 4T(n-2)+2+1\\ &= 8T(n-3)+4+2+1\\&...\\&= 2^i\cdot T(n-i)+\sum_{j=0}^{i-1}2^j\end{align}$
 >>Per $i= n-1:\ T(n)=2^{n-1}T(1)+\sum_{j=0}^{n-2}2^j=\Theta(2^n)$ 
 >
->.
+>
 >>**Es.4**
 >>$\begin{align}T(n)&= T(n-1)+T(n-2) +1 \\ &= T(n-2)+2T(n-3)+T(n-4)+3\\ &= T(n-3)+3T(n-4)+3T(n-5)+T(n-6)+7\\&...\end{align}$
 >
