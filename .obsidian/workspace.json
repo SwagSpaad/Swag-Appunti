@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SOR/Lezione 3 - Operazioni del sistema operativo.md",
+                "file": "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
                 "mode": "source",
                 "source": false
               }
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SOR/Lezione 3 - Operazioni del sistema operativo.md",
+                "file": "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SOR/Lezione 3 - Operazioni del sistema operativo.md",
+                "file": "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SOR/Lezione 3 - Operazioni del sistema operativo.md"
+                "file": "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md"
               }
             }
           },
@@ -178,17 +178,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "95d0eca7356a3f20",
+  "active": "556121e41f89bf60",
   "lastOpenFiles": [
+    "CPS/Lezione 1 - Introduzione alla probabilità.md",
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
     "SOR/Lezione 3 - Operazioni del sistema operativo.md",
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "Pasted image 20221014202049.png",
     "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
     "SOR/Lezione 2 - Tipologie di sistemi.md",
     "Senza nome.md",
     "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
-    "FI/Capitolo 0 - Fondamenti di informatica.md",
-    "CPS/Lezione 1 - Introduzione alla probabilità.md",
-    "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
-    "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md"
+    "FI/Capitolo 0 - Fondamenti di informatica.md"
   ]
 }
