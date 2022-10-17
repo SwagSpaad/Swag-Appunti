@@ -13,13 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "LMP/Lezione 4 - Basi del linguaggio.md",
+                "file": "SOR/Lezione 4 - Gestione dei processi.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "5ab1d8088386ad69",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -86,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "LMP/Lezione 4 - Basi del linguaggio.md",
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "LMP/Lezione 4 - Basi del linguaggio.md",
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "LMP/Lezione 4 - Basi del linguaggio.md"
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md"
               }
             }
           },
@@ -163,17 +176,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "95d0eca7356a3f20",
+  "active": "5ab1d8088386ad69",
   "lastOpenFiles": [
+    "BDC/Capitolo 0 - Basi di dati e di conoscenza.md",
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
+    "FI/Capitolo 0 - Fondamenti di informatica.md",
     "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "LMP/Lezione 4 - Basi del linguaggio.md",
+    "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+    "SOR/Lezione 4 - Gestione dei processi.md",
     "LMP/Lezione 3 - Concetti dell'OOP.md",
-    "LMP/Lezione 2 - Il linguaggio Java.md",
-    "LMP/Lezione 1 - Introduzione.md",
-    "LMP/Immagini/getStarted-compiler.gif",
-    "LMP/Immagini/Pasted image 20221016174127.png",
-    "LMP/Immagini/Pasted image 20221011174606.png",
-    "LMP/Immagini/helloWorld.gif",
-    "LMP/Lezione 3.md"
+    "LMP/Lezione 2 - Il linguaggio Java.md"
   ]
 }
