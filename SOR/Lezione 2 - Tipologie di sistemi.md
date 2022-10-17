@@ -15,7 +15,7 @@ Questi sistemi utilizzano il **asymmetric multiprocessing** (AMP), in cui ad ogn
 ### Multiprocessori simmetrici
 I sistemi più diffusi utilizzano il **symmetric multiprocessing**, che prevede che ogni processore esegua tutte le funzioni del sistema operativo. SMP significa che tutti i processori sono pari; non esiste alcun rapporto gerarchico tra i processori.  
 
-![[img2.png|center|500]]  
+![[SOR/img/img2.png|center|500]]  
 
 Ogni processore ha il proprio insieme di registri e una cache privata. Tuttavia, tutti i processori condividono la memoria fisica. Il vantaggio di questo modello è che molti processi possono essere eseguiti in parallelo. 
 I sistemi multiprocessore possono avere due modelli di accesso alla memoria: **accesso alla memoria uniforme (UMA) e accesso alla memoria non uniforme (NUMA)**. UMA è una tecnica in cui l’accesso a qualsiasi RAM da qualsiasi processore richiede la stessa quantità di tempo. Con NUMA, alcune parti della memoria possono richiedere più tempo di accesso rispetto ad altre parti, creando una riduzione delle prestazioni.  
@@ -24,7 +24,7 @@ Una recente tendenza nella progettazione dei processori è quella di includere p
 ### Cluster
 Un altro tipo di sistema multiprocessore è il **cluster**. Questi sistemi differiscono dai sistemi multiprocessore in quanto sono costituiti da più computer (detti nodi) connessi tra loro. Questi computer condividono la memoria secondaria e sono connessi tramite LAN o un bus di interconnessione veloce. 
 
-![[img3.png|center|500]] 
+![[SOR/img/img3.png|center|500]] 
 
 Il cluster è utilizzato per fornire alta affidabilità di un servizio, ovvero in caso di guasto di uno o più computer del cluster, il servizio continua a funzionare. Un cluster può essere strutturato in modo **asimmetrico** o **simmetrico**.  
 Nel cluster asimmetrico una macchina è in modalità hot-standby, mentre le altre eseguono le applicazioni. La macchina host in hot-standby ha il compito di monitorare i nodi attivi e, in caso di guasto di uno dei nodi, diventa un server attivo.  

@@ -1,5 +1,5 @@
 # Lezione 3
-## Cambiare
+## Operazioni del sistema operativo. Ambienti di elaborazione. Struttura e organizzazione software dei sistemi operativi
 ---
 ## Operazioni del sistema operativo
 I sistemi multiprogrammati richiedono che diversi programmi siano contemporaneamente in memoria, per questo è necessaria la **gestione di essa**. Inoltre se alcuni programmi sono pronti per essere eseguiti nello stesso momento , il SO deve scegliere chi verrà eseguito prima. Queesta decisione è presa da una funzione del kernel, ovvero lo **scheduling della CPU**.

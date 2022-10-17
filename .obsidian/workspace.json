@@ -4,59 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "9260b43158fa3558",
+        "id": "10573745fcf0404a",
         "type": "tabs",
         "children": [
           {
-            "id": "326459158e611c71",
+            "id": "d7ea6b7262fed786",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SOR/Lezione 2 - Tipologie di sistemi.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "556121e41f89bf60",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "5848bf56dc6082f1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "f2d263251a3fd83e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
+                "file": "LMP/Lezione 4 - Basi del linguaggio.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "vertical"
@@ -115,7 +78,7 @@
       {
         "id": "fb5624376e7ba2b5",
         "type": "tabs",
-        "dimension": 63.83647798742138,
+        "dimension": 58.95895895895896,
         "children": [
           {
             "id": "028dbcaefe0b4db7",
@@ -123,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
+                "file": "LMP/Lezione 4 - Basi del linguaggio.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -140,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
+                "file": "LMP/Lezione 4 - Basi del linguaggio.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -163,18 +126,16 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "LMP/Lezione 3 - Concetti dell'OOP.md"
+                "file": "LMP/Lezione 4 - Basi del linguaggio.md"
               }
             }
           },
           {
             "id": "95d0eca7356a3f20",
             "type": "leaf",
-            "pinned": true,
             "state": {
               "type": "git-view",
-              "state": {},
-              "pinned": true
+              "state": {}
             }
           }
         ],
@@ -183,7 +144,7 @@
       {
         "id": "1931227594f23ca3",
         "type": "tabs",
-        "dimension": 36.16352201257861,
+        "dimension": 41.04104104104104,
         "children": [
           {
             "id": "bb4eafc6c9dc8f49",
@@ -197,22 +158,22 @@
       }
     ],
     "direction": "horizontal",
-    "width": 309.94464111328125
+    "width": 323.5
   },
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "f2d263251a3fd83e",
+  "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
     "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
-    "FI/Capitolo 0 - Fondamenti di informatica.md",
-    "SOR/Lezione 4 - Gestione dei processi.md",
-    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
-    "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
-    "SOR/Lezione 2 - Tipologie di sistemi.md",
-    "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
-    "SOR/Lezione 3 - Operazioni del sistema operativo.md",
+    "LMP/Lezione 4 - Basi del linguaggio.md",
     "LMP/Lezione 3 - Concetti dell'OOP.md",
-    "LMP/Lezione 2 - Il linguaggio Java.md"
+    "LMP/Lezione 2 - Il linguaggio Java.md",
+    "LMP/Lezione 1 - Introduzione.md",
+    "LMP/Immagini/getStarted-compiler.gif",
+    "LMP/Immagini/Pasted image 20221016174127.png",
+    "LMP/Immagini/Pasted image 20221011174606.png",
+    "LMP/Immagini/helloWorld.gif",
+    "LMP/Lezione 3.md"
   ]
 }
