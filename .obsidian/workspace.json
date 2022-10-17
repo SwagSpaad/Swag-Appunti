@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SOR/Lezione 4 - Gestione dei processi.md",
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
                 "mode": "source",
                 "source": false
               }
@@ -123,7 +123,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "SOR/Lezione 4 - Gestione dei processi.md",
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -140,7 +140,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "SOR/Lezione 4 - Gestione dei processi.md",
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -163,7 +163,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SOR/Lezione 4 - Gestione dei processi.md"
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md"
               }
             }
           },
@@ -202,17 +202,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "95d0eca7356a3f20",
+  "active": "f2d263251a3fd83e",
   "lastOpenFiles": [
-    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
+    "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
+    "FI/Capitolo 0 - Fondamenti di informatica.md",
     "SOR/Lezione 4 - Gestione dei processi.md",
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
     "SOR/Lezione 2 - Tipologie di sistemi.md",
     "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
     "SOR/Lezione 3 - Operazioni del sistema operativo.md",
     "LMP/Lezione 3 - Concetti dell'OOP.md",
-    "LMP/Lezione 2 - Il linguaggio Java.md",
-    "LMP/Lezione 1 - Introduzione.md",
-    "Appunti LMP/Lezione 2.md"
+    "LMP/Lezione 2 - Il linguaggio Java.md"
   ]
 }
