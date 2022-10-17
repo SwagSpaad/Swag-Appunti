@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "LMP/Lezione 3.md",
+                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
                 "mode": "source",
                 "source": false
               }
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "LMP/Lezione 3.md",
+                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "LMP/Lezione 3.md",
+                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "LMP/Lezione 3.md"
+                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md"
               }
             }
           },
@@ -180,11 +180,11 @@
   },
   "active": "556121e41f89bf60",
   "lastOpenFiles": [
-    "LMP/Lezione 2.md",
-    "LMP/Lezione 1 - Introduzione.md",
+    "LMP/Lezione 3 - Concetti dell'OOP.md",
     "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
+    "LMP/Lezione 1 - Introduzione.md",
+    "LMP/Lezione 2 - Il linguaggio Java.md",
     "LMP/img/img0.png",
-    "LMP/Lezione 3.md",
     "LMP/Indice delle lezioni.md",
     "LMP/Lezione 1.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",

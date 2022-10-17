@@ -40,7 +40,7 @@ _Def:_
 L'API è una vasta collezione di componenti software già pronti che forniscono molte funzionalità.
 è raggruppato in librerie di classi e interfacce correlate. Queste librerie sono conosciute come pacchetti(package)
 
-![[img2.gif]]
+![[img2.gif|center|500]]
 
 # Cosa posso fare con la tecnologia Java?
 
