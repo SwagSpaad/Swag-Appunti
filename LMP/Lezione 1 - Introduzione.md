@@ -1,9 +1,9 @@
 # Introduzione alla programmazione ad oggetti
 
 Esistono 3 tipi di programmazione:
-- [[Introduzione#Programmazione Strutturata|Programmazione Strutturata]]
-- [[Introduzione#Programmazione Procedurale|Programmazione Procedurale]]
-- [[Introduzione#Programmazione Orientata agli Oggetti|Programmazione Orientata agli Oggetti]]
+- [[#Programmazione Strutturata|Programmazione Strutturata]]
+- [[#Programmazione Procedurale|Programmazione Procedurale]]
+- [[#Programmazione Orientata agli Oggetti|Programmazione Orientata agli Oggetti]]
 
 ## Programmazione Strutturata
 I seguenti requisiti devono essere rispettati da un linguaggio di programmazione strutturato:

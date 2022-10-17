@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "5848bf56dc6082f1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -99,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md"
+                "file": "LMP/Lezione 3 - Concetti dell'OOP.md"
               }
             }
           },
@@ -178,17 +190,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "556121e41f89bf60",
+  "active": "5848bf56dc6082f1",
   "lastOpenFiles": [
+    "LMP/Lezione 2 - Il linguaggio Java.md",
+    "LMP/Lezione 1 - Introduzione.md",
+    "Appunti LMP/Lezione 2.md",
     "LMP/Lezione 3 - Concetti dell'OOP.md",
     "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
-    "LMP/Lezione 1 - Introduzione.md",
-    "LMP/Lezione 2 - Il linguaggio Java.md",
     "LMP/img/img0.png",
     "LMP/Indice delle lezioni.md",
     "LMP/Lezione 1.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",
-    "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
-    "ASD/Capitolo 0 - Algoritmi e strutture dati.md"
+    "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md"
   ]
 }

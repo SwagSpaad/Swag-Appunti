@@ -35,4 +35,4 @@ Identificare lo stato e il comportamento di un oggetto nella vita reale è una g
 ![[LMP/img/img3.png|center|500]]
 
 Gli oggetti software sono concettualmente simili agli oggetti nella vita reale: anche loro sono cpomposti da stati e comportamenti. Un oggetto software salva i suoi stati nei _fields_(campi)(variabili in qualche linguaggio di programmazione) ed espone i suoi comportamenti tramite i _methods_(metodi)(funzioni in qualche linguaggio di programmazione). I metodi operano sullo stato interno di un oggetto e servono come il meccanismo primario per la comunicazione object-to-object.
-Nascondere lo stato interno e richiedere che tutte le interazioni vengano eseguite attraverso i metodi di un oggetto è noto come incapsulamento dei dati(**data encapsulation**), un principio fondamentale della programmazione orientata agli oggetti
+Nascondere lo stato interno e richiedere che tutte le interazioni vengano eseguite attraverso i metodi di un oggetto è noto come incapsulamento dei dati (**data encapsulation**), un principio fondamentale della programmazione orientata agli oggetti
