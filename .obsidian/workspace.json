@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BDC/Lezione 1.md",
+                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
                 "mode": "source",
                 "source": false
               }
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BDC/Lezione 1.md",
+                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "BDC/Lezione 1.md",
+                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BDC/Lezione 1.md"
+                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md"
               }
             }
           },
@@ -178,15 +178,15 @@
   },
   "active": "749d592a3273484d",
   "lastOpenFiles": [
+    "FI/Lezione 2 - Espressioni regolari, linguaggi e problemi.md",
+    "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
+    "BDC/Lezione 1.md",
     "BDC/Capitolo 0 - Basi di dati e di conoscenza.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "SOR/Lezione 5 - Operazione sui processi.md",
     "Pasted image 20221018112742.png",
     "SOR/Lezione 4 - Gestione dei processi.md",
     "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
-    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
-    "FI/Capitolo 0 - Fondamenti di informatica.md",
-    "LMP/Capitolo 0 - Linguaggi e metodologie di programmazione.md",
-    "LMP/Lezione 4 - Basi del linguaggio.md"
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md"
   ]
 }

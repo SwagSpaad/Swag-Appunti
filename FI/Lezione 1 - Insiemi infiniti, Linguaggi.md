@@ -76,7 +76,7 @@ L'insieme aperto (0,1) e l'insieme $\mathbb R$ sono equinumerosi(una possibile b
 
 Basta dunque mostrare che l'insieme dei reali in (0,1) non è numerabile. A tal fine, consideriamo l'insieme delle sequenze infinite di cifre decimali che i reali in (0,1) e mostriamo che tale insieme non è numerabile
 
-_Dim per assurdo_
+**Dim per assurdo**
 Si supponga per assurdo di aver trovato una qualsiasi corrispondenza tra i naturali e le sequenze: questa corrispondenza definirebbe una enumerazione $\Phi =\: \langle\phi_0,\phi_1,...\rangle$ delle sequenze
 
 Introduciamo ora la sequenza $\phi$ avente come i-esima cifra, per $i=0,1,2,,,$ il valore ottenuto sommando 1(mod 10) alla i-esima cifra di $\phi_i$ 
@@ -118,7 +118,7 @@ $|f|f:\mathbb R\rightarrow \mathbb R|=2^{2^{\aleph_0}}$
 
 ## Linguaggi
 
-_Def_
+**Def.**
 Un insieme finito non vuoto $\Sigma$ di simboli (detti **caratteri**)  prende il nome di **alfabeto**
 
 Dato un alfabeto $\Sigma$ denotiamo come $\langle\Sigma^\star,\circ ,\epsilon\rangle$ il **monoide libero definito su $\Sigma$**
@@ -139,7 +139,7 @@ $$x\circ y\neq y\circ x$$
 
 Un caso particolare di concatenazione è quello in cui la stringa viene concatenata con se stesa: con $x^h$ si denota la concatenazione di x con se stessa iterata h volte, Per convenzione con $x^0$ si intende la stringa vuota. 
 
-_Def_
+**Def.**
 Dato un alfabeto $\Sigma$, si definisce **linguaggio** un qualsivoglia sottoinsieme di $\Sigma^\star$. Si noti che poichè $\Sigma\subseteq\Sigma^\star$, un alfabeto è a sua volta un linguaggio.
 
 Si chiama **linguaggio vuoto**, e lo si indica con $\Lambda$, il linguaggio che non contiene stringa alcuna. Si noti che $\Lambda\neq (\epsilon)$ 
@@ -167,11 +167,11 @@ La **potenza** $L^h$ di un linguaggio è definita come:
 $$L^h=L\circ L^{h-1},h\geq1$$
 con la convenzione secondo cui $L^0=(\epsilon)$. Si noti che,in basde alla suddetta convenzione, $\Lambda^0=(\epsilon)$
 
-_Def_
+**Def.**
 Il linguaggio $L^\star$ definito da:
 $$L^\star=\bigcup_{h=0}^\infty L^h$$
 prende il nome di **chiusura riflessiva del linguaggio** L rispetto all'operazione di concatenazione, mentre l'operatore '$\star$' prende il nome di **iterazione o stella di Kleene**. Si noti che, dato un qualunque linguaggio $L,\epsilon\in L^\star$, e che $\Lambda^\star=(\epsilon)$ 
 
-_Def_
+**Def.**
 Si indica con $L^+$ la **chiusura(non riflessiva)** definita da $$L^+=\bigcup_{h=1}^\infty L^h$$
 Risulta ovviamente $L^\star=L^+\cup (\epsilon)$ 
