@@ -1,5 +1,5 @@
 # Lezione 6
-## Cambiare
+## Comunicazione tra processi. Memoria condivisa. Esempio di comunicazioni tra processi non sincronizzati. Memoria condivisa in POSIX.
 ---
 ## Comunicazione tra processi
 I processi in esecuzione in un sistema possono essere *indipendenti* o *cooperanti*.  
