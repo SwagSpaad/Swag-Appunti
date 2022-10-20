@@ -25,14 +25,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
+                "file": "FI/Lezione 2 - Espressioni regolari, linguaggi e problemi.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "52e41e23f5214705",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "SOR/Lezione 6 -.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -99,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
+                "file": "SOR/Lezione 6 -.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
+                "file": "SOR/Lezione 6 -.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md"
+                "file": "SOR/Lezione 6 -.md"
               }
             }
           },
@@ -176,17 +188,17 @@
   "ribbon": {
     "mostRecentAction": ""
   },
-  "active": "749d592a3273484d",
+  "active": "52e41e23f5214705",
   "lastOpenFiles": [
+    "SOR/Lezione 5 - Operazione sui processi.md",
+    "SOR/Lezione 6 -.md",
     "FI/Lezione 2 - Espressioni regolari, linguaggi e problemi.md",
     "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
     "BDC/Lezione 1.md",
     "BDC/Capitolo 0 - Basi di dati e di conoscenza.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
-    "SOR/Lezione 5 - Operazione sui processi.md",
     "Pasted image 20221018112742.png",
     "SOR/Lezione 4 - Gestione dei processi.md",
-    "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
-    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md"
+    "ASD/Capitolo 0 - Algoritmi e strutture dati.md"
   ]
 }
