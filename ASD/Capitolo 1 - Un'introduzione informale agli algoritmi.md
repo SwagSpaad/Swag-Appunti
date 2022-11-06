@@ -121,7 +121,7 @@ F_{n-1}+F_{n-2}&se\ \ n\geq3\\
 >(38 milione di volte più dell'algoritmo $Fibonacci2$!)
 >- L'algoritmo $Fibonacci3$ impiega tempo proporzionale a n invece di esponenziale in n come Fibonacci2
 >- Tempo effettivo richiesto da implementazioni in C dei due algoritmi su piattaforme obsolete:
->![[img4.png]]
+>![[ASD/img/img4.png]]
 >
 
 ##### Occupazione di memoria
@@ -186,10 +186,10 @@ Risulta:
 > $T(n) \leq c + \lfloor log_2 n\rfloor + T(1)= O(log_2 n)$
 
 ##### Analisi memoria ausiliaria Fibonacci2
->![[img5.png]]
+>![[ASD/img/img5.png]]
 >- Chiamate attive formano un cammino P radice-nodoz
 >- P ha al più n nodi
 >- Ogni nodo / chiamata usa memoria costante
 
 #### Riepilogo finale
->![[img6.png]]
+>![[ASD/img/img6.png]]

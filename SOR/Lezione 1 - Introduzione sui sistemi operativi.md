@@ -13,7 +13,7 @@ Il sistema operativo gestisce e controlla le risorse hardware, necessarie per l'
 ## Funzionamento di un computer
 Un moderno computer è costituito da uno o più processori e da un numero di controller di dispositivi (in celeste nella foto) connessi mediante bus di sistema comune che forniscono l’accesso alla memoria condivisa.
 
-![[img1.png|center|500]]  
+![[SOR/img/img1.png|center|500]]  
 
 - Un controller è un modulo elettronico programmabile. Ogni controller gestisce un particolare dispositivo.  
 - I processori e i controller dei dispositivi sono in grado di eseguire istruzioni in parallelo, competendo tra loro per accedere alla memoria. Per garantire un accesso ordinato alla memoria, nell'hardware del computer è presente un dispositivo che sincronizza l'accesso ad essa.

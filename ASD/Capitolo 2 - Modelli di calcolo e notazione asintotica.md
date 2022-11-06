@@ -2,7 +2,7 @@
 ## Modelli di calcolo e notazione asintotica
 ---
 ## Macchina di Turing
->![[img7.png|center|500]]
+>![[ASD/img/img7.png|center|500]]
 >- Struttura di basso livello, troppo differente dai calcolatori reali
 >- Utile per la calcolabilità ma meno utile per l'efficienza
 
