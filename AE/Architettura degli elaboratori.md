@@ -1,8 +1,8 @@
 # Capitolo 1 
-# Introduzione
+## Introduzione
 ---
 
-## Differenza tra traduzione e interpretazione
+### Differenza tra traduzione e interpretazione
 
 Un metodo per eseguire un programma scritto in L1 consiste nel sostituire, in una fase iniziale, ogni sua istruzione con un'equivalente sequenza di istruzioni in L0. Il programma che ne risulta è costituito interamente da istruzioni di L0 e può essere eseguito dal computer al posto del programma L1 originale. Questa tecnica è chiamata **traduzione**. 
 L'altra tecnica consiste invece nello scrivere un programma in L0 che accetta come dati d'ingresso programmi in L1; tale programma li esegue esaminando un'istruzione alla volta e sostituendola direttamente con l'equivalente sequenza di istruzioni L0. Questa tecnica, che non richiede la generazione preventiva di un nuovo programma L0, è chiamata **interpretazione** e il programma che la esegue è detto **interprete**.
@@ -10,7 +10,7 @@ L'altra tecnica consiste invece nello scrivere un programma in L0 che accetta co
 - La traduzione: tradurre tutto il programma al linguaggio inferiore e poi viene eseguito. 
 - L'interpretazione: traduce ed esegue ogni singola istruzione del programma. Legge ed esegue il codice sorgente del programma senza creare un file oggetto eseguibile. E' più lenta rispetto alla compilazione.
 
-## Differenza tra compilazione ed interpretazione
+### Differenza tra compilazione ed interpretazione
 
 La compilazione e l'interpretazione sono due metodi per eseguire un programma informatico. La compilazione, eseguita dal compilatore, traduce tutte le istruzioni di un programma in linguaggio macchina, creando un file eseguibile dal computer.
 L'interpretazione traduce ed esegue ogni singola istruzione del programma. Legge ed esegue il codice sorgente del programma senza creare un file oggetto eseguibile. E' più lenta rispetto alla compilazione.
@@ -22,20 +22,20 @@ Dopo aver eseguito un'istruzione, il software interprete passa ad elaborare la s
 ![[AE/img/img0.png|center|400]]
 
 
-## Livelli di un computer
+### Livelli di un computer
 
 ![[AE/img/img1.png|center|400]]
 
 # Capitolo 2 
 ## Organizzazione dei sistemi di calcolo
 ---
-## CPU
+### CPU
 
 Una tipica CPU di Von Neumann è formata da registri (da 1 a 32), dalla ALU e da alcuni bus che connettono tra loro diverse parti. I registri alimentano due registri di input della ALU che mantengono i dati d’ingresso della ALU. La ALU esegue operazioni di somma e sottrazione, e il risultato viene memorizzato in un apposito registro di input, successivamente può essere immagazzinato in uno dei registri della CPU e volendo copiato in memoria.
 Le operazioni sono divise in: 
 - istruzioni registro-memoria: prelevano parole in memoria e vengono portate all'interno dei registri, dove vengono utilizzate dalla ALU per operazioni successive
 - istruzioni registro-registro: preleva due operandi dai registri e li porta dentro dei registri di input della ALU e ne memorizza il risultato in uno dei registri. Il processo che porta i due operandi attraverso la ALU e memorizza il risultato è chiamato **ciclo del percorso dati** ed è il cuore della CPU.
-### Esecuzione dell'istruzione
+#### Esecuzione dell'istruzione
 
 La CPU esegue ogni istruzione compiendo una serie di passi:
 1.  p releva la successiva istruzione dalla memoria per portarla nell’IR;
@@ -47,7 +47,7 @@ La CPU esegue ogni istruzione compiendo una serie di passi:
 7.  torna al punto 1 per l’istruzione successiva.
 Questa sequenza di passi è detta ciclo di prelievo-decodifica-esecuzione (fetch-decode-execute). 
 
-## CISC e RISC
+### CISC e RISC
 
 La **CISC** (Complex istruction set computer) è formata da un set di istruzioni in grado di eseguire operazioni molto più complesse rispetto all’architettura **RISC**. E’ infatti possibile utilizzare una sola istruzione per leggere un dato in memoria, modificarlo e salvarlo nuovamente, cosa impensabile con un set di istruzioni ridotto. 
 Sebbene questo tipo di architettura non abbia la velocità di quella **RISC**, ha il vantaggio di poter realizzare programmi più compatti che occupano un minor spazio in memoria. I programmi in questione sono però più “pesanti“, e richiedono molto tempo per l’esecuzione. Un singolo set di istruzioni è eseguito in più passaggi; ogni set di istruzioni ha oltre 300 istruzioni separate. Le istruzioni vengono completate in 2-10 cicli macchina.
@@ -60,16 +60,16 @@ La **RISC** è semplice e lineare, permettendo al microprocessore di eseguire il
 
 ![[AE/img/img2.png|center|500]]  
 
-## Dischi magnetici
+### Dischi magnetici
 
 Ogni traccia è divisa in settori di lunghezza fissata. Tra due settori è presente un piccolo spazio detto **intersector gap**.
 Le tracce interne hanno maggiore densità di memorizzazione rispetto alle esterne. Ogni drive ha una scheda dedicata (può contenere una CPU) chiamato controllore del disco, oltre a pilotare accetta i comandi software, corregge i dati.
 
-## Hard disk
+### Hard disk
 
 Sono dispositivi di memorizzazione dati che possono essere collegati internamente o esternamente al calcolatore. 
 
-### Hard disk magnetici 
+#### Hard disk magnetici 
 
 Costituito da una pila di dischi che ruotano intorno all’asse, l’insieme di tracce è detto cilindro.
 Le performance dell’HD dipendono da:
@@ -81,22 +81,22 @@ Il posizionamento della testina nel raggio della traccia ricercata è detto temp
 La latenza rotazionale è il tempo necessario al disco per posizionare il corretto settore sotto la testina e dipende dalla velocità angolare del disco.
 Il tempo di trasferimento dipende dalla densità lineare e dalla velocità di rotazione.
 
-### Dischi IDE
+#### Dischi IDE
 
 Il controller dell’Hard disk è su una scheda separata, fu utilizzato lo standard IDE in grado di gestire dischi con una capacità fino a 504 MB, 4 MB/s.
 Il SO leggeva e scriveva dati sul disco inserendo parametri nei registri della CPU e poi invocando il BIOS. 
 Da IDE si passò all’EIDE dove ha uno schema di indirizzamento aggiuntivo denominato LBA. Ai controllori EIDE potevano avere due canali su ciascuno dei quali poteva essere collegato un driver primario e secondario.
 Dopo EIDE ci fu ATA-3, poi ATAPI-4 incrementarono la dimensione del connettore e la velocità di trasferimento , ATAPI-5 e ATAPI-6, mentre ATAPI-7 incrementa la dimensione del connettore per aumentare la banda, utilizza un serial ATA per trasferire i bit su un connettore.
 
-### SCSI disk
+#### SCSI disk
 
 I controller possono collegare fino a 7 dispositivi, hanno organizzazione simile ai dischi IDE ma nescessitano di diverse interfacce ed hanno velocità più alte
 
-### Dischi a stato solido (SSD)
+#### Dischi a stato solido (SSD)
 
 Dischi basati su memoria flash non volatile, velocità fino a tre volte superiore rispetto HDD.
 
-## CD-ROM
+### CD-ROM
 
 Realizzato in policarbonato poi una striscia sottile di alluminio riflettente. Nel substrato di policarbonato è possibile creare delle depressioni tra aree non incise.
 La transizione da un pit a land può rappresentare un valore logico alto o  basso.
@@ -108,7 +108,7 @@ Un settore contiene:
 -   il codice ECC
 il modo senza ECC è utilizzato per applicazioni audio/video.
 
-## RAID
+### RAID
 
 Per migliorare le prestazioni dei dischi (anche l’affidabilità) si pensò di adottare la strategia del calcolo parallelo.
 L’idea è di far vedere al calcolatore il sistema RAID (insieme di dischi) come un unico enorme disco virtuale con elevata performance e affidabilità.
@@ -132,3 +132,56 @@ Esistono 5 schemi RAID:
 - **RAID Livello 4/5**: I RAID 4  e 5 lavorano su strisce e non richiedono dischi sincronizzati. è come il RAID 0, con una parità striscia per striscia scritta su un disco separato di parità.  Si esegue l’EXOR bit a bit di tutte le strisce ottenendo così una striscia di parità.
 
 ![[AE/img/img7.png|center|500]]
+
+# Capitolo 3
+## Livello logico digitale
+
+La base hardware di tutti i calcolatori è costituita da piccoli dispositivi elettronici dette porte logiche, ciascune delle quali calcola una diversa funzione di questi segnali.
+
+### Negazione NOT
+![[AE/img/img8.png|center|150]]
+
+Restituisce il valore inverso del valore in entrata (1 restituisce 0 e 0 restituisce 1)
+### Congiunzione logica AND
+![[AE/img/img9.png|center|150]]
+
+Il risultato è 1 se tutti gli operatori sono 1, altrimenti 0
+Proprietà:
+- idempotenza: $A \land A = A$  
+- commutativa: $A \land B = B \land A$
+- associativa: $A \land (B\land C) = (A\land B)\land C$ 
+- elemento neutro: $1 \land A = A$
+- elemento assorbente: $0 \land A = 0$ 
+- complementi: $\neg A \land A = 0$ 
+### Disgiunzione logica OR
+![[AE/img/img10.png|center|150]]  
+
+Il risultato è 1 se e solo se almeno uno degli operandi è 1
+Proprietà:
+- idempotenza: $A \lor A = A$  
+- commutativa: $A \lor B = B \lor A$
+- associativa: $A \lor (B\lor C) = (A\lor B)\lor C$ 
+- elemento neutro: $0 \lor A = A$
+- elemento assorbente: $1 \lor A = 0$ 
+- complementi: $\neg A \lor A = 1$ 
+### Disgiunzione logica esclusiva XOR e EXOR
+
+![[AE/img/img11.png|center|150]]  
+
+Il risultato è 1 se e solo se un numero dispari di operandi vale 1
+>$$A \oplus B = (\neg A)\land B \: \lor A\land(\neg B)  $$
+
+### Proprietà logiche
+#### Distributiva di AND rispetto OR
+$$A\land(B\lor C)= (A\land B)\lor(A\land C)$$
+#### Distributiva OR rispetto AND
+$$A\lor(B\land C)= (A\lor B)\land(A\lor C)$$
+#### Primo teorema dell'assorbimento
+$$A\land(A\lor B)= A$$
+#### Secondo teorema dell'assorbimento
+$$A\land((\neg A)\lor B)= A \land B$$
+#### Prima legge di de Morgan
+$$\neg(A\land B)= (\neg A)\lor(\neg B)$$
+#### Seconda legge di de Morgan
+$$\neg(A\lor B)= (\neg A)\land(\neg B)$$
+### Multiplexer

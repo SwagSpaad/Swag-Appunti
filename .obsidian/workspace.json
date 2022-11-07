@@ -221,8 +221,9 @@
     "direction": "horizontal",
     "width": 323.5
   },
-  "active": "eb459183a5311c88",
+  "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
+    "BDC/Capitolo 0 - Basi di dati e di conoscenza.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",
     "BDC/Lezione 1.md",
     "SOR/Lezione 6 - Comunicazione tra processi.md",
@@ -231,7 +232,6 @@
     "LMP/Lezione 2 - Il linguaggio Java.md",
     "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
     "FI/Lezione 2 - Espressioni regolari, linguaggi e problemi.md",
-    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
-    "SOR/Lezione 7 -.md"
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md"
   ]
 }
