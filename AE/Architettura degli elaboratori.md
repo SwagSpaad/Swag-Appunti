@@ -185,3 +185,35 @@ $$\neg(A\land B)= (\neg A)\lor(\neg B)$$
 #### Seconda legge di de Morgan
 $$\neg(A\lor B)= (\neg A)\land(\neg B)$$
 ### Multiplexer
+
+Un multiplexer è un circuito con $2^n$ dati di input, un valore di output ed n input di controllo. Gli input selezionano la linea di ingresso che verrà trasferita in uscita. 
+
+![[AE/img/img12.png|center|300]]
+
+Le linee di controllo $S_0,\: S_1,\: S_2$ codificano un numero a 3 bit che specifica quale delle $I_0,\: I_1,...,\:I_7$ linee di input deve essere instradata verso la porta OR e quindi verso l'output. Indipendentemente dal valore definito dalle linee di controllo, le 7 rimanenti porte AND genereranno il valore 0, mentre quella rimanente produrrà in output 0 oppure 1.
+
+>**Oss.**
+>A partire dalla forma normale disgiuntiva, è possibile costruire un qualsiasi circuito utilizzando solamente porte AND, OR e NOT. Di conseguenza il MUX può essere utilizzata per realizzare qualsiasi funzione logica.
+
+### Decoder
+
+Un decodificatore accetta come input un numero ad n bit e lo utilizza per impostare ad 1 una sola delle $2^n$ linee di output.
+
+![[AE/img/img13.png|center|350]]
+
+Quando si fornisce alla memoria un indirizzo, si utilizzano i suoi 3 bit più significativi per selezionare uno degli otto chip di memoria ($U_0,\: U_1,...,\: U_7$). I 3 bit corrispondono ai tre input A, B, C; a seconda del loro valore 1 solo degli 8 chip assumerà il valore 1, mentre tutti gli altri rimangono a 0.
+
+### PLA (Array logico programmabile)
+
+Chip generale che permette di calcolare somme di prodotti. Nella figura la porta OR $F_1$ genera come risultato $(\neg W)YZ+WX(\neg Z)$ 
+
+![[AE/img/img14.png|center|350]]
+
+>**Oss.**
+>A partire dalla forma normale disgiuntiva, come per il multiplexer, la PLA può essere realizzata utilizzando porte AND, OR, NOT e può essere utilizzata per implementare qualsiasi funzione.
+
+### Circuiti aritmetici
+#### Shifter
+
+
+
