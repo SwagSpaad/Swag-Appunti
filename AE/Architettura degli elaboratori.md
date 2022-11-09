@@ -215,5 +215,72 @@ Chip generale che permette di calcolare somme di prodotti. Nella figura la porta
 ### Circuiti aritmetici
 #### Shifter
 
+![[AE/img/img15.png|center|500]]
+
+Lo shifter in figura è un circuito con 8 input ($D_0,\: D_1,...,\:D_7$) e 8 output ($S_0,\: S_1,...,\:S_7$). I bit in output sono la copia di quelli in input traslati tutti di una posizione a destra o a sinistra. La direzione (destra/sinistra) è impostata da un bit di controllo C (0 = sx, 1 = dx).
+
+#### Sommatori
+Per un calcolatore, la somma tra bit è un operazione fondamentale. Per realizzare un sommatore ad n bit, vengono utilizzati n [[#Full-adder|sommatori]] (full-adder a 1 bit), realizzati a loro volta partendo da [[#Half-adder|semi-sommatori]] (half-adder a 1 bit).    
+##### Half-adder
+
+![[AE/img/img16.png|center|500]]
+
+L'half-adder funziona solo per i bit meno significativi, perché non gestisce un riporto in ingresso.
+##### Full-adder
+
+![[AE/img/img17.png|center|500]] 
+
+A partire da due half-adder, si può costruire un sommatore che prende in ingresso tre bit (A, B e riporto in ingresso). 
+##### Clock
+
+Nei circuiti digitali complessi è necessario stabilire l'ordine con cui si verificano gli eventi. Un clock è un circuito che emette degli impulsi di larghezza definita ad intervalli di tempo costanti. L'intervallo di tempo compreso tra le estremità di due impulsi è detto **tempo di ciclo di clock**.
+
+![[AE/img/img18.png|center|450]] 
+La frequenza di clock specifica il numero di cicli di clock per unità di tempo (secondo). L'unità di misura è dell'ordine degli Hertz (Hz).
+#### Memorie
+La memoria è un componente fondamentale in un computer perché memorizza dati ed istruzioni. Per costruire un circuito che memorizza dati è necessario utilizzare circuiti sequenziali in cui l'output non dipende solamente dall'input, ma anche dallo stato del circuito.
+##### Latch
+Per creare una memoria a 1 bit è necessario un circuito che ricordi i precedenti valori in input. Un circuito semplice può essere realizzato con due NOR che hanno le uscite retroazionate in ingresso (dipendono dai valori dei precedenti ingressi). Il set-reset latch (**SR Latch**) ha due ingressi: S (set) è utilizzato per impostare ad 1 il valore dell'uscita e R (reset) è usato per azzerarlo. 
+
+![[AE/img/img19.png|center|450]]
+
+Il cambio di stato è provocato da un segnale/impulso; a seguito dell'impulso il circuito si mantiene nello stato raggiunto a meno che non vengano inviati ulteriori segnali/impulsi.
+Quando S è impostato temporaneamente ad 1, lo stato del latch diventa Q = 1, indipendentemente dallo stato precedente. Quando si imposta R temporaneamente ad 1, si forza il latch a passare nello stato Q = 0.
+##### SR Latch temporizzato
+
+![[AE/img/img20.png|center|450]]
+
+È un SR latch in cui i segnali agiscono solo quando il segnale di clock è attivo. Quando il clock vale 0, le porte AND generano in output il valore 0, indipendentemente dai valori di S ed R, impedendo al latch di cambiare stato. Quando il clock vale 1, le porte AND non bloccano i segnali di S ed R che tornano a pilotare lo stato del latch.
+Ma cosa succede nel caso in cui S = R = 1? Come cambiano gli stati? In questa circostanza il circuito è in uno stato instabile. Vediamo come risolvere questo problema.
+##### D latch temporizzato
+Per risolvere l'ambiguità del latch SR, viene utilizzato un solo ingresso dati D. 
+- Quando D = 1 e il clock = 1, il latch va nello stato Q = 1
+- Quando D = 0 e il clock = 1, il latch va nello stato Q = 0
+
+![[AE/img/img21.png|center|450]]
+
+##### Flip-Flop
+Il flip-flop è un circuito simile ad un latch, l'unica differenza è relativa all'istante in cui il segnale di clock determina il cambiamento di stato:
+- Nel latch il cambiamento di stato è determinato dal livello alto/basso del clock
+- Nel flip-flop è determinato dal fronte salita/discesa del clock
+
+![[AE/img/img22.png|center|450]]
+
+Molti latch hanno due ingressi aggiuntivi PRESET (per forzare lo stato Q = 1) e CLEAR (per forzare lo stato Q = 0).
+Un flip-flop D è dotato di un generatore di impulsi che funge da clock nei fronti di salita e discesa dovuti ai ritardi fisici del processamento del segnale passante per l'AND.
+
+![[AE/img/img23.png|center|450]]
+
+Per realizzare un registro ad 1 byte possono essere utilizzati 8 flip-flop come mostrato nella figura sottostante
+
+![[AE/img/img24.png|center|450]]
+
+- Gli 8 flip-flop hanno l'input di clock collegati tra loro e sono pilotati da una porta NOT (pin 11).
+- Input (D) e Output (Q) sono separati tra loro.
+- Per la scrittura è sufficiente prendere i dati sui PIN D e inviare un impulso di clock.
+- Il byte memorizzato è sempre disponibile sui PIN Q.
+
+
+
 
 
