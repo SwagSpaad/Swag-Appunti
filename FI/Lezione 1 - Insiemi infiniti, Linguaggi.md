@@ -121,8 +121,8 @@ $|f|f:\mathbb R\rightarrow \mathbb R|=2^{2^{\aleph_0}}$
 **Def.**
 Un insieme finito non vuoto $\Sigma$ di simboli (detti **caratteri**)  prende il nome di **alfabeto**
 
-Dato un alfabeto $\Sigma$ denotiamo come $\langle\Sigma^\star,\circ ,\epsilon\rangle$ il **monoide libero definito su $\Sigma$**
-Gli elementi di $\Sigma^\star$ vengono detti **parole** o **stringhe**
+Dato un alfabeto $\Sigma$ denotiamo come $\langle\Sigma^\star,\circ ,\epsilon\rangle$ il **monoide libero definito su $\Sigma$**.
+Gli elementi di $\Sigma^\star$ vengono detti **parole** o **stringhe**.
 L'elemento $\epsilon$ viene detto **parola vuota**. L'operazione $o:\Sigma^\star x\Sigma^\star\rightarrow \Sigma^\star$ definita sul monoide è chiamata **concatenazione** e consiste nel giustapporre due parole di $\Sigma^\star$:
 $$x_{i_1},...,x_{i_n}\:o\:y_{j_1},...,y_{j_m}=x_{i_1}...x_{i_n}y_{j_1}...y_{j_m},con\: x_{i_1},...,x_{i_n},y_{j_1},...,y_{j_m}\in \Sigma$$
 **Esempio**
