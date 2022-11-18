@@ -4,67 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "7b6a5d39beea4c58",
+        "id": "95f13e86ed75b65b",
         "type": "tabs",
         "children": [
           {
-            "id": "8f2ffb56cefea932",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "749d592a3273484d",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "52e41e23f5214705",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "SOR/Lezione 6 - Comunicazione tra processi.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "15b0a76da02d3780",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "LMP/Lezione 4 - Basi del linguaggio.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bf6d8390485350d2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "CPS/Lezione 1 - Introduzione alla probabilità.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "7c16025b1e0f225b",
+            "id": "4c93a7c53020fc7b",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -134,7 +78,6 @@
       {
         "id": "fb5624376e7ba2b5",
         "type": "tabs",
-        "dimension": 58.95895895895896,
         "children": [
           {
             "id": "028dbcaefe0b4db7",
@@ -142,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -159,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -182,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md"
+                "file": "AE/Architettura degli elaboratori.md"
               }
             }
           },
@@ -198,12 +141,11 @@
         "currentTab": 4
       },
       {
-        "id": "1931227594f23ca3",
+        "id": "a619c2fd6fa6e744",
         "type": "tabs",
-        "dimension": 41.04104104104104,
         "children": [
           {
-            "id": "bb4eafc6c9dc8f49",
+            "id": "749d592a3273484d",
             "type": "leaf",
             "state": {
               "type": "graph",
@@ -218,15 +160,15 @@
   },
   "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
-    "SOR/Lezione 6 - Comunicazione tra processi.md",
-    "CPS/Lezione 1 - Introduzione alla probabilità.md",
-    "AE/Architettura degli elaboratori.md",
-    "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md",
-    "FI/Lezione 1 - Insiemi infiniti, Linguaggi.md",
-    "FI/Lezione 2 - Espressioni regolari, linguaggi e problemi.md",
-    "FI/img/img3.png",
     "FI/Capitolo 0 - Fondamenti di informatica.md",
-    "BDC/Capitolo 0 - Basi di dati e di conoscenza.md",
-    "BDC/Lezione 1.md"
+    "FI/Lezione 9 - Sempre su RE,RG e ASF.md",
+    "FI/Lezione 8 - RE, RG e ASF.md",
+    "FI/Lezione 7 - Equivalenza tra ASFD e ASFND.md",
+    "FI/Lezione 6 - ASF.md",
+    "FI/Lezione 5 - Automi.md",
+    "FI/Lezione 4 - Ancora sulle grammatiche.md",
+    "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md",
+    "FI/Lezione 2 - Espressioni regolari, linguaggi e problemi.md",
+    "FI/img/img27.png"
   ]
 }

@@ -134,15 +134,14 @@ Per generare la stringa $aabbcc$ si può procedere come segue:
 Ciò mostra che $S \:\overset{*}{\implies}\: aabbcc$, ed in particolare $S \:\overset{i}{\implies}\: aabbcc$, per ogni $i \geq 8$ . 
 #### Forme di frase
 Data una grammatica $G$, si definisce **forma di frase** una qualunque stringa $\phi\in V^\star$ tale che $S\xRightarrow[\mathcal G]{\star}\phi$.
-Supponendo di partire da una stringa che contiene il solo simbolo $S$ 
-Utilizzando la grammatica dell'esempio 2, partendo da $S$ possiamo trovare la stringa $aabbcc$, utilizzando una sequenza di 8 $\psi$
+Supponendo di partire da una stringa che contiene il solo simbolo $S$, utilizzando la grammatica dell'esempio, partendo da $S$ possiamo trovare la stringa $aabbcc$, utilizzando una sequenza di 8 $\psi$, infatti come si può notare, $S\xRightarrow{\star}\psi_1\xRightarrow{\star}\psi_2....\xRightarrow{\star}\psi_8$.
+Tutte le $\psi$ sono forme di frase, che possiamo derivare partendo dall'assioma $S$.
 
-Infatti come si può notare, $S\xRightarrow{\star}\psi_1\xRightarrow{\star}\psi_2....\xRightarrow{\star}\psi_8$
-tutte le $\psi$ sono forme di frase, che possiamo derivare partendo dall'assioma $S$
-**Oss** la $\psi_8$ è una sequenza di soli simboli terminali,e quindi da qui in poi non si può continuare la derivazione
+**Oss.** 
+La $\psi_8$ è una sequenza di soli simboli terminali, e quindi da qui in poi non si può continuare la derivazione. 
 
 #### Linguaggio generato da una grammatica
 
 Il **linguaggio generato da una grammatica** $G$ è l'insieme $L(G)\subset\Sigma^\star$ tale che
-$$L(G)=\lbrace x|x\in V_T^\star \wedge S\xRightarrow[\mathcal G]{\star}x\rbrace$$
+$$L(G)=\lbrace x\:|\:x\in V_T^\star \wedge S\underset{\mathcal G}{\overset{\star}{\implies}}x\rbrace$$
 $L(G$) è l'insieme delle stringhe di caratteri terminali che si possono ottenere a partire dall'assioma mediante l'applicazione di un numero finito di passi di derivazione diretta

@@ -2,3 +2,10 @@
 ---
 - **[[Lezione 1 - Insiemi infiniti, Linguaggi|Lezione 1]]** - Introduzione, principio di induzione, insiemi infiniti e linguaggi.
 - **[[Lezione 2 - Espressioni regolari, linguaggi e problemi|Lezione 2]]** - Espressioni regolari, linguaggi e problemi di decisione. Relazione tra problemi e linguaggi. 
+- [[Lezione 3 - Ancora espressioni regolari, grammatiche|Lezione 3]] - Algebra delle espressioni regolari, grammatiche e linguaggi generati
+- [[Lezione 4 - Ancora sulle grammatiche|Lezione 4]] - Grammatiche equivalenti, tipolgie di grammatiche. 
+- [[Lezione 5 - Automi|Lezione 5]] - Automi, configurazioni e funzioni di transizione
+- [[Lezione 6 - ASF|Lezione 6]] - Automi a stati finiti deterministici e non deterministici
+- [[Lezione 7 - Equivalenza tra ASFD e ASFND|Lezione 7]] - Equivalenza tra ASFD e ASFND
+- [[Lezione 8 - RE, RG e ASF|Lezione 8]] - Espressioni regolari, grammatiche regolari e ASF
+- Lezione 9 -

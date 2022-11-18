@@ -1,27 +1,30 @@
-# Automi a Stati Finiti
-
+# Lezione 6
+## Automi a stati finiti deterministici e non deterministici
+---
 ## Automi a Stati Finiti Deterministici
-_Def_
+**Def.**
 Un **automa a stati finiti deterministico** (ASFD) è una quintupla $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$, dove:
 - $\Sigma=\lbrace a_1,...,a_n\rbrace$ è l'**alfabeto** di input (corrisponde all'insieme dei simboli terminali nelle grammatiche)
 - $Q=\lbrace q_0,...,q_m\rbrace$ è un insieme finito e non vuoto di **stati**
 - $q_0\in Q$ è lo **stato iniziale**
-- $F\subseteq Q$ è un insieme di **stati finali**
+- $F\subseteq Q$ è l'insieme di **stati finali**
 - $\delta:Q\times\Sigma\to Q$ è la **funzione (totale) di transizione** che ad ogni coppia $\langle\text{stato},\text{carattere in input}\rangle$ associa uno stato successivo.
 
->**Oss** Un ASFD è la specializzazione più semplice e di fatto è il modello più debole dal punto di vista espressivo e computazionale
+>**Oss.** 
+>Un ASFD è la specializzazione più semplice e di fatto è il modello più debole dal punto di vista espressivo e computazionale.
 
-![[appunti fi/immagini/Pasted image 20221031113627.png|center|600]]
+![[FI/img/img11.png|center|400]]
 
 Si assume che il nastro sia read-only, e può essere letto solo da sinistra verso destra
 
 ### Funzione di transizione
 
-![[appunti fi/immagini/Pasted image 20221031113922.png|center|500]]
+![[img12.png|center|400]]
 
 La funzione $\delta$ si rappresenta con una tabella, come in figura, dove i valori di $Q$ sono le righe, mentre i valori di $\Sigma$ sono le colonne.
 Quindi questa tabella ci dice che
-- $\delta(q_0,a)=q_0||\delta(q_0,b)=q_1$
+- $\delta(q_0,a)=q_0$
+- $\delta(q_0,b)=q_1$
 - $\delta(q_1,a)=q_2$
 - etc...
 La tabella prende nome di **tabella di transizione**
@@ -32,36 +35,33 @@ Il grafo prende nome di **grafo di transizione**:
 
 Esempio:
 $\delta(q_i,a_j)=q_k$ viene rappresentato con 
-![[appunti fi/immagini/Pasted image 20221031115625.png|center|400]]
+
+![[img13.png|center|400]]
 
 ### Configurazione di un ASF
-
-Dato un automa a stati finiti $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$, una configurazione di $\mathcal A$ è una coppia (q,x), con $q\in Q$ e $x\in\Sigma^\star$
+Dato un automa a stati finiti $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$, una configurazione di $\mathcal A$ è una coppia (q, x), con $q\in Q$ e $x\in\Sigma^\star$
 Una configurazione $\langle q,x\rangle,q\in Q\:e\:x\in\Sigma^\star$, di $\mathcal A$, è detta:
 - **iniziale** se $q=q_0$
 - **finale** se $x=\epsilon$
 - **accettante** se $x=\epsilon$ e $q\in F$
 
 ### Transizioni di un ASFD
-
-Dato un ASFD $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$ e due configurazioni $(q,x)$ e $(q',y)$ di $\mathcal A$, avremo che $(q,x)\vdash_{\mathcal A}(q',y)$ se e solo se valgono le due condizioni:
+Dato un ASFD $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$ e due configurazioni $(q,x)$ e $(q',y)$ di $\mathcal A$, avremo che $(q,x)\underset{\mathcal A}{\vdash}(q',y)$ se e solo se valgono le due condizioni:
 
 1. $x=ay$, per un qualche $a\in\Sigma$
 2. $\delta(q,a)=q'$
 
 #### Accettazione da un ASFD
-
 Dato un automa a stati finiti deterministico $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$, una stringa $x\in\Sigma^\star$ è accettata da $\mathcal A$ se e solo se:
-$$(q_o,x)\vdash_{\mathcal A}^\star (q,\epsilon)$$
+$$(q_o,x)\underset{\mathcal A}{\overset{\star}{\vdash}}(q,\epsilon)$$
 con $q\in F$
-
 Possiamo definire il linguaggio riconosciuto da $\mathcal A$ come
-$$L(\mathcal A)=\lbrace x\in\Sigma^\star|(q_0,x)\vdash_{\mathcal A}^\star(q,\epsilon),q\in F\rbrace$$
+$$L(\mathcal A)=\lbrace x\in\Sigma^\star|(q_0,x)\underset{\mathcal A}{\overset{\star}{\vdash}}(q,\epsilon),q\in F\rbrace$$
 
 **Esempio**
-
 La stringa aab è accettata dall'automa a stati finiti deterministico
-![[appunti fi/immagini/Pasted image 20221031130503.png|center|500]]
+
+![[img14.png|center|500]]
 
 Infatti, a partire dalla configurazione iniziale $(q_0,aab)$ l'automa raggiunge la configurazione di accettazione $(q_1,\epsilon)$ per mezzo della computazione 
 $$(q_0,aab)\vdash(q_0,ab)\vdash(q_0,b)\vdash(q_1,\epsilon)$$
@@ -75,19 +75,14 @@ $$\overline\delta(q,xa)=\delta(\overline\delta(q,x),a)$$
 dove $a\in\Sigma,x\in\Sigma^\star$
 Una stringa $x\in\Sigma^\star$ è accettata da $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$ se e solo se $\overline\delta(q_0,x)\in F$
 
-**esempio**
+**Esempio**
 $\delta(q,a)$
 $\overline\delta(q,aab)$
 
 ### Linguaggio riconosciuto da un ASFD
-
 Il **linguaggio riconosciuto** da un automa a stati finiti deterministico $\mathcal A$ è l'insieme
-$$L(\mathcal A)=\lbrace x\in\Sigma^\star|\delta(q_0,x)\in F\rbrace$$
-**esempio 1**
-vedi file su notability.
-
+$$L(\mathcal A)=\lbrace x\in\Sigma^\star\:|\:\delta(q_0,x)\in F\rbrace$$
 ### Funzione di transizione parziale
-
 La funzione di transizione $\delta$ è stata definita come totale
 Ogni ASFD $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$ con funzione di transizione $\delta$ non totale può essere trasformato in un ASFD $\mathcal A'=\langle\Sigma,Q',\delta',q_0,F\rangle$ con funzione di transizione totale ed equivalente, ponendo $Q'=Q\cup\lbrace \overline q\rbrace$ e $\overline\delta$ tale che:
 
@@ -103,7 +98,7 @@ Questa classe di linguaggi coincide con quella dei linguaggi generati dalle gram
 
 ## Automi a Stati Finiti Non Deterministici
 
-_Def_
+**Def.**
 Un **automa a stati non deterministico** è una quintupla $\mathcal A_N=\langle\Sigma,Q,\delta_N,q_0,F\rangle$, in cui:
 - $\Sigma=\lbrace a_1,...,a_n\rbrace$ è l'**alfabeto** di input (corrisponde all'insieme dei simboli terminali nelle grammatiche)
 - $Q=\lbrace q_0,...,q_m\rbrace$ è un insieme finito e non vuoto di **stati**
@@ -113,26 +108,23 @@ Un **automa a stati non deterministico** è una quintupla $\mathcal A_N=\langle\
 
 **Esempio funzione di transizione ASFND**
 
-![[appunti fi/immagini/Pasted image 20221031172410.png|center|400]]
+![[img15.png|center|300]]
 
 **Esempio**
-
 Un ASFND può essere descritto, così come un ASFD, tramite un grafo di transizione
 
-![[appunti fi/immagini/Pasted image 20221031172800.png|center|500]]
+![[img16.png|center|500]]
 
 ### Computazioni di un ASFND
 
 Un automa a stati finiti non deterministico definisce, data una stringa in input, un insieme di computazioni
-
 Alternativamente, possiamo considerare che l'automa esegue una sola **computazione non deterministica** nel corso della quale, per ogni carattere letto, assume non uno solo, ma un insieme di stati attuali e transita, ad ogni nuovo carattere, non da stato a stato ma da un insieme di stati ad un insieme di stati
 
 **Esempio**
 Usando la stringa bbab e il grafo dell'esempio precedente abbiamo che
 $$\lbrace q_0\rbrace\underbrace{\to}_{\text{leggiamo una b}}\lbrace q_0,q_1\rbrace\underbrace{\to}_{\text{leggiamo un'altra b}}\lbrace q_0,q_1,q_3\rbrace$$
-che corrisponde alla tabella di prima
+che corrisponde alla tabella di prima.
 In questo caso la stringa bbab non viene accettata dall'ASFND perchè l'insieme di stati $\lbrace q_0,q_1\rbrace$ non comprende stati finali
-**fine esempio**
 
 **Esempio**
 L'automa precedente definisce, in corrispondenza alla stringa in input bba, le tre computazioni:
@@ -145,7 +137,8 @@ Il prefisso bb della stringa di input da luogo anche alla computazione:
 la quale però non presenta continuazioni possibili
 
 Albero delle computazioni corrispondente
-![[appunti fi/immagini/Pasted image 20221031174530.png|center|500]]
+
+![[img17.png|center|500]]
 
 Alternativamente, possiamo considerare che l'automa definisca la computazione non deterministica:
 $$(\lbrace q_0\rbrace,bba)\vdash(\lbrace q_0,q_1\rbrace,ba)\vdash(\lbrace q_0,q_1,q_3\rbrace,a)\vdash(\lbrace q_0,q_1,q_3\rbrace,\epsilon)$$
@@ -153,7 +146,7 @@ $$(\lbrace q_0\rbrace,bba)\vdash(\lbrace q_0,q_1\rbrace,ba)\vdash(\lbrace q_0,q_
 ### Accettazione ad ASFND
 
 Una stringa x viene accettata da un automa a stati finiti non deterministico se almeno una delle computazioni definite per la stringa stessa è di accettazione, quindi se:
-$$(\lbrace q_0\rbrace,x)\vdash^\star(\mathcal Q,\epsilon)$$
+$$(\lbrace q_0\rbrace,x)\overset{\star}{\vdash}(\mathcal Q,\epsilon)$$
 con $\mathcal Q\subseteq Q$ e $$\mathcal Q\cap F \neq\emptyset$$
 ### Funzione di transizione estesa di un ASFND $\overline\delta_N$ 
 Dato un ASFND, la **funzione di transizione estesa** è la funzione $\overline\delta_N:Q\times\Sigma^\star\to\mathcal P(Q)$, definita nel seguente modo
@@ -164,9 +157,8 @@ dove $a\in\Sigma,x\in\Sigma^\star,p\in Q$
 Dato uno stato q ed una striga x in input, $q'\in\overline\delta_N(q,x)$ se e solo se esiste una computazione dell'automa la quale, a partire da q ed in conseguenza della lettura della stringa x, conduce allo stato $q'$
 
 ### Linguaggio accettato da un ASFND
-
 Il linguaggio $L(\mathcal A)$ accettato da un ASFND $\mathcal A$ è definito come:
-$$L(\mathcal A)=\lbrace x\in\Sigma^\star|(\lbrace q_0,x\rbrace)\vdash^\star(Q,\epsilon),Q\cap F\neq\emptyset\rbrace$$
+$$L(\mathcal A)=\lbrace x\in\Sigma^\star|(\lbrace q_0,x\rbrace)\overset{\star}{\vdash}(Q,\epsilon),Q\cap F\neq\emptyset\rbrace$$
 o anche come:
 $$L(\mathcal A_N)=\lbrace x\in\Sigma^\star|\overline\delta_N(q_0,x)\cap F\neq\emptyset\rbrace$$
 
@@ -174,16 +166,15 @@ $$L(\mathcal A_N)=\lbrace x\in\Sigma^\star|\overline\delta_N(q_0,x)\cap F\neq\em
 
 Un **$\epsilon$-ASFND** è un ASFND con $\delta_N:Q\times(\Sigma\cup\lbrace\epsilon\rbrace)\to \mathcal P(Q)$, nella quale sono quindi ammesse $\epsilon$-transizioni
 
-![[appunti fi/immagini/Pasted image 20221102135847.png|center|400]]
+![[img18.png|center|350]]
 
-**Oss** 
+**Oss.** 
 $$L(ASFND)\subseteq L(\epsilon-ASFND)$$
-**Oss**  vale anche l'opposto.
+vale anche l'opposto.
 
-#### Non determinismo e $\epsilon$-transizioni
+#### Non determinismo ed $\epsilon$-transizioni
 
-La presenza di $\epsilon$-transizioni in un ASF rende di per se l'automa non deterministico
-
+La presenza di $\epsilon$-transizioni in un ASF rende di per se l'automa non deterministico.
 La singola $\epsilon$-transizione, potendo aver luogo o meno, è inerentemente non deterministica
 
 #### $\epsilon$-chiusura
@@ -210,9 +201,9 @@ Facendo riferimento all'automa precedente abbiamo che:
 La **funzione di transizione estesa** $\hat\delta$ è definita come:
 
 1. $\hat\delta(q,\epsilon)=\epsilon(q)$
-2. Per ogni $x\in\Sigma^\star$ e per ogni $a\in\Sigma,\hat\delta(q,xa)=\bigcup_{p\in P}\epsilon(p)$, dove $P=\lbrace p|\exists r\in\hat\delta(q,x):p\in\delta(r,a)\rbrace$; vale a dire l'unione delle $\epsilon$-chiusure di tutti gli stati raggiungibili da un qualche stato $\hat\delta(q,x)$, avendo in input il carattere $a$
+2. Per ogni $x\in\Sigma^\star$ e per ogni $a\in\Sigma,\:\hat\delta(q,xa)=\underset{p\in P}{\bigcup}\epsilon(p)$, dove $P=\lbrace p|\exists r\in\hat\delta(q,x):p\in\delta(r,a)\rbrace$; vale a dire l'unione delle $\epsilon$-chiusure di tutti gli stati raggiungibili da un qualche stato $\hat\delta(q,x)$, avendo in input il carattere $a$
 
-Dato $P\subseteq Q,\epsilon(P)$ è l'unione delle $\epsilon$-chiusure di tutti gli stati in $P:\epsilon(P))=\bigcup_{p\in P}\epsilon(P)$
+Dato $P\subseteq Q,\epsilon(P)$ è l'unione delle $\epsilon$-chiusure di tutti gli stati in $P:\epsilon(P))=\underset{p\in P}{\bigcup}\epsilon(P)$
 
 **Esempio**
 Per l'automa precedente,
@@ -236,9 +227,6 @@ Problema: mostrare che i due automi sono equivalenti
 
 Per l'automa precedente, si ottiene:
 
-![[appunti fi/immagini/Pasted image 20221102190751.png|center|500]]
+![[img19.png|center|350]]
 
-**Esercizio**
 
-Definiamo come $\epsilon$-ASFD un automa a stati finiti deterministico esteso da un insieme di $\epsilon$-transizioni
-Mostrare l'equivalenza tra $\epsilon$-ASFD e ASFND

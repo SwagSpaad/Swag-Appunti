@@ -135,7 +135,7 @@ Esistono 5 schemi RAID:
 
 # Capitolo 3
 ## Livello logico digitale
-
+---
 La base hardware di tutti i calcolatori è costituita da piccoli dispositivi elettronici dette porte logiche, ciascune delle quali calcola una diversa funzione di questi segnali.
 
 ### Negazione NOT
@@ -146,13 +146,13 @@ Restituisce il valore inverso del valore in entrata (1 restituisce 0 e 0 restitu
 ![[AE/img/img9.png|center|150]]
 
 Il risultato è 1 se tutti gli operatori sono 1, altrimenti 0
-Proprietà:
+Proprietà: 
 - idempotenza: $A \land A = A$  
 - commutativa: $A \land B = B \land A$
 - associativa: $A \land (B\land C) = (A\land B)\land C$ 
 - elemento neutro: $1 \land A = A$
 - elemento assorbente: $0 \land A = 0$ 
-- complementi: $\neg A \land A = 0$ 
+- complementi: $\bar A \land A = 0$ 
 ### Disgiunzione logica OR
 ![[AE/img/img10.png|center|150]]  
 
@@ -163,13 +163,13 @@ Proprietà:
 - associativa: $A \lor (B\lor C) = (A\lor B)\lor C$ 
 - elemento neutro: $0 \lor A = A$
 - elemento assorbente: $1 \lor A = 0$ 
-- complementi: $\neg A \lor A = 1$ 
+- complementi: $\bar A \lor A = 1$ 
 ### Disgiunzione logica esclusiva XOR e EXOR
 
 ![[AE/img/img11.png|center|150]]  
 
 Il risultato è 1 se e solo se un numero dispari di operandi vale 1
->$$A \oplus B = (\neg A)\land B \: \lor A\land(\neg B)  $$
+>$$A \oplus B = (\bar A\land B) \: \lor (A\land\bar B)  $$
 
 ### Proprietà logiche
 #### Distributiva di AND rispetto OR
@@ -179,11 +179,11 @@ $$A\lor(B\land C)= (A\lor B)\land(A\lor C)$$
 #### Primo teorema dell'assorbimento
 $$A\land(A\lor B)= A$$
 #### Secondo teorema dell'assorbimento
-$$A\land((\neg A)\lor B)= A \land B$$
+$$A\land(\bar A\lor B)= A \land B$$
 #### Prima legge di de Morgan
-$$\neg(A\land B)= (\neg A)\lor(\neg B)$$
+$$\overline{(A\land B)}= \bar A\lor\bar B$$
 #### Seconda legge di de Morgan
-$$\neg(A\lor B)= (\neg A)\land(\neg B)$$
+$$\overline{(A\lor B)}= \bar A\land\bar B$$
 ### Multiplexer
 
 Un multiplexer è un circuito con $2^n$ dati di input, un valore di output ed n input di controllo. Gli input selezionano la linea di ingresso che verrà trasferita in uscita. 
@@ -205,7 +205,7 @@ Quando si fornisce alla memoria un indirizzo, si utilizzano i suoi 3 bit più si
 
 ### PLA (Array logico programmabile)
 
-Chip generale che permette di calcolare somme di prodotti. Nella figura la porta OR $F_1$ genera come risultato $(\neg W)YZ+WX(\neg Z)$ 
+Chip generale che permette di calcolare somme di prodotti. Nella figura la porta OR $F_1$ genera come risultato $\bar WYZ+WX\bar Z$ 
 
 ![[AE/img/img14.png|center|350]]
 
@@ -235,7 +235,8 @@ A partire da due half-adder, si può costruire un sommatore che prende in ingres
 
 Nei circuiti digitali complessi è necessario stabilire l'ordine con cui si verificano gli eventi. Un clock è un circuito che emette degli impulsi di larghezza definita ad intervalli di tempo costanti. L'intervallo di tempo compreso tra le estremità di due impulsi è detto **tempo di ciclo di clock**.
 
-![[AE/img/img18.png|center|450]] 
+![[AE/img/img18.png|center|450]]
+
 La frequenza di clock specifica il numero di cicli di clock per unità di tempo (secondo). L'unità di misura è dell'ordine degli Hertz (Hz).
 #### Memorie
 La memoria è un componente fondamentale in un computer perché memorizza dati ed istruzioni. Per costruire un circuito che memorizza dati è necessario utilizzare circuiti sequenziali in cui l'output non dipende solamente dall'input, ma anche dallo stato del circuito.
@@ -280,6 +281,88 @@ Per realizzare un registro ad 1 byte possono essere utilizzati 8 flip-flop come 
 - Per la scrittura è sufficiente prendere i dati sui PIN D e inviare un impulso di clock.
 - Il byte memorizzato è sempre disponibile sui PIN Q.
 
+### Bus
+Un bus è un collegamento che unisce i vari dispositivi di un computer. Possono essere interni alla CPU (connette i registri della ALU) o esterni (memoria o periferiche di I/O). 
+Alcuni dispositivi sono **attivi** (master) perché possono iniziare un trasferimento dati sul bus, altri **passivi** (slave) perché restano in attesa di una richiesta di un master.
+Spesso i segnali digitali generati dalle periferiche sono troppo deboli per alimentare un bus, soprattutto se questo è lungo o collegato a molti dispositivi. Per risolvere questo problema molti master sono connessi al bus mediante un chip detto **bus-driver**, mentre gli slave utilizzano un chip detto **bus-receiver**. Per le periferiche che svolgono sia il ruolo di master che di slave si utilizzano chip detti **trasmettitore-ricevitore del bus**. Questi chip sono dispositivi a tre stati per permettere loro di essere sconnessi quando non necessari. Un'alternativa consiste nell'agganciare la periferica al bus tramite un collettore aperto; quando due o più dispositivi accedono la linea nello stesso istante, il risultato è un OR di tutti i segnali (wired-OR).
+
+Se un bus ha n linee di indirizzi, la CPU può indirizzare almeno $2^n$ locazioni di memoria diverse. L'incremento della dimensione del bus indirizzi permette di indirizzare maggiori spazi di memoria, ma questo comporta un incremento di costi, larghezza del bus, fili e occupazione di spazio.
+Per incrementare la larghezza di banda di un bus si può:
+- ridurre il periodo di clock del bus, con il rischio, però, di:
+	- avere dispositivi che operano a velocità differenti
+	- perdere retrocompatibilità
+- aggiungere nuove linee di dati; per non avere bus troppo ampi si utilizza la tecnica del bus multiplexato, ma questo porta un rallentamento del sistema.
+
+#### Bus sincroni
+Utilizzano un clock che determina la temporizzazione delle attività sul bus. Ogni operazione richiede un numero di periodi di clock per essere eseguita.
+1. La CPU master pone l'indirizzo di memoria sull'address bus in modo che le linee si stabilizzino;
+2. la CPU comunica al sistema che l'operazione che intende fare con la memoria;
+3. la CPU comunica che si tratta di un'operazione in lettura, così la memoria slave deve fornire il contenuto della cella indirizzata dall'address bus;
+4. poiche la memoria è meno veloce della CPU, c'è maggiore stato di attesa
+
+#### Bus asincroni
+Il bus si adatta alla velocità del dispositivo collegato ed un dispositivo lento non rallenterà il sistema. La maggior parte dei bus sono sincroni perché più semplici da realizzare.
+
+#### Arbitraggio del bus
+Ciascun dispositivo intelligente del computer (CPU, coprocessori, ecc.) possono diventare a turno master del bus. L'arbitraggio del bus è utilizzato per prevenire situazioni di conflitto in cui due o più dispositivi tentano di diventare master. Questo meccanismo può essere **centralizzato** o **decentralizzato**.
+
+Il meccansimo centralizzato necessita di un arbitro, che quando riceve una richiesta di utilizzo del bus, la concede garantendo una linea di connessione del bus. Quando il dispositivo più vicino vede la connessione: ^5c5be8
+- se lo ha richiesto lui, blocca la linea negandola a tutti
+- altrimenti mantiene libera la linea
+Quando due o più dispositivi fanno richiesta, la ottiene il più vicino all'arbitro.
+Molti bus per aggirare il fatto che le priorità sono legate alla distanza dall'arbitro, definiscono diversi livelli di priorità, utilizzando diverse linee di richiesta-concessione ed il bus viene concesso al dispositivo con priorità maggiore; a parità di priorità vince chi è più vicino all'arbitro.
+
+![[AE/img/img25.png|center]]
+
+Nel meccanismo decentralizzato, ogni dispositivo ha una propria linea di richiesta ed una priorità, prima di inviare una richiesta ciascuno deve verificare che non ci sia già una richiesta con priorità più alta. Al termine dell'utilizzo del bus, la linea deve essere negata. Lo svantaggio è che ci sono troppi collegamenti e il numero di collegamenti non può superare il numero di linee.
+Lo schema utilizza tre linee:
+- La linea di richiesta del bus;
+- La linea BUSY asserita dal dispositivo bus master corrente;
+- La linea di arbitraggio propagata tra i dispositivi in cascata.
+Per ottenere un bus un dispositivo deve:
+- controllare che BUSY sia negata e che l'ingresso IN sia asserito;
+- cosi nega OUT, asserisce la linea BUSY e diventa il master del bus.
+al termine sblocca OUT e libera BUSY negandolo.
+
+![[AE/img/img26.png|center]]
+
+### Dispositivi di I/O
+I dispositivi esterni dovrebbero rappresentare/raccogliere informazioni in una forma comprensibile agli esseri umani.
+Le periferiche esterne possono essere divise in tre categorie: input, output o entrambi.
+Le periferiche di input permettono di inserire dati all'interno del computer (tastiera, mouse);
+quelli di output permettono di fornire dati dal computer (monitor, stampante);
+quelli di I/O permettono di inserire ed estrarre dati dal computer (modem, hard disk).
+
+# Capitolo 4
+## Livello di microarchitettura
+
+Il livello della microarchitettura **descrive il funzionamento interno di una CPU**, e in particolare come le istruzioni ISA (Instruction Set Architecture) vengono interpretate ed eseguite dall'hardware (livello della logica digitale) che costituisce la CPU.
+
+### Percorso dati
+Il percorso dati è quella parti della CPU che contiene la ALU, i suoi input ed output. Il data path contiene registri a 32 bit che controllano l'accesso in memoria. Inoltre l percorso dati si compone di due bus: B e C (l'operando A è quello contenuto nel registor H).
+La maggior parte dei registri può inviare il proprio contenuto sul bus B, collegato in input alla ALU. Alla base dell'ALU troviamo lo shifter, il quale invia il proprio risultato al bus C. 
+
+I registri del data path sono i seguenti (in **grassetto** i più importanti):
+- **Memory address register (MAR)**
+- **Memory data register (MDR)**
+- **Program counter (PC)**
+- Memory byte register (MBR), è un byte nello stream di istruzioni che provengono dalla memoria.
+- **Stack pointer (SP)**
+- Local variable (LV), è il riferimento nello stack alla base delle variabili locali
+Gli altri registri presenti sono:
+- Constant pool (CPP)
+- Top word on the stack (TOS)
+- Op code register (OPC), è il registro temporaneo, può contenere l'ultima istruzione eseguita prima di un salto e identifica il tipo di istruzione indicando anche se è di tipo ADD o BRANCH
+- Holding (H)
+
+![[AE/img/img27.png|center|450]]
+
+### ALU 
+
+
+
+
+ 
 
 
 
