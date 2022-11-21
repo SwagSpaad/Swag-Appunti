@@ -412,3 +412,5 @@ I 29 segnali di controllo non sono sufficienti a specificare una microistruzione
 - JAM: bit per la gestione dei salit incondizionati a seconda dei bit di stato (N, Z) dell'ALU
 
 ![[AE/img/img31.png|center|500]]
+
+### Microarchitettura MIC-1
