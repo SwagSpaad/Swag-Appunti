@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AE/Architettura degli elaboratori.md",
+                "file": "FI/Lezione 10 - Minimizzazione di ASF.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AE/Architettura degli elaboratori.md",
+                "file": "FI/Lezione 10 - Minimizzazione di ASF.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "AE/Architettura degli elaboratori.md",
+                "file": "FI/Lezione 10 - Minimizzazione di ASF.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AE/Architettura degli elaboratori.md"
+                "file": "FI/Lezione 10 - Minimizzazione di ASF.md"
               }
             }
           },
@@ -158,17 +158,17 @@
     "direction": "horizontal",
     "width": 323.5
   },
-  "active": "95d0eca7356a3f20",
+  "active": "4c93a7c53020fc7b",
   "lastOpenFiles": [
-    "FI/Capitolo 0 - Fondamenti di informatica.md",
     "FI/Lezione 9 - Sempre su RE,RG e ASF.md",
     "FI/Lezione 8 - RE, RG e ASF.md",
+    "FI/Lezione 10 - Minimizzazione di ASF.md",
+    "AE/Architettura degli elaboratori.md",
+    "FI/Capitolo 0 - Fondamenti di informatica.md",
     "FI/Lezione 7 - Equivalenza tra ASFD e ASFND.md",
     "FI/Lezione 6 - ASF.md",
     "FI/Lezione 5 - Automi.md",
     "FI/Lezione 4 - Ancora sulle grammatiche.md",
-    "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md",
-    "FI/Lezione 2 - Espressioni regolari, linguaggi e problemi.md",
-    "FI/img/img27.png"
+    "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md"
   ]
 }
