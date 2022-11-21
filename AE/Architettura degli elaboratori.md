@@ -358,12 +358,57 @@ Gli altri registri presenti sono:
 ![[AE/img/img27.png|center|450]]
 
 ### ALU 
+![[AE/img/img28.png|center|500]]
 
+Il settore in basso a sinistra contiene un decodificatore a 2 bit che, in base ai segnali $F_0$ e $F_1$, permette di attivare una delle quattro linee per le 4 operazioni: $AB$ (AND), $A+B$ (OR), $\bar B$ (NOT), $A + B$ (somma aritmetica). 
+Il settore in alto contiene le porte logiche per calcolare A AND B, A OR B e $\bar B$; in base alle linea attivata dal decodificatore solo uno di questi risultati viene passato attraverso la porta OR. 
+Gli input ENA e ENB possono essere utilizzati per forzare a 0 gli input A e B, mentre è possibile avere come input $\bar A$ al posto di $A$ impostando ad 1 l'input INVA (inverti A). 
+Il settore in basso a destra è un [[#Full-adder|full-adder]].
 
+Le ALU ad 1 bit possono essere assemblate insieme per costruire un ALU di lunghezza variabile. Questa tecnica è detta bit-slice e può essere applicata ad altri circuiti digitali che lavorano bit a bit.
 
+![[AE/img/img29.png|center|500]]
 
- 
+Il segnale INC è utilizzato per incrementare il risultato, ovvero per calcolare somme come A+1, A+B+1.
 
+### Temporizzazione del percorso dati
 
+![[AE/img/img30.png|center|550]]
 
+Ogni nuovo ciclo ha inizio sul fronte di discesca del clock, momento in cui vengono memorizzati i bit che controllano il funzionamento delle porte. Questa operazione richiede un intervallo di tempo finito (w in figura). Il registro richiesto viene selezionato e il suo contenuto portato sul bus B. Dopo un intervallo di tempo x. A questo punto, la ALU e lo shifter possono iniziare ad operare sui suoi dati e i loro output diventano stabili dopo un intervallo di tempo y. Dopo un ulteriore intervallo di tempo z, i risultati vengono propagati lungo il bus C e caricati nei registri in corrispondenza del fronte di salita del successivo impulso di clock.
 
+### Operazioni della memoria
+La CPU ha due modi per comunicare con la memoria:
+- Una porta da 32 bit per la lettura/scrittura dei dati del livello ISA. La porta viene controllata da due registri:
+	- MAR (Memory Address Register): specifica l'indirizzo di memoria in cui si desidera leggere o scrivere una parola
+	- MDR (Memory Data Register): ospita la parola (32 bit) che sarà letta o scritta all'indirizzo di memoria specificato da MAR
+- Una porta a 8 bit per leggere (solo lettura!) il programma eseguibile (fetch delle istruzioni ISA). Anche questa porta è controllata da due registri:
+	- PC (Program Counter): registro a 32 bit che indica l'indirizzo di memoria della prossima istruzione ISA da caricare (fetch)
+	- MBR (Memory Byte Register): contiene il byte letto dalla memoria durante il fetch. È un registro a 32 bit, pertanto il byte letto viene memorizzato negli 8 bit meno significativi
+In generale tutti i registri della CPU vengono controllati da uno o due segnali di controllo. In [[AE/img/img27.png|figura]] la freccia vuota indica l'output del registro sul bus B, mentre la freccia piena indica il caricamento dal bus C. 
+MBR può essere scritto sul bus B in due modi diversi: 
+- unsigned: i 24 bit non utilizzati vengono impostati a 0 (valore MBR tra 0 e 255)
+- signed: il bit di segno (il settimo), viene copiato su tutti i 24 bit non utilizzati (valori tra -128 e +127)
+
+Le due porte MAR/MDR e PC/MBR indirizzano la memoria a parole (32 bit) e a byte (8 bit) rispettivamente.
+
+### Microistruzioni
+Per controllare il data path abbiamo bisogno di 29 segnali suddivisibili in 5 gruppi funzionali:
+- 9 segnali (frecce piene) per controllare la scrittura dei dati dal bus C all'interno dei registri 
+- 9 segnali (frecce vuote) per controllare l'abilitazione dei registri del bus B per l'input della ALU
+- 8 segnali per controllare le funzioni della ALU e dello shifter
+- 2 segnali (non mostrati in [[AE/img/img27.png|figura]]) per indicare lettura/scrittura della memoria tramite PC/MBR
+- 1 segnale (non mostrato in [[AE/img/img27.png|figura]]) per il fetch (lettura) delle istruzioni dalla memoria tramite PC/MBR
+I valori di questi 29 segnali specificano il comportamento della CPU da eseguire durante un ciclo del percorso dati.
+La sequenza di cicli di data path necessari all'esecuzione di un istruzione ISA prende il nome di **microprogramma** di quell'istruzione ISA. Un microprogramma è costituito di **microistruzioni**. 
+
+I 29 segnali di controllo non sono sufficienti a specificare una microistruzione; infatti, è necessario specificare anche cosa fare nel ciclo seguente. Una microistruzione è una sequenza di bit, composta da 3 parti:
+- Control: stato dei segnali di controllo
+	- ALU: seleziona le funzioni dell'ALU e dello shifter 
+	- C: seleziona quali registri sono scritti dal bus C
+	- Mem: seleziona la funzione in memoria
+	- B: seleziona quale registro è scritto sul bus B
+- Address: indirizzo della prossima microistruzione da eseguire
+- JAM: bit per la gestione dei salit incondizionati a seconda dei bit di stato (N, Z) dell'ALU
+
+![[AE/img/img31.png|center|500]]

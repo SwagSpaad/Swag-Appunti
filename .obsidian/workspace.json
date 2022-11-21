@@ -11,15 +11,26 @@
             "id": "4c93a7c53020fc7b",
             "type": "leaf",
             "state": {
+              "type": "image",
+              "state": {
+                "file": "AE/img/img27.png"
+              }
+            }
+          },
+          {
+            "id": "9458e87d58d705c8",
+            "type": "leaf",
+            "state": {
               "type": "markdown",
               "state": {
-                "file": "FI/Lezione 10 - Minimizzazione di ASF.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "FI/Lezione 10 - Minimizzazione di ASF.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "FI/Lezione 10 - Minimizzazione di ASF.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "FI/Lezione 10 - Minimizzazione di ASF.md"
+                "file": "AE/Architettura degli elaboratori.md"
               }
             }
           },
@@ -158,17 +169,17 @@
     "direction": "horizontal",
     "width": 323.5
   },
-  "active": "4c93a7c53020fc7b",
+  "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
+    "AE/img/img27.png",
+    "AE/Architettura degli elaboratori.md",
+    "FI/Lezione 10 - Minimizzazione di ASF.md",
     "FI/Lezione 9 - Sempre su RE,RG e ASF.md",
     "FI/Lezione 8 - RE, RG e ASF.md",
-    "FI/Lezione 10 - Minimizzazione di ASF.md",
-    "AE/Architettura degli elaboratori.md",
     "FI/Capitolo 0 - Fondamenti di informatica.md",
     "FI/Lezione 7 - Equivalenza tra ASFD e ASFND.md",
     "FI/Lezione 6 - ASF.md",
     "FI/Lezione 5 - Automi.md",
-    "FI/Lezione 4 - Ancora sulle grammatiche.md",
-    "FI/Lezione 3 - Ancora espressioni regolari, grammatiche.md"
+    "FI/Lezione 4 - Ancora sulle grammatiche.md"
   ]
 }
