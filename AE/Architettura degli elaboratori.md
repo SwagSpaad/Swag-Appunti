@@ -531,7 +531,7 @@ Poi sono presenti:
 
 ![[AE/img/img38.png|center|500]]
 
-# Capitolo 8
+# Capitolo 8 (Da vedere con sistemi operativi)
 ## Architetture per il calcolo parallelo
 L'obiettivo principale dell'industria dei computer è sempre stato quello di incrementare la performance.
 In passato questo è stato possibile incrementando la frequenza del clock. Poi, con l'aiuto della teoria della relatività, si capì che nessun segnale elettrico può propagarsi più velocemente della velocità della luce. 
@@ -665,7 +665,7 @@ I più semplici multiprocessori sono basati su un singolo bus che interconnette 
 
 Una CPU che vuole leggere/scrivere una parola in memoria, se il bus è occupato, deve attendere che si liberi. Questa architettura funziona bene con due o tre CPU. Per aumentare il numero di CPU occorre aumentare il numero di memorie.
 
-#### UMA con singlo bus e cache nelle CPU
+##### UMA con singlo bus e cache nelle CPU
 L'aggiunta di una memoria cache all'interno delle singole CPU può ridurre il traffico sul bus e il sistema può sopportare anche più di 3 CPU
 
 ![[img47.png|center|350]]
@@ -677,16 +677,260 @@ Se una CPU scrive una parola che è contenuta anche in altri blocchi di cache re
 -   una copia modificata del blocco di memoria (detta “copia sporca”), allora la cache lo deve prima trascrivere in memoria e poi applicare la modifica
 L’insieme di tali regole, utilizzate per la gestione della cache è chiamato **protocollo di coerenza della cache**.
 
-#### UMA con singolo bus e CPU dotate di RAM
+##### UMA con singolo bus e CPU dotate di RAM
 Un'altra soluzione è con l'aggiunta di memorie RAM in un bus dedicato per ogni CPU 
 
 ![[img48.png|center|250]]
 
 A questo punto la memoria condivisa è utilizzata esclusivamente per scrivere variabili condivise (globali). Questa soluzione riduce il traffico sul bus ma richiede una collaborazione attiva del compilatore che deve separare gli oggetti locali da quelli globali.
 
-#### UMA con crossbar switch
+##### UMA con crossbar switch
 Anche con le migliori tecniche di caching, l’uso di un singolo bus di interconnessione limita la dimensione del multiprocessore UMA a 16 o 32 CPU.
 Per andare oltre, occorre utilizzare una differente rete di interconnessione. Il circuito più semplice che permette di collegare $n$ CPU a $k$ memorie è il **crossbar switch**.
 
 ![[img49.png|center|400]]
+
+Ad ogni intersezione tra una linea orizzontale (CPU) e una verticale c'è un **crosspoint**, un commutatore che può essere aperto o chiuso, a seconda che si voglia collegare o meno le linee corrispondenti. 
+Un vantaggio di questo sistema è che si crea una rete non bloccante, ovvero non succede mai che venga negata a una CPU la connessione di cui ha bisogno perché la linea è già occupata. 
+Non è necessaria alcuna azione di pianificazione anticipata, perché è sempre possibile connettere una CPU ad una nuova memoria. 
+Rimane il problema della competizione per la memoria, qualora due, o più, CPU vogliono accedere allo stesso modulo nel medesimo istante.
+Una delle peggiori caratteristiche di questo schema è che il numero di crosspoint cresce come $n^2$
+- Con 1000 CPUs e 1000 moduli di memoria occorrono un milione di crosspoints. Costruire una crossbar di queste dimensioni non è fattibile.
+
+##### UMA con reti a commutazione multilivello
+Una progettazione differente è basata su commutatori 2x2 (2 input, 2 output); i messaggi che arrivano nelle due linee di ingresso possono scambiarsi in una delle due linee di uscita. 
+Ogni messaggio contiene:
+- quale memoria utilizzare 
+- l'indirizzo del modulo
+- il codice dell'operazione
+- il valore di un operando
+Lo switch utilizza il campo module per scegliere dove spedire il messaggio.
+Una rete economica e semplice è la rete **Omega**
+
+![[img50.png|center|500]] 
+
+Sono state connesse 8 CPU ad 8 memorie con 12 switch. Per $n$ CPU e $n$ memorie sono necessarie $\log_2 n$ stadi per un totale di $(\frac{n}{2})\log_2 n$ switch. 
+Lo schema di connessione è detto shuffle perfetto. A differenza del crossbar la Omega è una rete 
+bloccante, non tutti gli insiemi di richieste possono essere processati contemporaneamente.
+
+##### Multiprocessori NUMA
+Forniscono un singolo spazio degli indirizzi a tutte le CPU.
+In un processore NUMA il tempo di accesso ai moduli di memoria locale è minore rispetto a quello dei moduli remoti, tutti i programmi UMA girano in quelli NUMA, ma avranno performance degradate.
+Le macchine NUMA hanno 3 caratteristiche chiave: 
+1. c’è un singolo spazio degli indirizzi visibile a tutte le CPU
+2. l’accesso in memoria remota avviene tramite istruzioni LOAD e STORE   
+3. l’accesso alla memoria remota è più lento rispetto all’accesso in memoria locale
+Quando il tempo di accesso in memoria è nascosto, si parla di NC-NUMA(Non-Cache NUMA); mentre quando sono presenti cache coerenti, si parla di CC-NUMA(Cache-Coherent NUMA)
+L’approccio migliore per la creazione di grandi sistemi multiprocessore CC-NUMA è il multiprocessore basato su directory.
+L’idea che sta alla base è quella di mantenere un DB che indica dove sia ciascuna linea di cache e quale sia il suo stato; quando si ha un riferimento ad una linea di cache, si interroga il DB perchè trovi dov'è e se è pulita o sporca (modificata). Occorre mantenere il DB in un hardware veloce.
+
+##### Tipi di SO multiprocessore 
+Esistono diverse organizzazioni. Le più usate sono:
+- ogni CPU ha il proprio SO
+- multiprocessori master-slave
+- multiprocessori simmetrici
+
+###### Ogni CPU ha il proprio SO
+In questa organizzazione la memoria è divisa in partizioni, tante quante sono al CPU, fornendo ad ogni CPU la propria memoria virtuale e il proprio SO. 
+Bisogna ricordare 4 aspetti fondamentali di questa organizzazione:
+1. Quando un processo fa una system call, essa viene intercettata dalla propria CPU, utilizzando le proprie strutture dati.
+2. Ogni CPU ha il proprio insieme di processi, che schedula per conto proprio. Non c'è condivisione dei processi, e può capitare che se la CPU 1 è inattiva, la CPU 2 è carica di lavoro (non c'è bilanciamento del carico)
+3. Non c'è condivisione delle pagine e non c'è alcun modo di ottenere pagine da una CPU all'altra
+4. Se il sistema operativo mantiene una cache dei blocchi del disco recentementi usati, ciascun SO lo farà in modo indipendente; è possibile che un certo blocco sia presente e "sporco" in più CPU contemporaneamente. Per eliminare questo problema, basterebbe eliminare la cache, ma ciò provocherebbe un abbassamento delle prestazioni.
+
+###### Multiprocessori master-slave
+In questa organizzazione, una sola CPU contiene il SO e le tabelle delle pagine, mentre le altre eseguono processi utente. Questa organizzazione viene chiamata **master-slave** dato che la CPU 1 è il padrone (master) e le altre gli schiavi (slave). Questo modello risolve la maggior parte dei problemi del modello precedente; infatti non accade mai che una CPU sia inattiva e un'altra carica di lavoro. C'è però uno svantaggio: con tanti slave, il master potrebbe diventare il collo di bottiglia del sistema, perché deve gestire tutte le system call degli slave
+
+###### Multiprocessori simmetrici
+Gli SMP (Symmetric MultiProcessor) eliminano questa asimmetria: in memoria è presente una copia del SO, ma ogni CPU può eseguirlo. La CPU che ha eseguito la system call, effettua una trap al kernel ed elabora la richiesta.
+Ogni CPU può diventare il master della struttura. Questo modello bilancia i processi e la memoria dinamicamente, elimina il collo di bottiglia della CPU master, ma ha qualche svantaggio: se due o più CPU eseguono il codice del SO in contemporanea, avverrà un disastro.
+Per evitare questi problemi, il modo più semplice è associare un mutex al SO, rendendo questo una grande regione critica. Quando una CPU vuole eseguire un codice del SO, deve prima acquisire il mutex: se è occupata, la CPU resta in attesa.
+
+#### Sincronizzazione dei multiprocessori
+Le CPU dei multiprocessori vanno sincronizzate di frequente.
+Per essere sincronizzate occorrono primitive di sincronizzazione appropriate. Tutte le CPU devono usare e rispettare un protocollo mutex appropriato. Per garantire la mutua esclusione, il cuore di ogni mutex e l'istruzione TSL. Per implementare le regioni critiche in un multiprocessore, l'istruzione TSL deve bloccare il bus, poi effettuare entrambi gli accessi in memoria e infine sbloccare il bus. Il lock del bus avviene richiedendolo al bus stesso, per mezzo del protocollo ordinario di richiesta, quindi ponendo a livello logico alto (cioè 1) una linea speciale del bus.
+
+Se TSL è implementata in maniera corretta, la mutua esclusione viene sempre garantita. Questo modello è detto **spin lock**.
+
+#### Scheduling dei multiprocessori
+In un multiprocessore lo scheduling è bidirezionale, cioè lo scheduler deve scegliere quale processo schedulare e su quale CPU.
+Ci sono 3 tipi di scheduling: 
+- Timesharing
+- Condivisione dello spazio
+- Schedulazione gang
+
+##### Timesharing
+L'algoritmo di scheduling a timesharing viene usato **solo quando i processi sono indipendenti**.
+Utilizza un vettore di liste e thread (tutti nello stato ready) a diverse priorità di esecuzione. Questa schedulazione con una sola struttura dati, utilizzata da tutte le CPU, ripartisce il tempo tra le CPU come se ci trovassimo in un multiprocessore, fornendo anche un bilanciamento del carico automatico.
+I due svantaggi sono:
+- potenziale contesa per la struttura di schedulazione
+- overhead nell'effettuare il context-switch tra i processi che si bloccano su I/O
+Se un processo tiene un lock gestito da ciclo di attesa, le altre CPU sprecano tempo per ciclare in attesa che il processo rilasci il lock. Per ovviare a questo problema si utilizza lo smart scheduling, in cui un processo con un lock, utilizza un flag a livello di processo per evidenziare che detiene correntemente il lock; quando rilascia il lock, azzera il flag. Lo scheduler non ferma un processo che detiene il lock, ma gli concede un po' di tempo in più.
+
+Alcuni multiprocessori utilizzano lo scheduling per affinità: l'idea di base è quella di eseguire un processo sulla stessa CPU dove è stato eseguito l'ultima volta.
+Un modo per implementare ciò è la schedulazione a due livelli: quando un processo viene creato, viene assegnato ad una CPU e tale assegnazione costituisce il livello superiore dell'algoritmo.
+Come risultato otteniamo che ogni CPU acquisisce il proprio insieme di processi. Ci sono 3 vantaggi:
+1. il carico tra le CPU è distribuito in modo paritario
+2. sfrutta l'affinità della cache
+3. viene minimizzata la contesa tra le liste
+
+##### Condivisione dello spazio (space sharing)
+Questo modello si può utilizzare quando i processi sono correlati tra di loro. 
+Funziona così: supponiamo di creare un insieme di thread contemporaneamente; in quel momento lo scheduler controlla se ci sono tante CPU libere quanti sono i thread. Se esistono, assegnano ogni thread alla CPU dedicata e partono tutti insieme; se non ci sono abbastanza CPU, non va in esecuzione nessun thread, finché non è disponibile un numero di CPU adeguato. In ogni istante, l'insieme delle CPU è suddiviso in un certo numero di partizioni, ciascuna delle quali esegue i thread di un processo.
+
+Un vantaggio dello space sharing è che elimina l'overhead dovuto al context-switch. Uno svantaggio è il tempo perso per il blocco di una CPU.
+
+##### Schedulazione gang
+Una soluzione ai problemi dello space sharing è la schedulazione gang, uno sviluppo della co-schedulazione . È costituita di 3 parti:
+1. gruppi di thread correlati sono schedulati come un'unità;
+2. tutti i membri di una gang sono in esecuzione contemporaneamente, in differenti CPU in time sharing
+3. tutti i membri di una gang iniziano e finiscono nello stesso istante
+Questo modello funziona perché tutte le CPU sono schedulate in sincronia; questo significa che il tempo è suddiviso in quanti discreti.
+All'inizio di un nuovo quanto, tutte le CPU sono di nuovo schedulate e un nuovo thread inizia su ciascuna di esse.
+L'idea di questo modello è quella di avere tutti i thread di un processo in esecuzione in contemporanea, cosicché se uno di essi manda una richiesta all'altro, quest'ultimo riceverà il messaggio e sarà in grado di rispondere quasi immediatamente.
+
+#### Multicomputer
+I multiprocessori offrono un modello semplice di comunicazione: tutte le CPU condividono una memoria comune. I thread possono scrivere messaggi in memoria che possono essere letti da altri thread. La sincronizzazione può essere fatta utilizzando una mutex, semafori o monitor. I multiprocessori di grandi dimensioni, però sono difficili da costruire e perciò risultano costosi.
+
+Per ovviare a questi problemi sono nati i multicomputer che sono fortemente accoppiati ma non condividono memoria (ogni computer ha la sua). Questi sistemi sono chiamati anche Cluster di Computers o Cluster di workstations. I multicomputer sono facili da costruire perché il componente base è un PC con una scheda di rete con alte performance. Il segreto per ottenere alte performance in un multicomputer è nel progetto della rete di interconnesione e delle schede di rete. I messaggi sono spediti in un tempo dei $\mu$s, mille volte in meno rispetto ad un accesso in memoria (ordine dei ns). Il progetto è quindi più semplice da realizzare ed allo stesso tempo economico. 
+
+##### Hardware dei multicomputer (Topologia)
+Il nodo base di un multicomputer consiste di una CPU, una memoria ed un'interfaccia di rete. Ogni nodo ha un'interfaccia di rete con uno o due cavi (o fibra) che lo connette agli altri nodi oppure agli switch
+
+In un sistema piccolo potrebbe essere presente uno switch attraverso il quale sono connessi tutti i nodi
+
+![[img51.png|center|150]]
+
+Un'altra rete di interconnessione è la topologia ad anello: ogni nodo è connesso ad altri due nodo in ordine per formare un anello circolare (non sono necessari switch).
+
+![[img52.png|center|150]]
+
+La topologia a griglia (grid) o maglia (mesh) è una struttura bidimensionale utilizzata in molti sistemi complessi. La sua forma regolare la rende altamente scalabile. Il percorso più lungo tra due nodi, aumenta come $\sqrt n$ sul numero $n$ di nodi. 
+
+![[img53.png|center|150]]
+
+Il doppio toro è una variante della griglia, ma con i nodi estremi che si congiungono, è più tollerante ai guasti ma ha un diametro più piccolo. 
+
+![[img54.png|center|150]]
+
+Il cubo è una topologia tridimensionale regolare
+
+![[img55.png|center|150]]
+
+Un cubo di dimensione 4 si può ottenere da uno di dimensione 3 ed è detto ipercubo. Molti computer paralleli utilizzano questa topografia perché il diametro cresce in modo logaritmico con la dimensione.
+Diametro = $\log_2 n$ con n nodi.
+Un cubo di dimensione n + 1 si può ottenere da uno di dimensione n in modo ricorsivo.
+
+![[img56.png|center|250]]
+
+Nei multicomputer sono utilizzati due tipi di schemi di switching:
+1. store and forward packet switching 
+2. circuit switching
+
+##### Store and forward packet switching
+Ogni messaggio è suddiviso in pacchetti che sono poi inseriti nella rete. Il pacchetto raggiunge il nodo destinatario attraverso delle politiche di instradamento che dipendono da vari fattori (traffico dati, priorità).
+È flessibile ed efficiente ma ha il problema dell'incremento dei tempi di latenza lungo la rete di interconnessione.
+
+##### Circuit swtiching
+Nel secondo schema il primo switch stabilisce un collegamento fisico, attraverso tutti gli switch coinvolti, fino allo switch del nodo di destinazione. Una volta che la connessione è creata i bit sono spediti alla massima velocità possibile (gli switch intermedi non hanno la necessità di memorizzare i dati in transito).
+-   Richiede una fase di inizializzazione che prende tempo, ma una volta terminata il processo è velocissimo.
+Una variante del circuit switching è il **wormhole routing** (instradamento verso la tana del verme), spezza il pacchetto in sottopacchetti e permette a quest’ultimi di iniziare il tragitto prima che sia stato inizializzato il collegamento.
+
+##### Interfacce di rete 
+Tutti i nodi di un multicomputer hanno una scheda di rete per consentire la connessione del nodo alla rete di interconnessione.
+La scheda di interfaccia contiene della RAM per conservare i pacchetti in ingresso/uscita, che vanno copiati nella RAM della scheda di interfaccia, prima di poter essere trasmessi al primo switch.
+La scheda di interfaccia può avere uno o più canali DMA, o anche una CPU completa (Processore di rete). I canali DMA possono copiare i pacchetti fra la scheda di interfaccia e la RAM principale ad alta velocità, trasferendo quindi diverse parole senza dover richiedere il bus per ogni parola. 
+
+#### Software di comunicazione a basso livello
+Il nemico peggiore della comunicazione ad alte prestazioni è l’eccesso di copia dei pacchetti: nel migliore dei casi avremo una copia dalla RAM alla scheda di interfaccia, una copia dall’interfaccia del sorgente a quella di destinazione, e una copia da li alla RAM di destinazione, per un totale di 3 copie.
+Per evitare questo numero di copie in eccesso, e l’abbassamento delle prestazioni, alcuni multicomputer mappano la scheda di interfaccia direttamente nello spazio utente, permettendo al processo utente di mettere i pacchetti direttamente sulla scheda, senza interpellare il kernel.
+Sorgono però 2 problemi:
+- Il primo problema sta nella competizione di due o più processi, concorrenti sullo stesso nodo, che vogliono spedire un pacchetto. Una possibile soluzione è quella di mappare la scheda di interfaccia in tutti i processi che se ne servono, però occorre un meccanismo per evitare le corse critiche.
+- Il secondo problema sta nella condivisione della scheda di rete tra il kernel, che magari vuole accedere ad un file system remoto, ed il processo utente. La soluzione ottimale è quella di utilizzare 2 schede di rete diverse per ciascuna funzione: una nello spazio utente per il traffico di applicazioni, l’altra nello spazio kernel per il SO
+
+#### Software di comunicazione a livello utente
+I processi sulle diverse CPU di un multicomputer comunicano attraverso lo scambio di messaggi; nella forma più semplice lo scambio di messaggi è visibile al processo utente.
+
+##### Send e Receive
+I servizi di comunicazioni possono essere ridotti a 2 chiamate di sistema, una per inviare (send) messaggi e l’altra per leggerli (receive)
+
+```C
+send(dest, &mptr)
+receive(addr, &mptr)
+```
+
+Poiché in un multicomputer il numero di CPU è noto a priori, il campo addr si compone di due parti:
+1.  Identificativo della CPU
+2.  Identificativo del processo o della porta sulla CPU selezionata
+
+###### Primitive bloccanti e non bloccanti
+Le primitive viste prima sono dette bloccanti (a volte anche sincrone): quando un processo utente chiama la send, specifica la destinazione e il buffer da spedire a quella destinazione. Mentre il messaggio viene inviato, il processo si blocca; l’istruzione dopo la send non viene eseguite finché il messaggio non viene spedito.
+
+Un’alternativa a questo è rappresentato dalle primitive non bloccanti (dette anche asincrone). La send non bloccante restituisce immediatamente il controllo al processo utente, prima che il messaggio venga spedito; il vantaggio è che il mittente può continuare ad eseguire calcoli in parallelo alla trasmissione del messaggio, anziché lasciare inattiva la CPU. La scelta tra primitive bloccanti o non bloccanti viene fatta dai progettisti del sistema.
+Oltre al grosso vantaggio delle primitive non bloccanti, esse presentano un grosso svantaggio: il mittente non ha idea di quando il destinatario ha ricevuto il messaggio, e quindi non sa quando può operare sul buffer contenente il messaggio senza fare danni.
+
+Ci sono 3 possibili soluzioni.
+- il kernel si crea una copia del messaggio in un buffer interno. svantaggio : eccesso di copie
+- generare un’interrupt verso il mittente quando il messaggio viene effettivamente spedito,per informarlo che il buffer è di nuovo utilizzabile. svantaggio: la gestione degli interrupt a livello utente rende la programmazione complessa, e potrebbe portare a molte race condition
+- marcare il buffer come copia in scrittura (copy-on-write), cioè marcare il buffer in sola lettura finché il messaggio non viene spedito. svantaggio: eccesso di copie.
+
+Quindi, dal punto di vista del mittente, abbiamo queste scelte:
+1.  send bloccante (CPU inattiva)
+2.  send non bloccante con copia (spreco di tempo di CPU per la copia)   
+3.  send non bloccante con interrupt (difficile la programmazione)
+4.  copy-on-write (probabilità elevata di eccesso in scrittura)
+In condizioni normali, la prima scelta è la migliore, sopratutto se sono disponibili thread multipli, così quando un thread si blocca con la send, gli altri svolgono altri lavori.
+
+Anche la receive può essere bloccante o non.
+Una receive bloccante sospende il mittente finchè il messaggio non è arrivato; una receive non bloccante invece dice al kernel dove si trova il buffer e ritorna quasi immediatamente.
+Si possono usare gli interrupt per segnalare che il messaggio è arrivato, ma sono difficili da programmare e anche piuttosto lente, quindi è preferibile che il ricevente effettui il polling per i messaggi in ingresso,vutilizzando una procedura detta poll, che rileva se ci sono dei messaggi in attesa.
+
+Un ulteriore schema è quello di creare e utilizzare, nello spazio degli indirizzi del processo ricevente, un thread pop-up ,appena arriva il messaggio. Dopo aver svolto il proprio lavoro, questo thread viene automaticamente distrutto.
+
+Una variante consiste nell’eseguire il codice di ricezione direttamente nel gestore delle interruzioni. Per velocizzare il tutto, il messaggio stesso contiene l’indirizzo del gestore delle interruzioni, così da poter richiamare il gestore con poche istruzioni.
+Il vantaggio è che non viene effettuata nessuna copia: il gestore preleva il messaggio dalla scheda di interfaccia e lo elabora al volo.
+Questo metodo è detto **schema a messaggi attivi**
+
+##### Remote Procedure Call (Chiamate di procedura remote)
+L’unico problema del modello a scambio di messaggi è che il paradigma base, su cui è costruito tutto il processo, è l’I/O.
+Per ovviare a questo problema Birrel e Nelson, hanno proposto di permettere ai programmi di chiamare procedure su altre CPU.
+Quando il processo sulla macchina 1 chiama una procedura sulla macchina 2, il processo chiamante viene sospeso, e l’esecuzione della procedura avviene sulla macchina. L’informazione può essere trasportata attraverso i parametri, e tornare indietro attraverso i risultati della procedura.
+Questa tecnica è nota come RPC(Remote Procedure Call) 
+La procedura chiamante è nota come client, e quella chiamata come server. 
+L’idea alla base è quella di far sembrare la chiamata di procedura remota il più possibile come una chiamata locale
+
+I passi effettivi della RPC sono:
+1.  chiamata da parte del client al client stub(piccola procedura di libreria,locale)
+2.  impacchettamento dei parametri in un messaggio e system call per spedire il messaggio(l’impacchettamento dei messaggi è detto marshaling)
+3.  il kernel spedisce il messaggio dalla macchina client a quella server
+4.  il kernel passa il pacchetto in arrivo al server stub
+5.  il server stub chiama la procedura al server
+La risposta fa lo stesso percorso in direzione opposta.
+
+###### Problemi implementativi
+Esistono diversi problemi nascosti:
+1. Con RPC il passaggio dei puntatori è impossibile, perchè il client ed il server hanno diversi spazi per gli indirizzi
+2. Questo capita con i linguaggi debolmente tipati come il C, in cui è perfettamente legale scrivere una procedura che calcola il prodotto scalare di due vettori senza che se ne conosca la dimensione. Con RPC è impossibile che il client riesca a fare il marshaling dei pacchetti, se non ne conosce la dimensione
+3. Non è sempre possibile dedurre i tipi di parametri
+4. Questo è relativo all'uso delle variabili globali. Di norma le procedure chiamante e chiamata possono comunicare con le variabili globali. Se la procedura chiamata viene spostata su una macchina remota, il codice fallirà, perchè non sono più condivise le variabili globali
+
+##### DSM (Distributed Shared Memory)
+Molti programmatori preferiscono ancora un modello a memoria condivisa.
+Si utilizza una tecnica chiamata DSM (Memoria Condivisa Distribuita).
+Questa tecnica consiste nel fare avere ad ogni macchina la propria memoria e le proprie tabelle delle pagine. Quando una CPU effettua una LOAD o STORE su una pagina che non ha, avviene una trap, che localizza la pagina e chiede alla CPU che la possiede di inviarla e spedirla sulla rete di interconnessione.
+Quando arriva, viene mappata e viene fatta ripartire l’istruzione che aveva provocato il fault.
+
+### Virtualizzazione
+Un sistema virtualizzato mantiene l’affidabilità di un sistema multicomputer ad un costo ridotto ed una maggiore semplificazione della manutenibilità. Un guasto sul server che gestisce le macchine virtuali produce un danno catastrofico rispetto a quello di un sistema virtualizzato (la probabilità di un guasto naturale hardware è più bassa rispetto ad un guasto naturale software)
+
+#### Vantaggi della virtualizzazione
+- un malfunzionamento su una macchina virtuale non inficia il comportamento delle altre
+- la riduzione delle macchine fisiche riduce lo spazio, il consumo di energia, la produzione di calore quindi l’energia per il raffreddamento
+- la creazione di checkpoint e la migrazione di macchine virtuali è più semplice rispetto ad un ambiente tradizionale   
+- si possono far girare applicazioni legacy su ambienti obsoleti che non funzionerebbero con gli attuali hardware   
+- i programmatori possono effettuare il test delle applicazioni su differenti SO senza disporre di hardware fisici e SO
+
+#### Tipi di virtualizzazione
+continuare quando necessario
+
 

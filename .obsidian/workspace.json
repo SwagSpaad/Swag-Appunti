@@ -139,7 +139,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       },
       {
         "id": "1c92eb5818844502",
@@ -160,17 +160,17 @@
     "direction": "horizontal",
     "width": 323.5
   },
-  "active": "95d0eca7356a3f20",
+  "active": "a25a81186417e4aa",
   "lastOpenFiles": [
-    "Pasted image 20221122142252.png",
+    "SOR/Lezione 6 - Comunicazione tra processi.md",
     "AE/Architettura degli elaboratori.md",
+    "Pasted image 20221122142252.png",
     "Multithreading a grana fine.md",
     "SOR/Lezione 2 - Tipologie di sistemi.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "colli di bottiglia.md",
     "parall.md",
     "AE/img/img27.png",
-    "SOR/Lezione 7 -.md",
-    "AE/img/img30.png"
+    "SOR/Lezione 7 -.md"
   ]
 }
