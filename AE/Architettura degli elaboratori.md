@@ -335,7 +335,7 @@ quelli di I/O permettono di inserire ed estrarre dati dal computer (modem, hard 
 
 # Capitolo 4
 ## Livello di microarchitettura
-
+---
 Il livello della microarchitettura **descrive il funzionamento interno di una CPU**, e in particolare come le istruzioni ISA (Instruction Set Architecture) vengono interpretate ed eseguite dall'hardware (livello della logica digitale) che costituisce la CPU.
 
 ### Percorso dati
@@ -426,6 +426,7 @@ Subito dopo i segnali vengono propagati all'interno del data path ed uno dei reg
 
 # Capitolo 5
 ## Il livello ISA e un esempio: IJVM
+---
 Il **livello ISA** (Istruction Set Architecture) descrive l'architettura delle istruzioni che la CPU è in grado di eseguire in Hardware (firmware). Ogni CPU ha un proprio ISA e quindi istruzioni diverse spesso non sono compatibili tra loro. 
 Il livello ISA è l'interfaccia tra i compilatori e l'hardware, quindi il linguaggio che entrambi possono comprendere. Questo livello deve essere retrocompatibile. 
 Normalmente ha due modalità operative:
@@ -533,6 +534,7 @@ Poi sono presenti:
 
 # Capitolo 8 (Da vedere con sistemi operativi)
 ## Architetture per il calcolo parallelo
+---
 L'obiettivo principale dell'industria dei computer è sempre stato quello di incrementare la performance.
 In passato questo è stato possibile incrementando la frequenza del clock. Poi, con l'aiuto della teoria della relatività, si capì che nessun segnale elettrico può propagarsi più velocemente della velocità della luce. 
 Un computer con un clock di 1 THz dovrebbe essere piccolissimo (100 µm). Rendere un computer di queste dimensioni è possibile ma si presenterebbe un ulteriore problema, cioè la dissipazione del calore.

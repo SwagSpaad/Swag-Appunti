@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "400b776bbf5ee522",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "AE/ARM.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -86,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AE/Architettura degli elaboratori.md",
+                "file": "AE/ARM.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "AE/Architettura degli elaboratori.md",
+                "file": "AE/ARM.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AE/Architettura degli elaboratori.md"
+                "file": "AE/ARM.md"
               }
             }
           },
@@ -139,7 +152,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       },
       {
         "id": "1c92eb5818844502",
@@ -160,17 +173,17 @@
     "direction": "horizontal",
     "width": 323.5
   },
-  "active": "a25a81186417e4aa",
+  "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
+    "SOR/Lezione 7 -.md",
     "SOR/Lezione 6 - Comunicazione tra processi.md",
+    "AE/ARM.md",
     "AE/Architettura degli elaboratori.md",
     "Pasted image 20221122142252.png",
     "Multithreading a grana fine.md",
     "SOR/Lezione 2 - Tipologie di sistemi.md",
     "SOR/Capitolo 0 - Sistemi operativi e reti.md",
     "colli di bottiglia.md",
-    "parall.md",
-    "AE/img/img27.png",
-    "SOR/Lezione 7 -.md"
+    "parall.md"
   ]
 }
