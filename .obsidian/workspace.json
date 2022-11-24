@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a25a81186417e4aa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "AE/Architettura degli elaboratori.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "400b776bbf5ee522",
             "type": "leaf",
             "state": {
@@ -31,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -175,15 +162,15 @@
   },
   "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
+    "AE/Architettura degli elaboratori.md",
+    "AE/ARM.md",
+    "2022-11-24.md",
+    "CPS/Lezione 1 - Introduzione alla probabilità.md",
     "SOR/Lezione 7 -.md",
     "SOR/Lezione 6 - Comunicazione tra processi.md",
-    "AE/ARM.md",
-    "AE/Architettura degli elaboratori.md",
     "Pasted image 20221122142252.png",
     "Multithreading a grana fine.md",
     "SOR/Lezione 2 - Tipologie di sistemi.md",
-    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
-    "colli di bottiglia.md",
-    "parall.md"
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md"
   ]
 }

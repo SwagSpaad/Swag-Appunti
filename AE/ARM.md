@@ -178,3 +178,75 @@ Le istruzioni ARM possono essere classificate in base alla tipologia e alla sint
 Le istruzioni di elaborazione servono al processore per svolgere calcoli come operazioni aritmetiche o logiche, mentre le istruzioni di trasferimento dati consentono di caricare i vari registri.
 
 ##### Istruzioni aritmetiche e logiche
+Implementano le operazioni matematiche. Queste possono essere di tipo **aritmetiche** (somma, differenza, prodotto), **logiche** (operazioni booleane) o **relazionali** (comparazione di valori)
+Le istruzioni aritmetiche e logiche operano al massimo su due operandi e possono aggiornare i flag del registro di stato.
+L'istruzione aritmetica o logica presenta la seguente sintassi:
+$$
+\text{< MNEM >\{< PreCond >\}\{< S >\} <Rd>, < Rn >, OP}_2
+$$
+- $\text{< MNEM >}$ è il codice mnemonico dell'operazione (ADD, SUB)
+- $\text{< PreCond >}$ è la pre-condizione (opzionale) che consente l'esecuzione dell'istruzione quando risulta verificata, altrimenti, se falsa, l'istruzione verrà ignorata
+- $\text{< S >}$ (opzionale) forza la scrittura nel registro di stato CPSR
+- $\text{< Rd >}$ è il registro destinazione nel quale verrà salvato il risultato dell'operazione
+- $\text{< Rn >}$ è il registro sorgente nel quale è presente il valore del primo operando
+- $\text{OP}_2$ è il secondo operando, che può essere un valore immediato, un altro registro oppure il risultato di un operazione di shift su un valore o registro
+
+![[img72.png|center|500]]
+
+###### Esempi di istruzioni artimetiche e logiche
+- **ADD R0, R1, R2**: carico in R0 la somma tra il contenuto del registro R1 ed R2 (indirizzamento a registro)
+- **ADD R0, R1, #16**: carico in R0 la somma tra il contenuto del registro R1 ed il numero decimale 16 (indirizzamento immediato)
+- **ADD R0, R1, # 0xF**: carico in R0 la somma tra il contenuto del registro R1 ed il numero esadecimale F (indirizzamento immediato)
+- **ADDLT R0, R1, R2**: carico in R0 la somma tra il contenuto del registro R1 e del registro R2, inoltre carico lo stato del risultato nei flags NZCV del registro di stato CPSR. Per esempio, se il risultato della somma va in overflow i flag C (carry) e V (overflow) verranno settati a 1
+
+###### Indirizzamento immediato
+Si hanno a disposizione solo 12 bit su 32 che costituiscono la word dell’istruzione, quindi si potrebbero rappresentare soltanto i numeri che vanno da 0…+4095 oppure da -2048…+2047. Questo limite non è accettabile perchè il processore ARM gestisce valori che hanno un campo di variazione da 0x00000000 a 0xFFFFFFFF
+Vengono memorizzati nei 12 bit due campi: posizione (4 bit) e valore (8 bit)
+
+Il numero descritto è ottenuto per traslazione, verso destra, dei bit del campo valore per un numero di posizioni pari al doppio del campo posizione
+
+Questo implica che si possono esprimere tutti i valori che hanno in binario bit 1 a distanza massima minore, o al più uguale, ad 8 che possano essere ottenuti per traslazione in pos pari.
+
+in generale :
+1.  convertire il valore in binario e verificare che il  bit 1 più significativo e ultimo bit 1 meno significativo siano a distanza massimo di 8 (compressi il primo bit 1 più significativo e ultimo bit 1 meno significativo) 
+2.   verificare che il numero di zeri sia pari
+	- il codice binario anche se in riga vanno immaginati come scritti su un cerchio perciò anche se 0xA000000A sembra non indirizzabile perchè in binario è 10100000000000000000000000001010 e sembra non rispettare i nessuno dei due punti in realtà **1010**000000000000000000000000**1010** le parti evidenziate sono come nelle mappe K vicine tra di loro
+
+###### Indirizzamento con shift immediato e con shift a registro
+Se il bit 25 vale 0, nei bit 5 e 6 il tipo di shift da applicare tra quelli disponibili nel [[#Barrel shifter|barrel shifter]] (LSL, LSR, ASR, ROR, RRX) mentre il bit 4 specifica il tipo di indirizzamento.
+Esempi:
+**(INDIRIZ. CON SHIFT IMMEDIATO)**:
+- ADD R3, R3, R3, LSL #2 —> R3 = R3 + R3 * 4
+- RSB R2, R2, R2, LSL #4—> R2 = R2 * 16 - R2
+- AND R0, R1, R2, RRX —> R0 = R1 AND RRX (R2)
+
+**(INDIRIZZ. CON SHIFT A REGISTRO)**:
+ADD R0, R1, R2, LSL R3 —> R0 = R1+R2*(2^R3)
+ORR R0, R0, R2, LSL R3 —> R0 = R0 0R R2 * (2^R3)
+AND R0, R0, R2, LSR R3 —>R0 = R0 AND R2 / (2^R3)
+
+###### Indirizzamento a registro
+Il secondo operando è il registro Rm, senza che quest’ultimo subisca operazioni di shift
+Questa istruzione è un caso particolare dell'istruzione LSL con indirizzamento immediato in cui i bit non sono traslati
+
+##### Istruzioni aritmetiche con saturazione
+Se si utilizzano 32 bit per codificare i numeri interi con segno, l’intervallo di rappresentazione si divide in due sottoinsiemi:
+-   valori positivi da 1 a $2^{32}-1$
+-   valori negativi da -1 a $-2^{32}-1$
+
+Se durante un'operazione aritmetica si ottiene un numero che eccede uno dei due limiti, il risultato potrebbe essere interpretato per sbaglio nel limite opposto.
+Per questo ARM usa la tecnica di aritmetica con saturazione, in cui tutte le operazioni finiscono in un dominio intero e finito di valori compresi tra un minimo e un massimo.
+Quando un valore supera un estremo, il flag Q del CPSR viene attivato.
+Le istruzioni che supportano le operazioni aritmetiche con saturazione sono QADD e QSUB
+I bit non utilizzati nella codifica dell’istruzione sono segnati con SBZ (Should Be Zero)
+
+La sintassi delle istruzioni aritmetiche con interi saturi è:
+$$
+\text{< MNEM >\{< PreCond >\} <Rd>, < Rm >, < Rn >}
+$$
+La codifica delle istruzioni aritmetiche con interi saturi è:
+
+| 31.. 28 | 27 26 25 | 24.. 21 | 20 | 19.. 16 | 15.. 12 | 11.. 8 | 7 6 5 4 | 3.. 0 |
+|:-------:|:--------:|:-------:|:--:|:-------:|:-------:|:------:|:-------:|:-----:|
+| PreCond |   0 0 0  |  OPCODE |  0 |    Rn   |    Rd   |   SBZ  | 0 1 0 1 |   Rm  |
+
