@@ -1,7 +1,8 @@
 {
-  "baseFontSize": 14,
+  "baseFontSize": 15,
   "enabledCssSnippets": [
-    "center"
+    "center",
+    "table_center"
   ],
   "accentColor": "",
   "cssTheme": "Atom"
