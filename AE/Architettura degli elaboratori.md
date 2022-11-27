@@ -38,7 +38,7 @@ Le operazioni sono divise in:
 #### Esecuzione dell'istruzione
 
 La CPU esegue ogni istruzione compiendo una serie di passi:
-1.  p releva la successiva istruzione dalla memoria per portarla nell’IR;
+1.  preleva la successiva istruzione dalla memoria per portarla nell’IR;
 2.  modifica il PC per farlo puntare all’istruzione seguente;
 3.  determina il tipo di istruzione;
 4.  se l’istruzione usa una parola in memoria, determina dove si trova;
@@ -49,7 +49,7 @@ Questa sequenza di passi è detta ciclo di prelievo-decodifica-esecuzione (fetch
 
 ### CISC e RISC
 
-La **CISC** (Complex istruction set computer) è formata da un set di istruzioni in grado di eseguire operazioni molto più complesse rispetto all’architettura **RISC**. E’ infatti possibile utilizzare una sola istruzione per leggere un dato in memoria, modificarlo e salvarlo nuovamente, cosa impensabile con un set di istruzioni ridotto. 
+La **CISC** (Complex istruction set computer) è formata da un set di istruzioni in grado di eseguire operazioni molto più complesse rispetto all’architettura **RISC**. È infatti possibile utilizzare una sola istruzione per leggere un dato in memoria, modificarlo e salvarlo nuovamente, cosa impensabile con un set di istruzioni ridotto. 
 Sebbene questo tipo di architettura non abbia la velocità di quella **RISC**, ha il vantaggio di poter realizzare programmi più compatti che occupano un minor spazio in memoria. I programmi in questione sono però più “pesanti“, e richiedono molto tempo per l’esecuzione. Un singolo set di istruzioni è eseguito in più passaggi; ogni set di istruzioni ha oltre 300 istruzioni separate. Le istruzioni vengono completate in 2-10 cicli macchina.
 La **RISC** è semplice e lineare, permettendo al microprocessore di eseguire il set di istruzioni in tempi molto rapidi e inferiori ai tempi dell'architettura CISC. Esiste un insieme di principi di progettazione, chiamati **principi di progettazione RISC**, che i progettisti delle CPU cercano di seguire il più possibile:
 -   Tutte le istruzioni sono eseguite direttamente dall’hardware;

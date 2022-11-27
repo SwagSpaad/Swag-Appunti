@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AE/ARM.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "mode": "source",
                 "source": false
               }
@@ -86,7 +86,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AE/ARM.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +103,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "AE/ARM.md",
+                "file": "AE/Architettura degli elaboratori.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +126,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AE/ARM.md"
+                "file": "AE/Architettura degli elaboratori.md"
               }
             }
           },
@@ -139,7 +139,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       },
       {
         "id": "1c92eb5818844502",
@@ -160,10 +160,10 @@
     "direction": "horizontal",
     "width": 323.5
   },
-  "active": "95d0eca7356a3f20",
+  "active": "400b776bbf5ee522",
   "lastOpenFiles": [
-    "AE/img/img85.png",
     "AE/ARM.md",
+    "AE/img/img85.png",
     "AE/Architettura degli elaboratori.md",
     "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
     "CPS/Lezione 1 - Introduzione alla probabilità.md",
