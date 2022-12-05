@@ -3,15 +3,12 @@
 ---
 
 ### Differenza tra traduzione e interpretazione
-
 Un metodo per eseguire un programma scritto in L1 consiste nel sostituire, in una fase iniziale, ogni sua istruzione con un'equivalente sequenza di istruzioni in L0. Il programma che ne risulta è costituito interamente da istruzioni di L0 e può essere eseguito dal computer al posto del programma L1 originale. Questa tecnica è chiamata **traduzione**. 
-L'altra tecnica consiste invece nello scrivere un programma in L0 che accetta come dati d'ingresso programmi in L1; tale programma li esegue esaminando un'istruzione alla volta e sostituendola direttamente con l'equivalente sequenza di istruzioni L0. Questa tecnica, che non richiede la generazione preventiva di un nuovo programma L0, è chiamata **interpretazione** e il programma che la esegue è detto **interprete**.
-
+L'altra tecnica consiste invece nello scrivere un programma in L0 che accetta come dati d'ingresso programmi in L1; tale programma li esegue esaminando un'istruzione alla volta e sostituendola direttamente con l'equivalente sequenza di istruzioni L0. Questa tecnica, che non richiede la generazione preventiva di un nuovo programma L0, è chiamata **interpretazione** e il programma che la esegue è detto **interprete**
 - La traduzione: tradurre tutto il programma al linguaggio inferiore e poi viene eseguito. 
 - L'interpretazione: traduce ed esegue ogni singola istruzione del programma. Legge ed esegue il codice sorgente del programma senza creare un file oggetto eseguibile. E' più lenta rispetto alla compilazione.
 
 ### Differenza tra compilazione ed interpretazione
-
 La compilazione e l'interpretazione sono due metodi per eseguire un programma informatico. La compilazione, eseguita dal compilatore, traduce tutte le istruzioni di un programma in linguaggio macchina, creando un file eseguibile dal computer.
 L'interpretazione traduce ed esegue ogni singola istruzione del programma. Legge ed esegue il codice sorgente del programma senza creare un file oggetto eseguibile. E' più lenta rispetto alla compilazione.
 
@@ -30,13 +27,12 @@ Dopo aver eseguito un'istruzione, il software interprete passa ad elaborare la s
 ## Organizzazione dei sistemi di calcolo
 ---
 ### CPU
-
 Una tipica CPU di Von Neumann è formata da registri (da 1 a 32), dalla ALU e da alcuni bus che connettono tra loro diverse parti. I registri alimentano due registri di input della ALU che mantengono i dati d’ingresso della ALU. La ALU esegue operazioni di somma e sottrazione, e il risultato viene memorizzato in un apposito registro di input, successivamente può essere immagazzinato in uno dei registri della CPU e volendo copiato in memoria.
 Le operazioni sono divise in: 
 - istruzioni registro-memoria: prelevano parole in memoria e vengono portate all'interno dei registri, dove vengono utilizzate dalla ALU per operazioni successive
 - istruzioni registro-registro: preleva due operandi dai registri e li porta dentro dei registri di input della ALU e ne memorizza il risultato in uno dei registri. Il processo che porta i due operandi attraverso la ALU e memorizza il risultato è chiamato **ciclo del percorso dati** ed è il cuore della CPU.
-#### Esecuzione dell'istruzione
 
+#### Esecuzione dell'istruzione
 La CPU esegue ogni istruzione compiendo una serie di passi:
 1.  preleva la successiva istruzione dalla memoria per portarla nell’IR;
 2.  modifica il PC per farlo puntare all’istruzione seguente;
@@ -48,7 +44,6 @@ La CPU esegue ogni istruzione compiendo una serie di passi:
 Questa sequenza di passi è detta ciclo di prelievo-decodifica-esecuzione (fetch-decode-execute). 
 
 ### CISC e RISC
-
 La **CISC** (Complex istruction set computer) è formata da un set di istruzioni in grado di eseguire operazioni molto più complesse rispetto all’architettura **RISC**. È infatti possibile utilizzare una sola istruzione per leggere un dato in memoria, modificarlo e salvarlo nuovamente, cosa impensabile con un set di istruzioni ridotto. 
 Sebbene questo tipo di architettura non abbia la velocità di quella **RISC**, ha il vantaggio di poter realizzare programmi più compatti che occupano un minor spazio in memoria. I programmi in questione sono però più “pesanti“, e richiedono molto tempo per l’esecuzione. Un singolo set di istruzioni è eseguito in più passaggi; ogni set di istruzioni ha oltre 300 istruzioni separate. Le istruzioni vengono completate in 2-10 cicli macchina.
 La **RISC** è semplice e lineare, permettendo al microprocessore di eseguire il set di istruzioni in tempi molto rapidi e inferiori ai tempi dell'architettura CISC. Esiste un insieme di principi di progettazione, chiamati **principi di progettazione RISC**, che i progettisti delle CPU cercano di seguire il più possibile:
@@ -61,16 +56,13 @@ La **RISC** è semplice e lineare, permettendo al microprocessore di eseguire il
 ![[AE/img/img2.png|center|500]]  
 
 ### Dischi magnetici
-
 Ogni traccia è divisa in settori di lunghezza fissata. Tra due settori è presente un piccolo spazio detto **intersector gap**.
 Le tracce interne hanno maggiore densità di memorizzazione rispetto alle esterne. Ogni drive ha una scheda dedicata (può contenere una CPU) chiamato controllore del disco, oltre a pilotare accetta i comandi software, corregge i dati.
 
 ### Hard disk
-
 Sono dispositivi di memorizzazione dati che possono essere collegati internamente o esternamente al calcolatore. 
 
 #### Hard disk magnetici 
-
 Costituito da una pila di dischi che ruotano intorno all’asse, l’insieme di tracce è detto cilindro.
 Le performance dell’HD dipendono da:
 -   tempo medio di seek;
@@ -82,22 +74,18 @@ La latenza rotazionale è il tempo necessario al disco per posizionare il corret
 Il tempo di trasferimento dipende dalla densità lineare e dalla velocità di rotazione.
 
 #### Dischi IDE
-
 Il controller dell’Hard disk è su una scheda separata, fu utilizzato lo standard IDE in grado di gestire dischi con una capacità fino a 504 MB, 4 MB/s.
 Il SO leggeva e scriveva dati sul disco inserendo parametri nei registri della CPU e poi invocando il BIOS. 
 Da IDE si passò all’EIDE dove ha uno schema di indirizzamento aggiuntivo denominato LBA. Ai controllori EIDE potevano avere due canali su ciascuno dei quali poteva essere collegato un driver primario e secondario.
 Dopo EIDE ci fu ATA-3, poi ATAPI-4 incrementarono la dimensione del connettore e la velocità di trasferimento , ATAPI-5 e ATAPI-6, mentre ATAPI-7 incrementa la dimensione del connettore per aumentare la banda, utilizza un serial ATA per trasferire i bit su un connettore.
 
 #### SCSI disk
-
 I controller possono collegare fino a 7 dispositivi, hanno organizzazione simile ai dischi IDE ma nescessitano di diverse interfacce ed hanno velocità più alte
 
 #### Dischi a stato solido (SSD)
-
 Dischi basati su memoria flash non volatile, velocità fino a tre volte superiore rispetto HDD.
 
 ### CD-ROM
-
 Realizzato in policarbonato poi una striscia sottile di alluminio riflettente. Nel substrato di policarbonato è possibile creare delle depressioni tra aree non incise.
 La transizione da un pit a land può rappresentare un valore logico alto o  basso.
 I pit sono scritti in modo continuo su una spirale che parte dal buco centrale del disco, per leggere si usa un laser a bassa potenza.
@@ -109,7 +97,6 @@ Un settore contiene:
 il modo senza ECC è utilizzato per applicazioni audio/video.
 
 ### RAID
-
 Per migliorare le prestazioni dei dischi (anche l’affidabilità) si pensò di adottare la strategia del calcolo parallelo.
 L’idea è di far vedere al calcolatore il sistema RAID (insieme di dischi) come un unico enorme disco virtuale con elevata performance e affidabilità.
 Esistono 5 schemi RAID:
@@ -129,7 +116,7 @@ Esistono 5 schemi RAID:
 
 ![[AE/img/img6.png|center|500]]
 
-- **RAID Livello 4/5**: I RAID 4  e 5 lavorano su strisce e non richiedono dischi sincronizzati. è come il RAID 0, con una parità striscia per striscia scritta su un disco separato di parità.  Si esegue l’EXOR bit a bit di tutte le strisce ottenendo così una striscia di parità.
+- **RAID Livello 4/5**: I RAID 4 e 5 lavorano su strisce e non richiedono dischi sincronizzati. è come il RAID 0, con una parità per striscia scritta su un disco separato di parità. Si esegue l’EXOR bit a bit di tutte le strisce ottenendo così una striscia di parità.
 
 ![[AE/img/img7.png|center|500]]
 
@@ -185,7 +172,6 @@ $$\overline{(A\land B)}= \bar A\lor\bar B$$
 #### Seconda legge di de Morgan
 $$\overline{(A\lor B)}= \bar A\land\bar B$$
 ### Multiplexer
-
 Un multiplexer è un circuito con $2^n$ dati di input, un valore di output ed n input di controllo. Gli input selezionano la linea di ingresso che verrà trasferita in uscita. 
 
 ![[AE/img/img12.png|center|300]]
@@ -196,7 +182,6 @@ Le linee di controllo $S_0,\: S_1,\: S_2$ codificano un numero a 3 bit che speci
 >A partire dalla forma normale disgiuntiva, è possibile costruire un qualsiasi circuito utilizzando solamente porte AND, OR e NOT. Di conseguenza il MUX può essere utilizzata per realizzare qualsiasi funzione logica.
 
 ### Decoder
-
 Un decodificatore accetta come input un numero ad n bit e lo utilizza per impostare ad 1 una sola delle $2^n$ linee di output.
 
 ![[AE/img/img13.png|center|350]]
@@ -204,7 +189,6 @@ Un decodificatore accetta come input un numero ad n bit e lo utilizza per impost
 Quando si fornisce alla memoria un indirizzo, si utilizzano i suoi 3 bit più significativi per selezionare uno degli otto chip di memoria ($U_0,\: U_1,...,\: U_7$). I 3 bit corrispondono ai tre input A, B, C; a seconda del loro valore 1 solo degli 8 chip assumerà il valore 1, mentre tutti gli altri rimangono a 0.
 
 ### PLA (Array logico programmabile)
-
 Chip generale che permette di calcolare somme di prodotti. Nella figura la porta OR $F_1$ genera come risultato $\bar WYZ+WX\bar Z$ 
 
 ![[AE/img/img14.png|center|350]]
@@ -231,15 +215,17 @@ L'half-adder funziona solo per i bit meno significativi, perché non gestisce un
 ![[AE/img/img17.png|center|500]] 
 
 A partire da due half-adder, si può costruire un sommatore che prende in ingresso tre bit (A, B e riporto in ingresso). 
-##### Clock
 
+##### Clock
 Nei circuiti digitali complessi è necessario stabilire l'ordine con cui si verificano gli eventi. Un clock è un circuito che emette degli impulsi di larghezza definita ad intervalli di tempo costanti. L'intervallo di tempo compreso tra le estremità di due impulsi è detto **tempo di ciclo di clock**.
 
 ![[AE/img/img18.png|center|450]]
 
 La frequenza di clock specifica il numero di cicli di clock per unità di tempo (secondo). L'unità di misura è dell'ordine degli Hertz (Hz).
+
 #### Memorie
 La memoria è un componente fondamentale in un computer perché memorizza dati ed istruzioni. Per costruire un circuito che memorizza dati è necessario utilizzare circuiti sequenziali in cui l'output non dipende solamente dall'input, ma anche dallo stato del circuito.
+
 ##### Latch
 Per creare una memoria a 1 bit è necessario un circuito che ricordi i precedenti valori in input. Un circuito semplice può essere realizzato con due NOR che hanno le uscite retroazionate in ingresso (dipendono dai valori dei precedenti ingressi). Il set-reset latch (**SR Latch**) ha due ingressi: S (set) è utilizzato per impostare ad 1 il valore dell'uscita e R (reset) è usato per azzerarlo. 
 
@@ -247,6 +233,7 @@ Per creare una memoria a 1 bit è necessario un circuito che ricordi i precedent
 
 Il cambio di stato è provocato da un segnale/impulso; a seguito dell'impulso il circuito si mantiene nello stato raggiunto a meno che non vengano inviati ulteriori segnali/impulsi.
 Quando S è impostato temporaneamente ad 1, lo stato del latch diventa Q = 1, indipendentemente dallo stato precedente. Quando si imposta R temporaneamente ad 1, si forza il latch a passare nello stato Q = 0.
+
 ##### SR Latch temporizzato
 
 ![[AE/img/img20.png|center|450]]
@@ -296,7 +283,7 @@ Per incrementare la larghezza di banda di un bus si può:
 #### Bus sincroni
 Utilizzano un clock che determina la temporizzazione delle attività sul bus. Ogni operazione richiede un numero di periodi di clock per essere eseguita.
 1. La CPU master pone l'indirizzo di memoria sull'address bus in modo che le linee si stabilizzino;
-2. la CPU comunica al sistema che l'operazione che intende fare con la memoria;
+2. la CPU comunica al sistema l'operazione che intende fare con la memoria;
 3. la CPU comunica che si tratta di un'operazione in lettura, così la memoria slave deve fornire il contenuto della cella indirizzata dall'address bus;
 4. poiche la memoria è meno veloce della CPU, c'è maggiore stato di attesa
 
@@ -309,6 +296,7 @@ Ciascun dispositivo intelligente del computer (CPU, coprocessori, ecc.) possono 
 Il meccansimo centralizzato necessita di un arbitro, che quando riceve una richiesta di utilizzo del bus, la concede garantendo una linea di connessione del bus. Quando il dispositivo più vicino vede la connessione: ^5c5be8
 - se lo ha richiesto lui, blocca la linea negandola a tutti
 - altrimenti mantiene libera la linea
+
 Quando due o più dispositivi fanno richiesta, la ottiene il più vicino all'arbitro.
 Molti bus per aggirare il fatto che le priorità sono legate alla distanza dall'arbitro, definiscono diversi livelli di priorità, utilizzando diverse linee di richiesta-concessione ed il bus viene concesso al dispositivo con priorità maggiore; a parità di priorità vince chi è più vicino all'arbitro.
 
