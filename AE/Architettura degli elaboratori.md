@@ -327,7 +327,7 @@ quelli di I/O permettono di inserire ed estrarre dati dal computer (modem, hard 
 Il livello della microarchitettura **descrive il funzionamento interno di una CPU**, e in particolare come le istruzioni ISA (Instruction Set Architecture) vengono interpretate ed eseguite dall'hardware (livello della logica digitale) che costituisce la CPU.
 
 ### Percorso dati
-Il percorso dati è quella parti della CPU che contiene la ALU, i suoi input ed output. Il data path contiene registri a 32 bit che controllano l'accesso in memoria. Inoltre l percorso dati si compone di due bus: B e C (l'operando A è quello contenuto nel registor H).
+Il percorso dati è quella parti della CPU che contiene la ALU, i suoi input ed output. Il data path contiene registri a 32 bit che controllano l'accesso in memoria. Inoltre il percorso dati si compone di due bus: B e C (l'operando A è quello contenuto nel registro H).
 La maggior parte dei registri può inviare il proprio contenuto sul bus B, collegato in input alla ALU. Alla base dell'ALU troviamo lo shifter, il quale invia il proprio risultato al bus C. 
 
 I registri del data path sono i seguenti (in **grassetto** i più importanti):
@@ -363,7 +363,7 @@ Il segnale INC è utilizzato per incrementare il risultato, ovvero per calcolare
 
 ![[AE/img/img30.png|center|550]]
 
-Ogni nuovo ciclo ha inizio sul fronte di discesca del clock, momento in cui vengono memorizzati i bit che controllano il funzionamento delle porte. Questa operazione richiede un intervallo di tempo finito (w in figura). Il registro richiesto viene selezionato e il suo contenuto portato sul bus B. Dopo un intervallo di tempo x. A questo punto, la ALU e lo shifter possono iniziare ad operare sui suoi dati e i loro output diventano stabili dopo un intervallo di tempo y. Dopo un ulteriore intervallo di tempo z, i risultati vengono propagati lungo il bus C e caricati nei registri in corrispondenza del fronte di salita del successivo impulso di clock.
+Ogni nuovo ciclo ha inizio sul fronte di discesca del clock, momento in cui vengono memorizzati i bit che controllano il funzionamento delle porte. Questa operazione richiede un intervallo di tempo finito (w in figura). Il registro richiesto viene selezionato e il suo contenuto portato sul bus B, dopo un intervallo di tempo x. A questo punto, la ALU e lo shifter possono iniziare ad operare sui suoi dati e i loro output diventano stabili dopo un intervallo di tempo y. Dopo un ulteriore intervallo di tempo z, i risultati vengono propagati lungo il bus C e caricati nei registri in corrispondenza del fronte di salita del successivo impulso di clock.
 
 ### Operazioni della memoria
 La CPU ha due modi per comunicare con la memoria:
@@ -397,7 +397,7 @@ I 29 segnali di controllo non sono sufficienti a specificare una microistruzione
 	- Mem: seleziona la funzione in memoria
 	- B: seleziona quale registro è scritto sul bus B
 - Address: indirizzo della prossima microistruzione da eseguire
-- JAM: bit per la gestione dei salit incondizionati a seconda dei bit di stato (N, Z) dell'ALU
+- JAM: bit per la gestione dei salti incondizionati a seconda dei bit di stato (N, Z) dell'ALU
 
 ![[AE/img/img31.png|center|500]]
 
