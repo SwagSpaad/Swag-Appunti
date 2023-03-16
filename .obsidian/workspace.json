@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "ca6615cbfbcdd860",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ASD/MOD II/Lezione 2.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -86,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ASD/MOD II/Lezione 1.md",
+                "file": "ASD/MOD II/Lezione 2.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -103,7 +116,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ASD/MOD II/Lezione 1.md",
+                "file": "ASD/MOD II/Lezione 2.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -126,7 +139,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ASD/MOD II/Lezione 1.md"
+                "file": "ASD/MOD II/Lezione 2.md"
               }
             }
           },
@@ -170,47 +183,47 @@
       "command-palette:Apri riquadro comandi": false
     }
   },
-  "active": "c17fdbf18fbce401",
+  "active": "95d0eca7356a3f20",
   "lastOpenFiles": [
-    "ASD/MOD II/Capitolo 0.md",
-    "ASD/MOD I/Capitolo 13 - Cammini minimi.md",
-    "ASD/MOD I/Capitolo 2.1 - Modelli di calcolo e notazione asintotica.md",
+    "ASD/MOD II/img/img8.png",
+    "ASD/MOD II/img/img7.png",
+    "ASD/MOD II/img/img6.png",
     "ASD/MOD II/Lezione 1.md",
+    "ASD/MOD II/Lezione 2.md",
+    "ASD/MOD II/img/img5.png",
+    "ASD/MOD I/Capitolo 11.1 - Grafi e visite di grafi.md",
+    "ASD/MOD I/Capitolo 8 - Code con priorità, d-heap, heap binomiali e di Fibonacci.md",
+    "ASD/MOD I/Capitolo 6.2 - Alberi AVL.md",
+    "ASD/MOD I/Capitolo 6.1 - Binary Search Tree.md",
+    "ASD/MOD I/Capitolo 4.1 - Selection sort, insertion sort, bubble sort, merge sort e quick sort.md",
+    "ASD/MOD I/Capitolo 3 - Strutture dati elementari.md",
+    "ASD/MOD I/Capitolo 2.3 - Metodo della sostituzione, divide et impera e Teorema Master.md",
+    "ASD/MOD I/Capitolo 2.2 - Ricorsione, tecniche di progettazione e equazioni di ricorrenza.md",
+    "ASD/MOD I/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
+    "ASD/MOD I/Capitolo 2.1 - Modelli di calcolo e notazione asintotica.md",
+    "ASD/MOD I/Capitolo 13 - Cammini minimi.md",
+    "ASD/MOD I/Capitolo 11.2 - Strutture dati per rappresentare grafi.md",
+    "LMP/MOD I/Lezione 4 - Basi del linguaggio.md",
+    "LMP/MOD II/Lezione 3 - Esecuzione dei programmi in prolog.md",
+    "LMP/MOD II/Lezione 2 - I basilari del Prolog.md",
+    "Senza nome.md",
+    "ASD/MOD II/Capitolo 0.md",
     "Appunti FI/MOD I/Lezione 9 - Sempre su RE,RG e ASF.md",
     "Appunti FI/MOD I/Lezione 6 - ASF.md",
     "Appunti FI/MOD I/Lezione 2 - RE,Linguaggi e problemi.md",
     "ASD/MOD I/Capitolo 0 - Algoritmi e strutture dati.md",
     "ASD/MOD II/img/img4.png",
-    "ASD/MOD I/Capitolo 8 - Code con priorità, d-heap, heap binomiali e di Fibonacci.md",
     "ASD/MOD II/img/img3.png",
     "ASD/MOD II/img/img2.png",
     "ASD/MOD II/img/img1.png",
     "ASD/MOD I/Capitolo 4.2 - HeapSort.md",
-    "ASD/MOD I/Capitolo 3 - Strutture dati elementari.md",
-    "ASD/MOD I/Capitolo 6.2 - Alberi AVL.md",
-    "ASD/MOD I/Capitolo 11.1 - Grafi e visite di grafi.md",
-    "ASD/MOD I/Capitolo 6.1 - Binary Search Tree.md",
     "ASD/MOD I/Capitolo 11.3 - Applicazioni della visita DFS.md",
-    "ASD/MOD I/Capitolo 11.2 - Strutture dati per rappresentare grafi.md",
     "ASD/MOD I/img/img0_1.jpg",
-    "ASD/MOD I/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
     "ASD/MOD I/img/img0.png",
     "ASD/MOD II/img/img0.png",
-    "ASD/MOD I/img/img1.png",
-    "ASD/img/8mg47.png",
-    "ASD/img/img0_1.jpg",
     "ASD/MOD II/img",
     "ASD/MOD II/Nuova cartella",
-    "AE/Architettura degli elaboratori.md",
-    "Capitolo 2.3.md",
-    "ASD/MOD I/Lezione 1 - Capitolo 1.md",
     "AE.zip",
-    "Appunti FI/MOD I/Indice delle lezioni FI.md",
-    "Appunti FI/MOD I/Lezione 1 - Insiemi infiniti, Linguaggi.md",
-    "Appunti FI/MOD I/Lezione 3 - RE,Grammatiche.md",
-    "Appunti FI/MOD I/Lezione 4 - Ancora sulle grammatiche.md",
-    "Appunti FI/MOD I/Lezione 5 - Automi.md",
-    "Appunti FI/MOD I/Lezione 7 - Equivalenza tra ASFD e ASFND.md",
     "Appunti FI/MOD I/Esercizi/ImgEs",
     "Appunti FI/MOD I/Esercizi/Esercizi_ASF_2_nov_2022.pdf",
     "Appunti FI/MOD I/Esercizi",
