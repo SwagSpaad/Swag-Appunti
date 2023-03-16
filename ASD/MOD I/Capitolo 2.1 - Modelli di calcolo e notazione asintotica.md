@@ -153,11 +153,10 @@ o & \lt\\
 T(n): complessità computazionale nel caso peggiore con input n
 $c_j$:#passi elementari eseguiti su una RAM quando è eseguita la linea di codice j
 - linea 1,2,5 eseguite una volta
-- linee 3 e 4 eseguite aò più n volte
+- linee 3 e 4 eseguite al più n volte
 $T(n)\leq c_1+c_2+c_5+(c_3+c_4)n=\Theta(n)\implies T(n)=O(n)$
 
 ### Lower Bound
-
 >algoritmo fibonacci3(intero n)$\rightarrow$ intero
 >1. sia Fib un array di n interi
 >2. $Fib[1]=Fib[2]=1$
