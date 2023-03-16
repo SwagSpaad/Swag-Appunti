@@ -1,0 +1,18 @@
+# Sommario
+---
+- **[[Capitolo 1 - Un'introduzione informale agli algoritmi|Capitolo 1]]** - Introduzione agli algoritmi. Calcolo dell'ennesimo numero di Fibonacci. Analisi dei costi di ogni algoritmo di calcolo.  
+- **Capitolo 2**:
+	- **[[Capitolo 2.1 - Modelli di calcolo e notazione asintotica|Capitolo 2.1]]** - Modelli di calcolo. Caso peggiore, medio e migliore. Notazione asintotica. Esempi di calcolo caso medio. Ricorsioni ed equazioni di ricorrenza. 
+	- **[[Capitolo 2.2 - Ricorsione, tecniche di progettazione e equazioni di ricorrenza|Capitolo 2.2]]** - Algoritmi ricorsivi. Equazioni di ricorrenza: metodo dell'iterazione e albero della ricorsione.
+	- **[[Capitolo 2.3 - Metodo della sostituzione, divide et impera e Teorema Master|Capitolo 2.3]]** - Metodo della sostituzione, divide et impera e Teorema Master.
+- **[[Capitolo 3 - Strutture dati elementari|Capitolo 3]]** - Strutture dati elementari: dizionario, pila e coda. Tecniche di rappresentazioni. Alberi e visite di alberi.
+- **Capitolo 4**: Algoritmi di ordinamento
+	- **[[Capitolo 4.1 - Selection sort, insertion sort, bubble sort, merge sort e quick sort|Capitolo 4.1]]** - Il problema dell'ordinamento. Ordinamento in tempo quadratico e meno del quadratico.
+	- **[[Capitolo 4.2 - HeapSort|Capitolo 4.2]]** - Ordinare utilizzando struttura dati efficienti: l'heap e HeapSort.
+	- **[[Capitolo 4.3 - Lower bound al problema di ordinamento e Algoritmi Lineari|Capitolo 4.3]]** - Lower e upper bound, ottimalità di un algoritmo. Integer sort.
+- **Capitolo 6**: Il problema del dizionario:
+	- **[[Capitolo 6.1 - Binary Search Tree|Capitolo 6.1]]** - Alberi binari di ricerca
+	- **[[Capitolo 6.2 - Alberi AVL|Capitolo 6.2]]** - Alberi AVL. Ribilanciamento tramite rotazioni.
+- **[[Capitolo 8 - Code con priorità, d-heap, heap binomiali e di Fibonacci|Capitolo 8]]**: Il problema della coda con priorità. D-heap, heap binomiali e heap di Fibonacci.   
+- **Capitolo 11**:
+- **Capitolo 13**:

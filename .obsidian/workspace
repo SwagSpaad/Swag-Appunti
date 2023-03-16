@@ -1,0 +1,170 @@
+{
+  "main": {
+    "id": "18c17198da014839",
+    "type": "split",
+    "children": [
+      {
+        "id": "326459158e611c71",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "159b5a26b33d7cd1",
+    "type": "split",
+    "children": [
+      {
+        "id": "d59a0d3a33aa5a6d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "eb459183a5311c88",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "44f3f8f750321792",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "dc79c854224cb80e",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 244.50363159179688
+  },
+  "right": {
+    "id": "c57e083be98af551",
+    "type": "split",
+    "children": [
+      {
+        "id": "fb5624376e7ba2b5",
+        "type": "tabs",
+        "dimension": 63.83647798742138,
+        "children": [
+          {
+            "id": "028dbcaefe0b4db7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "22a509c12180c01f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "88b57d085a1805ef",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "82c6fc833e5dd7cb",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "ASD/Capitolo 0 - Algoritmi e strutture dati.md"
+              }
+            }
+          },
+          {
+            "id": "95d0eca7356a3f20",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "pinned": true
+            }
+          }
+        ],
+        "currentTab": 4
+      },
+      {
+        "id": "1931227594f23ca3",
+        "type": "tabs",
+        "dimension": 36.16352201257861,
+        "children": [
+          {
+            "id": "bb4eafc6c9dc8f49",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 309.94464111328125
+  },
+  "active": "326459158e611c71",
+  "lastOpenFiles": [
+    "ASD/Capitolo 2 - Modelli di calcolo e notazione asintotica.md",
+    "ASD/Capitolo 1 - Un'introduzione informale agli algoritmi.md",
+    "ASD/Capitolo 0 - Algoritmi e strutture dati.md",
+    "SOR/Lezione 2 - Tipologie di sistemi.md",
+    "SOR/Lezione 1 - Introduzione sui sistemi operativi.md",
+    "SOR/Capitolo 0 - Sistemi operativi e reti.md",
+    "CPS/Lezione 2 - Formule legate alla probabilità condizionata.md",
+    "CPS/Lezione 1 - Introduzione alla probabilità.md",
+    "CPS/Capitolo 0 - Calcolo delle probabilità e statistica.md",
+    "francesco totti.md"
+  ]
+}
