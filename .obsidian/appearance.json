@@ -1,9 +1,9 @@
 {
-  "baseFontSize": 15,
+  "baseFontSize": 19,
   "enabledCssSnippets": [
     "center",
     "table_center"
   ],
   "accentColor": "",
-  "cssTheme": "Atom"
+  "cssTheme": "Catppuccin"
 }
