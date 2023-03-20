@@ -62,3 +62,7 @@ Utilizziamo una coda con priorità come con Dijkstra e creiamo un insieme $S$ ch
 
 #### Correttezza
 Inizializziamo S = qualsiasi nodo (taglio). Applichiamo la cut property ad $S$, aggiungiamo il costo minimo nel cutset $D(S)$ a $T$ e aggiungiamo un nuovo nodo esplorato $u$ ad $S$.
+
+
+
+MST e SPT sono la stessa cosa? no
