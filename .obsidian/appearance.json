@@ -1,9 +1,15 @@
 {
-  "baseFontSize": 19,
+  "baseFontSize": 16,
   "enabledCssSnippets": [
     "center",
     "table_center"
   ],
   "accentColor": "",
-  "cssTheme": "Catppuccin"
+  "cssTheme": "",
+  "textFontFamily": "",
+  "baseFontSizeAction": false,
+  "interfaceFontFamily": "",
+  "monospaceFontFamily": "",
+  "showViewHeader": true,
+  "nativeMenus": false
 }
