@@ -11,7 +11,7 @@ I seguenti requisiti devono essere rispettati da un linguaggio di programmazione
 - **Singolo punto di Ingresso e Uscita**: in ogni struttura di controllo si devono poter identificare un singolo punto di ingresso e un singolo punto di uscita. Ciò è necessario per la successiva
 - **Componibilità**: ogni struttura di controllo deve poter essere considerata come un macro-statement, di modo da poter essere usata, ricorsivamente, come istruzione in altre strutture di controllo
 
-![[LMP/img/img0.png|center|500]]
+![[LMP/MOD I/img/img0.png|center|500]]
 
 ## Programmazione Procedurale
 Consiste nella possibilità di agevolare la leggibilità di un programma (e la sua manutenibilità) tramite la definizione di blocchi di codice, racchiusi da delimitatori e usualmente identificati da un nome

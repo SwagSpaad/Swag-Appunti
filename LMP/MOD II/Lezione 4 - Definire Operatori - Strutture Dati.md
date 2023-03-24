@@ -66,7 +66,7 @@ dateOfBirth(person(_ , _ , Date, _ ), Date).
 
 # Automa non deterministico
 
-![[Pasted image 20230323122219.png]]
+![[LMP/MOD II/img/img0.png|center|500]]
 
 finals(s3).
 
@@ -139,7 +139,7 @@ template( [1/Y1,2/Y2,3/Y3,4/Y4,5/Y5,6/Y6,7/Y7,8/Y8] ).
 - la scrittura in Prolog sarebbe:
 	+( * (1,2),  * (3,4))
 
-![[Pasted image 20230323143627.png]]
+![[LMP/MOD II/img/img4.png|center|500]]
 
 # Definire un operatore
 
@@ -149,18 +149,18 @@ template( [1/Y1,2/Y2,3/Y3,4/Y4,5/Y5,6/Y6,7/Y7,8/Y8] ).
 	**( +(a,b), c) ?
 - Nel senso comune trasmessoci, * lega di più di +,
 
-![[Pasted image 20230323143603.png]]
+![[LMP/MOD II/img/img3.png|center|500]]
 
 Codificare la priorità: l’albero delle interpretazioni ha priorità decrescenti
 + ha priorità 500  
 * ha priorità 400  
 (e quindi + ha priorità più alta di * )
 
-![[Pasted image 20230323143538.png]]
+![[LMP/MOD II/img/img2.png|center|500]]
 
 - :- op(700, yfx, somma).
 - 9 somma 5 somma 7
 
-![[Pasted image 20230323143442.png]]
+![[LMP/MOD II/img/img1.png|center|500]]
 
 - Quello a sinistra è corretto, perché?
