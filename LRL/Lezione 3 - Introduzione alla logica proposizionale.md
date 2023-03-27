@@ -59,7 +59,7 @@ Nelle fomule abbiamo usato i connettivi $\lnot, \land, \lor, \implies$ e $\equiv
 - $p \implies q$ è equivalente a $\lnot p \lor q$, diciamo che in questo caso il connettivo $\implies$ può essere definito in termini dei connettivi $\lnot$ e $\lor$
 - $p \land q$ è equivalente a $\lnot(\lnot p \lor \lnot q)$ quindi anche $\land$ può essere definito in termini di $\lnot$ e $\lor$
 - $p \equiv q$ è equivalente a $(p \implies q) \land (q \implies p)$ o anche a $(p \land q) \lor (\lnot p \land \lnot q)$ e siccome $\implies$ e $\land$ possono essere definiti in termini di $\lnot$ e $\lor$, anche $\equiv$ può essere definitio in termini di $\lnot$ e $\lor$
-Quinid potremmo riscrivere tutte le formule viste finora usando soltanto i due connettivi $\lnot$ e $\lor$. In modo analogo potremmo farlo usando i due connettivi $\lnot$ e $\land$.
+Quindi potremmo riscrivere tutte le formule viste finora usando soltanto i due connettivi $\lnot$ e $\lor$. In modo analogo potremmo farlo usando i due connettivi $\lnot$ e $\land$.
 
 Esiste un connettivo che utilizzato da solo puo definire tutti gli altri?
 Consideriamo il connettivo seguente, che chiamiamo **joint denial** (NOR in termini di circuiti)
