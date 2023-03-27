@@ -78,7 +78,7 @@ gli altri: lo indichiamo con $|$ e lo chiamiamo **alternative denial** (oppure n
 ![[LRL/img/img4.png|center|250]]
 
 # Notazione polacca
-Se scriviamo $[\implies pq]$ al posto di $[p \implies q]$, $[\land pq]$ al posto di $[p \land q]$, $[\lor pq]$ al posto di $[p \lor q]$, e $[\equiv pq]$ al posto di $[p \equiv q]$, è possibile scrivere ogni formula ben formata in modo non  ambiguo senza l’utilizzo di parentesi. Questo tipo di sintassi è detta **notazione polacca**.  
+Se scriviamo $[\implies pq]$ al posto di $[p \implies q]$, $[\land pq]$ al posto di $[p \land q]$, $[\lor pq]$ al posto di $[p \lor q]$, e $[\equiv pq]$ al posto di $[p \equiv q]$. È possibile scrivere ogni formula ben formata in modo non ambiguo senza l’utilizzo di parentesi. Questo tipo di sintassi è detta **notazione polacca**.  
 Ad esempio, la formula $\lnot p ∧ (q \implies \lnot r)$ in notazione polacca diventa $\land \lnot p \implies q\: \lnot r$.
 
 **Def.** Formule ben formate in notazione polacca
