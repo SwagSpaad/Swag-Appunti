@@ -170,8 +170,8 @@ $$T(n) \leq T\left(\lfloor \frac {n}{2}\rfloor\right) + c$$
 
 ##### Metodo dell'iterazione
 Risulta:
-$T(n) \leq c + T\left(\lfloor \frac {n}{2}\rfloor\right)$ Fibonacci6 è esponenzialmente più
-$\leq 2c + T\left(\lfloor \frac {n}{4}\rfloor\right)$ veloce di Fibonacci3
+$T(n) \leq c + T\left(\lfloor \frac {n}{2}\rfloor\right)$ Fibonacci6 è esponenzialmente più veloce di Fibonacci3
+$\leq 2c + T\left(\lfloor \frac {n}{4}\rfloor\right)$
 $\leq 3c + T\left(\lfloor \frac {n}{8}\rfloor\right)$
  :
 $\leq ic + T\left(\lfloor \frac {n}{2^i}\rfloor\right)$
