@@ -79,12 +79,12 @@ Per calcolare $T(n)$ contiamo il numero di foglie e di nodi interni.
 
 ###### Lemma 1
 Il numero di foglie dell'albero della ricorsione di $Fibonacci2(n)$ è pari a $F_n$
-**Dim.**
+
 ![[ASD/MOD I/img/img2.png|center|500]]
 
 ###### Lemma 2
 Il numero di nodi interni di un albero in cui ogni nodo interno ha due figli è pari al numero di foglie -1
-**Dim.**
+
 ![[ASD/MOD I/img/img3.png|center|500]]
 
 In totale le linee di codice eseguite sono: $$F_{n}+2 \cdot(F_{n}-1)=3F_{n}-2$$
@@ -105,14 +105,15 @@ Algoritmo**Fibonacci3**$(intero \ n )\rightarrow intero$
 4. Fib[i]$\leftarrow$Fib[i-l]+Fib[i-2] 
 5. $return$ Fib[n]  
 
+^dd465d
 ##### Calcolo del tempo di esecuzione
- - Linee 1,2 e 5 eseguite una sola volta
+ - Linee 1, 2 e 5 eseguite una sola volta
  - Linea 3 eseguita $\leq$ n volte
  - Linea 4 eseguita $\leq$ n volte
  - $T(n)$: numero di linee di codice mandate in esecuzione da Fibonacci3
  $T(n)\leq n + n + 3 = 2n + 3$
  $T(45)\leq 93$
-(38 milione di volte più dell'algoritmo $Fibonacci2$!)
+(38 milioni di volte più dell'algoritmo $Fibonacci2$!)
 - L'algoritmo $Fibonacci3$ impiega tempo proporzionale a n invece di esponenziale in n come Fibonacci2
 - Tempo effettivo richiesto da implementazioni in C dei due algoritmi su piattaforme obsolete:
 ![[ASD/MOD I/img/img4.png]]
@@ -128,54 +129,55 @@ Algoritmo**Fibonacci4**$(intero \ n)\rightarrow intero$
 	 3. c $\leftarrow$ a+b
 	 4. b $\leftarrow$ a
 	 5. a $\leftarrow$ c
- 6. $return$ a
+ 6. $return$ c
 
 Possiamo calcolare $F_n$ in tempo inferiore a $O(n)$?
 #### Algoritmo Fibonacci5
 Algoritmo**Fibonacci5** $(intero \ n)\rightarrow intero$
 1. M $\leftarrow \begin {bmatrix} 1 & 0 \\ 0 & 1 \end {bmatrix}$
-2. for i = 1to n-1 do
+2. for i = 1 to n-1 do
 3. M $\leftarrow$ M $\cdot \begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
 4. return M $[\: 0 \:][\: 0 \: ]$
-##### Cosa si guadagna?
-- Si può calcolare la n-esima potenza elevando al quadrato la ($\lfloor$$\frac {n}{2}\rfloor$)-esima potenza
+
+**Oss.**
+- Si può calcolare la n-esima potenza elevando al quadrato la ($\lfloor\frac {n}{2}\rfloor$)-esima potenza
 - Se n è dispari eseguiamo un'ulteriore moltiplicazione
 
 ##### Esempio
 $3^2=9$
-$3^4=9^2=81$ 
-$3^8=81^2=6561$ $\implies$Si eseguono solo 3 prodotti invece di 7
- 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 = $3^8$
+$3^4=9^2=81$
+$3^8=81^{2}=6561\implies$Si eseguono solo 3 prodotti invece di 7
+3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 = $3^8$
 
 #### Algoritmo Fibonacci6
 Algoritmo**Fibonacci6**$(intero \ n )\rightarrow intero$
 1. $A \leftarrow$ $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
 2. $M \leftarrow potenzadiMatrice(A,n-1)$
-3. Return M [0] [0]
+3. Return M $[\:0\:][\:0\:]$
 Funzione potenzadiMatrici(Matrice A, intero k) $\implies$ matrice
-4. if (k = 0) return $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
-5. else M $\leftarrow$ potenzadiMatrice (A, $\lfloor$$\frac {k}{2}\rfloor$)
-6. M $\leftarrow$ M $\cdot$ M
-7. if (k è dispari ) then M $\leftarrow$ M $\cdot$ A
-8. return M
+1. if (k = 0) return $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
+2. else M $\leftarrow$ potenzadiMatrice (A, $\lfloor\frac {k}{2}\rfloor$)
+3. M $\leftarrow$ M $\cdot$ M
+4. if (k è dispari ) then M $\leftarrow$ M $\cdot$ A
+5. return M
 
 ##### Tempo di esecuzione
 Tutto il tempo è speso nella procedura potenzadiMatrice:
 - All'interno della procedura si spedne tempo costante
 - Chiamata ricorsiva con input $\lfloor \frac {k}{2}\rfloor$
 L'equazione di ricorrenza è pertanto:
-$$T(n) \leq T(\lfloor \frac {n}{2}\rfloor) + c$$
+$$T(n) \leq T\left(\lfloor \frac {n}{2}\rfloor\right) + c$$
 
 ##### Metodo dell'iterazione
 Risulta:
-$T(n) \leq c + T(\lfloor \frac {n}{2}\rfloor)$ Fibonacci6 è esponenzialmente più
-$\leq 2c + T(\lfloor \frac {n}{4}\rfloor)$ veloce di Fibonacci3
-$\leq 3c + T(\lfloor \frac {n}{8}\rfloor)$
+$T(n) \leq c + T\left(\lfloor \frac {n}{2}\rfloor\right)$ Fibonacci6 è esponenzialmente più
+$\leq 2c + T\left(\lfloor \frac {n}{4}\rfloor\right)$ veloce di Fibonacci3
+$\leq 3c + T\left(\lfloor \frac {n}{8}\rfloor\right)$
  :
-$\leq ic + T(\lfloor \frac {n}{2^i}\rfloor)$
+$\leq ic + T\left(\lfloor \frac {n}{2^i}\rfloor\right)$
 
-Per i= $\lfloor log_2 n\rfloor$ si ottiene
-$T(n) \leq c + \lfloor log_2 n\rfloor + T(1)= O(log_2 n)$
+Per i = $\lfloor \log_2 n\rfloor$ si ottiene
+$T(n) \leq c + \lfloor \log_2 n\rfloor + T(1)= O(\log_2 n)$
 
 ##### Analisi memoria ausiliaria Fibonacci2
 ![[ASD/MOD I/img/img5.png|center|600]]
@@ -185,4 +187,5 @@ $T(n) \leq c + \lfloor log_2 n\rfloor + T(1)= O(log_2 n)$
 - Ogni nodo / chiamata usa memoria costante
 
 #### Riepilogo finale
+
 ![[ASD/MOD I/img/img6.png|center|600]]
