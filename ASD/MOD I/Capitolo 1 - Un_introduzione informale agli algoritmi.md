@@ -135,14 +135,16 @@ Possiamo calcolare $F_n$ in tempo inferiore a $O(n)$?
 Algoritmo**Fibonacci5** $(intero \ n)\rightarrow intero$
 1. M $\leftarrow \begin {bmatrix} 1 & 0 \\ 0 & 1 \end {bmatrix}$
 2. for i = 1to n-1 do
-3. M $\leftarrow$ M $\cdot \begin {bmatrix} 1 & 0 \\ 0 & 1 \end {bmatrix}$
+3. M $\leftarrow$ M $\cdot \begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
 4. return M $[\: 0 \:][\: 0 \: ]$
 ##### Cosa si guadagna?
 - Si può calcolare la n-esima potenza elevando al quadrato la ($\lfloor$$\frac {n}{2}\rfloor$)-esima potenza
 - Se n è dispari eseguiamo un'ulteriore moltiplicazione
 
 ##### Esempio
-$3^2=9$ $3^4=9^2=81$ $3^8=81^2=6561$ $\implies$Si eseguono solo 3 prodotti invece di 7
+$3^2=9$
+$3^4=9^2=81$ 
+$3^8=81^2=6561$ $\implies$Si eseguono solo 3 prodotti invece di 7
  3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 $\cdot$ 3 = $3^8$
 
 #### Algoritmo Fibonacci6
@@ -151,7 +153,7 @@ Algoritmo**Fibonacci6**$(intero \ n )\rightarrow intero$
 2. $M \leftarrow potenzadiMatrice(A,n-1)$
 3. Return M [0] [0]
 Funzione potenzadiMatrici(Matrice A, intero k) $\implies$ matrice
-4. if (k $\leq$ 1) return $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
+4. if (k = 0) return $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
 5. else M $\leftarrow$ potenzadiMatrice (A, $\lfloor$$\frac {k}{2}\rfloor$)
 6. M $\leftarrow$ M $\cdot$ M
 7. if (k è dispari ) then M $\leftarrow$ M $\cdot$ A

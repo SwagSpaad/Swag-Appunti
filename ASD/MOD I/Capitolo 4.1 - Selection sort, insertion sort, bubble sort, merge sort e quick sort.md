@@ -5,8 +5,7 @@ Data una sequenza di n numeri $\langle a_1,a_2,....,a_n\rangle$, vogliamo ottene
 # Ordinare in tempo quadratico
 ## Selection Sort
 
-
-**Approccio incrementale**: estende l'ordinamento da k a k+1 elementi, scegliendo il minimo degli n-k elementi non ancora ordinati e mettendolo in posizione k+1 ^09646f
+**Approccio incrementale**: estende l'ordinamento da k a k+1 elementi, scegliendo il minimo degli n-k elementi non ancora ordinati e mettendolo in posizione k+1 
 
 ![[ASD/MOD I/img/img23.png|center|500]]
 
