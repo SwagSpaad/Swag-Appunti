@@ -76,6 +76,7 @@ cioè ignoro:
 $f(n)=\mathcal{O}g(n)$se$\exists$ c>0, $n_0\geq0$ tali che $0\leq f(n)\leq c\cdot g(n)\:\:\forall\: n\geq n_0$    
 
 ![[ASD/MOD I/img/img11.png|center|500]]
+
 **Esempi**
 
 Sia $f(n)=2n^2+3n$, allora:

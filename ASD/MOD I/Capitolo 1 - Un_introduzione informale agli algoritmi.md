@@ -105,7 +105,6 @@ Algoritmo**Fibonacci3**$(intero \ n )\rightarrow intero$
 4. Fib[i]$\leftarrow$Fib[i-l]+Fib[i-2] 
 5. $return$ Fib[n]  
 
-^dd465d
 ##### Calcolo del tempo di esecuzione
  - Linee 1,2 e 5 eseguite una sola volta
  - Linea 3 eseguita $\leq$ n volte
