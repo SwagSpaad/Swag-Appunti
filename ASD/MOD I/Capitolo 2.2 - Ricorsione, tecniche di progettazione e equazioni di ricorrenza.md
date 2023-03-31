@@ -2,7 +2,7 @@
 # Soluzione esercizio calcolo tempo medio con algoritmo di pesatura
 
 Alg1
-1. for i=2 to n do
+1. for i = 2 to n do
 	2. if peso($x_1$)>peso($x_i$) then return $x_1$
 	3. if peso($x_1$)<peso($x_i$) then return $x_i$
 
@@ -40,8 +40,9 @@ $T(n)=c+T(n/2)$
 $T(n/2)=c+T(n/4)\dots$
 $T(n) = c + T(n/2)=c + (c + T(n/4)) = 2c + T(n/4) + \dots +ic + T(n/2^i)$
 
-Continuo a srotolare fin quando non trovo il caso base, in questo caso quando $i=log_2(n)$, infatti:
-$$T(n)=c\:log_2(n)+T(\frac{n}{2^{log_2(n)}}) =  c\: log_2(n)+T(\frac{\cancel{n}}{\cancel{n}})= c\cdot log_2(n)+T(1)=\Theta(log(n))$$
+Continuo a srotolare fin quando non trovo il caso base, in questo caso quando $i=\log_2(n)$, infatti:
+$$T(n)=c\:\log_2(n)+T\left(\frac{n}{2^{\log_2(n)}}\right) =  c\: \log_2(n)+T\left(\frac{\cancel{n}}{\cancel{n}}\right)= c\cdot \log_2(n)+T(1)=\Theta(\log(n))$$
+
 **Esercizi**
 - esercizio 1: $T(n)=T(n-1)+n$
 - esercizio 2: $T(n)=9T(n/3)+n$

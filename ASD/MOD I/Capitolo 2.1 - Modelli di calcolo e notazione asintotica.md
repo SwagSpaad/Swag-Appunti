@@ -73,7 +73,7 @@ cioè ignoro:
 - termini di ordine inferiore
 
 ## Notazione asintotica O
-$f(n)=\mathcal{O}g(n)$se$\exists$ c>0, $n_0\geq0$ tali che $0\leq f(n)\leq c\cdot g(n)\:\:\forall\: n\geq n_0$    
+$f(n)=O(g(n))$se $\exists$ c > 0, $n_0\geq0$ tali che $0\leq f(n)\leq c\cdot g(n)\:\:\forall\: n\geq n_0$    
 
 ![[ASD/MOD I/img/img11.png|center|500]]
 
@@ -85,7 +85,7 @@ Sia $f(n)=2n^2+3n$, allora:
 - $f(n)\neq O(n)$
 
 In generale
-$$f(n)=O(g(n))\implies lim_{n\to\infty}{\frac{f(n)}{g(n)}}\lt\infty$$
+$$f(n)=O(g(n))\implies \lim_{n\to\infty}{\frac{f(n)}{g(n)}}\lt\infty$$
 ## Notazione asintotica $\Omega$
 
 $f(n)=\Omega(g(n))$ se $\exists\:c\gt0, n_0\geq0|f(n)\geq c\cdot g(n)\geq0$ 
@@ -100,7 +100,7 @@ Sia $f(n)=2n^2-3n$ allora:
 - $f(n)\neq\Omega(n^3)$
 
 In generale
-$$f(n)=\Omega(g(n))\implies lim_{n\to\infty}\frac{f(n)}{g(n)}\gt0$$
+$$f(n)=\Omega(g(n))\implies \lim_{n\to\infty}\frac{f(n)}{g(n)}\gt0$$
 
 ## Notazione asintotica $\Theta$
 
@@ -153,7 +153,7 @@ o & \lt\\
 
 T(n): complessità computazionale nel caso peggiore con input n
 $c_j$:#passi elementari eseguiti su una RAM quando è eseguita la linea di codice j
-- linea 1,2,5 eseguite una volta
+- linea 1, 2, 5 eseguite una volta
 - linee 3 e 4 eseguite al più n volte
 $T(n)\leq c_1+c_2+c_5+(c_3+c_4)n=\Theta(n)\implies T(n)=O(n)$
 
@@ -170,7 +170,11 @@ $c_j$:#passi elementari eseguiti su una RAM quando è eseguita la linea di codic
 - linea 4 eseguita almeno n-3 volte
 $T(n)\geq c_4(n-3)=c_4n-3c_4=\Theta(n)\implies T(n)=\Omega(n)$
 
+<<<<<<< HEAD
 Quindi tra upper bound e lower bound possiamo dedurre che:$$T(n)=\Theta(n)$$
+=======
+Quindi tra upper bound e lower bound possiamo dedurre che $$T(n)=\Theta(n)$$
+>>>>>>> 9bf9335801b9022131d6649d9787307d27f6f3ff
 ## Notazione asintotica: perchè è una grande idea
 
 - **misura indipendente** dall'implementazione dell'algoritmo e dalla macchina reale su cui è eseguito
