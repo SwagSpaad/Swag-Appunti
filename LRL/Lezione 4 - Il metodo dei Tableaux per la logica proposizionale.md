@@ -45,3 +45,4 @@ Anche il secondo e il terzo ramo si chiudono : il secondo perchè $\nexists$ una
 Non c'è più niente da scomporre e abbiamo un albero con tutti i rami chiusi. Che cosa significa? Torniamo un attimo indietro e vediamo di ripercorrere quello che abbiamo fatto con riferimento al nostro schema di formule:
 
 ![[LRL/img/img10.png|center|500]]
+

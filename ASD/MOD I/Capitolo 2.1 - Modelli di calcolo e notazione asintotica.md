@@ -170,7 +170,7 @@ $c_j$:#passi elementari eseguiti su una RAM quando è eseguita la linea di codic
 - linea 4 eseguita almeno n-3 volte
 $T(n)\geq c_4(n-3)=c_4n-3c_4=\Theta(n)\implies T(n)=\Omega(n)$
 
-Quindi tra upper bound e lower bound possimao dedurre che $$T(n)=\Theta(n)$$
+Quindi tra upper bound e lower bound possiamo dedurre che:$$T(n)=\Theta(n)$$
 ## Notazione asintotica: perchè è una grande idea
 
 - **misura indipendente** dall'implementazione dell'algoritmo e dalla macchina reale su cui è eseguito
