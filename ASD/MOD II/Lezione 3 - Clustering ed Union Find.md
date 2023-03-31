@@ -48,3 +48,5 @@ Lo spacing in $C$ è $\leq d^*$ dal momento che $q$ e $q'$ sono in due diversi c
 
 
 
+
+

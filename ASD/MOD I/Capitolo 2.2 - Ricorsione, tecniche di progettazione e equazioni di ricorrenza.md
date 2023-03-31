@@ -81,14 +81,14 @@ Ma vale $T(n)=\Theta(n^2)$?
 ![[ASD/MOD I/img/img20.png|250]]
 
 Come possiamo vedere dalla foto, il lower bound è $T(n)\geq \frac{n}{2}\frac{n}{2}=\frac{n^2}{4}$ e quindi $T(n)=\Omega(n^2)$
-Di conseguenza dato che T(n) è sia $O(n^2)$ (upper bound) che $Omega(n^2)$ (lower bound) allora $T(n)=\Theta(n^2)$ 
+Di conseguenza dato che T(n) è sia $O(n^2)$ (upper bound) che $\Omega(n^2)$ (lower bound) allora $T(n)=\Theta(n^2)$ 
 
 #### Albero binario completo
 
 I nodi di un albero binario completo di altezza h sono dati dalla seguente formula $$\sum_{i=0}^h 2^i=2^{h+1}-1$$
 
 **Es.**
-$T(n) = 2T(n - 1) + 1$ 
+$T(n) = 2T(n-1) + 1$ 
 $T(1) = 1$
 ![[ASD/MOD I/img/img21.png|center|500]]
 
@@ -121,16 +121,16 @@ Studiamo upper bound e lower bound
 
 **Upper bound**
 Quanti costa ogni livello? $\leq n$ 
-Quanti livelli ha l'albero? $O(log_{3/2}n)$
+Quanti livelli ha l'albero? $O(\log_{3/2}n)$
 
-Quindi possiamo dire che $T(n)=O(nlog(n))$.(Upper Bound)
-Perchè però $nlog_{3/2}n$? perchè ci sono $log_{3/2}n$ livelli, ognuno di costo al più n
-Ma vale che $T(n)=\Theta(nlog(n))$?
+Quindi possiamo dire che $T(n)=O(n\log(n))$ (Upper Bound)
+Perchè però $n\log_{3/2}n$? perchè ci sono $\log_{3/2}n$ livelli, ognuno di costo al più n
+Ma vale che $T(n)=\Theta(n\log(n))$?
 
 **Lower bound**
 Quanto costa ogni nodo? $\leq n$
-Quanti livelli ha l'albero? $log_3n$
-$T(n)\geq nlog_3n\implies T(n)=\Omega(nlog(n))$ 
-Perchè però $nlog_3(n)$? perchè ci sono $log_3(n)$ livelli nell'albero, ognuno di costo al più n
+Quanti livelli ha l'albero? $\log_3n$
+$T(n)\geq n\log_3n\implies T(n)=\Omega(n\log(n))$ 
+Perchè però $n\log_3(n)$? perchè ci sono $\log_3(n)$ livelli nell'albero, ognuno di costo al più n
 
-La risposta alla domanda è si, $T(n)= \Theta(nlog(n))$ 
+La risposta alla domanda è si, $T(n)= \Theta(n\log(n))$ 
