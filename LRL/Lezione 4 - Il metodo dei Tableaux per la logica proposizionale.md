@@ -1,13 +1,11 @@
 # Antipasto
 
 Sia $\mathcal{F}$ la formula seguente:
-
 $$((p \land q)\implies r)\implies(\lnot p \ \lor(q \implies r)), $$
 
 $\mathcal {F}$ è una tautologia? Dalla lezione precedente sappiamo che per scoprirlo si utilizzano le tabelle di verità. Ma, per il momento accantoniamo le tabelle e concentriamoci su altro.
 
 1. Prendiamo $\lnot \ \mathcal F$ 
-
 $$\lnot [((p \land q ) \implies r) \implies (\lnot p \ \lor (q \implies r))]$$
 
 Si osservi che questa formula è vera in qualche interpretazione $\iff$ $\mathcal F$ non è una tautologia. Quindi per vedere se $\mathcal F$ non è una tautologia possiamo dimenticarci di $\mathcal F$ e vedere se $\exists$ una intrpretazione che rende la formula vera.
@@ -16,7 +14,7 @@ Si osservi che questa formula è vera in qualche interpretazione $\iff$ $\mathca
 
 ![[LRL/img/img5.png|center|500]]
 
-Quindi per vedere se $\exists$ un'interpretazione che rende la prima formula vera, possiamo dimenticarci della formula stessa e vedere se $\exists$ un'interpretazione che rende vere le formule 2,3
+Quindi per vedere se $\exists$ un'interpretazione che rende la prima formula vera, possiamo dimenticarci della formula stessa e vedere se $\exists$ un'interpretazione che rende vere le formule 2, 3
 
 3. Consideriamo la formula 2: è un'implicazione, quindi è vera solo quando $(p\land q)$ è falso oppure quando $r$ è vero. In altre parole, quando almeno una è vera, fra le due formule quì sotto:
 
@@ -24,7 +22,7 @@ Quindi per vedere se $\exists$ un'interpretazione che rende la prima formula ver
 
 Si osservi che le ultime 2 formule non sono state posizionate una sotto l'altra come nei casi precedenti, ma si sono creati due rami. Questo perchè per vedere se $\exists$ una interpretazione che rende vere sia la seconda formula che la terza, possiamo dimenticarci della seconda e vedere se $\exists$ una interpretazione che rende vera la terza formula e almeno una fra la quarta e la quinta
 
-4. Si consideri la terza: è la negazine di un OR, quindi è vera $\iff$ $\lnot p$ e $(q\implies r)$ sono entrambe false, in altre parole, quando sia la sesta ch la settima sono vere
+4. Si consideri la terza: è la negazione di un OR, quindi è vera $\iff$ $\lnot p$ e $(q\implies r)$ sono entrambe false, in altre parole, quando sia la sesta che la settima sono vere
 
 ![[LRL/img/img7.png|center|500]]
 
