@@ -43,3 +43,19 @@ Se $\mathcal F$ non fosse una tautologia, allora $\lnot \mathcal F$ sarebbe sodd
 
 # Insiemi di Hintikka e completezza del metodo
 
+Per dimostrare la correttezza del metodo dei tableaux, abbiamo utilizzato la definizione di insiemi di formule soddisfacibili. Per dimostrarne la completezza introduciamo un'altra classe di insiemi di formule, che chiamiamo **insiemi di Hintikka**.
+
+>**Def.**
+>Un insieme di formule S per cui valgono le tre proprietà seguenti, si chiama **insieme di Hintikka**:
+>$H_0$ : S non contiene sia una variabile $p$ che la sua negata $\lnot p$
+>$H_1$ : Se S contiene una $\alpha$-formula, allora S contiene anche entrambe le sue componenti $\alpha_1$ e $\alpha_2$.
+>$H_2$ : Se S contiene una $\beta$-formula, allora S contiene anche almeno una delle sue componenti $\beta_1$ e $\beta_2$
+
+Diciamo che un tableau è completo se è chiuso, oppure se ogni formula $\mathcal F$ (che non sia una variabile o una variabile negata) sui rami aperti del tableau è stata espansa. Per esempio il tableau della [[Lezione 4 - Il metodo dei Tableaux per la logica proposizionale|lezione precedente]] non è completo perché le formule 3 e 4 non sono state espanse.
+
+>**Teorema** (completezza)
+>Se $\mathcal F$ è una tautologia allora è dimostrabile col metodo dei tableaux.
+
+**Dim.**
+Se non fosse dimostrabile allora partendo da $\lnot \mathcal F$ ed espandendo tutte le formule si otterrebbe un tableau completo con almeno un ramo aperto $\theta$ . L'insieme delle formule sul ramo $\theta$ quindi sarebbe un insieme di Hintikka. Ma ogni insieme di Hintikka è soddisfacibile. Quindi in particolare sarebbe soddisfacibile la formula $\lnot \mathcal F$, che è assurdo perché per ipotesi $\mathcal F$ è una tautologia.
+
