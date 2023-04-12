@@ -15,6 +15,9 @@ Esistono anche altri connettivi come l'implicazione ($\implies$) e l'equivalenza
 ![[LRL/img/img1.png|center|400]]
 
 # Formule ben formate
+
+^65fc78
+
 Ad ogni formula della logica proposizionale, possiamo associare una tabella di verità. Per esempio, la formula $p \land (q\lor \lnot{r})$ vale T $\iff$  $p$ è T e ($q$ è T oppure $r$ è F). 
 La tabella di verità sarà la seguente:
 
