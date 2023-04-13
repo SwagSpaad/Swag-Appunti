@@ -14,5 +14,8 @@
 	- **[[Capitolo 6.1 - Binary Search Tree|Capitolo 6.1]]** - Alberi binari di ricerca
 	- **[[Capitolo 6.2 - Alberi AVL|Capitolo 6.2]]** - Alberi AVL. Ribilanciamento tramite rotazioni.
 - **[[Capitolo 8 - Code con priorità, d-heap, heap binomiali e di Fibonacci|Capitolo 8]]**: Il problema della coda con priorità. D-heap, heap binomiali e heap di Fibonacci.   
-- **Capitolo 11**:
-- **Capitolo 13**:
+- **Capitolo 11**: Grafi e visite sui grafi.
+	- **[[Capitolo 11.1 - Grafi e visite di grafi|Capitolo 11.1]]** - Teoria dei grafi e terminologia.
+	- **[[Capitolo 11.2 - Strutture dati per rappresentare grafi|Capitolo 11.2]]** - Strutture dati per rappresentare i grafi. Visita in ampiezza e in profondità.
+	- **[[Capitolo 11.3 - Applicazioni della visita DFS|Capitolo 11.3]]** -  Applicazioni della visita DFS.
+- **[[Capitolo 13 - Cammini minimi|Capitolo 13]]**: Cammini minimi. Shortest Path Tree. Algoritmo di Dijkstra.
