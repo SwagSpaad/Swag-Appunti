@@ -6,7 +6,7 @@ $$((p \land q)\implies r)\implies(\lnot p \ \lor(q \implies r)), $$ ^7292d6
 
 $\mathcal {F}$ è una tautologia? Dalla lezione precedente sappiamo che per scoprirlo si utilizzano le tabelle di verità. Ma, per il momento accantoniamo le tabelle e concentriamoci su altro.
 
-1. Prendiamo $\lnot \ \mathcal F$ 
+1. Prendiamo $\lnot\mathcal F$ 
 $$\lnot [((p \land q ) \implies r) \implies (\lnot p \ \lor (q \implies r))]$$ ^b44b98
 
 Si osservi che questa formula è vera in qualche interpretazione $\iff$ $\mathcal F$ non è una tautologia. Quindi per vedere se $\mathcal F$ non è una tautologia possiamo dimenticarci di $\mathcal F$ e vedere se $\exists$ una intrpretazione che rende la formula vera.

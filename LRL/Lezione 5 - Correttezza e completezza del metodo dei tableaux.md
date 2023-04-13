@@ -5,7 +5,7 @@ Diciamo che $\mathcal F$ è **soddisfacibile** se esiste una interpretazione in 
 **Oss.**
 Una formula è soddisfacibile $\iff$ è una tautologia o contingenza.
 
-DIciamo che un insieme di formule S è soddisfacibile, se esiste una interpretazione in cui tutte le formule di  S sono T
+DIciamo che un insieme di formule S è soddisfacibile, se esiste una interpretazione in cui tutte le formule di S sono T
 
 Abbiamo visto col metodo dei tableaux che una formula $\mathcal F$ può essere di due tipi: una $\alpha$-formula o una $\beta$-formula
 
@@ -57,5 +57,5 @@ Diciamo che un tableau è completo se è chiuso, oppure se ogni formula $\mathca
 >Se $\mathcal F$ è una tautologia allora è dimostrabile col metodo dei tableaux.
 
 **Dim.**
-Se non fosse dimostrabile allora partendo da $\lnot \mathcal F$ ed espandendo tutte le formule si otterrebbe un tableau completo con almeno un ramo aperto $\theta$ . L'insieme delle formule sul ramo $\theta$ quindi sarebbe un insieme di Hintikka. Ma ogni insieme di Hintikka è soddisfacibile. Quindi in particolare sarebbe soddisfacibile la formula $\lnot \mathcal F$, che è assurdo perché per ipotesi $\mathcal F$ è una tautologia.
+Se $\mathcal F$ non fosse dimostrabile allora partendo da $\lnot \mathcal F$ ed espandendo tutte le formule si otterrebbe un tableau completo con almeno un ramo aperto $\theta$ . L'insieme delle formule sul ramo $\theta$ quindi sarebbe un insieme di Hintikka. Ma ogni insieme di Hintikka è soddisfacibile. Quindi in particolare sarebbe soddisfacibile la formula $\lnot \mathcal F$, che è assurdo perché per ipotesi $\mathcal F$ è una tautologia.
 
