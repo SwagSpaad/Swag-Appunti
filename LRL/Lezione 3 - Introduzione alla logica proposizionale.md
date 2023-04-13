@@ -6,7 +6,7 @@ Indichiamo con $p,\: q, \:r, ...$  delle variabili booleane, ossia variabili che
 A partire dalle variabili, che chiamiamo lettere proposizionali, possiamo costruire delle formule più complesse utilizzando i connettivi.
 Data una variabile $p$, indichiamo con $\lnot{p}$, la formula che è T $\iff$ $p$ è F (**negazione**).
 Indichiamo con $p \lor q$  la formula che è T  $\iff$ una fra $p$ e $q$ è T (**or, disgiunzione**).
-Indichiamo con $p \land q$ la formula che è T quando $p$ e $q$ sono entrambe T (**and, congiunzione**).
+Indichiamo con $p \land q$ la formula che è T quando $p$ e $q$ sono entrambe T (**and, congiunzione**). ^dcf684
 
 ![[LRL/img/img0.png|center|400]]
 

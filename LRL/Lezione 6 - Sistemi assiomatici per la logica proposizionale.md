@@ -27,7 +27,7 @@ Per esempio la formula $(q \implies r)\implies(p\implies(q \implies r))$ è un i
 >
 >![[LRL/img/img16.png|center|500]]
 >
->La sequenza di formule 1, 2, e 3 qui sopra è una dimostrazione secondo la [[#^3b63aa|definizione]]. Infatti, le formule 1 e 2 sono istanza di assiomi e la formula 3 si ottiene dalle due formule precedenti usando la regola di inferenza M.P., dove poniamo $X = (p \implies (q \implies p))$ e $Y = (p \implies q) \implies (p\implies p)$ 
+>La sequenza di formule 1, 2, e 3 qui sopra è una dimostrazione secondo la [[#^3b63aa|definizione]]. Infatti, le formule 1 e 2 sono istanze di assiomi e la formula 3 si ottiene dalle due formule precedenti usando la regola di inferenza M.P., dove poniamo $X = (p \implies (q \implies p))$ e $Y = (p \implies q) \implies (p\implies p)$ 
 
 >**Def.** (teorema)
 >In un sistema assiomatico un teorema è l'ultima formula di una dimostrazione.
