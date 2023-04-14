@@ -42,9 +42,9 @@ I simboli utilizzati nella logica del primo ordine sono:
 
 **Def.** (termine)
 Le variabili e le costanti sono **termini**. Se $t_{1},\dots,t_{n}$ sono termini e $f^{(n)}$ è una lettera funzionale con $n$ argomenti, allora anche $f^{(n)}(t_{1},\dots,t_n)$ è un termine.
-
+def.
 **Def.** (formula ben formata)
-Se $t_{1},\dots,t_{n}$ sono termini e $P^{(n)}$ è una lettera predicativa con $n$ argomenti, allora  $P^{(n)}(t_{1},\dots,t_{n})$ è una formula ben formata. Queste si chiamano formule atomiche, inoltre come nella logica proposizionale: 
+Se $t_{1},\dots,t_{n}$ sono termini e $P^{(n)}$ è una lettera predicativa con $n$ argomenti, allora  $P^{(n)}(t_{1},\dots,t_{n})$ è una formula ben formata. Queste si chiamano formule atomiche, inoltre come nella logica proposizionale:  ^c17a5b
 - Se $\mathcal F$ è una f.b.f., allora anche $\lnot F$ è una f.b.f.
 - Se $\mathcal F$ e $\mathcal G$ sono f.b.f., allora anche $\mathcal F \circ \mathcal G$  è una f.b.f. dove con $\circ$ abbiamo indicato uno qualunque dei connettivi $\land,\lor, \implies, \equiv$.
 - Se $\mathcal F$ è una f.b.f. e $x$ è una variabile, allora anche $\forall x\mathcal F$ e $\exists x \mathcal F$ sono f.b.f.
@@ -55,3 +55,42 @@ Data una f.b.f. $\mathcal F$, una sua interpretazione consiste in:
 - Una relazione per ogni lettera predicativa P in $\mathcal F$
 - Una funzione per ogni lettera funzionale $f$ in $\mathcal F$
 - Un elemento del dominio per ogni costante a in $\mathcal F$
+
+**Esempio**
+Consideriamo la formula $$\forall x \ \exists yP(f(x,a), y)$$
+>**Interpretazione 1**
+>Dominio: $\mathbb N$ 
+>$P(x,y)$ = "$x$ è uguale a $y$"
+>$f(x, y)$ = $x^y$
+>$a = 2$
+>In questa interpretazione la formula si legge "per ogni numero naturale $x$ esiste un numero naturale $y$ tale che $x^2=y$". Questa interpretazione è T
+
+>**Interpretazione 2**
+>Tutto come nell'interpretazione 1, ma $P(x,y)$ = "$x$ è maggiore di $y$". In questa interpretazione la formula si legge "per ogni numero naturale $x$ esiste un numero naturale $y$ tale che $x^2$ è maggiore di $y$". Quindi è F perché per $x = 1$ non è vera
+
+# Variabili libere e vincolate. Formule chiuse
+Per tutte le formule viste finora, una volta data un'interpretazione I, la formula risultava T o F. Tuttavia questo non è vero per ogni f.b.f. in accordo alla definizione di f.b.f.
+
+Osserviamo che la formula $\forall x P(x,y)$ è una f.b.f. Proviamo a darne un interpretazione con dominio $\mathbb N$ e $P(x,y)$ = "$x$ è maggiore di $y$". In questa interpretazione la formula si legge "per ogni numero naturale $x$ si ha che $x$ è maggiore di $y$". La formula quindi è vera o falsa? Non possiamo dirlo perché non sappiamo chi è $y$. In quella formula si dice che $x$ è una variabile **vincolata**, mentre $y$ è **libera**.
+
+**Def.** (variabili libere e vincolate)
+In una f.b.f. si dice **vincolata** una variabile che sta nel campo d'azione di un quantificatore, altrimenti si dice **libera**.
+
+**Oss.**
+Una stessa variabile può anche comparire libera in alcune occorrenze e vincolata in altre. Per esempio nella formula seguente la prima occorrenza della variabile $y$ è libera, mentre nella seconda è vincolata: $$\forall x[P(x)\land Q(y)]\implies \exists yQ(y)$$
+**Def.** (formule chiuse)
+Una f.b.f. senza variabili libere si dice **chiusa**.
+
+# Formule valide vs tautologie
+Negli esempi sopra abbiamo visto che ci sono formule che sono vere in ogni interpretazione
+
+**Def.** (formule valide)
+Una formula $\mathcal F$ vera in ogni interpretazione si dice **valida**.
+
+Perché allora non le chiamiamo tautologie? Perché riserviamo il termine per un sottoinsieme delle formule valide. Per esempio, consideriamo la formula $$\forall x P(x)\lor\lnot(\forall x P(x))$$
+Questa formula è del tipo $\mathcal F \lor \lnot\mathcal F$, che è chiaramente vera in ogni interpretazione. Nella logica del primo ordine si chiamano **tautologie** le formule che sono istanze di tautologie nella logica proposzionale. Per esempio la formula $$\forall x P(x)\implies(\exists xQ(x)\implies \forall xP(x))$$ si ottiene dalla formula $X \implies (Y \implies X)$. La formula sopra è una tautologia mentre ad esempio la formula $\forall x P(x)\implies \exists xP(x)$, pur essendo valida, non è una tautologia.
+
+Si noti che una tautologia è vera in ogni interpretazione indipendentemente dal significato che hanno i quantificatori, mentre una formula valida che non è una tautologia è vera in ogni interpretazione per il significato che hanno i quantificatori. 
+
+# Interdipendenza dei quantificatori
+I quantificatori $\forall$ e $\exists$ non sono indipendenti, nel senso che si può definire uno in funzione dell'altro. Per esempio la formula $\lnot \exists x P(x)$ è equivalente alla formula $\forall x \lnot P(x)$. Infatti, data una qualunque interpretazione, la prima sta dicendo che "non esiste un elemento $x$ per cui vale $P(x)$", la seconda sta dicendo che "per ogni elemento $x$ non vale $P(x)$".
