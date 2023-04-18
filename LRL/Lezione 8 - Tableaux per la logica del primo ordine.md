@@ -15,3 +15,10 @@ Nella logica del primo ordine, in aggiunta alle $\alpha$-formule e $\beta$-formu
 ![[LRL/img/img20.png|center|300]]
 
 Sebbene siano identiche, manca ancora qualcosa, ma prima vediamo il significato della regola.
+
+La prima regola afferma che se è vero che la proprità P vale per ogni elemento del dominio, allora prendiamo un elemento $a$ che appartenga al dominio per il quale la proprità P è vera.
+
+La seconda regola afferma che se è vero che esiste un elemento del dominio per il quale la proprietà P vale, allora prendiamo un elemento $a$ appartenente al dominio che faccia risultare vera la proprità.
+
+
+
