@@ -62,4 +62,4 @@ Per sommare i numeri in complemento a due si può utilizzare il metodo già vist
 e $(0010)_{\bar2}=(2)_{10}$ che è il risultato corretto.
 
 **Oss.**
-Nella somma sopra è stato trascurato il bit di riporto che sarebbe stato il quinto bit e il risultato è comunque corretto. Infatti in complemento a due a $k$ bit la somma non va in overflow quando c'è un riporto non nullo per il quale avrei bisogno di $k+1$ bit, ma quando sommo due numeri positivi la cui somma è maggiore di $2^{k-1}-1$ oppure quando sommo due numeri negativi la cui somma è minore di $-2^{k-1}$
+Nella somma sopra è stato trascurato il bit di riporto che sarebbe stato il quinto bit e il risultato è comunque corretto. Infatti in complemento a due a $k$ bit la somma non va in overflow quando c'è un riporto non nullo per il quale avrei bisogno di $k+1$ bit, ma quando sommo due numeri positivi la cui somma è maggiore di $2^{k-1}-1$ oppure quando sommo due numeri negativi la cui somma è minore di $-2^{k-1}$.
