@@ -18,7 +18,8 @@ Sebbene siano identiche, manca ancora qualcosa, ma prima vediamo il significato 
 
 La prima regola afferma che se è vero che la proprità P vale per ogni elemento del dominio, allora prendiamo un elemento $a$ che appartenga al dominio per il quale la proprità P è vera.
 
-La seconda regola afferma che se è vero che esiste un elemento del dominio per il quale la proprietà P vale, allora prendiamo un elemento $a$ appartenente al dominio che faccia risultare vera la proprità.
+La seconda regola afferma che se è vero che esiste un elemento del dominio per il quale la proprietà P vale, allora prendiamo un elemento $a$ appartenente al dominio che faccia risultare vera la proprità. Cosa manca?
+Quando incontriamo una formula del tipo $\exists x P(x)$ e aggiungiamo $P(a)$ al tableau, questo è legittimo, ma cosa succede se più avanti troviamo una formula del tipo $\exists x Q(x)$? Possiamo aggiungere al tableau $Q(a)$? No, perché non è detto che l'elemento per cui vale la proprietà $Q$ sia lo stesso per cui vale la proprietà $P$, quinid in questo caso dobbiamo scegliere un nuovo elemento, diciamo $b$. 
+Vale lo stesso anche se più avanti incontriamo una formula del tipo $\forall x Q(x)$? No, perché appunto $Q$ vale per ogni elemento del dominio, quindi anche per $a$. Riassumiamo le regole in questo modo:
 
-
-
+Dobbiamo anche stabilire delle regole per
