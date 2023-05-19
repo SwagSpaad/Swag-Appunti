@@ -1,5 +1,4 @@
 # Porte Logiche
-
 Quando si parla di circuiti si usa una notazione diversa per esprimere gli stessi concetti che abbiamo utilizzato nella logica proprosizionale: per esempio indichiamo con 0 e 1, False e True, rispettivamente.
 
 ![[LRL/img/img31.png|center|400]]
