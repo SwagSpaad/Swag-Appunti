@@ -62,3 +62,20 @@ In una mappa di Karnaugh tutti i mintermini che si possono semplificare sono adi
 Si noti inoltre che, siccome le colonne della mappa di Karnaugh sono indicizzate con il codice di $Gray$, l'ultima colonna è adicente alla prima.
 Si noti inoltre anche che l'1 in posizione $(x_{0},x_{1},x_{2})=(1,1,0)$ nella mappa in (5) è stato considerato due volte. Complessivamente quindi la forma semplificata che otteniamo dalla (5) è $$y = x_{0}x_{1}+ x_{0}\bar x_{2}$$
 dove l'implicamente $x_{0}x_{1}$ corrisponde al rettangolo blu in (5) mentre l'implicante $x_{0}\bar x_{2}$ corrisponde a quello rosso.
+SI noti che l'1 in poszione $(x_{0},x_{1},x_{2})= (1,1,0)$ nella mappa in (5) è stato considerato due volte. Complessivmente quindi la formula semplificata che otteniamo dalla (5) è $$y=x_{0}x_{1}+ x_{0}\bar x_{2}$$
+dove l'implicante $x_{0}x_{1}$ corrisponde al rettangolo blu in (5) mentre l'implicante $x_{0}\bar x_{2}$ corrisponde a quello rosso.
+
+Si osservi che nonostante gli 1 siano tutti adiacenti nella (5) non possiamo raggrupparli tutti e tre insieme in un unico implicante, mentre avremmo potuto farlo se fossero stati "quattro" adiacenti.
+## Ex: 
+In questo esempio si possono raggruppare gli 1 in questo modo
+
+![[LRL/img/img48.png|center|400]]
+
+Ottendeno la formula $x_{0}+\bar x_{1}x_{2}$ , dove l'implicante $x_{0}$ viene dal rettangolo blu e l'implicante $\bar x_{1}x_{2}$ viene dal rettangolo rosso.
+
+Se ci limitiamo a formule con al più quattro variabili, le mappe di Karnaugh ci consentono si semplificare una formula in forma normale disgiuntiva fino a ottenere il minor numero possibile di implicanti e con il minor numero di variabili per implicante. Per esempio, dalla seguente mappa di Karnaugh
+
+![[LRL/img/img49.png|center|400]]
+
+Corrisponde la seguente formula $$\bar x_{0}\bar x_{3}+ \bar x_{0}x_{1}+ x_{0}\bar x_{1} x_{3}$$ Dove il primo implicante $\bar x_{0}\bar x_{3}$, viene dal quadrato blu, il secondo implicante $\bar x_{0} x_{1}$ viene dal rettangolo verde e il terzo implicante, $x_{0}\bar x_{1}x_{3}$, viene dal rettangolo rosso.
+Osservate che se nella mappa (8) avessimo considerato dei rettangoli diversi, avremmo ottennuto una formula equivalente ma non minimizzata.
