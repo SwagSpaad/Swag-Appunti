@@ -1,36 +1,29 @@
-# Riduzione
-Si possoono ridurre le formule iniziali per risparmiare sul circuito
-
-## Ex:
-**Formula Iniziale non semplificata:**
+Data una formula in forma normale, come
 $$y = x_{0} \bar x_{1} \bar x_{2}+  x_{0} x_{1}\bar x_{2} + x_{0}x_{1}x_{2}$$
-**Inizio la semplificazione:**
-$$y = x_{0} \bar x_{1} \bar x_{2}+  x_{0} x_{1}\bar x_{2} + x_{0}x_{1}x_{2}=$$
-$$= x_{0} \bar x_{1} \bar x_{2}+ x_{0}x_{1}(\bar x_{2}+ x_{2})
-$$
-**Formula finale semplificata:**
-$$= x_{0} \bar x_{1} \bar x_{2}+ x_{0} x_{1}$$
-### Circuito Originale
+possiamo immediatamente costruire un circuto che la implementi, ma semplificandola possiamo risparmiare qualche porta sul circuito finale.
+La formula semplificata risulta quindi
+$$y = x_{0} \bar x_{1} \bar x_{2}+  x_{0} x_{1}\bar x_{2} + x_{0}x_{1}x_{2}=$$$$= x_{0} \bar x_{1} \bar x_{2}+ x_{0}x_{1}(\bar x_{2}+ x_{2})
+$$$$= x_{0} \bar x_{1} \bar x_{2}+ x_{0} x_{1}$$
+In foto notiamo la differenza tra i due circuiti:
+**circuito iniziale**
+![[LRL/img/img39.png|center|200]]
 
-![[LRL/img/img39.png|center|400]]
+**circuito ridotto**
+![[LRL/img/img40.png|center|200]]
 
-### Circuito Ridotto
-
-![[LRL/img/img40.png|center|400]]
-
-## Codici Gray e Mappe di Karnaugh
+# Codici Gray e Mappe di Karnaugh
 
 Confrontando la semplificazione che abbiamo svolto nel paragrafo precedente:
 $$x_{0}  x_{1} \bar x_{2}+x_{0}  x_{1} \bar x_{2}= x_{0}x_{1}(\bar x_{2}+ x_{2})=x_{0}x_1 $$
 Con la seguente tabella di verità:
 
-![[LRL/img/img41.png|center|400]]
+![[LRL/img/img41.png|center|200]]
 
 Si noti che abbiamo raccolto i due **mintermini** relativi agli 1 cerchiati in blu in un unico implicante, $x_{0}x_{1}$ dove la variabile $x_{2}$ è stata eliminata perchè assume valori di verità diversi nelle due righe cerchiate in verde della tabella di verità, mentre $x_{0}$ e $x_1$ compaiono asseriti, perchè il loro valore di verità è 1 in entrambe le righe. Si noti che allo stesso modo avremmo potuto semplificare:
 $$x_{0}  x_{1} \bar x_{2}+x_{0}  x_{1} \bar x_{2} = x_{0}\bar x_{1}$$
 dove a essere eliminata è la variabile $x_1$, mentre $x_0$ compare asserita e $x_2$ compare negata.
 
-![[LRL/img/img42.png|center|400]]
+![[LRL/img/img42.png|center|200]]
 
 Per evidenziare direttamente dalla tabella quali semplificazioni si possono fare, sarebbe utile scrivere le righe con un ordinamento in cui ogni riga differisca dalla precedente e dalla successiva per un unico bit. È possibile farlo?
 L'ordinamento usuale con cui scriviamo le $2^n$ righe di una tabella con $n$ variabili si può generare ricorsivamente in questo modo: 
@@ -44,7 +37,7 @@ Se nella costruzione precedente, quando "duplichiamo" la sequenza, la "ribaltiam
 
 Quindi se scriviamo una tabella di verità con le righe ordinate secondo il codice di $Gray$ alcune semplificazioni appariranno immediatamente evidenti. Per esempio, la tabella nella (3) verrebbe scritta così: 
 
-![[LRL/img/img45.png|center|400]]
+![[LRL/img/img45.png|center|200]]
 
 Dove i due 1 adiacenti cerchiati in blu evidenziano la semplificazione ($x_{0}  x_{1} \bar x_{2}+x_{0}  x_{1} x_{2} = x_{0}\bar x_{1}$). Si osservi però che mentre alcune semplificazioni si evidenziano, altre rimangono "nascoste", come per esempio la semplificazione che si può ottenere dalla quinta e ultima riga della tabella precedente ($x_{0}  x_{1} \bar x_{2}+x_{0} \bar x_{1} \bar x_{2} = x_{0}\bar x_{2}$).
 Per ottenere il massimo possibile da questa schematizzazione non è sufficiente ordinare le righe di una tabella secondo il codice di $Gray$, ma dobbiamo scrivere la tabella di verità in modo $bidimensionale$.
@@ -66,7 +59,8 @@ SI noti che l'1 in poszione $(x_{0},x_{1},x_{2})= (1,1,0)$ nella mappa in (5) è
 dove l'implicante $x_{0}x_{1}$ corrisponde al rettangolo blu in (5) mentre l'implicante $x_{0}\bar x_{2}$ corrisponde a quello rosso.
 
 Si osservi che nonostante gli 1 siano tutti adiacenti nella (5) non possiamo raggrupparli tutti e tre insieme in un unico implicante, mentre avremmo potuto farlo se fossero stati "quattro" adiacenti.
-## Ex: 
+
+**Esempio**
 In questo esempio si possono raggruppare gli 1 in questo modo
 
 ![[LRL/img/img48.png|center|400]]
