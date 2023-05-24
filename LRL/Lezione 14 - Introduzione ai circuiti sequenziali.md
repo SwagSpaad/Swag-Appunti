@@ -41,5 +41,15 @@ Come sarà la tabella di verità del circuito?
 
 ![[LRL/img/img67.png|center|250]]
 
-Con questo circuito quindi possiamo, per esempio, impostare per un attimo gli input a $(x_{0}, x_{1})=(1,\:0)$ e così settare il bit in output $y_{1}=1$ e il bit 
+Con questo circuito quindi possiamo, per esempio, impostare per un attimo gli input a $(x_{0}, x_{1})=(1,\:0)$ e così settare il bit in output $y_{1}=1$ e il bit $y_{0}= 0$, riportare gli input a $(x_{0},x_{1})= (0,0)$ e $y_{1}$, rimarrà a 1.
+Inoltre, impostando per un attimo gli input a $(x_{0}, x_{1})=(0,1)$ possiamo resettare il bit $y_{1} = 0$.
+Osservate che abbiamo  appena costruito una memoria: un circuito in grado di fissare un bit in output $yi$ a 0 o 1, a seconda dei valori assegnati agli input $(x_{0}, x_{1})$, e ricordare il bit assegnato a $y_{1}$ quando entrambi gli input tornano ad avere valore .
+Il circuito costruito si chiama SR - Latch: gli input si chiamano S e R (Set e Reset) e gli output $Q \ e \ \bar Q$, e il simbolo con cui si indica il circuito è quello in Figura (1).
+
+Osservate che chiamare gli output di un SR - Latch $Q  \ e \ \bar Q$ non è propriamente corretto, perchè se gli input R e S sono entrambi 1 e gli output sono entrambi zero. Inoltre impostare entrambi gli input a 1 crea anche un altro problema.
+
+![[LRL/img/img68.png|center|400]]
+
+Si deve assolutamente eliminare la possibilità che gli input siano entrambi 1
+
 
