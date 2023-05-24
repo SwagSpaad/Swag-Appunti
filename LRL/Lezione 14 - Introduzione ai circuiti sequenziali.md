@@ -57,25 +57,25 @@ Il circuito costruito qui sopra, oltre che a garantire che i due output $Q$ e $\
 Il circuito così costruito si chiama D-Latch e il simbolo usato è quello in Figura (2).
 Quando CLK = 1 si dice che il latch è trasparente, quando invece CLK = 0 si dice che il latch è opaco.
 
-# Flip-Flop e registri
+# Flip-flop e registri
 Un D-Latch ci consente di settare il valore di $Q$ quando CLK = 1 e tenerlo in memoria per tutto il tempo in cui CLK = 0. Tuttavia il fatto che il latch è "trasparente" quando CLK = 1 può essere uno svantaggio in alcuni casi. Consideriamo un circuito fatto così
 
 ![[img70.png|center|300]]
 
 Quando CLK = 0 non c'è nessun problema: il valore in input D sarà uguale al negato dell'output $Q$, ma il valore di $Q$ non cambia perchè il latch è opaco. Nel momento in cui poniamo CLK = 1 però creiamo un "paradosso logico".
 
-Questo problema può essere risolto mettendo in sequenza due D-Latch collegati ad un unica variabile CLK che entra negata nel primo latch e asserita nel secondo. Il circuito che otteniamo si chiama Flip-Flop: lo schema e il simbolo sono in Figura(3)
+Questo problema può essere risolto mettendo in sequenza due D-Latch collegati ad un unica variabile CLK che entra negata nel primo latch e asserita nel secondo. Il circuito che otteniamo si chiama flip-flop: lo schema e il simbolo sono in Figura(3)
 
 ![[LRL/img/img71.png|center|500]]
 
-In un D-FlipFlop:
+In un D-flip-flop:
 - Quando CLK = 0 il latch master è trasparente ma il latch slave è opaco
 - Quando CLK = 1 il latch slave è trasparente ma il latch master è opaco
 
-In altre parole, il FlipFlop fa passare il valore dell'input D all'output $Q$ solo "nel momento" in cui il valore di CLK passa da 0 a 1.
-Se si pensa all'input CLK come a una variabile che periodicamente cambia valore da 0 a 1 e viceversa, l'output $Q$ rappresenta lo stato lo stato attuale del FlipFlop e l'input D il suo stato futuro
+In altre parole, il flip-flop fa passare il valore dell'input D all'output $Q$ solo "nel momento" in cui il valore di CLK passa da 0 a 1.
+Se si pensa all'input CLK come a una variabile che periodicamente cambia valore da 0 a 1 e viceversa, l'output $Q$ rappresenta lo stato lo stato attuale del flip-flop e l'input D il suo stato futuro
 
-Una serie di FlipFlop con i clock sincronizzati costituiscono collegati un registro
+Una serie di flip-flop con i clock sincronizzati costituiscono collegati un registro
 
 ![[LRL/img/img72.png|center|450]]
 
@@ -83,4 +83,4 @@ Possiamo disegnare un registro a 4 bit anche in questo modo
 
 ![[LRL/img/img73.png|center|300]]
 
-I FlipFlop, come gli altri blocchi funzionali, possono avere ulteriori input. Per esempio per abilitarli o per resettarli.
+I flip-flop, come gli altri blocchi funzionali, possono avere ulteriori input. Per esempio per abilitarli o per resettarli.
