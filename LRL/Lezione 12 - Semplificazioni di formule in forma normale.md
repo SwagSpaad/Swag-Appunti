@@ -20,7 +20,8 @@ Con la seguente tabella di verità:
 ![[LRL/img/img41.png|center|200]]
 
 Si noti che abbiamo raccolto i due **mintermini** relativi agli 1 cerchiati in blu in un unico implicante, $x_{0}x_{1}$ dove la variabile $x_{2}$ è stata eliminata perchè assume valori di verità diversi nelle due righe cerchiate in verde della tabella di verità, mentre $x_{0}$ e $x_1$ compaiono asseriti, perchè il loro valore di verità è 1 in entrambe le righe. Si noti che allo stesso modo avremmo potuto semplificare:
-$$x_{0}  x_{1} \bar x_{2}+x_{0}  x_{1} \bar x_{2} = x_{0}\bar x_{1}$$
+$$x_{0}  x_{1} \bar x_{2}+x_{0}  \bar x_{1} \bar x_{2} = x_{0}\bar x_{2}$$
+
 dove a essere eliminata è la variabile $x_1$, mentre $x_0$ compare asserita e $x_2$ compare negata.
 
 ![[LRL/img/img42.png|center|200]]
@@ -39,7 +40,7 @@ Quindi se scriviamo una tabella di verità con le righe ordinate secondo il codi
 
 ![[LRL/img/img45.png|center|200]]
 
-Dove i due 1 adiacenti cerchiati in blu evidenziano la semplificazione ($x_{0}  x_{1} \bar x_{2}+x_{0}  x_{1} x_{2} = x_{0}\bar x_{1}$). Si osservi però che mentre alcune semplificazioni si evidenziano, altre rimangono "nascoste", come per esempio la semplificazione che si può ottenere dalla quinta e ultima riga della tabella precedente ($x_{0}  x_{1} \bar x_{2}+x_{0} \bar x_{1} \bar x_{2} = x_{0}\bar x_{2}$).
+Dove i due 1 adiacenti cerchiati in blu evidenziano la semplificazione ($x_{0}  x_{1} \bar x_{2}+x_{0}  x_{1} x_{2} = x_{0}x_{1}$). Si osservi però che mentre alcune semplificazioni si evidenziano, altre rimangono "nascoste", come per esempio la semplificazione che si può ottenere dalla quinta e ultima riga della tabella precedente ($x_{0}  x_{1} \bar x_{2}+x_{0} \bar x_{1} \bar x_{2} = x_{0}\bar x_{2}$).
 Per ottenere il massimo possibile da questa schematizzazione non è sufficiente ordinare le righe di una tabella secondo il codice di $Gray$, ma dobbiamo scrivere la tabella di verità in modo $bidimensionale$.
 
 ## Mappe di Karnaugh

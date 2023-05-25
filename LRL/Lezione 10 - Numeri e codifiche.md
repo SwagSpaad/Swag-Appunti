@@ -30,13 +30,13 @@ Quando lavoriamo con i numeri in binario in informatica, abbiamo bisogno di fiss
 # I parenti del sistema binario
 Un numero espresso in binario diventa una sequenza di zeri ed uni, che può essere conveniente scrivere in altri modi.
 Nella codifica **esadecimale** si utilizzano 16 simboli: le cifre da 0 a 9 e le prime lettere dell'alfabeto A, B, C, D, E, F per indicare i numeri da dieci a quindici.
-La sequenza esadecimale $(A2C)_{16}$ rappresenta il numero $(2602)_{10}$, infatti $$(A2C)_{16}=A\cdot16^{2}+2\cdot16^{1}+C\cdot16^{0}=10\cdot256+2\cdot16+12\cdot1=(2602)_{16}$$
+La sequenza esadecimale $(A2C)_{16}$ rappresenta il numero $(2602)_{10}$, infatti $$(A2C)_{16}=A\cdot16^{2}+2\cdot16^{1}+C\cdot16^{0}=10\cdot256+2\cdot16+12\cdot1=(2602)_{10}$$
 Siccome sedici è una potenza di 2, per passare da esadecimale a binario è sufficiente convertire in binario ogni singolo carattere esadecimale usando quattro bit e poi concatenarli. Per esempio siccome $(A)_{16}=(1010)_{2}$, $(2)_{16}=(0010)_{2}$ e $(C)_{16}=(1100)_{2}$, il numero $(A2C)_{16}$ in binario si scriverà
 $$101000101100$$
 
 # Codifica in complemento a due
 Nei paragrafi precedenti abbiamo visto come scrivere in binario i numeri naturali e abbiamo osservato che se abbiamo a disposizione $k$ bit possiamo codificare i numeri che vanno da $0$ a $2^{k}-1$. Per esempio con $k=4$ tutte le sequenze di 4 bit codificano in binario i numeri da 0 a 15. Come facciamo a codificare i numeri negativi?
-La prima idea potrebbe essere quella di usare un bit per il segno, quindi per esempio con 4 bit scriveremmo il numero $(2)_{10}=(0010)_{2}$ e il numero $(-2)_10=(1010)_{2}$. Questa codifica è legittima, ma presenta qualche caratteristica che la rende inefficace. Per esempio lo zero ha due codifiche differenti: 1000 e 0000, ma soprattutto la somma fra due numeri non si può più fare nel modo che abbiamo visto. Per esempio la somma di $(2)_{10}$ e $(-2)_{10}$ deve fare 0, ma se provo a farla in questa codifica ottengo
+La prima idea potrebbe essere quella di usare un bit per il segno, quindi per esempio con 4 bit scriveremmo il numero $(2)_{10}=(0010)_{2}$ e il numero $(-2)_{10}=(1010)_{2}$. Questa codifica è legittima, ma presenta qualche caratteristica che la rende inefficace. Per esempio lo zero ha due codifiche differenti: 1000 e 0000, ma soprattutto la somma fra due numeri non si può più fare nel modo che abbiamo visto. Per esempio la somma di $(2)_{10}$ e $(-2)_{10}$ deve fare 0, ma se provo a farla in questa codifica ottengo
 
 ![[LRL/img/img29.png|center|100]]
 
