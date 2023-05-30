@@ -5,7 +5,7 @@ $$y_{i}=\begin{cases} 1 \ \ se \   (i)_{10}=(x_{n-1} \ ..... \ x_{1}x_{0})_{2} \
 In altre parole il circuito decodifica la sequenza di bit in input ponendo a 1 l'output $y_{i}$ il cui indice $i \in \{0,1,....., 2^{n}-1\}$   è il numero intero rappresentato in binario dagli $n$ bit in input. Per esempio, se i due bit in input di un DECODER 2:4 sono $(x_{1},x_{0}) = (1, 0)$, i quattro bit in output devono essere $(y_{3}, y_{2}, y_{1}, y_{0})= (0, 1, 0, 0)$ .
 Si noti che in un decoder, qualunque sia la sequenza di bit in input, uno e uno solo degli output avrà valore 1.
 Come si costruisce tale circuito?
-Se $n = 1$ abbiamo un solo input $x_{0}$ e due output $y_{1},y_{0}$.  $y_{0}$ deve essere 1 quando $x_{0}= 0$ mentre $y_{1}$ deve essere 1 quando $x_{0}=1$  
+Se $n = 1$ abbiamo un solo input $x_{0}$ e due output $y_{1},y_{0}$ ; $y_{0}$ deve essere 1 quando $x_{0}= 0$ mentre $y_{1}$ deve essere 1 quando $x_{0}=1$  
 
 ![[LRL/img/img50.png|center|400]]
 
@@ -35,7 +35,7 @@ Possiamo anche ragionare più ad altro livello e osservare che, quando $s_{0}=0$
 
 ![[LRL/img/img54.png|center|350]]
 
-Si noti che il multiplexer implementa un $"if" : if s_{0} \  then \ x_{1} \ else \ x_{0}$ 
+Si noti che il multiplexer implementa un $if : if \ s_{0} \  then \ x_{1} \ else \ x_{0}$ 
 
 Possiamo costruire un MULTIPLEXER 4:1 anche usando un DECODER 2:4, quattro porte AND e una porta OR, come in figura (4)
 

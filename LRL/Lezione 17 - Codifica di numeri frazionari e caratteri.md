@@ -1,4 +1,4 @@
-# Un primo tentativo
+# Un primo tentativo 8=======D
 Sappiamo che le sequanze distinte di $n$ bit sono $2^n$, quindi ognuna di queste potrà rappresentare uno di $2^n$ "oggetti" diversi.  Abbiamo visto che se gli "oggetti" in questione sono i numeri interi senza segno, con la codifica binaria standard usiamo quelle sequenze di bit per indicare i numeri da 0 a $2^{n}-1$. Se gli oggetti che vogliamo rappresentare sono i numeri interi positivi e negativi, allora con la codifica in complemento a due a n bit indichiamo i numeri interi da $-2^{n-1}$ a $2^{n-1}-1$ .
 
 Per codificare i numeri frazionari, una prima idea potrebbe essere quella di usare una parte di bit per la parte intera e una parte dei bit per la parte frazionaria. Per esempio, se abbiamo $n=8$ bit e ne usiamo 4 per la parte intera e 4 per la parte frazionaria, allora la sequenza $01101100$ rappresenterebbe il numero
