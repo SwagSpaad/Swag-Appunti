@@ -1,3 +1,4 @@
+----
 # Addizionatore / Sottrattore a propagazione di riporto
 
 Quando abbiamo iniziato a parlare di circuiti abbiamo visto come sia semplice, usando solo porte logiche elementari, costruire un circuito, il FullAdder, che faccia la somma di 3 bit restituendo in output  un bit che indica la somma e uno che indica il riporto.
