@@ -34,7 +34,10 @@ La tabella di s è uno XOR mentre quella di c è un AND, quindi possiamo disegna
 
 In questo circuito l'output s è proprio la somma dei due bit di input, mentre l'output c'è il riporto. Un tale circuito si chiama Half Adder.
 Ricordiamo come facciamo la somma di due numeri espressi in binario.
+Quando facciamo la somma bit a bit su ogni colonna dobbiamo avere la possibilità di sommare tre bit, ovvero i due bit di $a$ e $b$ più un eventuale riporto proveniente dalla colonna $c_{out}$. L'half adder non è sufficiente per questo, ma per ottenere questo risultato abbiamo bisogno di un FULL ADDER che ha la tabella di verità qui sotto.
 
+![[LRL/img/img99.png|center|200]]
+ 
 # Forme normali e circuiti
 
 Se si ha una formula in forma normale è immediato ricavare un circuito e disegnarlo in un modo "standard" . Per esempio, data la seguente tabella di verità

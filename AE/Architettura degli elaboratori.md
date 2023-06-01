@@ -240,6 +240,7 @@ Quando S è impostato temporaneamente ad 1, lo stato del latch diventa Q = 1, in
 
 È un SR latch in cui i segnali agiscono solo quando il segnale di clock è attivo. Quando il clock vale 0, le porte AND generano in output il valore 0, indipendentemente dai valori di S ed R, impedendo al latch di cambiare stato. Quando il clock vale 1, le porte AND non bloccano i segnali di S ed R che tornano a pilotare lo stato del latch.
 Ma cosa succede nel caso in cui S = R = 1? Come cambiano gli stati? In questa circostanza il circuito è in uno stato instabile. Vediamo come risolvere questo problema.
+
 ##### D latch temporizzato
 Per risolvere l'ambiguità del latch SR, viene utilizzato un solo ingresso dati D. 
 - Quando D = 1 e il clock = 1, il latch va nello stato Q = 1
