@@ -11,5 +11,6 @@
   "interfaceFontFamily": "",
   "monospaceFontFamily": "",
   "showViewHeader": true,
-  "nativeMenus": false
+  "nativeMenus": false,
+  "theme": "obsidian"
 }

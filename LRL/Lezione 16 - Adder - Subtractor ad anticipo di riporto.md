@@ -11,7 +11,7 @@ Mettendo in serie k FullAdder, con $k \in \mathbb N$, otteniamo quindi un circui
 
 Se si interpreta il bit $C_{out}$ come il quinto bit della somma, allora il circuito in Figura (2) calcola correttamente la somma di qualunque coppia di numeri in binario a quattro bit $(a_{3},a_{2},a_{1},a_{0}), (b_{3},b_{2},b_{1},b_{0})$ restituendo di fatto un numero a cinque bit  $(C_{out},s_{3},s_{2},s_{1},s_{0})$.
 
-Interpretando le sequenze di bit come numeriin completamento a due, con una piccola modifica al circuito possiamo fare in modo che lo stesso circuito calcoli sia la somma che la sottrazione fra numeri in complemento a due a k bit, a seconda che il bit $C_{in}$ sia 0 oppure 1
+Interpretando le sequenze di bit come numeri x in completamento a due, con una piccola modifica al circuito possiamo fare in modo che lo stesso circuito calcoli sia la somma che la sottrazione fra numeri in complemento a due a k bit, a seconda che il bit $C_{in}$ sia 0 oppure 1
 
 ![[LRL/img/img93.png|center|400]]
 
