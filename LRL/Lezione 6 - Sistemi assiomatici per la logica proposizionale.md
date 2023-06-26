@@ -14,7 +14,7 @@ Nella lezione con il simbolo $\mathcal S_{0}$ indicheremo il sistema assiomatico
 >**Def.**
 >Diciamo che una formula $\mathcal F$ è un istanza di un assioma, se si ottiene da uno schema di assioma, sostituendo ad ogni lettera dello schema una formula. 
 
-Per esempio la formula $(q \implies r)\implies(p\implies(q \implies r))$ è un istanza dell'assioma $A_1$, perché si ottiene da $A_1$ sostituendo $(q \implies r)$ alla lettera $X$ e $p$ alla lettera $Y$.
+Per esempio la formula $(q \implies r)\implies(p\implies(q \implies r))$ è un istanza dell'assioma $A_1,$ perché si ottiene da $A_1$ sostituendo $(q \implies r)$ alla lettera $X$ e $p$ alla lettera $Y$.
 
 # Teoremi e dimostrazioni
 >**Def.** (dimostrazione)
@@ -41,7 +41,7 @@ Un concetto che estende quello di dimostrazione è quello che chiamiamo derivazi
 Introduciamo dei simboli. Quando una formula $\mathcal F$ deriva da un insieme $\mathcal T$ in un sistema assiomatico $\mathcal S$, scriviamo $\mathcal T \vdash_{\mathcal S}\mathcal F$. Quando il sistema $\mathcal S$ di cui stiamo parlando è chiaro dal contesto lo omettiamo e scriviamo semplicemente $\mathcal T \vdash \mathcal F$. 
 
 **Esempio**
-Consideriamo sempre il nostro sistema assiomatico $\mathcal S_0$ e facciamo vedere che la formula $p \implies r$ deriva dalle formule $p\implies q$ e $q\implies r$; in simboli: $$p\implies q,\: (q \implies r) \vdash (p \implies r)$$
+Consideriamo sempre il nostro sistema assiomatico $\mathcal S_0$ e facciamo vedere che la formula $p \implies r$ deriva dalle formule $p\implies q$ e $q\implies r$; in simboli: $$(p\implies q),\: (q \implies r) \vdash (p \implies r)$$
 Chiamiamo $p\implies q$ e $q\implies r$ rispettivamente *ipotesi1* e *ipotesi2*.
 
 ![[LRL/img/img17.png|center|600]]

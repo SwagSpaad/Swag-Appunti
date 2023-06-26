@@ -46,7 +46,7 @@ Inoltre, impostando per un attimo gli input a $(x_{0}, x_{1})=(0,1)$ possiamo re
 Osservate che abbiamo appena costruito una memoria: un circuito in grado di fissare un bit in output $y_i$ a 0 o 1, a seconda dei valori assegnati agli input $(x_{0}, x_{1})$, e ricordare il bit assegnato a $y_{1}$ quando entrambi gli input tornano ad avere valore.
 Il circuito costruito si chiama SR - Latch: gli input si chiamano S e R (Set e Reset) e gli output $Q \ e \ \bar Q$.
 
-Osservate che chiamare gli output di un SR - Latch $Q  \ e \ \bar Q$ non è propriamente corretto, perchè se gli input R e S sono entrambi 1 e gli output sono entrambi zero. Inoltre impostare entrambi gli input a 1 crea anche un altro problema.
+Osservate che chiamare gli output di un SR - Latch $Q  \ e \ \bar Q$ non è propriamente corretto, perchè se gli input R e S sono entrambi 1, gli output sono entrambi zero. Inoltre impostare entrambi gli input a 1 crea anche un altro problema.
 
 ![[LRL/img/img68.png|center|400]]
 

@@ -16,7 +16,7 @@ Ricordiamo che con il metodo dei tableaux quello che facciamo è costruire una s
 
 ![[LRL/img/img12.png|center|300]]
 
-a seconda che la formumla che si sta espandendo sia una $\alpha$-formula o una $\beta$-formula.
+a seconda che la formula che si sta espandendo sia una $\alpha$-formula o una $\beta$-formula.
 Per esempio, con riferimento al caso visto in dettaglio nella [[Lezione 4 - Il metodo dei Tableaux per la logica proposizionale|lezione 4]], il primo tableaux $T_0$ è la [[Lezione 4 - Il metodo dei Tableaux per la logica proposizionale#^b44b98|negazione]] di $\mathcal F$. Siccome $T_0$  è una $\alpha$-formula, $T_1$ è ottenuto estendendo $T_0$ tramite una regola $\alpha$.
 
 ![[LRL/img/img13.png|center|400]]

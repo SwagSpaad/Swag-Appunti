@@ -72,9 +72,7 @@ Consideriamo il connettivo seguente, che chiamiamo **joint denial** (NOR in term
 - $p \downarrow p$ è **F** quando $p$ è **T** ed è **T** quando $p$ è **F**. In altri termini $p \downarrow p$ è equivalente a $\lnot p$
 - La tabella di verità di $\downarrow$ è la negazione di quella di $\lor$, ossia $p\downarrow q$ è equivalente a $\lnot(p\lor q)$. Ma allora $p \lor q$ deve essere equivalente a $\lnot(p\downarrow q)$, che a sua volta, per il punto precedente deve essere equivalente a $(p \downarrow q)\downarrow(p \downarrow q)$.
 
-Siccome possiamo definire i connettivi $\lnot$ e $\lor$ in termini del connettivo $\downarrow$  per quanto visto  
-all’inizio di questa sezione, possiamo definire anche tutti gli altri connettivi in termini del  
-connettivo $\downarrow$.  
+Siccome possiamo definire i connettivi $\lnot$ e $\lor$ in termini del connettivo $\downarrow$  per quanto visto all’inizio di questa sezione, possiamo definire anche tutti gli altri connettivi in termini del connettivo $\downarrow$.  
 Oltre a $\downarrow$, c’è un altro connettivo che, da solo, può essere usato per definire tutti gli  
 gli altri: lo indichiamo con $|$ e lo chiamiamo **alternative denial** (oppure nand). 
 

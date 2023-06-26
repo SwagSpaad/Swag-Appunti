@@ -27,8 +27,7 @@ Si consideri un addizionatore/sottrattore a 16 bit e immaginiamolo diviso in 4 a
 ![[LRL/img/img94.png|center|400]]
 
 Chiamiamo $C_i$ il riporto in ingresso dell'$i$-esimo FullAdder.
-Per migliorare l'efficienza del circuito.
-Per migliorare l'efficienza del circuito, in temrini di velocità di propagazione del segnale da $C_{0}$ fino a $C_{16}$ , possiamo provare a fare in modo di precomputare in ogni blocco quattro bit qualcosa che ci consenta di non dover far passare i bit dei vari riporti in ognuno dei 16 FullAdder. Vediamo.
+Per migliorare l'efficienza del circuito, in termini di velocità di propagazione del segnale da $C_{0}$ fino a $C_{16}$ , possiamo provare a fare in modo di precomputare in ogni blocco quattro bit qualcosa che ci consenta di non dover far passare i bit dei vari riporti in ognuno dei 16 FullAdder. Vediamo.
 Si consideri il generico FullAdder $i$-esimo, per $i=0,...,15$ e osserviamo che:
 - Se $a_{i}b_{i}=1$ allora il FullAdder genera il bit di riporto $C_{i+1}=1$ indipendentemente se il suo riporto in entrata $C_{i}$ sia 0 o 1;
 - Se $a_{i}\oplus b_{i}=1$ allora il FullAdder propaga il bit di riporto: $C_{i+1}=C_i$ 
@@ -40,7 +39,7 @@ Applicando la relazione precedente con $i= 7$ abbiamo, per esempio, che il ripor
 abbiamo che:$$\begin{align} C_{8}&= g_{7}+p_{7}c_{7} \\
 &=g_{7}+ p_{7}(g_{6}+ p_{6}C_{6}) \\ 
 &= g_{7}+p_{7}g_{6}+p_{7}p_{6}C_{6}\end{align}$$
-Una volta precomputati A e B, nel momento jin cui arriva il riporto in entrata $c_{4}$ l'adder a 4-bit può calcolare il riporto $c_{8}$ in uscita usando solo una porta AND e una porta OR
+Una volta precomputati A e B, nel momento in cui arriva il riporto in entrata $c_{4}$ l'adder a 4-bit può calcolare il riporto $c_{8}$ in uscita usando solo una porta AND e una porta OR
 
 ![[LRL/img/img95.png|center|400]]
 
