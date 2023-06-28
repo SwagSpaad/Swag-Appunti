@@ -26,7 +26,7 @@ Complessivamente quindi la codifica del nostro numero $-76,28125$ sarà
 
 ![[LRL/img/img97.png|center|400]]
 
-che espresso in esadecimale diventa $1100 \ 0010 \ 1001 \ 1000 \ 0000 \ 0000 \ 0000 = C2989000$. 
+che espresso in esadecimale diventa $1100 \ 0010 \ 1001 \ 1000 \ 1001 \ 0000 \ 0000 \ 0000 = C2989000$. 
 
 Alcune sequenze di 32 bit sono riservate a codificare numeri speciali:
 
