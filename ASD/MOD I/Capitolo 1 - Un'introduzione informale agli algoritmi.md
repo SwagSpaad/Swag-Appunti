@@ -14,7 +14,7 @@ La riproduzione dei conigli può essere descritta in un albero:
 
 ![[ASD/MOD I/img/img0.png|center|600]]
 
-### La regola di espansione
+y### La regola di espansione
 
 ^3d1572
 
@@ -53,7 +53,7 @@ $\phi\approx 1.618 \ e \ \hat{\phi}\approx -0.618$
 
 Utilizzare direttamente la [[#^3d1572|definizione ricorsiva]]
 Algoritmo**Fibonacci2** $(intero\ n)\rightarrow intero$
- 1. $if \: (n\geq 2)\: then\ return \: 1$ 
+ 1. $if \: (n\leq 2)\: then\ return \: 1$ 
  2. $else \: return$ Fibonacci2$(n-1)$ + Fibonacci2$(n-2)$
 
 ##### Tempo di esecuzione

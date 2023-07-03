@@ -11,5 +11,6 @@
     "en-US",
     "it"
   ],
-  "spellcheck": false
+  "spellcheck": false,
+  "promptDelete": false
 }
