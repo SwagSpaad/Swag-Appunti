@@ -102,7 +102,7 @@ Algoritmo**Fibonacci3**$(intero \ n )\rightarrow intero$
 1. sia Fib un array di n interi
 2. Fib[1] $\leftarrow$ Fib[2] $\leftarrow$ 1
 3. $for$ i=3 $to$ n $do$
-4. Fib[i]$\leftarrow$Fib[i-l]+Fib[i-2] 
+4. Fib[i]$\leftarrow$Fib[i-1]+Fib[i-2] 
 5. $return$ Fib[n]  
 
 ^dd465d
