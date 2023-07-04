@@ -152,18 +152,19 @@ $3^8=81^{2}=6561\implies$Si eseguono solo 3 prodotti invece di 7
 #### Algoritmo Fibonacci6
 Algoritmo**Fibonacci6**$(intero \ n )\rightarrow intero$
 1. $A \leftarrow$ $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
-2. $M \leftarrow potenzadiMatrice(A,n-1)$
+2. $M \leftarrow PotenzaDiMatrice(A,\: n-1)$
 3. Return M $[\:0\:][\:0\:]$
+
 Funzione potenzadiMatrici(Matrice A, intero k) $\implies$ matrice
-1. if (k = 0) return $\begin {bmatrix} 1 & 1 \\ 1 & 0 \end {bmatrix}$
-2. else M $\leftarrow$ potenzadiMatrice (A, $\lfloor\frac {k}{2}\rfloor$)
-3. M $\leftarrow$ M $\cdot$ M
+1. if (k = 0) return $\begin {bmatrix} 1 & 0 \\ 0 & 1 \end {bmatrix}$
+3. else M $\leftarrow$ PotenzaDiMatrice (A, $\lfloor\frac {k}{2}\rfloor$)
+	1.  M $\leftarrow$ M $\cdot$ M
 4. if (k è dispari ) then M $\leftarrow$ M $\cdot$ A
 5. return M
 
 ##### Tempo di esecuzione
-Tutto il tempo è speso nella procedura potenzadiMatrice:
-- All'interno della procedura si spedne tempo costante
+Tutto il tempo è speso nella procedura PotenzaDiMatrice:
+- All'interno della procedura si spende tempo costante
 - Chiamata ricorsiva con input $\lfloor \frac {k}{2}\rfloor$
 L'equazione di ricorrenza è pertanto:
 $$T(n) \leq T\left(\lfloor \frac {n}{2}\rfloor\right) + c$$
