@@ -115,7 +115,7 @@ $T(n)=O(n2^n)$
 
 ![[ASD/MOD I/img/img22.png]]
 
-In questo esempio possiamo verificare che a sinistra l'albero scende ogni volta di n/3, mentre a destra scende di 3n/2; da questo possiamo dedurre che da sinistra l'albero sarà alto $log_3n$ mentre da destra $log_{3/2}n$
+In questo esempio possiamo verificare che a sinistra l'albero scende ogni volta di n/3, mentre a destra scende di 3n/2; da questo possiamo dedurre che da sinistra l'albero sarà alto $\log_3n$ mentre da destra $\log_{3/2}n$
 
 Studiamo upper bound e lower bound
 
