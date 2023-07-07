@@ -75,8 +75,8 @@ Ha soluzione se:
 
 **Esempi**
 1. $T(n)=n+2T(n/2),a=2,b=2,f(n)=n=\Theta(n^{\log_22})$ caso 2 del teorema master e quindi $T(n)=\Theta(n\log(n))$ 
-2. $T(n)=c+3T(n/9),a=3,b=9,f(n)=c=O(n^{\log_93-\epsilon})$ caso 1 del teorema master e quindi $T(n)=\Theta(\sqrt(n))$
-3. $T(n)=n+3T(n/9),a=3,b=9,f(n)=n=\Omega(n^{\log_93+\epsilon}),3T(n/9)\leq cn\:per\:c=1/3$ caso 3 del teorema master, es: $\epsilon=0.1$ e quindi $T(n)=\Theta(n)$
+2. $T(n)=c+3T(n/9),a=3,b=9,f(n)=c=O(n^{\log_93-\epsilon})$ caso 1 del teorema master e quindi $T(n)=\Theta(\sqrt{n})$
+3. $T(n)=n+3T(n/9),a=3,b=9,f(n)=n=\Omega(n^{\log_93+\epsilon}),\:3T(n/9)\leq cn\:per\:c=1/3$ caso 3 del teorema master, es: $\epsilon=0.1$ e quindi $T(n)=\Theta(n)$
 4. $T(n)=n\log(n)+2T(n/2), a=2,b=2,f(n)=\omega(n^{\log_22})$ ma $f(n)\neq\Omega(n^{\log_22+\epsilon}),\forall\epsilon\gt0$
  per l'esempio 4 non si può applicare il teorema master perchè non ci troviamo in nessuno dei 3 casi del teorema, per verificale dovremmo verificare che $nlog(n)=\Omega(n^{1+\epsilon})$
  Vediamo: $lim_{n\to\infty}{\frac{n\log(n)}{n^2}}=\frac{\log(n)}{n}=0$ e quindi $n\log(n)=\omega(n^{1+\epsilon})$
@@ -84,7 +84,7 @@ Ha soluzione se:
 ## Cambiamento di variabile
 
 **Esempio**
-$T(n)=T(\sqrt(n))+O(1)$
+$T(n)=T(\sqrt{n})+O(1)$
 
 $T(n)=T(n^{1/2})+O(1)$
 $n=2^x\implies x=\log_2n$
