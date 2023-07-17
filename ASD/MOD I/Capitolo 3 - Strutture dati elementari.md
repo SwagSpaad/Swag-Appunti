@@ -110,7 +110,7 @@ Se v è la radice allora `P[v].parent = null`.
 >- tempo per individuare uno o più figli di un nodo: $O(n)$
 
 **Vettore posizionale**
-Nel caso partiolare di alberi d-ari completi con $d \geq 2$, si utilizza una struttura indicizzata dove ogni nodo ha una posizione prestabilita nella struttura. Sia T un albero d-ario con n nodi numerati. Un vettore posizionale è un array P di dimensione n tale che `P[v]` contiene l'informazione associata al nodo v, e tale che l'informazione associata all'i-esimo figlio di v è in posizione $P[d\cdot v +i]$, per i compreso tra 0 e d-1. 
+Nel caso particolare di alberi d-ari completi con $d \geq 2$, si utilizza una struttura indicizzata dove ogni nodo ha una posizione prestabilita nella struttura. Sia T un albero d-ario con n nodi numerati. Un vettore posizionale è un array P di dimensione n tale che `P[v]` contiene l'informazione associata al nodo v, e tale che l'informazione associata all'i-esimo figlio di v è in posizione $P[d\cdot v +i]$, per i compreso tra 0 e d-1. 
 
 In un albero binario completo, il figlio sinistro di v sarà in posizione 2v, mentre il figlio destro in posizione 2v+1. 
 
@@ -134,7 +134,7 @@ Gli algoritmi di visita si distinguono in nodi base al particolare ordine di acc
 #### Algoritmo di visita in profondità (DFS)
 
 **Def.**
-L'algoritmo di visita in profondità (DFS) parte da r (radice) e procede visitando nodi di figlio in figlio, fino a raggiungere una foglia. Retrocede poi al primo antenato che ha ancora figli non visitati (se esiste) e ripete il procedimento a partire da uno di quei figli.
+L'algoritmo di visita in profondità (DFS) parte da r (radice) e procede visitando i nodi di figlio in figlio, fino a raggiungere una foglia. Retrocede poi al primo antenato che ha ancora figli non visitati (se esiste) e ripete il procedimento a partire da uno di quei figli.
 
 ![[ASD/MOD I/img/img78.png|center|400]]
 ![[ASD/MOD I/img/img79.png|center|400]]
