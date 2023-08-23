@@ -4,8 +4,8 @@
 ## Espressioni regolari
 
 **Def.**
-Dato un alfabeto $\Sigma$ e dato l'insieme di simboli $(+,\star,(,),\cdot,\emptyset)$ si definisce **espressione regolare** sull'alfabeto $\Sigma$ una stringa
-$$r\in(\Sigma\:\cup(+,\star,(,),\cdot,\emptyset))^+$$
+Dato un alfabeto $\Sigma$ e dato l'insieme di simboli $\{+,\star,(,),\cdot,\emptyset\}$ si definisce **espressione regolare** sull'alfabeto $\Sigma$ una stringa
+$$r\in(\Sigma\:\cup\{+,\star,(,),\cdot,\emptyset\})^+$$
 tale che valga una delle seguenti condizioni:
 1. $r=\emptyset$
 2. $r\in\Sigma$

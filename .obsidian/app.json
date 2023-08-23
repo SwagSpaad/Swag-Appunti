@@ -7,10 +7,7 @@
     "downscalePercent": 85
   },
   "alwaysUpdateLinks": true,
-  "spellcheckLanguages": [
-    "en-US",
-    "it"
-  ],
+  "spellcheckLanguages": null,
   "spellcheck": false,
   "promptDelete": false
 }
