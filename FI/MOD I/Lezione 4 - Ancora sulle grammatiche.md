@@ -65,7 +65,7 @@ in cui si esprime il fatto che A può essere sostituito da $\gamma$ in una forma
 **Def.**
 Dette anche **non contestuali** o **contex free** (CF), ammettono solo produzioni del tipo:
 $$A\to\beta,A\in V_N,\:\beta\in V^+$$
-cioè produzioni in cui ogni non terminale A piò essere riscritto in una stringa $\beta$ indipendentemente dal contesto in cui esso si trova
+cioè produzioni in cui ogni non terminale A può essere riscritto in una stringa $\beta$ indipendentemente dal contesto in cui esso si trova
 
 **Esempio**
 Grammatica che genera espressioni aritmetiche di somme e moltiplicazioni in una variabile i:
@@ -88,7 +88,7 @@ Dunque il linguaggio in questione è context free.
 
 Dette anche **lineari destre o regolari**, ammettono solo produzioni del tipo:
 $$A\to\delta,A\in V_N,\delta\in (V_T\circ V_N)\cup V_T$$
-il termine "regolare" deriva dal fatto che i corrispondenTi linguaggi sono rappresentabili per mezzo di espressioni regolari.
+il termine "regolare" deriva dal fatto che i corrispondenti linguaggi sono rappresentabili per mezzo di espressioni regolari.
 
 I linguaggi generabili da queste gramamtiche vengono detti **linguaggi di tipo 3 o regolari**.
 
@@ -113,7 +113,7 @@ Per ogni $0\leq n\leq 2$, ogni grammatica di tipo n+1 è anche di tipo n: pertan
 ![[FI/img/img5.png|center|200]]
 
 ## Grammatiche con $\epsilon$-produzioni
-Dalle definizioni, non è possibile generare la stringa vuota con grammatiche di tipo 1, 2 ,3
+Dalle definizioni, non è possibile generare la stringa vuota con grammatiche di tipo 1, 2, 3.
 Linguaggi contenenti $\epsilon$ possono però essere generati apportando lievi modifiche (aggiunta di opportune $\epsilon$-produzioni) alle grammatiche non contestuali e regolari
 
 Se una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$ di tipo 1, 2 o 3 genera un linguaggio L, per poter generare il linguaggio $L\cup\epsilon$ è sufficente utilizzare la gramamtica
@@ -148,7 +148,7 @@ genera $ab^\star bb\cup\lbrace\epsilon\rbrace\cup b^\star b$
 L'aggiunta non controllata di $\epsilon$-produzioni può aumentare in modo sostanziale il potere generativo della grammatica
 
 >**Teorema** 
->Data una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$ di tipo 0, esiste una grammatica di tipo $\mathcal G'$ equivalente a $\mathcal G$, ottenuta estendendo una grammatica di tipo 1 con opportune $\epsilon$-produzioni
+>Data una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$ di [[Riepilogo#^432bae|tipo 0]], esiste una grammatica di tipo $\mathcal G'$ equivalente a $\mathcal G$, ottenuta estendendo una grammatica di [[Riepilogo#^da2967|tipo 1]] con opportune $\epsilon$-produzioni
 
 La grammatica $\mathcal G'=\langle V_T',V_N',P',S'\rangle$ è caratterizzata da: $V_T'=V_T,V_N'=V_N\cup\lbrace X\rbrace$,con $X\not\in V_N,S'=S\:e\:P'$ ottenuto da $P$ aggiungendo la produzione $X\to\epsilon$ e sostituendo ad ogni produzione $\phi\to\psi$, con $|\phi|\gt|\psi|\gt 0$ la produzione:
 $$\phi\to\psi\:\:\underbrace {X...X}_{|\phi|-|\psi|}$$
@@ -161,18 +161,18 @@ Avendo una forma di frase del tipo $CaABBC$ e applicando la produzione 1 avremo 
 Mentre se applicassimo la produzione con X avremo la stringa $CaABBC\to CaAXBC\to CaABC$.
 Il risultato è equivalente.
 
-Questo ci dice che introdurre le $\epsilon$-produzioni in una grammatica [[#Grammatiche di tipo 1 (Contex Sensitive)|CS]] è qualcosa che in realtà ci porta fuori dalla classe delle grammatiche, e quindi otterremo l'effetto delle grammatiche di tipo 0.
+Questo ci dice che introdurre le $\epsilon$-produzioni in una grammatica [[Riepilogo#^da2967|CS]] è qualcosa che in realtà ci porta fuori dalla classe delle grammatiche, e quindi otterremo l'effetto delle grammatiche di tipo 0.
 Sostanzialmente possiamo dire che se aggiungiamo una $\epsilon$-produzione in una grammatica di tipo 1 (CS), allora poi otterremo una grammatica di tipo 0.
 
 ### Grammatiche di tipo 2 o 3 con $\epsilon$-produzioni
 
 L'aggiunta indiscriminata di $\epsilon$-produzioni non altera il potere generativo delle grammatiche.
-Si può dimostrare che data una gramamtica di tipo 2 o 3 estesa con $\epsilon$-produzioni, ne possiamo sempre costruire una qeuivalente, dello stesso tipo, che usa $\epsilon$-produzioni solo a partire dall'assioma (nel caso in cui $\epsilon$ appartenga al linguaggio da generare) o non ne usa affatto (in caso contrario).
+Si può dimostrare che data una gramamtica di [[Riepilogo#^75297e|tipo 2]] o [[Riepilogo#Grammatica tipo 3|3]] estesa con $\epsilon$-produzioni, ne possiamo sempre costruire una qeuivalente, dello stesso tipo, che usa $\epsilon$-produzioni solo a partire dall'assioma (nel caso in cui $\epsilon$ appartenga al linguaggio da generare) o non ne usa affatto (in caso contrario).
 
 >**Teorema**
->Data una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$ il cui insieme di produzioni P comprende soltanto produzioni di tipo [[#Grammatiche di tipo 2 (Context Free)|non contestuale]] e produzioni vuote, esiste una grammatica non contestuale $\mathcal G'$ tale che $L(\mathcal G')=L(\mathcal G)-\lbrace\epsilon\rbrace$
+>Data una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$ il cui insieme di produzioni P comprende soltanto produzioni di tipo [[Riepilogo#^75297e|non contestuale]] e produzioni vuote, esiste una grammatica non contestuale $\mathcal G'$ tale che $L(\mathcal G')=L(\mathcal G)-\lbrace\epsilon\rbrace$
 
-Derivazione di $\mathcal G'\:da\:\mathcal G$
+Derivazione di $\mathcal G'$ da $\mathcal G$
 1. determinazione dei simboli che si annulalno, cioè i non terminali da cui è possibile derivare $\epsilon$
 2. per ogni produzione $A\to\alpha$ di P, con l'esclusione delle $\epsilon$-produzioni, se nessun simbolo di $\alpha$ si annulla $A\to\alpha$ va in in $P'$; altrimenti a $P'$ si aggiungono tutte le possibili produzioni ottenute da $A\to\alpha$ eliminando da un $\alpha$ un sottoinsieme dei simboli che si annullano, considerati con la propria molteplicità
 

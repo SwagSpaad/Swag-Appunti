@@ -38,9 +38,9 @@ Qualunque albero sintattico $A(\sigma)$ relativo ad una stringa $\sigma\in V_T^\
 
 Poniamo $s(\sigma)=w$ e $r(\sigma)=vwx$
 
-![[appunti fi/mod i/immagini/Pasted image 20221206094941.png|center|400]]
+![[FI/img/img51.png|center|400]]
 
-![[appunti fi/mod i/immagini/Pasted image 20221206095016.png|center|400]]
+![[FI/img/img52.png|center|400]]
 
 - Gli alberi $R(\sigma),S(\sigma)$ possono essere sostituiti (avendo radice corrispondente allo stesso non terminale) l'uno all'altro all'interno di qualunque albero sintattico
 - Quindi, anche la stringa $uvy$ è generata dalla grammatica (sostituendo in $A(\sigma),R(\sigma)\:e\:S(\sigma)$)

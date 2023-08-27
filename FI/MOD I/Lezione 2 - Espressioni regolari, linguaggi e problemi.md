@@ -72,7 +72,7 @@ Consideriamo le descrizioni utilizzando un alfabeto dato, ad esempio, ancora $\l
 - Una descrizione/algoritmo è una stringa su $\lbrace 0,1\rbrace$
 - Dato un qualunque alfabeto finito, l'insieme delle stringhe corrispondenti è numerabile
 
-**Conseguenza**: ci sono più problemi di decisione(linguaggi) che loro descrizioni finite(algoritmi). Quindi,esistono problemi/linguaggi non descrivibili in modo finiti e non decidibili mediante algoritmi $\square$ 
+**Conseguenza**: ci sono più problemi di decisione (linguaggi) che loro descrizioni finite (algoritmi). Quindi, esistono problemi/linguaggi non descrivibili in modo finito e non decidibili mediante algoritmi $\square$ 
 
 Quanto detto vale nel caso di descrizioni/algoritmi più generali possibili. Che succede se consideriamo delle restizioni nelle modalità di descrizione?
 Perchè dovremmo porci la questione?

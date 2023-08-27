@@ -53,7 +53,7 @@ che per costruzione vale proprio $[ q_{j_1},...,q_{j_h}]$
 
 La dimostrazione è completa osservando che $\overline\delta'([q_0],x)\in F'$ esattamente quando $\delta_N(q_0,x)$ contiene uno stato di $Q$ che è in $F$. $\square$ 
 
-## Equivalenza tra ASF,RG e RE
+## Equivalenza tra ASF, RG e RE
 
 ### ASF e Grammatiche di tipo 3
 Per ogni grammatica regolare $\mathcal G=\langle V_T,V_N,P,S\rangle$, esiste un ASFND $\mathcal A_N=\langle\Sigma,Q,\delta_N,q_0,F\rangle$ che riconosce il linguaggio che esso genera

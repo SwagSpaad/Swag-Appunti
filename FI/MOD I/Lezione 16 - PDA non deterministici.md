@@ -15,13 +15,13 @@ Mentre gli automi a pila non deterministici riconoscono la classe dei linguaggi 
 
 Tabella di transizione dell’automa a pila che accetta per pila vuota il linguaggio $\{w\hat w|w\in\{s,b\}^+\}$
 
-![[appunti fi/mod i/immagini/Pasted image 20221217162459.png|center|550]]
+![[FI/img/img56.png|center|550]]
 
 **Esempio di accettazione per stato finale**
 
 Tabella di transizione dell’automa a pila che accetta per stato finale il linguaggio $\{w\hat w|w\in\{s,b\}^+\}$ con $q_f=q_2$
 
-![[appunti fi/mod i/immagini/Pasted image 20221217162904.png|center|550]]
+![[FI/img/img57.png|center|550]]
 
 ## Equivalenza tra condizioni di accettazione
 
@@ -158,7 +158,7 @@ da cui otteniamo come caso particolare, che $[q_0Z_,q']\xRightarrow[]{\star}x\if
 
 Accettazione/produzione della stringa 00011
 
-![[appunti fi/mod i/immagini/Pasted image 20221228125503.png|center|650]]
+![[FI/img/img58.png|center|650]]
 
 # Automi a pila deterministici
 

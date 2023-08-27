@@ -62,7 +62,7 @@ Una **grammatica formale** $\mathcal G$ è una quadrupla $\mathcal G=\langle V_T
 1. $V_T$ è un insieme finito e non vuoto di simboli detti **terminali**.
 2. $V_N$ è un insieme finito e non vuoto di simboli detti **non terminali**.
 3. $P$ è una relazione binaria di cardinalità finita su $$(V_T\cup V_N)^\star \circ V_N \circ (V_T\cup V_N)^\star\:\: \times \:\: (V_T\cup V_N)^\star$$ $P$ è detta insieme delle **produzioni**. Una coppia $\langle\alpha,\beta\rangle\in P$, si indica generalemtne con la notazione $\alpha\rightarrow\beta$;
-4. $S\in V_n$ è detto **assioma** ed è il simbolo non terminale di inizio. 
+4. $S\in V_N$ è detto **assioma** ed è il simbolo non terminale di inizio. 
 
 La componente sinistra di una produzione $P$ (ovvero $\alpha$) è una qualunque stringa di caratteri **terminali** e **non terminali** mescolati, in cui deve esserci almeno un simbolo non terminale.
 La componente destra (ovvero $\beta$) è una sequenza (pot. nulla) di simboli terminali e non terminali. 
@@ -96,7 +96,7 @@ Con la regola di produzione: $aBC\to\epsilon$, la stringa: $BBaBCaC$ diventa $BB
 
 ### Derivazioni dirette
 
-Data una grammatica $\mathcal G=\langle V_t,V_n,P,S\rangle$, la **derivazione diretta** è una relazione su $(V^\star\circ V_n\circ V^\star)\times V^\star$ così definita:
+Data una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$, la **derivazione diretta** è una relazione su $(V^\star\circ V_N\circ V^\star)\times V^\star$ così definita:
 
 La coppia $\langle\phi,\psi\rangle$ appartiene alla relazione se e solo se esistono $\alpha\in V^\star\circ V_n\circ V^\star\:e\:\beta,\gamma,\delta\in V^\star$ tali che :
 $$\begin{cases}\phi=\gamma\alpha\delta\\\psi=\gamma\beta\delta\\\alpha\to\beta\in P\end{cases}$$

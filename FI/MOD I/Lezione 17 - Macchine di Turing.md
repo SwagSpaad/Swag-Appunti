@@ -5,7 +5,7 @@ Dispositivo che accede ad un **nastro** potenzialmente illimitato diviso in cell
 All'inizio del calcolo solo una porzione finita del nastro contiene simboli di $\Gamma$. La macchina di Turing opera su tale nastro tramite una testina, la quale può scorrere su di esso in entrambe le direzioni.
 Su ogni cella la testina può leggere o scrivere caratteri appartenenti all'alfabeto $\Gamma$ oppure il simbolo $\square$
 
-![[appunti fi/mod i/immagini/Pasted image 20230109112412.png|center|500]]
+![[FI/img/img59.png|center|500]]
 
 ## Macchina di Turing deterministica
 
@@ -19,7 +19,7 @@ Sestupla $\mathcal M=\langle\Gamma,\square,Q,q_0,F,\delta\rangle$ dove:
 
 **Esempio**
 
-![[appunti fi/mod i/immagini/Pasted image 20230109121029.png|center|500]]
+![[FI/img/img60.png|center|500]]
 
 ### DTM (Deterministic Turing Machine)
 
@@ -61,13 +61,13 @@ La funzione di transizione può essere rappresentata mediante **matrici di trans
 
 **Esempio**
 
-![[appunti fi/mod i/immagini/Pasted image 20230110110553.png|center|500]]
+![[FI/img/img61.png|center|500]]
 
 In generale, assumiamo che uno stato finale non abbia transizioni uscenti definite.
 
 #### Grafo di transizione
 
-![[appunti fi/mod i/immagini/Pasted image 20230110110701.png|center|600]]
+![[FI/img/img62.png|center|600]]
 
 **Esercizio**
 
@@ -153,8 +153,7 @@ Una configurazione di una MTM è:
 
 Riconoscimento di $L=\{xc\hat x,x\in\{a,b\}^+\}$
 
-![[appunti fi/mod i/immagini/Pasted image 20230116151522.png|center|500]]
-
+![[FI/img/img63.png|center|500]]
 Sul nastro di lavoro deve esserci $\square$
 
 - Operazioni:
@@ -176,7 +175,7 @@ Funzione di transizione:
 
 Computazioni massimali corrispondenti ai due input $bacab$ e $acb$.
 
-![[appunti fi/mod i/immagini/Pasted image 20230118144127.png|center|200]]
+![[FI/img/img64.png|center|200]]
 
 ## Equivalenza tra MTM e MT
 
@@ -195,7 +194,7 @@ Una macchina di Turing non deterministica (NDTM) $\mathcal M$ a k nastri è una 
 
 Consideriamo una macchina di Turing non deterministica avente $\Gamma=\{a,b,c,d\},Q=\{q_0,...,q_{11}\},F=\{q_{11}\}$ e funzione di transizione definita in questo modo 
 
-![[appunti fi/mod i/immagini/Pasted image 20230118145343.png|center|600]]
+![[FI/img/img65.png|center|600]]
 
 La macchina di Turing $\mathcal M$:
 

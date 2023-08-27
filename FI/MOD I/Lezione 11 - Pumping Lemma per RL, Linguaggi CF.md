@@ -60,7 +60,7 @@ $$\begin{align}S\to aSbA|ab\\A\to cAd|cd\end{align}$$
 La stringa $aaabbcdbcd\in L(\mathcal G)$ può essere così derivata:
 $$S\to aSbA\to aaSbAbA\to aaabbAbA\to aaabbcdbA\to aaabbcdbcd$$
 L'albero sintattico associato sarà:
-![[appunti fi/mod i/immagini/Pasted image 20221122102425.png|center|500]]
+![[FI/img/img45.png|center|500]]
 
 L'insieme delle foglie, se lette da sinistra verso destra, sarà proprio la stringa $w\in L(\mathcal G)$ 
 

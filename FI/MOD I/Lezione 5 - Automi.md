@@ -41,7 +41,7 @@ Induce una **relazione di transizione** tra configurazioni, che associa ad una c
 
 Definita non sull'insieme delle possibili configurazioni, ma su domini e codomini che rappresentano parti di configurazioni, quelle che effettivamente determinano e sono determinate dalla transizione.
 
-L'applicazione della funzione di transizione ad una configurazione si dice **transizione** (**mossa** o **passo computazionale**) dell'automa.
+L'applicazione della funzione di transizione ad una configurazione si dice **transizione** ( o **passo computazionale**) dell'automa.
 
 ##### Transizioni
 
@@ -127,7 +127,7 @@ Se da una configurazione $c$ un automa può passare o meno in un'altra configura
 
 - Automa deterministico: associa alla stringa di input una sequenza di configurazioni (computazione lineare), con la prima uguale alla configurazione iniziale della stringa
 
-- Automa non deterministico: associa alla stringa di input un albero di configurazioni (**albero di computazione**), con la radice uguale alla configurazione iniziale della stringa. Ogni computazione corrisponde ad un cammino avente origine dalla radice stessa
+- Automa non deterministico: associa alla stringa di input un albero di configurazioni ( **albero di computazione**), con la radice uguale alla configurazione iniziale della stringa. Ogni computazione corrisponde ad un cammino avente origine dalla radice stessa
 
 #### Interpretazione 1
 
@@ -155,5 +155,5 @@ $c_8,c_9,c_7,c_4,c_5,c_6$ è il terzo insieme
 
 Asimmetria tra accettazione e rifiuto di una stringa, introdotto dal non determinismo
 - Nel caso deterministico la stringa viene accettata se la singola computazione definita è di accettazione, e rifiutata se essa termina in una configurazione non di accettazione
-- Nel caso non deterministio la stringa viene accettata se **una qualunque** delle computazioni definite è di accettazione, mentre non lo viene se **tutte** le possibili computazioni che terminano non sono di accettazione
+- Nel caso non deterministico la stringa viene accettata se **una qualunque** delle computazioni definite è di accettazione, mentre non lo viene se **tutte** le possibili computazioni che terminano non sono di accettazione
 

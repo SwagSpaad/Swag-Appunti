@@ -60,7 +60,7 @@ La derivazione di $\mathcal G'$ da $\mathcal G$ avviene applicando iterativament
 
 #### Fase 1
 
-![[appunti fi/mod i/immagini/Pasted image 20221130153509.png|center|700]]
+![[FI/img/img48.png|center|700]]
 
 Siano $B_1,...,B_j$ i non terminali aggiunti. A questo punto le produzioni sono tutte di uno tra i tipi:
 
@@ -74,13 +74,13 @@ Inoltre, le $A_k$-produzioni sono:
 
 #### Fase 2
 
-![[appunti fi/mod i/immagini/Pasted image 20221130155448.png|center|700]]
+![[FI/img/img49.png|center|700]]
 
 A questo punto le produzioni sono del tipo (b) o (c)
 
 #### Fase 3
 
-![[appunti fi/mod i/immagini/Pasted image 20221130155547.png|center|700]]
+![[FI/img/img50.png|center|700]]
 
 A questo punto le produzioni sono del tipo (b)
 
