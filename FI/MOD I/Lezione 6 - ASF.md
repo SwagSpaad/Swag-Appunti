@@ -80,7 +80,7 @@ $\delta(q,a)$
 $\overline\delta(q,aab)$
 
 ### Linguaggio riconosciuto da un ASFD
-2Il **linguaggio riconosciuto** da un automa a stati finiti deterministico $\mathcal A$ è l'insieme
+Il **linguaggio riconosciuto** da un automa a stati finiti deterministico $\mathcal A$ è l'insieme
 $$L(\mathcal A)=\lbrace x\in\Sigma^\star\:|\:\delta(q_0,x)\in F\rbrace$$
 ### Funzione di transizione parziale
 La funzione di transizione $\delta$ è stata definita come totale

@@ -152,7 +152,7 @@ ed è riconosciuto dall'ASFND
 
 A partire dall' ASFND è possibile derivare un ASFD equivalente
 
-![[FI/img/img21.png|center|500]]
+![[FI/img/img22.png|center|500]]
 
 E da questo una grammatica di tipo 3 equivalente a quella iniziale, dove $S=A_0$
 - $A_0\implies aA_1$

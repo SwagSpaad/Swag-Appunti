@@ -139,7 +139,7 @@ La visitia richiede tempo $\Theta(n+m)=\Theta(n)$ lineare nel numero di stati
 >è possibile decidere se il linguaggio accettato da un dato automa a stati finiti è finito
 
 >**Prop. 1**
->Se $\mathcal A$ accetta una z lungha almeno n allora, per il pumping lemma, accetta infinite stringhe
+>Se $\mathcal A$ accetta una stringa z lunga almeno n allora, per il pumping lemma, accetta infinite stringhe
 
 >**Prop. 2**
 >Se $L(\mathcal A)$ è infinito, allora esiste $z\in L(\mathcal A)$ tale che $n\leq|z|\lt 2n$

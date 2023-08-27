@@ -12,16 +12,6 @@ Sia $L$ un linguaggio regolare, allora $\exists n\gt 0$ tale che $\forall z\in L
 >Se $L$ è regolare, sia $\mathcal A$ l'ASFD che lo decide e che ha il minimo numero n di stati.
 >Una stringa $z\in L$ di lunghezza $m\geq n$ in input ad $\mathcal A$ gli fa eseguire m transizioni e quindi attraversare $m+1\gt n$ stati, quindi esiste almeno uno stato che viene attraversato più volte (Principio Della Piccionaia). $\square$
 
-## Interpretazione come gioco a due
-
-Se $L$ è regolare, Alice vince sempre questo gioco con Bob:
-
-1. Alice fissa un intero $n\gt0$ opportuno
-2. Bob sceglie una stringa $z\in L$ con $|z|\gt n$
-3. Alice divide z in tre parti $uvw$ con $|uv|\leq n\:e\:|v|\geq1$
-4. Bob scelgie un intero $i\gt0$
-5. Alice mostra a Bob che $uv^iw\in L$
-
 Il pumping lemma evidezia il fatto che gli automi finiti non possono contare e il numero di situazioni diverse che possono memorizzare è finito.
 Fornisce soltanto una condizione necessaria perchè un linguaggio sia regolare: non può essere utilizzato per mostrare la regolarità di un linguaggio, ma solo per dimostrarne la non regolarità.
 $$\begin{align}L\:\text{regolare}\implies \text{pumping lemma verificato}\\\text{pumping lemma non verificato}\implies L\:\text{non regolare}\end{align}$$
