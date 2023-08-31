@@ -45,7 +45,7 @@ Si può notare che $\forall z\in[x]:\overline\delta'(q_0',z)=q_{[x]}$. Quindi:
 Ipotesi:
 Tutti gli stati di $\mathcal A$ sono raggiungibili dallo stato iniziale, altrimenti è necessario un passo preliminare di eliminazione degli stati irraggiungibili
 
-- Per marcare le coppire di stati distinguibili si utilizza una tabella contenente una casella per ciascuna coppia (non ordinata) di stati di $Q$
+- Per marcare le coppie di stati distinguibili si utilizza una tabella contenente una casella per ciascuna coppia (non ordinata) di stati di $Q$
 - Le caselle vengono usate per marcare le coppie di stati distinguibili e per elencare, in una lista associata, tutte le coppie che dovranno essere marcate qualora la coppia a cui è associata la casella venga marcata
 
 La procedura inizia con la marcatura delle coppie distinguibili tramite la stringa $\varepsilon$ (tutte e sole le coppie costituite da uno stato finale e da uno non finale)

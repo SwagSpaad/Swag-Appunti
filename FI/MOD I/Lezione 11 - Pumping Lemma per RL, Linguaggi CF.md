@@ -56,7 +56,7 @@ L'insieme delle foglie, se lette da sinistra verso destra, sarà proprio la stri
 
 In questa rappresentazione non si mantiene traccia dell'ordine con cui le produzioni sono state applicate. Ad un unico albero possono corrispondere diverse derivazioni.
 
-Vantaggio: un albero di derivazione fornisce una descrizione sintentica della struttura sintattica della stringa, indipendentemente dall'ordine con cui le produzioni sono state applicate.
+Vantaggio: un albero di derivazione fornisce una descrizione sintetica della struttura sintattica della stringa, indipendentemente dall'ordine con cui le produzioni sono state applicate.
 
 ## Forme ridotte e forme normali
 

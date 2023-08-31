@@ -53,8 +53,29 @@ Un **automa a stati non deterministico** è una quintupla $\mathcal A_N=\langle\
 >Dato un ASFND che riconosce il linguaggio $L$, esiste corrispondentemente un $\epsilon$-ASFND che riconosce lo stesso linguaggio $L$; viceversa, dato un $\epsilon$-ASFND che riconosce un linguaggio $L'$, esiste un ASFND che riconosce lo stesso linguaggio $L'$
 
 
-Una grammatica $\mathcal G$ è in _forma ridotta_ se:
+>**Teorema**
+>Data una grammatica $\mathcal G$ di tipo 3, esiste una espressione regolare $r$ tale che $L(\mathcal G)=L(r)$, che descrive cioè il linguaggio generato da $\mathcal G$
 
+
+>**Teorema**
+>Dato un ASFD $\mathcal A$, esiste una espressione regolare $r$ tale che $L(\mathcal A)=L(r)$, che descrive cioè il linguaggio riconosciuto da $\mathcal A$
+
+
+Una grammatica $\mathcal G$ è in _forma ridotta_ se:
 1. non contiene $\varepsilon$-produzioni (se non, eventualmente, in corrispondenza dell'assioma, ed in tal caso l'assioma non compare mai al lato destro di una produzione)
 2. non contiene **produzioni unitarie**, cioè produzioni del tipo $$A\to B, con\:A,B\in V_N$$
 3. non contiene **simboli inutili**, cioè simboli che non compaiono in nessuna derivazione di una stringa di soli terminali
+
+
+**Pumping Lemma**: Sia $L$ un linguaggio regolare, allora $\exists n\gt 0$ tale che $\forall z\in L:|z|\geq n$ possiamo scrivere $z=u\:v\:w$, con $|u\:v|\leq n,|v|\geq1$ e ottenere che $\forall i\geq0, u\:v^i\:w\in L$. Utile per dimostrare la **NON** regolarità di un linguaggio, infatti se il pumping lemma non è verificato allora il linguaggio non è regolare.
+
+
+Da grammatica di tipo 2 ad una equivalente in forma ridotta mediante una sequenza di passi:
+1. A partire da $\mathcal G$, derivazione di $\mathcal G_1$ di tipo 2 senza $\varepsilon$-produzioni tale che $L(\mathcal G_1)=L(\mathcal G)-\lbrace\varepsilon\rbrace$
+2. A partire da $\mathcal G_1$, derivazione di $\mathcal G_2$ di tipo 2 senza $\varepsilon$-produzioni e senza produzioni unitarie tale che $L(\mathcal G_2)=L(\mathcal G_1)$
+3. A partire da $\mathcal G_2$, derivazione di $\mathcal G_3$ di tipo 2 senza $\varepsilon$-produzioni, senza produzioni unitarie e senza simboli inutili tale che $L(\mathcal G_3)=L(\mathcal G_2)$
+4. La grammatica $\mathcal G_4$ di tipo 2, equivalente a $\mathcal G$ coincide con $\mathcal G_3$ se $\varepsilon\not\in L(\mathcal G)$; altrimenti, $\mathcal G_4$ è ottenuta da $\mathcal G_3$ introducendo un nuovo assioma ed un opportuno insieme di produzioni su tale simbolo
+Per l'applicazione vedere gli esempi in [[Lezione 12 - Sempre su Linguaggi CF]]
+
+
+Una grammatica di tipo 2 si dice in **Forma Normale di Chomsky** se tutte le sue produzioni sono del tipo $A\to BC$ o del tipo $A\to a$, con $A,B,C\in V_N,a\in V_T$

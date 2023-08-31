@@ -3,7 +3,7 @@
 Ritornando a [[Lezione 11 - Pumping Lemma per RL, Linguaggi CF#Forme ridotte e forme normali|forme ridotte e forme normali]]
 # Forme ridotte e normali 
 
-Trasformazione di una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$ di tipo 2 in una grammatica equivalente in forma ridotta mediante una sequenza di passi
+Trasformazione di una grammatica $\mathcal G=\langle V_T,V_N,P,S\rangle$ di [[Riepilogo#^75297e|tipo 2]] in una grammatica equivalente in forma ridotta mediante una sequenza di passi
 
 1. A partire da $\mathcal G$, derivazione di $\mathcal G_1$ di tipo 2 senza $\varepsilon$-produzioni tale che $L(\mathcal G_1)=L(\mathcal G)-\lbrace\varepsilon\rbrace$
 2. A partire da $\mathcal G_1$, derivazione di $\mathcal G_2$ di tipo 2 senza $\varepsilon$-produzioni e senza produzioni unitarie tale che $L(\mathcal G_2)=L(\mathcal G_1)$
@@ -39,7 +39,7 @@ $$\begin{align}S&\to A|SSa|Sa|a|\varepsilon\\A&\to B|Ab|b\\B&\to S|ab|aA|a\end{a
 ## Passo 2
 
 >[!important]- Teorema
->Per ogni grammatica $\mathcal G$ di tipo 2 senza $\varepsilon$-produzioni, esiste sempre una grammatica $\mathcal G'$ di tipo 2 senza $\varepsilon$-produzioni,priva di produzioni unitarie ed equivalente a $\mathcal G$
+>Per ogni grammatica $\mathcal G$ di tipo 2 senza $\varepsilon$-produzioni, esiste sempre una grammatica $\mathcal G'$ di tipo 2 senza $\varepsilon$-produzioni, priva di produzioni unitarie ed equivalente a $\mathcal G$
 
 Sia, per ogni $A\in V_N,U(A)$ il sottoinsieme di $V_N-\lbrace A\rbrace$ comprendente tutti i non terminali derivabili da $A$ applicando una sequenza di produzioni unitarie:
 $$U(A)=\lbrace B\in V_N-\lbrace A\rbrace|A\xRightarrow[]{\star}B\rbrace$$
