@@ -38,7 +38,7 @@ La grammatica rappresenta nella sua struttura le relazioni di precedenza definit
 
 Data una grammatica $\mathcal G$ non contestuale, $\mathcal G$ è ambigua?
 
-Il problema è **indicidibile** nel caso delle CFG: non esiste quindi nessun algoritmo di decisione che, data una CFG, restituisca T se la grammatica è ambigua e F altrimenti
+Il problema è **indecidibile** nel caso delle CFG: non esiste quindi nessun algoritmo di decisione che, data una CFG, restituisca T se la grammatica è ambigua e F altrimenti
 
 ### Riduzione
 
@@ -48,9 +48,9 @@ Schema generale di dimostrazione:
 
 - Si vuole mostrare che il problema $\mathcal P_1$ è indecidibile
 - Si individua un'altro problema $\mathcal P_0$ che si sa essere indecidibile
-- Se definisce un algoritmo $\mathcal A$ che trasforma ogni istanza $\mathcal I_0$ di $\mathcal P_0$ in una istanza $\mathcal I_1=\mathcal A(\mathcal I_0)$ di $\mathcal P_0$
+- Se definisce un algoritmo $\mathcal A$ che trasforma ogni istanza $\mathcal I_0$ di $\mathcal P_0$ in una istanza $\mathcal I_1=\mathcal A(\mathcal I_0)$ di $\mathcal P_1$
 - Si mostra che l'istanza $\mathcal I_1$ è positiva per $\mathcal P_1$ se e solo se $\mathcal I_0$ è positiva per $\mathcal P_0$
-- Si conclude che $\mathcal P_1$ è indecidibile: se così non fosse avremmo un algoritmo che decide $\mathcal P_0$, in quanto potremmo trasformare, per mezzo di $\mathcal A$, ogni sua istanza in una istanza corrispondente di $\mathcal P_1$, che potremmo, per ipotesi, risolvere
+- Si conclude che $\mathcal P_1$ è indecidibile: se così non fosse avremmo un algoritmo che decide $\mathcal P_0$, in quanto potremmo trasformare, per mezzo di $\mathcal A$, ogni sua istanza in una istanza corrispondente di $\mathcal P_1$, che potremmo, per ipotesi, risolvere.
 
 Nel nostro caso:
 

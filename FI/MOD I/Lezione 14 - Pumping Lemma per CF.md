@@ -1,4 +1,4 @@
-
+ 
 # Pumping Lemma
 
 >[!important]- Teorema
@@ -98,9 +98,9 @@ Mostriamo che il linguaggio $L=L_1\circ L_2$ è generato dalla grammatica di tip
 
 ## Chiusura dei linguaggi CF: iterazione
 
-Dato un linguaggio CF $L\subseteq\Sigma^\star$,sia $\mathcal G=\langle\Sigma,V_{N},P,S\rangle$ e una grammatica di tipo 2 tale che $L=L(\mathcal G)$
+Dato un linguaggio CF $L\subseteq\Sigma^\star$, sia $\mathcal G=\langle\Sigma,V_{N},P,S\rangle$ una grammatica di tipo 2 tale che $L=L(\mathcal G)$
 
-Il linguaggio $L'=L^\star$ è allora generato dalla grammatica di tipo 2 $\mathcal G'=\langle\Sigma,V_N\cup\{S'\},P',S'\rangle$, dove $P'=P'\cup\{S'\to SS'|\varepsilon\}$ 
+Il linguaggio $L'=L^\star$ è allora generato dalla grammatica di tipo 2 $\mathcal G'=\langle\Sigma,V_N\cup\{S'\},P',S'\rangle$, dove $P'=P\cup\{S'\to SS'|\varepsilon\}$ 
 
 ## Chiusura dei linguaggi CF: complemento
 

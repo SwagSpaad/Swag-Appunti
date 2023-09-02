@@ -79,3 +79,11 @@ Per l'applicazione vedere gli esempi in [[Lezione 12 - Sempre su Linguaggi CF]]
 
 
 Una grammatica di tipo 2 si dice in **Forma Normale di Chomsky** se tutte le sue produzioni sono del tipo $A\to BC$ o del tipo $A\to a$, con $A,B,C\in V_N,a\in V_T$
+
+
+Da [[Lezione 16 - PDA non deterministici|NPDA]] a Grammatica: 
+- Sia $L$ un linguaggio accettato mediante pila vuota da un automa a pila $\mathcal M=\langle\Sigma,\Gamma,Q,\delta,Z_0,q_0,\emptyset\rangle$, allora esiste una grammatica non contestuale $\mathcal G$ che lo genera, cioè $L=N(\mathcal M)=L(\mathcal G)$ costruita nel seguente modo.
+- L'insieme dei simboli non terminali $V_N$ è costituito da tutte le triple $[q_{i},\: A, \:q_j]$ per ogni $q_i,\: q_j \in Q$ e per ogni simbolo di pila $A \in \Gamma$.
+- L'assioma $S$ della grammatica ha le seguenti derivazioni, per ogni $q \in Q$ abbiamo la produzione $S\to[q_0,Z_0,q]$ dove $Z_0$ è il simbolo iniziale sulla pila e $q_0$ è lo stato iniziale
+- Per ogni $q\in Q,\:A\in\Gamma,\:a\in\Sigma\cup\{\varepsilon\}$, se $(q',\varepsilon)\in\delta(q,a,A)$ allora $[q,A,q']\to a\in P$
+- Per ogni $q \in Q,\: A \in \Gamma, a \in \Sigma \cup \{\epsilon \}$, se $(q',B_1...B_m)\in\delta(q,a,A)$, allora $[q,A,q_{i_m}]\to a[q'B_1q_{i_1}][q_{i_1}B_2q_{i_2}]...[q_{i_m-1}B_mq_{i_m}]\in P$ 
