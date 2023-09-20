@@ -24,5 +24,5 @@ I DBMS garantiscono *affidabilità* e *privatezza*, rispettivamente la capacità
 
 L'approccio basato su DBMS va oltre l'uso di file locali gestiti dalle singole applicazioni tramite l'adozione di un sistema di gestione dei dati che risulta indipendente dalle applicazioni e specializzato in tale funzione. I dati non sono gestiti dalle singole applicazioni, ma da un DBMS che offre un'interfaccia comune a tutte le applicazioni.
 
-![[BDC/img/img1.png|center|500]]
+![[BDC/img/img1.png|center|600]]
 
