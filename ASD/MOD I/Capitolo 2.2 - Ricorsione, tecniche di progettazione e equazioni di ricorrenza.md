@@ -1,4 +1,4 @@
-x----
+----
 # Soluzione esercizio calcolo tempo medio con algoritmo di pesatura
 
 Alg1
