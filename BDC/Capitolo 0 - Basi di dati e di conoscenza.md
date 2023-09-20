@@ -1,3 +1,3 @@
 # Sommario
 ---
-- **[[BDC/Lezione 1]]** -  
+- **[[BDC/Lezione 1 - Introduzione]]** -  
