@@ -1,3 +1,4 @@
+
 # Modello Relazionale
 
 Il modello relazionale è stato proposto da E.F Codd nel 1970 per favorire **l'indipendenza dei dati**, fu reso disponibile in **DBMS** nel 1981 dato che non fu facile implementare l'indipendenza con efficienza e affidabilità.
