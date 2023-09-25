@@ -1,4 +1,4 @@
-
+----
 # Modello dei dati
 
 - Insieme di costrutti utilizzati per organizzare i dati di interesse e descriverne la dinamica

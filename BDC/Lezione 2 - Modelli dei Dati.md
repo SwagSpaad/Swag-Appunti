@@ -1,3 +1,4 @@
+----
 # Modelli dei Dati
 
 Un modello dei dati è un insieme di concetti utilizzati per organizzare i dati di interesse e descrivere la struttura in modo che essa risulti comprensibile a un elaboratore.

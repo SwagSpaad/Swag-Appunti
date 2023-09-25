@@ -1,3 +1,4 @@
+----
 Le strutture del modello relazionale ci permettono di organizzare le informazioni di interesse per le nostre applicazioni. In alcuni casi, però, non è vero che qualsiasi insieme di tuple sullo schema rappresenti informazioni corrette per l'applicazione. Consideriamo la base di dati rappresentata sotto e notiamo delle situazioni che non si dovrebbero presentare
 
 ![[BDC/img/img5.png|center|500]]
