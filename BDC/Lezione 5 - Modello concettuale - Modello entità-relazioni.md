@@ -316,3 +316,37 @@ Una classe è rappresentata da un rettangolo scomposto in tre parti:
 
 - Due oggetti con identificatori distinti sono comunque distinti, anche se hanno i valori di tutti gli attributi uguali
 - Due oggetti diversi devono avere identificatori diversi, anche se possono avere gli stessi valori per tutti gli attributi
+
+![[BDC/img/img36.png|center|900]]
+
+# I diagrammi delle classi (1)
+
+- Secondo la metodologia UML vengono definiti come $Diagrammi \ a \ struttura \ statica$. 
+Vengono utilizzati per:
+- Documentare le classi che compongono un sistema o un sottosistema
+- Descrivere **associazioni**, **generalizzazioni aggregazioni**, fra le varie classi.
+- Evidenziare le caratteristiche di una classe - **attributi** e **operazioni**
+
+# I diagrammi delle classi (2)
+
+- I diagrammi delle classi possono essere utilizzati in vaarie fasi dello sviluppo di un sistema:
+	- In fase di **analisi**: per la specifica delle classi all'interno del dominio del problema.
+	- In fase di **progettazione**: per la rappresentazione delle classi e relazioni che riflettono il modello della soluzione.
+- Possono documentare come interagiscono le classi di un particolare sistema con le librerie di classi già esistenti.
+- Possono essere utilizzati a rappresentare istanze di oggetti all'interno delle classi
+- Possono mostrare le interfacce di una classe
+
+# Tipi di attributi e di operazioni (1)
+
+- $Sintassi$ $$<nomeCaratteristica>:<tipo>$$
+- $Semantica$
+	- $nomeCaratteristica$ identifica o un attributo oppure un'operazione
+	- $Tipo$ identifica il tipo di dato dell'attributo oppure il tipo di dato restituito dall'operazione $$<nomeCaratteristica>:<tipo>$$
+- $N.B$ Gli attributi e le operazioni posono essere tipizzati come classi provenienti:
+	- Dalle librerie dell'ambiente d'implemetazione
+	- Dal modello delle classi in uso
+
+# Tipi di attributi e di operazioni (2)
+
+![[BDC/img/img37.png|center|800]]
+
