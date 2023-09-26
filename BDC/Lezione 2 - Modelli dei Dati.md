@@ -135,7 +135,7 @@ Il **modello di relazione** dei dati più diffuso, permette di definire tipi per
 	- **Indipendenza fisica**
 	- **Indipendenza logica**
 
-# Indipendenza logica
+# Indipendenza fisica
 
 - **Indipendenza fisica**: livello logico e quello esterno sono indipendenti da quello fisico
 	- Una relazione è utilizzata nello stesso modo qualunque sia la sua realizzazione fisica
