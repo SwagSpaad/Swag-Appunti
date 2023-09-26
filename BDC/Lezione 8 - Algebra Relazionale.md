@@ -374,5 +374,182 @@ $R_{1}\bowtie R_{2}$
 # Join naturale: proprietà
 
 1. Il **join** di $r_{1} \ e \ r_{2}$ contiene un numero di ennuple compreso fra zero e il prodotto di $|r_{1}|$ e $|r_{2}|$
-2. Se il join di $r_{1}$ e $r_{2}$ è **completo** allora contiene un numero di tuple pari almeno al massimo fra $|r_{1}|$ e $|r_{2}|$ 
-3. Se $X_{1}\cap X_{2}$ contiene una chiave per $r_{2}$ allora il join di $r_{1}(X_{1})$ e $r_{2}(X_{2})$ contiene almeno $|r_{2}|$ tuple  
+2. Se il **join** di $r_{1}$ e $r_{2}$ è **completo** allora contiene un numero di tuple pari almeno al massimo fra $|r_{1}|$ e $|r_{2}|$ 
+3. Se $X_{1}\cap X_{2}$ contiene una chiave per $r_{2}$ allora il **join** di $r_{1}(X_{1})$ e $r_{2}(X_{2})$ contiene almeno $|r_{2}|$ tuple  
+4. Se il **join** coinvolge una chiave di $R_{2}$ e **un vincolo di integrità referenziale**, allora il numero di tuple è pari a $|R_{1}|$
+5. $r_{1}\bowtie r_{2} = r_{1}$ il **join** è **commutativo**
+6. $(r_{1}\bowtie r_{2})\bowtie r_{3}=r_{1} \bowtie(r_{2}\bowtie r_{3})$ il **join** è **associativo**
+
+Quindi sequenze di **join** possono essere scritte senza parentesi
+
+# Prodotto cartesiano 
+
+- Un **join naturale** su relazioni senza attributi in comune
+- Contiene sempre un numero di ennuple pari al prodotto delle cardinalità degli operandi
+- Il **prodotto cartesiano** $r_{1} \times r_{2}$ di $r_{1}(X_{1})$ e $r_{2}(X_{2})$ è una relazione definità $X_{1}\cup X_{2}$ $$r_{1}\times r_{2}= \{t \ su \ X_{1}X_{2} \ | \ t[X_{1}]\in \ e \ t[X_{2}] \in r_{2}\}$$
+*EX*:
+
+**Impiegati**:
+
+| Impiegato | Reparto |
+| --------- | ------- |
+| Rossi     | A       |
+| Neri      | B       |
+| Bianchi   | B        |
+
+**Reparti**:
+
+| Codice | Capo |
+| ------ | ---- |
+| A      | Mori |
+| B      | Bruni     |
+
+$Impiegati \times Reparti$ 
+
+| Impiegato | Reparto | Codice | Capo  |
+| --------- | ------- | ------ | ----- |
+| Rossi     | A       | A      | Mori  |
+| Neri      | B       | A      | Mori  |
+| Bianchi   | B       | A      | Mori  |
+| Rossi     | A       | B      | Bruni |
+| Neri      | B       | B      | Bruni |
+| Bianchi   | B       | B      | Bruni      |
+
+# Join esterni: Outer join
+
+Il **join naturale** tralascia le ennuple in cui non vi è corrispondenza fra gli attributi legati dal join
+L'operatore di **join esterno** (**outer join**) prevede che tutte le tuple diano sempre un contributo al risultato, eventualmente estese con valori nulli ove non vi siano controparti opportune
+
+**Tre tipi di outer join**:
+
+- *Left join*: Contribuiscono tutte le ennuple del primo operando eventualmente estese con valori nulli
+- *Right join*: Contribuiscono tutte le ennuple del secondo operando eventualmente estese con valori nulli
+- *Full join*: Contribuiscono tutte le ennuple del primo e secondo operando eventualmente estese con valori nulli
+
+# Left join
+
+Ritorno tutte le tuple dalla relazione di sinistra a prescindere dal fatto che siano combinabili con quelle della relazione di destra.
+Assegna valori nulli per i record che non matchano.
+
+*EX*:
+
+**Impiegati**:
+
+| Impiegato | Reparto    |
+| --------- | ---------- |
+| Rossi     | vendite    |
+| Neri      | produzione |
+| Bianchi   | produzione           |
+
+**Reparti**:
+
+| Reparto    | Capo |
+| ---------- | ---- |
+| produzione | Mori |
+| acquisti   | Bruni     |
+
+$Impiegati \bowtie_{LEFT}Reparti$ 
+
+| Impiegati | Reparto    | Capo |
+| --------- | ---------- | ---- |
+| Rossi     | vendite    | NULL |
+| Neri      | produzione | Mori |
+| Bianchi   | produzione | Mori     |
+
+# Right join
+
+Ritorna tutte le tuple dalla relazione di destra a prescindere dal fatto che siano combinabili con quelle della relazione di sinistra
+Assegna i valori nulli per i record che non matchano
+
+*EX*:
+
+**Impiegati**:
+
+| Impiegati | Reparto    |
+| --------- | ---------- |
+| Rossi     | vendite    |
+| Neri      | produzione |
+| Bianchi   | produzione           |
+
+**Reparti**:
+
+| Reparto    | Capo |
+| ---------- | ---- |
+| produzione | Mori |
+| acquisti   | Bruni     |
+
+$Impiegati \bowtie_{RiGHT}Reparti$ 
+
+| Impiegato | Reparto    | Capo |
+| --------- | ---------- | ---- |
+| Neri      | produzione | Mori |
+| Bianchi   | produzione | Mori |
+| NULL      | acquisti   | Bruni     |
+
+
+# Full join
+
+Combina i risultati di due relazioni tenendo conto di tutte le tuple delle relazioni, anche di quelle che non hanno corrispondenza tra di loro.
+Il risultato contiene sempre tutte le tuple della relazione di sinistra ("left"),
+estraendo dalla relazione di destra ("right") solamente le tuple che trovano corrispondenza nella regola di confronto; inoltre verranno estratte tutte le tuple della relazione di sinistra ("left") che non trovano corrispondenza nella relazione di destra ("right") impostando a nulli i valori di tutti gli attributi della relazione di destra,  e viceversa.
+
+*EX*: 
+
+**Impiegato**:
+
+| Impiegato | Reparto    |
+| --------- | ---------- |
+| Rossi     | vendite    |
+| Neri      | produzione |
+| Bianchi   | produzione           |
+
+**Reparti**:
+
+| Reparto    | Capo |
+| ---------- | ---- |
+| produzione | Mori |
+| acquisti   | Bruni     |
+
+$Impiegati \bowtie_{FULL} Reparti$
+
+| Impiegato | Reparto    | Capo  |
+| --------- | ---------- | ----- |
+| Null      | acquisti   | Bruni |
+| Neri      | produzione | Mori  |
+| Bianchi   | produzione | Mori  |
+| Rossi     | vendite    | NULL      |
+
+# Theta-join
+
+Se si devono correlare attributi con nome diverso è possibile fare il **theta-join**, definito come un prodotto cartesiano seguito da una selezione $$r_{1}\bowtie_{F} r_{2} = \sigma (r_{1} \times r_{2})$$
+Dove F è una formula e $r_{1}$ e $r_{2}$ non hanno attributi di nome comune.
+Se F è una relazione di uguaglianza, con un attributo della prima relazione e uno della seconda, allora siamo in presenza di un **equi-join**
+
+*Sono importanti formalmente*:
+- Il join naturale è basato sui **nomi** degli attributi
+- Equi-join e theta-join sono basati sui **valori**
+
+*EX*: 
+
+**Impiegati**:
+
+| Impiegato | Progetto |
+| --------- | -------- |
+| Rossi     | A        |
+| Neri      | A        |
+| Neri      | B         |
+
+**Reparti**:
+
+| Codice | Nome   |
+| ------ | ------ |
+| A      | Venere |
+| B      | Marte       |
+
+$Impiegati\bowtie_{Progetto=Codice} Reparti$ 
+
+| Impiegato | Progetto | Codice | Nome   |
+| --------- | -------- | ------ | ------ |
+| Rossi     | A        | A      | Venere |
+| Neri      | A        | A      | Venere |
+| Neri      | B        | B      | Marte       |
