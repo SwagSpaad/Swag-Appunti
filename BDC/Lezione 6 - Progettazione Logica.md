@@ -97,4 +97,63 @@ La **relazione 1:1** diventa un'unica relazione che contiene gli attributi della
 
 La **relazione ricorsiva 1:N** oltre che con due relazioni è traducibile con una sola relazione che contiene due volte l'attributo identificatore, una volta come chiave esterna con un nome che riflette il ruolo dell'entità
 
+# ER $\rightarrow$ Modello relazionale -N:N
+
+### Dal modello ER al modello relazionale:
+
+- La **relazione N:N** diventa una nuova relazione coposta dagli identificatori univoci delle due entità e dagli eventuali attributi dell'associazione. La chiave della nuova relazione è formata dall'insieme di attributi che compongono le chiavi delle due entità oltre agli attributi necessari a garantire l'unicità delle entità
+
+*EX*: Relazione N:N
+
+![[BDC/img/img51.png|center|800]]
+
+
+*EX*:
+
+**Studente(Matricola, Nome, Cognome)**
+**Corso(CodCorso, Nome)**
+**Esame(Matricola, CodCorso, Voto)**
+
+![[BDC/img/img52.png|center|800]]
+
+### Dal modello ER al modello relazionale
+
+La **relazione ricorsiva N:N** è tradotto con 2 relazioni, una per l'entità e una per la relazione, la chiave della relazione che modella l'associazione è composta da 2 attributi, i cui nomi riflettono il diverso ruolo dell'entità. Ognuno di questi 2 attributi è anche chiave esterna.
+
+*EX*: 
+
+Relazione ricorsiva N:N
+
+![[BDC/img/img53.png|center|800]]
+
+*EX*: Relazione ricorsiva N:N
+
+**Prodotto (CodP, Nome, Costo)**
+**Coposizione(CodComposto, CodCompetente, Quantità)**
+
+![[BDC/img/img54.png|center|800]]
+
+
+# ER $\rightarrow$ Modello relazionale - Generalizzazione
+
+- Il modello relazionale non può rappresentare direttamente le *generalizzazione*. Si eleiminano quindi le gerarchie sostituendole con entità e relazioni/associzioni.
+
+*Ex*:
+
+![[BDC/img/img55.png|center|800]]
+
+*Soluzione 1*: *accorpamento delle entità figlie nell'entità padre*
+- Le entità figlie introducono differenziazioni non sostanziali 
+- Le operazioni d'accesso non distinguono tra occorrenze dell'entità padre e delle figlie
+
+![[BDC/img/img56.png|center|800]]
+
+*Soluzione 2*: *accorpamento dell'entità padre nelle entità figlie*
+- Le operazioni d'accesso distinguono tra occorrenze delle diverse entità figlie
+
+![[BDC/img/img57.png|center|900]]
+
+*Soluzione 3*: *sostituzione delle generalizzazioni con le associazioni*
+
+![[BDC/img/img58.png|center|800]]
 
