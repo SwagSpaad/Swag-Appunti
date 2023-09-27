@@ -553,3 +553,332 @@ $Impiegati\bowtie_{Progetto=Codice} Reparti$
 | Rossi     | A        | A      | Venere |
 | Neri      | A        | A      | Venere |
 | Neri      | B        | B      | Marte       |
+
+*EX*:
+
+**Impiegati**
+
+| Impiegato | Progetto |
+| --------- | -------- |
+| Rossi     | A        |
+| Neri      | A        |
+| Neri      | B         |
+
+**Reparti**
+
+| Codice | Nome   |
+| ------ | ------ |
+| A      | Venere |
+| B      | Marte       |
+
+$Impiegati \bowtie_{Progetto=Codice} Reparti$
+
+| Impiegato | Progetto | Codice | Nome   |
+| --------- | -------- | ------ | ------ |
+| Rossi     | A        | A      | Venere |
+| Neri      | A        | A      | Venere |
+| Neri      | B        | B      | Marte       |
+
+# Join naturale ed equijoin
+
+**Impiegato**
+
+| Impiegato | Reparto |
+| --------- | ------- |
+|           |         |
+
+**Reparti**
+
+| Codice | Capo |
+| ------ | ---- |
+|        |      |
+
+$$$\pi_{Impiegato, \ reparto, \ capo}(Impiegati \bowtie_{reparto=codice}Reparti)=$$
+$$\pi_{Impiegato, \ reparto, \ capo}(\sigma_{reparto=codice}(Impiegati \times Reparti))=$$
+$$Impiegati\bowtie(\rho_{Codice\leftarrow Reparto}(Reparti))$$ 
+# Join e proiezioni: perdita di innformazioni
+
+- $R_{1}(X_{1}), \ R_{2}(X_{2})$ $$\prod_{x_{1}}(R_{1}\bowtie R_{2})\subseteq R_{1}$$
+- $R(X), \ X=X_{1} \cup X_{2}$ $$(\prod_{X_{1}}(R))\bowtie(\prod_{X_2}(R))\supseteq R$$
+## Problemi
+
+$R_{1}$
+
+| Impiegato | Reparto |
+| --------- | ------- |
+| Rossi     | A       |
+| Neri      | B       |
+| Bianchi   | B        |
+
+$R_{2}$ 
+
+| Reparto | Capo |
+| ------- | ---- |
+| B       | Mori |
+| C       | Bruni     |
+
+$R_{1}\bowtie R_{2}$ 
+
+| Impiegato | Reparto | Capo |
+| --------- | ------- | ---- |
+| Neri      | B       | Mori |
+| Bianchi   | B       | Mori     |
+
+$\prod_{x_{1}}(R_{1}\bowtie R_{2})\subseteq R_{1}$
+
+| Impiegato | Reparto |
+| --------- | ------- |
+| Neri      | B       |
+| Bianchi   | B        |
+
+$(\prod_{X_{1}}(R))\bowtie(\prod_{X_2}(R))\supseteq R$
+
+| Reparto | Capo |
+| ------- | ---- |
+| B       | Mori     |
+
+## Problemi 2
+
+$R$ 
+
+| Impiegato | Reparto | Capo  |
+| --------- | ------- | ----- |
+| Neri      | B       | Mori  |
+| Bianchi   | B       | Bruni |
+| Verdi     | A       | Bini      |
+
+$\prod_{X_{1}}(R)$ 
+
+| Impiegato | Reparto |
+| --------- | ------- |
+| Neri      | B       |
+| Bianchi   | B       |
+| Verdi     | A        |
+
+$\prod_{X_{2}}(R)$
+
+| Reparto | Capo  |
+| ------- | ----- |
+| B       | Mori  |
+| B       | Bruni |
+| A       | Bini      |
+
+$(\prod_{X_{1}}(R))\bowtie (\prod_{X_{2}}(R))\supseteq R$  
+
+| Impiegato | Reparto | Capo  |
+| --------- | ------- | ----- |
+| Neri      | B       | Mori  |
+| Bianchi   | B       | Bruni |
+| Neri      | B       | Bruni |
+| Bianchi   | B       | Mori  |
+| Verdi     | A       | Bini      |
+
+# Interrgoazioni - query
+
+**Un'interrogazione** è una funzione **E(R)** che applicataad istanze di una base di dati **R** produce una relazione su un dato insieme di attributi **X**
+Le **Interogazioni** su uno schema di base di dati **R** in algebra relazionale sono espressioni sono espressioni i cui atomi sono relazioni in **R** o costanti
+
+**Le interrogazioni sono in pratica espressioni di relazioni che producono relazioni** 
+
+# Schema relazionale
+
+*EX*: 
+
+**Impiegati**
+
+| Matricola | Cognome  | Età | Stipendio |
+| --------- | -------- | --- | --------- |
+| 101       | Rossi    | 34  | 40        |
+| 103       | Bianchi  | 23  | 35        |
+| 104       | Neri     | 38  | 61        |
+| 210       | Celli    | 49  | 60        |
+| 231       | Bisi     | 50  | 60        |
+| 252       | Bini     | 44  | 70        |
+| 301       | S. Rossi | 34  | 70        |
+| 375       | M. Rossi | 50  | 65          |
+
+**Supervisione**
+
+| Capo | Impiegato |
+| ---- | --------- |
+| 210  | 101       |
+| 210  | 103       |
+| 210  | 104       |
+| 301  | 210       |
+| 301  | 231       |
+| 375  | 252          |
+
+- Trovare matricola, nome, età e stipendio degli impiegati che guadagnano più di 40 milioni
+
+$\sigma_{Stipendio>40}(Impiegati)$ 
+
+| Impiegati | Cognome  | Età | Stipendio |
+| --------- | -------- | --- | --------- |
+| 104       | Neri     | 38  | 61        |
+| 210       | Celli    | 49  | 60        |
+| 231       | Bisi     | 50  | 60        |
+| 252       | Bini     | 44  | 70        |
+| 301       | S. Rossi | 34  | 70        |
+| 375       | M. Rossi | 50  | 65          |
+
+- Trovare matricola, nome ed età degli impiegati che guadagnano più di 40 milioni
+
+$\pi_{Matricola, \ Nome, \ Età}(\sigma_{Stipendio>40}(Impiegati))$  
+
+| Impiegati | Cognome  | Età | Stipendio |
+| --------- | -------- | --- | --------- |
+| 104       | Neri     | 38  | 61        |
+| 210       | Celli    | 49  | 60        |
+| 231       | Bisi     | 50  | 60        |
+| 252       | Bini     | 44  | 70        |
+| 301       | S. Rossi | 34  | 70        |
+| 375       | M. Rossi | 50  | 65        |
+
+- Trovare le matricole dei capi degli impiegati che guadagnano più di 40 milioni$$\pi_{Capo}(Supervisione\bowtie_{Impiegato=Matricola}(\sigma_{Stipendio>40}(Impiegati))$$
+- Nome e stipendio dei capi degli impiegati che guadagnano più di 40mila euro $$Supervisione\bowtie_{Impiegato=Matricola}(\sigma_{Stipendio>40}(Impiegati))=A$$ $$\pi_{Cognome, \ Stipendio}(Impiegati\bowtie_{capo=Matricola}A)$$ 
+# Equivalenza di espressioni
+
+Due espressioni sono **equivalenti** se: 
+
+- $E_{1}\equiv_{R}E_{2}$ se $E_{1}(r) =E_{2}(r)$ per ogni istanza $r$ di $R$ 
+		(**equivalenza dipendente dallo schema**)
+- $E_{1}\equiv E_{2}$ se $E_{1}\equiv_{R}E_{2}$ per ogni schema $R$ 
+		(**equivalenza assoluta**)
+
+**L'equivalenza è importante in quanto consente di scegliere, a parità di risultato, l'operazione meno costosa**
+
+# Equivalenze
+
+- **Atomizzazione delle selezioni**
+		$\sigma_{F_{1}\land F_{2}}(E)\equiv \sigma_{F_{1}}(\sigma_{F_{2}}(E))$ 
+- **L'idenpotenza delle proiezioni** 
+		$\prod_{X}(E)\equiv \prod_{X}(\prod_{XY}(E))$ 
+- **Anticipazione della selezione rispetto al join**
+		$\sigma_{F}(E_{1}\bowtie E_{2})\equiv (\sigma_{F}(E_{1})\bowtie \sigma_{F}(E_{2}))$ 
+- **Anticipazione della proiezione rispetto al join**
+		$\prod_{X_{1}Y_{2}}(E_{1}\bowtie E_{2})\equiv E_{1}\bowtie_{ \prod_{Y_{2}}}(E_{2})$ 
+	(se gli attributi in $X_{2}-Y_{2}$ non sono coinvolti nel join)
+	Allora (combinando con idempotenza delle proiezioni):
+		$\prod_{Y}(E_{1}\bowtie_{F}E_{2})\equiv \prod_{Y}(\prod_{Y_{1}}E_{1}\bowtie_{F}\prod_{Y_{2}E_{2}})$     
+	Dove $Y_{1}$ e $Y_{2}$ sono gli attributi di $X_{1}$ e $X_{2}$ compresi in $Y$ o coinvolti nel join
+	*In pratica è possibile ignorare in ciascuna relazione gli attributi non compresi in $Y$ e non coinvolti nel join*
+- **Inglobamento di una selezione in un prodotto cartesiano a formare un join**:
+		$S_{F}(E_{1}\bowtie E_{2})\equiv E_{1}\bowtie_{F}E_{2}$
+- **Distributività della selezione rispetto all'unione**: 
+		$S_{F}(E_{1}\cup E_{2})\equiv S_{F}(E_{1})\cup S_{F}(E_{2})$ 
+- **Distributività della selezione rispetto alla differenza**:
+		$S_{F}(E_{1}- E_{2}) \equiv S_{F}(E_{1})- S_{F}(E_{2})$ 
+- **Distributività della proiezione rispetto all'unione**:
+		$P_{X}(E_{1} \cup E_{2})\equiv P_{X}(E_{1})\cup P_{X}(E_{2})$ 
+
+*Nota bene*: La proiezione NON è distributiva rispetto alla differenza
+
+- Tutti gli operatori binari eccetto la differenza godono delle proprietà associativa e commutativa.
+# Equivalenza
+
+- Corrispondenze fra gli operatori insiemistici e selezioni complesse
+		$\sigma_{F_{1}\lor F_{2}}(R)\equiv \sigma_{F_{1}}(R)\cup \sigma_{F_{2}}(R)$ 
+		$\sigma_{F_{1}\lor F_{2}}(R)\equiv \sigma_{F_{1}}(R)\cap \sigma_{F_{2}}(R)$ 
+		$\sigma_{F_{1}\lor \lnot F_{2}}(R)\equiv \sigma_{F_{1}}(R)- \sigma_{F_{2}}(R)$ 
+- Proprietà distributiva del join rispetto all'unione:
+		$E\bowtie(E_{1}\cup E_{2})\equiv(E\cup E_{1})\bowtie (E\cup E_{2})$ 
+
+# Algebra con valori nulli
+
+- Estensione degli operatori logici ad una logica ad una logica a 3 valori
+	(VERO, FALSO, SCONOSCIUTO(U))
+
+| Not |     |
+| --- | --- |
+| F   | V   |
+| U   | U   |
+| V   | F    |
+
+| And | V U F |
+| --- | ----- |
+| V   | V U F |
+| U   | U U F |
+| F   | F F F       |
+
+| or  | V U F |
+| --- | ----- |
+| V   | V V V |
+| U   | V U U |
+| F   | V U F      |
+
+- A IS NULL è vero su una ennupla t se il valore di t su A è nullo; falso se è specificato
+- A IS NOT FULL
+
+$\sigma_{ETÀ>30}(Persone)$ restituisce le persone la cui età è nota e > 30
+$\sigma_{ETÀ>30\lor ETÀ \ IS \ NULL}(Persone)$ restituisce le persone che potrebbero avere più di 30 anni
+
+# Viste (relazioni derivate)
+
+Rappresentazioni diverse per gli stessi dati (**schema esterno**)
+
+- **Relazioni di base**: contenuto autonomo
+- **Relazioni derivate**: relazioni il cui contenuto è funzione el contenuto di altre relazioni (definito per mezzo di interrogazioni)
+
+# Viste
+
+- **Relazioni Virtuali (Viste)**
+	Relazioni definite mediante funzioni o espressioni del linguaggio di interrogazione, non memorizzate ma utilizzabili come se lo fossero. Devono essere ricalcolate tutte le volte
+- **Viste materializzate**
+	Relazioni virtuali effettivamente memorizzate nella base di dati
+	Immediatamente disponibili ma critiche per il mantimento dell'allineamento con le relazioni da cui derivano. Non sono supportate dai DBMS
+
+# Vantaggi
+
+- Permettono di mostrare a un utente le sole componenti della base di dati che interessano
+- Espressioni molto complesse possono essere definitive come viste
+- **Sicurezza**: è possibile definire dei dirtitti di accesso relativi ad una vista (e quindi ad una particolare porzione della base di dati)
+- In caso di ristrutturazione della base di dati, le "vecchie" relazioni possono essere di nuovo ricavate mediante viste, consentendo l'uso di applicazioni che fanno riferimento al vecchio schema
+
+*EX*: 
+
+- Una vista:
+	$Supervisione = PROJ_{Impiegato, \ Capo}$
+
+**Afferenza**
+
+| Impiegato | Reparto |
+| --------- | ------- |
+| Rossi     | A       |
+| Neri      | B       |
+| Bianchi   | B        |
+
+**Direzione**
+
+| Reparto | Capo |
+| ------- | ---- |
+| A       | Mori |
+| B       | Bruni     |
+
+# Interrogazioni sulle viste
+
+- Sono eseguite sostituendo alla vista la sua definizione:$$SEL_{Capo='Leoni'}(Supervisione)$$
+Viene eseguita come $$SEL_{Capo='Leoni'}(PROJ_{Impiegato, \ Capo}(Afferenza \ Join \ Direzione))$$
+# Motivazioni
+
+- Schema esterno: ogni utente vede solo
+	- Ciò che gli interessa e nel modo in cui gli interessa, senza essere distratto dal resto
+	- Ciò che è autorizzato a vedere (autorizzazioni)
+- Strumento di programmazione
+	- Si può semplificare la scrittura di interrogazione: espressioni complesse e sottoespressioni ripetute
+	- Utilizzo di programmi esistenti su schemi ristrutturati
+
+# Strumento di programmazione
+
+- Trovare gli impiegati che hanno lo stesso capo di Rossi
+- Senza vista: $$PROJ_{Impiegato}(Afferenza \ Join \ Direzione)JOIN$$
+$$REN_{ImpR, \ RepR \leftarrow Imp, \ Reparto}(SEL_{Impiegato='Rossi'}(Afferenza \ JOIN \ Direzione))$$
+- Con la vista:$$PROJ_{Impiegato}(Supervisione)JOIN$$
+$$REN_{ImpR, \ Reparto}(SEL_{Impiegato='Rossi'}(Supervisione))$$
+
+# Viste e aggiornamenti
+
+- Aggiornare una vista
+	- Modificare le relazioni di base in modo che la vista , 'ricalcolata', rispecchi l'aggiornamento
+- L'aggiornamento sulle relazioni di base corrispondente a quello specificato sulla vista deve essere univoco
+- In genere però non è univoco
+- Ben pochi aggiornamenti sono ammissibili sulle viste

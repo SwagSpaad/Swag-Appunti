@@ -19,4 +19,3 @@
 - Algoritmi 1
 
 ## Sessione Estiva 2023/2024
-

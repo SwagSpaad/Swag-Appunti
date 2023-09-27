@@ -4,5 +4,8 @@
   "quick-latex",
   "obsidian-style-settings",
   "obsidian-mind-map",
-  "table-editor-obsidian"
+  "table-editor-obsidian",
+  "obsidian-checklist-plugin",
+  "cm-editor-syntax-highlight-obsidian",
+  "obsidian-advanced-slides"
 ]
