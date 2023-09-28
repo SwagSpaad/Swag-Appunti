@@ -1,4 +1,4 @@
-]----
+----
 Progettare una base di dati significa definirne la struttura, le caratteristiche e contenuto e quindi prevede l'uso di opportune metodologie. In base al grado di astrazione, la progettazione prevede: 
 - **Modello concettuale**: rappresenta la realtà dei dati e le relazioni tra essi attraverso uno schema.
 - **Modello logico**: descrive il modo attraverso il quale i dati sono organizzati negli archivi del calcolatore.

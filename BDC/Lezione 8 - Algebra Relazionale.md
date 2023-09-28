@@ -1,7 +1,7 @@
 ---
 
 ---
-
+----
 # Linguaggi per basi di dati
 
 Operazioni sullo schema

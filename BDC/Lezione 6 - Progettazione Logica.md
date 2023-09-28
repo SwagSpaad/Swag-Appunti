@@ -1,3 +1,4 @@
+----
 # ER $\rightarrow$ Modello relazionale
 ### Dal modello ER al modello relazionale:
 

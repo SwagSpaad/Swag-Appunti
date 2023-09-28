@@ -1,3 +1,4 @@
+----
 # Operazioni modello relazionale
 
 - Notazione algebrica $\rightarrow$ **Algebra Relazionale** $\rightarrow$ Linguaggio procedurale $\rightarrow$ interrogazioni espresse applicando operatori alle relazioni
