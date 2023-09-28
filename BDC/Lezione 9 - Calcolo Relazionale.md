@@ -163,4 +163,20 @@ Non c'è l'unione, per questo nei linguaggi interrogativi viene aggiunto esplici
 - Trovare gli impiegati che guadagnano più del proprio capo, mostrando, nome e stipendio dell'impiegato e del capo
 	- **Algebra relazionale**: $$\pi_{Nome, Stip,MatrC,StipC}(\sigma_{Stipendio>StipC}(\rho_{MAtrC,Nome, StipC,EtàC\leftarrow Matr,Nome,Stip,Età }(Impiegati)\bowtie_{MatrC=Capo}(Supervisione\bowtie_{Impiegato=Matricola}(Impiegati))))$$
 	- **Calcolo dei domini**:$$\{Nome \ n, \ Stip \ s, \ Nome Cnc, \ StipCsc \ | \ Impiegati(Matr:m, \ Nome \ n, \ Età \ e, \ Stipendio:s) \land (s>sc) \land Supervisione(Impiegato:m, \ Capo:c) \land Impiegati(Matr:c, \ Nome \ nc, \ Età \ ec, \ Stipendio: \ sc)\}$$
-	- **Calcolo delle ennuple**:$$$$
+	- **Calcolo delle ennuple**:$$\{t^{[4]} \ | \ (\exists x) (\exists y)(\exists z) Impiegati(x)\land Supervisione(y)\land (y.Impiegato=x.matr)\land Impiegati(z) \land (y.Capo=z.Matr)\land (t.Nome=x.Nome)\land (t.Stip>x.Stip)\land (t.NomeCapo=z.Nome)\land (t.StipCapo=z.Stip)\}$$
+- Trovare le matricole e i nomi dei capi i cui impiegati guadagnano tutti più di 40milioni
+	- Algebra relazionale:$$\pi_{Capo}(Supervisione)-\pi_{Capo}(Supervisione\bowtie_{Impiegato=Matricola}(\sigma_{Stipendio\leq 40}(Impiegati)))$$
+	- Calcolo dei domini (due modi: negazione quantificatore esistenziale)
+		- $$\{Matricola:c, \ Nome \ n \ | \ Impiegati(Matr:c, \ Nome \ n, \ Età  \ e, \ Stipendio:s)\land Supervisione(Impiegato:m, \ Capo:c)\land \rceil \exists m'(\exists n'(\exists s'(Impiegati(Matr: m', \ Nome \ n', Età \ e', \ Stipendio:s')\land Supervisione(Impiegato:m', \ Capo:c)\land(s'\geq 40))))$$
+		- $$\{Matricola:c, \ Nome \ n \ | \ Impiegati(Matr:c, \ Nome \ n, Età, \ e, \ Stipendio:s)\land \forall m'(\forall n'(\forall e'(\forall s'(Impiegati(Matr:m', \ Nome \ n', \ Età \ e', \ Stipendio:s')\land Supervisione(Impiegato:m', \ Capo:c)\land(s'>40)))))\}$$
+# Equivalenza fra i linguaggi
+
+- È possibile dimostrare che:
+	- Per ogni espressione del calcolo relazionale che sia indipendente dal dominio esiste un'espressione dell'algebra relazionale equivalente ad essa;
+	- Per ogni espressione dell'algebra relazionale esiste un'espressione del calcolo relazionale equivalente ad essa
+*Dim*: In modo ricorsivo a partire dagli operatori di base
+
+![[BDC/img/img72.png|center|800]]
+# Calcolo dei domini: QBE
+
+![[BDC/img/img73.png|center|800]]
