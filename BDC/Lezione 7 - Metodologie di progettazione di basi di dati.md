@@ -1,4 +1,4 @@
-----
+]----
 Progettare una base di dati significa definirne la struttura, le caratteristiche e contenuto e quindi prevede l'uso di opportune metodologie. In base al grado di astrazione, la progettazione prevede: 
 - **Modello concettuale**: rappresenta la realtà dei dati e le relazioni tra essi attraverso uno schema.
 - **Modello logico**: descrive il modo attraverso il quale i dati sono organizzati negli archivi del calcolatore.
@@ -77,3 +77,78 @@ Fissiamo delle regole generali per ottenere una specifica dei requisiti più pre
 	- nell'[[#Esempio di raccolta e analisi dei requisiti|esempio]], il concetto di *partecipazione ad un corso* è rappresentabile da una relazione tra le entità che rappresentano i *partecipanti* e i *corsi*. Questo vale solo nel caso in cui il concetto in questione non abbia le caratteristiche delle entità, come ad esempio il concetto di *visita* relativo a pazienti e medici (di una visita sono di interesse diverse proprietà quali la data, l'orario e la diagnosi).
 - se uno o più concetti risultano essere casi particolari di un altro, si rappresentano facendo uso di una **generalizzazione**;
 	- nell'[[#Esempio di raccolta e analisi dei requisiti|esempio]], i concetti di *professionista* e *dipendente* costituiscono dei casi particolari del concetto di *partecipante* ed è quindi indicato definire una generalizzazione tra le entità che rappresentano questi concetti.
+
+# Strategie di progetto
+Lo sviluppo di uno schema concettuale può essere considerato un processo di ingegnerizzazione e quindi risultano applicabili le strategie di progetto utilizzate anche in altre discipline.
+
+## Strategia top-down
+Lo schema concettuale viene prodotto mediante una serie di raffinamenti successivi a partire da uno schema iniziale che descrive le specifiche con pochi concetti molto astratti. Lo schema viene poi raffinato mediante opportune trasformazioni che aumentano il dettaglio dei vari concetti presenti. Nel passaggio da un livello di raffinamento ad un altro, lo schema viene modificato facendo uso di alcune trasformazioni elementari che vengono denominate *primitive di trasformazione top-down*.
+
+![[BDC/img/img68.png|center|500]]
+
+Esempi di primitive di trasformazione top-down sono:
+- T1, da *entità a relazione fra entità*: si applica quando si verifica che una entitià descrive due concetti diversi legati logicamente fra loro.
+- T2, da *entità a generalizzazione*: si applica quando una entità è composta da sotto-entità distinte o, più in generale, che uno stesso concetto può in realtà comprendere più concetti.
+- T3, da *relazione a insieme di relazioni*: si applica quando una relazione descrive in realtà due o più relazioni fra le medesime entità; tipicamente le due relazioni sono due specializzazioni di una relazione più generale.
+- T4, da *relazione ad entità con relazioni*: si applica quando una relazione descrive un concetto con esistenza autonoma ai fini dell'applicazione o concetti di cui si possono avere più occorrenze.
+- T5, *introduzione di attributi in una entità*: si applica per introdurre nuovi attributi ad una entità, che aiutino a descriverla in modo più completo.
+- T6, *introduzione di attributi su relazioni*: si applica per aggiungere proprietà a relazioni
+
+![[BDC/img/img69.png|center|500]]
+
+## Strategia bottom-up
+In questa strategia le specifiche iniziali sono suddivise in componenti sempre più piccole, fino a quando queste componenti descrivono un frammento elementare della realtà di interesse. Le componenti vengono poi fuse con trasformazioni successive, dette *primitive di trasgormazione bottom-up*, per giungere allo schema concettuale finale.
+Ogni trasformazione introduce nuovi concetti non presenti al livello precedente.
+
+![[BDC/img/img70.png|center|500]]
+
+Esempi di primitive di trasformazione bottom-up sono:
+- T1, *generazione di entità*: si applica quando si individua nelle specifiche una classe di oggetti caratterizzata da proprietà comuni.
+- T2, *generazione di relazione*: si applica quando nelle specifiche si individua un legame logico fra entità.
+- T3, *generazione di generalizzazione*: si applica quando si individua un legame fra diverse entità riconducibile ad una generalizzazione, quando cioè le diverse entità possono essere istanze di una stessa classe
+- T4, *aggregazione di attributi su entità*: si applica quando si individua una entità che può essere rappresentata come aggregazione di attributi presenti nelle specifiche.
+- T5, *aggregazione di attributi su relazione*: analoga a T4, ma relativa ad una relazione.
+
+## Strategia inside-out
+Questa strategia può essere vista come un caso particolare della strategia [[#Strategia bottom-up|bottom-up]]: individua solo alcuni concetti importanti, per poi procedere a macchia d'olio.
+Si rappresentano prima i concetti più vicini a quelli di partenza, per poi sviluppare quelli più lontani attraverso una navigazione nelle specifiche.
+
+![[BDC/img/img71.png|center|500]]
+
+Nella figura è mostrato un esempio di sviluppo inside-out. Si osserva che inizialmente è stata individuata l'entità **IMPIEGATO** con i suoi attributi e a partire da questa sono state rappresentate la partecipazione degli impiegati ai progetti e tutte le proprietà dei progetti. Successivamente sono state analizzate le correlazioni esistenti tra gli impiegati e i dipartimenti dell'azienda, individuando le relazioni ***Direzione*** e ***Afferenza*** e l'entità **DIPARTIMENTO**, con i relativi attributi. Infine, partendo da quest'ultima entità, sono state rappresentate le sedi dell'azienda (entità **SEDE**) e l'appartenenza dei dipartimenti alle relative sedi (relazione ***Composizione***). Nella penultima fase non si poteva identificare l'entità **DIPARTIMENTO** (a meno di aggiungere altri attributi), perché è possibile avere dipartimenti con lo stesso nome in sedi diverse, ma, al passo successivo, è stato possibile identificare tale entità con l'attributo *Nome* e l'entità **SEDE** attraverso la relazione ***Composizione***.
+
+I vantaggi di questa strategia sono di non richiedere passi di integrazione, ma d'altra parte è necessario di volta in volta esaminare tutte le specifiche e descrivere i nuovi concetti nel dettaglio. Non è quindi possibile procedere per livelli di astrazione come avviene nella strategia [[#Strategia top-down|top-down]].
+
+## Strategia mista
+Cerca di unire i vantaggi delle strategie [[#Strategia top-down|top-down]] e [[#Strategia bottom-up|bottom-up]]. Si suddividono i requisiti in componenti separate, come nella strategia bottom-up, ma allo stesso tempo si definisce uno *schema scheletro* contenente, a livello astratto, i concetti principali dell'applicazione. Questo schema fornisce una visione unitaria dell'intero progetto e favorisce le fasi di integrazione degli schemi sviluppati separatamente. Conteporaneamente, dalle specifiche, si creano in modo bottom-up i concetti non presenti nello schema scheletro.
+Questa strategia si adatta ad esigenze opposte di suddivisione di un problema complesso in sottoproblemi e di procedura per raffinamenti successiva, in pratica ingloba anche la strategia inside-out.
+Spesso è l'unica strategia utilizzabile, perché è necessario cominciare la progettazione quando non sono ancora disponibili tutti i dati e, dei dati noti abbiamo delle conoscenze a livello di dettaglio non omogenei.
+
+# Qualità di uno schema concettuale
+Nella costruzione di uno schema concettuale vanno garantite alcune proprietà generali che uno schema di buona qualità deve avere. Analizziamo le più importanti:
+- **Correttezza**: uno schema concettuale è corretto quando utilizza propriamente i costrutti messi a disposizione dal modello concettuale di riferimento. 
+- **Completezza**: uno schema concettuale è completo quando rappresenta tutti i dati di interesse e quando tutte le operazioni possono essere eseguite a partire dai concetti descritti nello schema.
+- **Leggibilità**: uno schema è leggibile quando rappresenta i requisiti in maniera naturale e facilmente comprensibile. Per garantire questa proprietà è necessario rendere lo schema autoesplicativo, mediante una scelta opportuna dei nomi da dare ai concetti.
+- **Minimalità**: uno schema è minimale quando tutte le specifiche sono rappresentate una volta sola, quindi non esistono *ridondanze*. Non sempre, però, una ridondanza è indesiderata, ma può nascere da scelte progettuali.
+
+# Una metodologia generale
+Tiriamo le somme su quanto detto relativamente alla progettazione concettuale di basi di dati. Per quanto riguarda le strategie di progetto, nella pratica non accade quasi mai che un progetto proceda *sempre* in modo top-down o bottom-up. Nelle situazioni reali capita infatti di modificare lo schema in via di costruzione sia con *trasformazioni che raffinano un concetto presente* (metodologia top-down) sia con *trasformazioni che aggiungono un concetto non presente* (tipicamente bottom-up). Presentiamo quindi una metodologia per la progettazione concettuale con il modello E-R con riferimento alla [[#Strategia mista|strategia mista]].
+La metodologia è composta dai seguenti passi:
+1. **Analisi dei requisiti**
+	- Costruire un glossario dei termini
+	- Analizzare i requisisti ed eliminare le ambiguità presenti
+	- Raggruppare i requisiti in insiemi omogenei
+2. **Passo base**
+	- Individuare i concetti più rilevanti e rappresentarli in uno schema scheletro
+3. **Passo di decomposizione**: da effettuare se appropriato e necessario
+	- Effettuare una decomposizione dei requisiti con riferimento ai concetti presenti nello schema scheletro
+4. **Passo iterativo**: da ripetere per tutti i sotto-schemi, finché ogni specifica è stata rappresentata
+	- Raffinare i concetti presenti sulla base delle loro specifiche
+	- Aggiungere nuovi concetti allo schema per descrivere specifiche non ancora descritte
+5. **Passo di integrazione**: da effettuare se è stato eseguito il passo 3
+	- Integrare i vari sotto-schemi in uno schema generale facendo riferimento allo schema scheletro
+6. **Analisi di qualità**:
+	- Verificare la correttezza dello schema ed eventualmente ristrutturare lo schema
+	- Verificare la completezza dello schema ed eventualmente ristrutturare lo schema
+	- Verificare la minimalità, documentare le ridondanze ed eventualmente ristrutturare lo schema
+	- Verificare la leggibilità dello schema ed eventualmente ristrutturare lo schema
