@@ -22,6 +22,8 @@ Consideriamo la relazione in tabella, che ha come chiave l'insieme costituito da
 | Bianchi   | 48000     | Venere   | 15000    | progettista |
 | Bianchi   | 48000     | Giove    | 15000    | direttore   |
 
+^46e80c
+
 - Il valore dello stipendio di ciascun impiegato è ripetuto in tutte le tuple relative a esso: si ha quindi una *ridondanza*; se per esempio un impiegato partecipasse a 20 progetti, il suo stipendio verrebbe ripetuto 20 volte.
 - Se lo stipendio di un impiegato varia, è necessario andarne a modificare il valore in tutte le tuple corrispondenti; questo inconveniente, che comporta la necessità di effettuare più modifiche contemporaneamente, va sotto il nome di *anomalia di aggiornamento*.
 - Se un impiegato interrompe la partecipazione a tutti i progetti senza lasciare l'azienda, e quindi tutte le corrispondenti tuple vengono eliminate, non è possibile conservare traccia del suo nome e del suo stipendio, che potrebbero rimanere di interresse; questo problema viene indicato come *anomalia di cancellazione*.
@@ -38,3 +40,116 @@ La normalizzazione dei dati può essere considerata come un processo di analisi 
 1. minimizzazione della ridondanza
 2. minimizzazione delle anomalie di inserimento, cancellazione, modifica.
 # Dipendenze funzionali
+La **dipendenza funzionale** (**FD**) è un particolare vincolo di integrità per il modello relazionale che descrive legami di tipo funzionale tra gli attributi di una relazione.
+Si ha **dipendenza funzionale** tra gli attributi quando il valore di un insieme di attributi A determina un singolo valore dell'attributo B e si indica con $A \rightarrow B$. Si dice anche che B dipende da A o che A è determinante per B.
+
+**Oss.**
+- Se un attributo è chiave candidata di una relazione, allora è un determinante di ogni attributo della relazione e viceversa, un attributo che determina tutti gli altri attributi è chiave candidata.
+- Si ha **dipendenza transitiva** auando A determina B e B determina C. Si dice allora che C dipende transitivamente da A
+
+Consideriamo la [[#^46e80c|tabella]] precedente. Osserviamo che lo stipendio di ogni impiegato è unico e ogni volta che in una tupla della relazione compare un certo impiegato, il valore del suo stipendio rimane sempre lo stesso. Possiamo dire che il valore dell'attributo *Impiegato* determina il valore dell'attributo *Stipendio*, o possiamo dire che esiste una funzione che associa a ogni elemento del dominio dell'attributo *Impiegato* un solo elemento del dominio dell'attributo *Stipendio*. 
+Notiamo che ogni impiegato in ciascun progetto ha una sola funzione. Scriviamo quindi in notazione: 
+$$\text{Impiegato} \rightarrow \text{Stipendio}$$
+$$\text{Impiegato Progetto} \rightarrow \text{Funzione}$$
+La seconda dipendenza si tratta però di una dipendenza funzionale *banale*, ovvero sempre soddisfatta.
+- $Y \rightarrow A$ è *non banale* se A non appartiene a Y.
+- $Y \rightarrow Z$ è *non banale* se nessun attributo in Z appartiene a Y
+
+Le anomalie nella tabella sono legate ad alcune dipendenze funzionali:
+- gli impiegati hanno un unico stipendio, scriviamo in notazione $$\text{Impiegato} \rightarrow \text{Stipendio}$$
+- i progetti hanno un unico bilancio $$\text{Progetto} \rightarrow \text{Bilancio}$$
+- in ciascun progetto, un impiegato svolge una sola funzione $$\text{Impiegato Progetto} \rightarrow \text{Funzione}$$
+Osserviamo che la terza FD corrisponde ad una chiave e non causa anomalie, mentre le prime due FD non corrispondono a chiavi e causano anomalie.
+La relazione contiene alcune informazioni legate alla chiave e altre ad attributi che non formano una chiave. 
+Le anomalie sono causate dalla presenza di concetti eterogenei:
+- proprietà degli impiegati (stipendio)
+- proprietà di progetti (bilancio)
+- proprietà della chiave Impiegato Progetto
+Una FD è una proprietà degli attributi nello schema R. Il vincolo deve valere su ogni istanza della relazione $r(R)$ 
+Se K è una chiave di R, allora K determina funzionalmente tutti gli attributi in R (poiché non abbiamo mai due tuple distinte con $t_1[K]=t_2[K]$).
+
+# Forme normali
+## Prima forma normale
+Uno schema di relazione $R(X)$ con X insieme di attributi, è in 1NF se ogni attributo appartenente ad X è un attributo semplice, ovvero se il suo valore è unico e indivisibile in una ennupla. 
+
+**Es.**
+
+| Codice | Cognome | Nome  | Data Nascita | Figli a carico |
+| ------ | ------- | ----- | ------------ | -------------- |
+| 001    | Rossi   | Mario | 01/01/1978   | Luca Serena    |
+| 002    | Verdi   | Luca  | 02/04/1959   | Marzia Ilaria  | 
+
+La tabella non è in 1NF, perché l'attributo *Figli a carico* contiene più valori. 
+La decomposizione genera due tabelle distinte
+
+| Codice | Cognome | Nome  | Data Nascita |
+| ------ | ------- | ----- | ------------ |
+| 001    | Rossi   | Mario | 01/01/1978   |
+| 002    | Verdi   | Luca  | 02/04/1959   | 
+
+| Codice | Codice Figlio | Nome   |
+| ------ | ------------- | ------ |
+| 001    | 01            | Luca   |
+| 001    | 02            | Serena |
+| 002    | 01            | Marzia |
+| 002    | 02            | Ilaria | 
+
+## Seconda forma normale
+Uno shcema di relazione $R(X)$ è in 2NF se è in 1NF e se ogni attributo non primo (non facente parte della chiave) di $R(X)$ dipende funzionalmente e completamente da ogni chiave di $R(X)$.
+
+**Es.**
+
+*Inventario*
+
+| <u>CodArticolo</u> | <u>CodMagazzino</u> | DescArticoli | Quantità | IndirizzoMagazzino |
+| ------------------ | ------------------- | ------------ | -------- | ------------------ |
+
+La tabella non è in 2NF, perché tutte le colonne corrispndenti agli attributi non chiave non dipendono dall'intera chiave primaria
+Si derivano quindi 3 diverse tabelle: 
+
+*Inventario*
+
+| <u>CodArticolo</u> | <u>CodMagazzino</u> | Quantità | 
+| ------------------ | ------------------- | -------- |
+
+*Articoli*
+
+| <u>CodArticolo</u> | DescArticoli | 
+| ------------------ | ------------ |
+
+*Magazzino*
+
+| <u>CodMagazzino</u> | IndirizzoMagazzino | 
+| ------------------- | ------------------ |
+
+## Terza forma normale
+Uno schema di relazione $R(X)$ è in 3NF se è in 1NF e se ogni attributo non primo (non facente parte della chiave) di $R(X)$ è dipendente in modo non transitivo da ogni chiave di $R(X)$.
+
+**Es.**
+
+*Impiegati*
+
+| <u>CodImpiegato</u> | Nome | Reparto | TelefonoReparto |
+| ------------------- | ---- | ------- | --------------- |
+
+La tabella non è in 3NF per i seguenti motivi: 
+- *telefono del Reparto* ripetuto per ogni Impiegato di quel *Reparto* (ridondanza)
+- se il telefono cambia occore modificare molte righe
+- con errori di aggiornamento, si avrebbero telefoni differenti
+- se un *Reparto* non ha impiegati, non si può conoscere il suo telefono
+Si osservano le seguenti dipendenze funzionali:
+- $\text{CodImpiegato} \rightarrow \text{Reparto}$
+- $\text{Reparto}\rightarrow \text{TelefonoReparto}$
+La tabella in 3NF risulta quindi:
+
+*Impiegati*
+
+| <u>CodImpiegato</u> | Nome | Reparto | 
+| ------------------- | ---- | ------- |
+
+*Reparto*
+
+| <u>Reparto</u> | TelefonoReparto | 
+| -------------- | --------------- |
+
+## Forma normale di Boyce-Codd
