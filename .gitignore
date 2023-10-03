@@ -1,6 +1,6 @@
 
 # Including plugin and hotkey configurations
-.obsidian
+.obsidian/*
 
 # MacOs 
 .trash/
