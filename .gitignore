@@ -1,4 +1,3 @@
-
 # Including plugin and hotkey configurations
 .obsidian/*
 
@@ -10,7 +9,7 @@
 # Stuff
 Latex_Math_Symbols.pdf
 
-info_lvnc.md
+info_lvnc.md*
 
 #Provvisoria
 SOR_Provvisoria
