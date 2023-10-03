@@ -17,18 +17,20 @@
 | Oper e Reti      | Martedì - Giovedì | 3PP2    |
 | Calcolo Numerico | Martedì           | Aula 13 |
 | Calcolo Numerico | Giovedì           | Aula 19 |
-| Algoritmi        | Martedì - Giovedì | 3PP2        |
+| Algoritmi        | Martedì - Giovedì | 3PP2    |
 # Piano
 ## Sessione Invernale 2023/2024
 
 - Basi di Dati (12 CFU)
 - Calcolo Numerico (6 CFU)
-- Sistemi Operativi (12 CFU)
+- Sistemi Operativi MOD1 (6 CFU)
+- Algoritmi MOD1 (6CFU)
 
 ## Sessione Estiva 2023/2024
 
 - Fondamenti 2 (12 CFU)
-- Algoritmi 1 - 2 (12 CFU)
+- Algoritmi MOD2 (6 CFU)
+- Sistemi Operativi MOD2 (6CFU)
 
 ## Sessione Autunnale 2023/2024
 
