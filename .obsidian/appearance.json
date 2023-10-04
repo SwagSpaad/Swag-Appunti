@@ -1,12 +1,12 @@
 {
-  "baseFontSize": 21,
+  "baseFontSize": 26,
   "enabledCssSnippets": [
     "center",
     "table_center"
   ],
   "accentColor": "",
   "cssTheme": "Catppuccin",
-  "textFontFamily": "Inter",
+  "textFontFamily": "Helvetica Neue",
   "baseFontSizeAction": false,
   "interfaceFontFamily": "",
   "monospaceFontFamily": "",

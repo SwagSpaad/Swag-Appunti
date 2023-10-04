@@ -28,7 +28,7 @@
 
 ## Sessione Estiva 2023/2024
 
-- Fondamenti 2 (12 CFU)
+- Fondamenti MOD2 (6 CFU)
 - Algoritmi MOD2 (6 CFU)
 - Sistemi Operativi MOD2 (6CFU)
 
