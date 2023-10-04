@@ -47,12 +47,11 @@ Per dimostrare che $\exists! p(x)\in \mathbb R_{n}[x]$ tale che $p(x_{i})=y_{i}$
 Dimostriamo dunque che il sistema $(\star)$ ha un'unica soluzione, cioè che $$\text{det}[V(x_{0},x_{1},\dots,x_{n})]\neq 0$$
 Per farlo, mostriamo che $$\text{det}[V(x_{0},x_{1},\dots,x_{n})]=\begin{cases} 1 \\
  \\
-\prod_{i,j=0,\: j<i}^{n}\:(x_{i}-x_{j})=(x_1-x_0)\cdot(x_2-x_{0}) \:\:(\star\star)\\
+\prod_{i,j=0,\: j<i}^{n}\:(x_{i}-x_{j})=(x_1-x_0)\cdot\dots(x_n-x_0)\cdot\dots(x_n-x_{n-1})\:\:(\star\star)\\
 \end{cases}
 $$
 Dimostriamo $(\star\star)$ nel caso n = 3 (la dimostrazione nel caso n generico è analoga).
 Per $i=1,\dots,3$ definiamo $d_{i}=\text{det}[V(x_{0},\dots,x_{i})]$. Il nostro obiettivo è calcolare $d_{3}=\text{det}[V(x_{0},\dots,x_{3})]$.
-
 $$d_{3}= \begin{vmatrix}
 1 & x_0 & x_{0}^2 & x_{0}^3 \\
 1 & x_1 & x_{1}^2 & x_{1}^3 \\
