@@ -8,9 +8,10 @@
   "cssTheme": "Catppuccin",
   "textFontFamily": "Helvetica Neue",
   "baseFontSizeAction": false,
-  "interfaceFontFamily": "",
+  "interfaceFontFamily": "JetBrainsMono Nerd Font",
   "monospaceFontFamily": "",
   "showViewHeader": true,
   "nativeMenus": false,
-  "theme": "obsidian"
+  "theme": "obsidian",
+  "translucency": true
 }

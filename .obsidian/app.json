@@ -9,5 +9,7 @@
   "alwaysUpdateLinks": true,
   "spellcheckLanguages": null,
   "spellcheck": false,
-  "promptDelete": false
+  "promptDelete": false,
+  "showLineNumber": false,
+  "vimMode": false
 }
