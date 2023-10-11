@@ -15,8 +15,8 @@ Per il teorema di Rolle abbiamo che:
 - $z^{'}(y)$ si annulla in almeno $n+1$ punti di $(a,b)$ 
 - $z^{''}(y)$ si annulla in almeno $n$ punti di $(a,b)$ 
  $\vdots$
-- $z^{n+1}(y)$ si annulla in almeno $1$ punto di $(a,b)$ $\to$ chiamo $\xi$ questo punto.
-\left|\sin(t)-p(t)\right|=\left|\frac{f^{'''}}{3!}(t-x_{0})(t-x_{1})(t-x_{2})\right|\:\:\: (\xi \in (0,1))
+- $z^{n+1}(y)$ si annulla in almeno $1$ punto di $(a,b)$ $\to$ chiamo $\xi$ questo punto$$.
+\left|\sin(t)-p(t)\right|=\left|\frac{f^{'''}}{3!}(t-x_{0})(t-x_{1})(t-x_{2})\right|\:\:\: (\xi \in (0,1))$$
 Mostriamo che il punto $\xi$ è quello che fa valere la formula $(\star)$. Per farlo devo calcolare la derivata $$z^{(n+1)}(y)=r^{(n+1)}(y)- \frac{r(x)}{\pi(x)}\pi^{(n+1)}(y)=$$ $$=f^{(n+1)}(y)-p^{(n+1)}(y)-\frac{r(x)}{\pi(x)}(n+1)!=$$ $$=f^{(n+1)}(y)- \frac{r(x)}{\pi(x)}(n+1)!$$ $$0=z^{(n+1)}(\xi)=f^{(n+1)}(\xi)- \frac{r(x)}{\pi(x)}(n+1)!$$
 $$\implies \frac{r(x)}{\pi(x)}(n+1)!=f^{(n+1)}(\xi)\implies r(x)=\frac{f^{(n+1)}}{(n+1)!}\pi(x)\:\:\: \text{è la }(\star)!!!$$ 
 ## Esempio 1
@@ -69,4 +69,4 @@ Tornando a $(£)$, $\forall x \in [0,1]$ si ha:
 
 $$|f(x)-p(x)|\le \frac{20e}{6}\cdot \frac{\sqrt3}{6}\approx 0.436$$ ^9bfc13
 
-2. Dal risultato [[#^9bfc13|sopra]] scegliendo $x=\frac{4}{3}\in [0,1]$ si ha $$\left|\underbrace{f\left(\frac{1}{3}\right)-p\left(\frac{1}{3}\right)}_{\sqrt[9]e-p(\frac{1}{3})}\right|\le\frac{20e}{6}\cdot \frac{\sqrt3}{6}\approx 0.436$$ Volendo ottenere una stima più precisa applico il teorema del resto dell'interpolazione con $x=\frac{1}{3}$ $$\left|f\left(\frac{1}{3}\right)-p\left(\frac{1}{3}\right)\right|=\left|\frac{f^{'''}(\xi)}{6}\left(\frac{1}{3}-0\right)\left(\frac{\frac{1}{3}-1}{2}\right)\left(\frac{1}{3}-1\right)\right|\le \frac{20e}{6}\frac{1}{3}\frac{1}{6}\frac{2}{3}\approx 0.336$$
+2. Dal risultato [[#^9bfc13|sopra]] scegliendo $x=\frac{4}{3}\in [0,1]$ si ha $$\left|\underbrace{f\left(\frac{1}{3}\right)-p\left(\frac{1}{3}\right)}_{\sqrt[9]e-p(\frac{1}{3})}\right|\le\frac{20e}{6}\cdot \frac{\sqrt3}{6}\approx 0.436$$ Volendo ottenere una stima più precisa applico il teorema del resto dell'interpolazione con $x=\frac{1}{3}$ $$\left|f\left(\frac{1}{3}\right)-p\left(\frac{1}{3}\right)\right|=\left|\frac{f^{'''}(\xi)}{6}\left(\frac{1}{3}-0\right)\left(\frac{\frac{1}{3}-1}{2}\right)\left(\frac{1}{3}-1\right)\right|\le \frac{20e}{6}\frac{1}{3}\frac{1}{6}\frac{2}{3}\approx 0.336$$ 
