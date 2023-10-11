@@ -153,3 +153,268 @@ La tabella in 3NF risulta quindi:
 | -------------- | --------------- |
 
 ## Forma normale di Boyce-Codd
+Una relazione è in **forma normale di Boyce-Codd (BCNF)** se è in 1NF se per ogni FD $X \to A$ in R, $X$ è una superchiave di R.
+
+**Oss.**
+Ogni forma normale è strettamente più forte della precedente:
+- Ogni relazione in [[#Seconda forma normale|2NF]] è in [[#Prima forma normale|1NF]]
+- Ogni relazione in [[#Terza forma normale|3NF]] è in [[#Seconda forma normale|2NF]]
+- Ogni relazione in [[#Forma normale di Boyce-Codd|BCNF]] è in [[#Terza forma normale|3NF]]
+
+Esistono delle relazioni in [[#Terza forma normale|3NF]] che però non sono in [[#Forma normale di Boyce-Codd|BCNF]].
+L'obiettivo è avere ogni relazione in [[#Forma normale di Boyce-Codd|BCNF]] o in [[#Terza forma normale|3NF]]
+
+## Quarta e quinta forma normale
+Risolvono i problemi che si possono creare quando nella relazione sono presenti attributi multivalore, cioè attributi che possono assumere più valori in corrispondenza dello stesso valore di un altro attributo.
+
+# Quale forma normale
+È sufficiente rappresentare le relazioni in [[#Terza forma normale|3NF]] che ha il pregio di essere sempre ottenibile senza **perdita di informazioni** e senza **perdita di dipendenze funzionali**.
+Non si può dire la stessa cosa per la [[#Forma normale di Boyce-Codd|forma normale di Boyce-Codd]], perché ci sono relazioni che non possono essere normalizzate in BCNF senza perdita di dipendenze funzionali.
+
+# Normalizzazione e decomposizione
+Cosa facciamo se una relazione non rispetta la BCNF? La rimpiazziamo con altre relazioni che la soddisfano, decomponendo sulla base delle dipendenze funzionali, al fine di separare i concetti. 
+
+## Esempio di decomposizione
+
+| <u>Impiegato</u> | Stipendio | <u>Progetto</u> | Bilancio | Funzione    |
+| ---------------- | --------- | --------------- | -------- | ----------- |
+| Rossi            | 20        | Marte           | 2        | tecnico     |
+| Verdi            | 35        | Giove           | 15       | progettista |
+| Verdi            | 35        | Venere          | 15       | progettista |
+| Neri             | 55        | Venere          | 15       | direttore   |
+| Neri             | 55        | Giove           | 15       | consulente  |
+| Neri             | 55        | Marte           | 2        | consulente  |
+| Mori             | 48        | Marte           | 2        | direttore   |
+| Mori             | 48        | Venere          | 15       | progettista |
+| Bianchi          | 48        | Venere          | 15       | progettista |
+| Bianchi          | 48        | Giove           | 15       | direttore   |
+
+**Procedura intuitiva di normalizzazioni**
+Non valida in generale, ma solo nei casi più semplici:
+- Per ogni dipendenza $X \to Y$ che viola la BCNF, definiamo una relazione su $XY$ ed eliminare $Y$ dalla relazione originaria
+Ma questo non sempre è possibile
+
+| Impiegato | Progetto | Sede   |
+| --------- | -------- | ------ |
+| Rossi     | Marte    | Roma   |
+| Verdi     | Giove    | Milano |
+| Verdi     | Venere   | Milano |
+| Neri      | Saturno  | Milano |
+| Neri      | Venere   | Milano |
+
+^976ccc
+
+Ha le seguenti dipendenza: 
+- $\text{Impiegato} \to \text{Sede}$
+- $\text{Progetto} \to \text{Sede}$
+
+Decomponiamo sulla base delle dipendenze
+
+| Impiegato | Progetto | Sede   |
+| --------- | -------- | ------ |
+| Rossi     | Marte    | Roma   |
+| Verdi     | Giove    | Milano |
+| Verdi     | Venere   | Milano |
+| Neri      | Saturno  | Milano |
+| Neri      | Venere   | Milano | 
+
+| Impiegato | Sede   |
+| --------- | ------ |
+| Rossi     | Roma   |
+| Verdi     | Milano |
+| Neri      | Milano |
+
+| Progetto | Sede   |
+| -------- | ------ |
+| Marte    | Roma   |
+| Giove    | Milano |
+| Saturno  | Milano |
+| Venere   | Milano | 
+
+**Proviamo a ricostruire**
+
+| Impiegato | Sede   |
+| --------- | ------ |
+| Rossi     | Roma   |
+| Verdi     | Milano |
+| Neri      | Milano | 
+
+| Progetto | Sede   |
+| -------- | ------ |
+| Marte    | Roma   |
+| Giove    | Milano |
+| Saturno  | Milano |
+| Venere   | Milano | 
+
+| Impiegato | Progetto | Sede   |
+| --------- | -------- | ------ |
+| Rossi     | Marte    | Roma   |
+| Verdi     | Giove    | Milano |
+| Verdi     | Venere   | Milano |
+| Neri      | Saturno  | Milano |
+| Neri      | Venere   | Milano |
+| **Verdi**     | **Saturno**  | **Milano** |
+| **Neri**      | **Giove**    | **Milano** | 
+
+Gli attributi evidenziati mostrano che la tabella risultante è diversa dalla [[#^976ccc|tabella]] di partenza.
+
+## Decomposizione senza perdita
+Una relazione $r$ si decompone senza perdita su $X_1$ e $X_2$ se il join delle proiezioni di $r$ su $X_1$ e $X_2$ è uguale a $r$ stessa, ovvero non contiene tuple spurie.
+La **decomposizione senza perdita** è garantita se gli attributi comuni contengono una **chiave** per almeno una delle relazioni decomposte.
+
+### Decomponiamo senza perdita
+
+| Impiegato | Progetto | Sede   |
+| --------- | -------- | ------ |
+| Rossi     | Marte    | Roma   |
+| Verdi     | Giove    | Milano |
+| Verdi     | Venere   | Milano |
+| Neri      | Saturno  | Milano |
+| Neri      | Venere   | Milano | 
+
+| Impiegato | Sede   |
+| --------- | ------ |
+| Rossi     | Roma   |
+| Verdi     | Milano |
+| Neri      | Milano |
+
+| Impiegato | Progetto |
+| --------- | -------- |
+| Rossi     | Marte    |
+| Verdi     | Giove    |
+| Verdi     | Venere   |
+| Neri      | Saturno  |
+| Neri      | Venere   | 
+
+- $\text{Impiegato}\to \text{Sede}$
+- $\text{Progetto}\to\text{Sede}$
+
+**Un altro problema**
+Supponiamo di voler inserire una nuova tupla che specifica la partecipazione dell'impiegato Neri, che opera a Milano, al progetto Marte.
+
+| Impiegato | Sede   |
+| --------- | ------ |
+| Rossi     | Roma   |
+| Verdi     | Milano |
+| **Neri**      | **Milano** | 
+
+| Impiegato | Progetto |
+| --------- | -------- |
+| Rossi     | Marte    |
+| Verdi     | Giove    |
+| Verdi     | Venere   |
+| Neri      | Saturno  |
+| Neri      | Venere   |
+| **Neri**      | **Marte**    | 
+
+- $\text{Impiegato}\to\text{Sede}$
+- $\text{Progetto}\to\text{Sede}$
+
+Ma il progetto **Marte** ha come sede **Roma**
+
+Una decomposizione, conserva le dipendenze se ciascuna delle dipendenze funzionali dello schema originario coinvolge attributi che compaiono tutti insieme in uno degli schemi decomposti.
+- $\text{Progetto}\to \text{Sede}$
+
+Una decomposizione dovrebbe sempre soddisfare:
+- la **decomposizione senza perdita**, che garantisce la ricostruzione delle informazioni originarie
+- la **conservazione delle dipendenze**, che garantisce il mantenimento dei vincoli di integrità originari.
+
+**Una relazione non normalizzata**
+
+| Dirigente | <u>Progetto</u> | <u>Sede</u> |
+| --------- | --------------- | ----------- |
+| Rossi     | Marte           | Roma        |
+| Verdi     | Giove           | Milano      |
+| Verdi     | Marte           | Milano      |
+| Neri      | Saturno         | Milano      |
+| Neri      | Venere          | Milano      | 
+
+- $\text{Progetto Sede}\to\text{Dirigente}$
+- $\text{Dirigente}\to\text{Sede}$
+
+La decomposizione è problematica, perché $\text{Progetto Sede}\to\text{Dirigente}$ coinvolge tutti gli attributi e quindi nessuna decomposizione può preservare questa dipendenza, quindi in alcuni casi la [[#Forma normale di Boyce-Codd|BCNF]] non è raggiungibile.
+
+Una relazione $r$ è in **terza forma normale** se, per ogni FD $X\to Y$ definita su $r$, è verificata almeno una delle seguenti condizioni:
+- $X$ contiene una chiave *K* di $r$
+- ogni attributo in $Y$ è contenuto in almeno una chiave di $r$
+
+La terza forma normale è meno restrittiva della forma normale di Boyce-Codd, ma ha il vantaggio di essere sempre raggiungibile. Se una relazione ha una sola chiave, allora essa è in BCNF se e solo se è in 3NF.
+
+
+## Decomposizione in terza forma normale
+- Si crea una relazione per ogni gruppo di attributi coinvolti in una dipendenza funzionale 
+- Si verifica che alla fine una relazione contenga una chiave della relazione originaria
+
+Se la relazione non è normalizzata si decompone in terza forma normale e alla fine si verifica se lo schema ottenuto è anche in BCNF.
+
+Vediamo uno schema non decomponibile in BCNF
+
+| Dirigente | <u>Progetto</u> | <u>Sede</u> |
+| --------- | --------------- | ----------- |
+| Rossi     | Marte           | Roma        |
+| Verdi     | Giove           | Milano      |
+| Verdi     | Marte           | Milano      |
+| Neri      | Saturno         | Milano      |
+| Neri      | Venere          | Milano      | 
+
+- $\text{Progetto Sede}\to\text{Dirigente}$
+- $\text{Dirigente}\to\text{Sede}$
+
+La relazione può essere riorganizzata nel seguente modo:
+
+| Dirigente | <u>Progetto</u> | <u>Sede</u> | Reparto |
+| --------- | --------------- | ----------- | ------- |
+| Rossi     | Marte           | Roma        | 1       |
+| Verdi     | Giove           | Milano      | 1       |
+| Verdi     | Marte           | Milano      | 1       |
+| Neri      | Saturno         | Milano      | 2       |
+| Neri      | Venere          | Milano      | 2       | 
+
+- $\text{Dirigente}\to\text{Sede Reparto}$
+- $\text{Sede Reparto}\to\text{Dirigente}$
+- $\text{Progetto Sede}\to\text{Reparto}$
+
+La relativa decomposizione in BCNF risulta
+
+| <u>Dirigente</u> | Sede   | Reparto |
+| ---------------- | ------ | ------- |
+| Rossi            | Roma   | 1       |
+| Verdi            | Milano | 1       |
+| Neri             | Milano | 2       | 
+
+| <u>Progetto</u> | <u>Sede</u> | Reparto |
+| --------------- | ----------- | ------- |
+| Marte           | Roma        | 1       |
+| Giove           | Milano      | 1       |
+| Marte           | Milano      | 1       |
+| Saturno         | Milano      | 2       |
+| Venere          | Milano      | 2       | 
+
+## Teoria della normalizzazione
+I concetti visti possono essere formalizzati in maniera precisa. 
+- **Problema**: data una relazione $r$ e un insieme di dipendenze funzionali definite su $r$, generare una decomposizione di $r$ che:
+	- sia senza perdita e conservi le dipendenze
+	- contenga solo relazioni normalizzate
+
+Per risolvere il problema faremo quindi riferimento alla 3NF.
+
+### Implicazione dipendenze funzionali
+Un insieme $F$ di FD **implica** un'altra FD $f$ se ogni relazione che soddisfa tutte le FD in $F$ soddisfa anche $f$.
+
+**Es.**
+$\text{R(Impiegato, Categoria, Stipendio)}$ 
+Le FD $\text{Impiegato}\to\text{Categoria}$ e $\text{Categoria}\to\text{Stipendio}$ implicano la FD $\text{Impiegato}\to\text{Stipendio}$.
+
+### Chiusura di un insieme di attributi
+Dati uno schema di relazione $R(U)$, un insieme $F$ di FD definite su U e un insieme di attributi $X$ contenuti in $U$, definiamo la **chiusura di X** rispetto ad F, indicata con $X^{+}_{F}$, come l'insieme degli attributi che dipendono funzionalmente da X: $$X_{F}^{+}:\{A\: |\: A\in U\: e\: F\:\text{implica }X \to A\}$$ Se A appartiene a $X_{F}^{+}$ allora $X \to A$ è implicata da F.
+
+Come calcoliamo $X_{F}^{+}$?
+- **Input**: un insieme X di attributo e un insieme di F di dipendenze funzionali
+- **Output**: un insieme $X_{p}$ di attributi
+
+1. Inizializziamo $X_{p}$ con l'insieme di input X
+2. Se esiste una FD $Y \to A$ in F con $Y \subseteq X_{p}$ e $A \notin X_{p}$, allora aggiungiamo A ad $X_{p}$ 
+3. Ripetiamo il passo 2 fino a quando non ci sono ulteriori attributi che possono essere aggiunti a $X_{p}$
+
+Un insieme di attributi K è chiave per uno schema di relazione $R(U)$ su cui è definito un insieme di dipendenze funzionali F se F implica $K \to U$. 
+L'algoritmo appena mostrato può essere utilizzato per verificare se un insieme di attributi è chiave.
