@@ -43,6 +43,18 @@ Tuttavia gli indirizzi sono di 32 o 64 byte, ciò vuol dire che lo spazio degli 
 
 Lo spazio degli indirizzi è separato dalla memoria fisica della macchina e può essere sia più grande che più piccolo della memoria fisica.
 
+# File
+Un concetto chiave di ogni SO è il file system. Per creare, cancellare, leggere e scrivere file sono necessarie chiamate di sistema.
+
+>*Ex*: Prima che un file possa essere letto, bisogna localizzarlo sul disco; dopo che è stato letto occorre chiuderlo, quindi le chiamate sono funzionali a questo scopo.
+
+Per storare i file, molti SO considerano le **directory** come metodo per raggrupparli. Le voci di una directory possono essere file o altre directory. Questo modello dà luogo a una gerarchia chiamata **File System**. 
+
+Le gerarchie del processo e dei file sono organizzate come alberi ma la loro affinità va oltre questo.
+Le gerarchie del processo hanno generalmente vita breve, al massimo qualche minuto, mentre la gerarchia della directory è il contrario, la vita può esistere anche anni. Anche la proprietà e la protezione differiscono per processi e file, generalmente solo un processo padre può accedere al processo figlio, ma esistono meccanismi che ignorano questa gerarchia per permettere che file e directory siano letti da un gruppo più ampio del solo proprietario.
+
+
+
 
 
 
