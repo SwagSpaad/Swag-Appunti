@@ -1,3 +1,4 @@
+----
 # Interpolazione polinomiale
 È il metodo più naturale e semplice per approssimare una funzione, mediante l'utilizzo di polinomi, che per un calcolatore sono estremamente facili da calcolare, perché deve svolgere solo potenze, moltiplicazioni e somme.
 
