@@ -189,7 +189,7 @@ Cosa facciamo se una relazione non rispetta la BCNF? La rimpiazziamo con altre r
 | Bianchi          | 48        | Venere          | 15       | progettista |
 | Bianchi          | 48        | Giove           | 15       | direttore   |
 
-**Procedura intuitiva di normalizzazioni**
+**Procedura intuitiva di normalizzazione**
 Non valida in generale, ma solo nei casi più semplici:
 - Per ogni dipendenza $X \to Y$ che viola la BCNF, definiamo una relazione su $XY$ ed eliminare $Y$ dalla relazione originaria
 Ma questo non sempre è possibile
@@ -418,3 +418,53 @@ Come calcoliamo $X_{F}^{+}$?
 
 Un insieme di attributi K è chiave per uno schema di relazione $R(U)$ su cui è definito un insieme di dipendenze funzionali F se F implica $K \to U$. 
 L'algoritmo appena mostrato può essere utilizzato per verificare se un insieme di attributi è chiave.
+
+### Coperture di dipendenze funzionali
+Due insieme di dipendenze funzionali $F_1$ ed $F_2$ sono **equivalenti** se $F_1$ implica ciascuna dipendenza in $F_2$ e viceversa. Se due insiemi sono equivalenti diciamo che ognuno è una **copertura** dell'altro. Questa proprietà consente di utilizzare, dato un insieme di dipendenze, un altro, a esso equivalente, ma più semplice.
+
+### Proprietà desiderabili di FD
+Un insieme di dipendenze $F$ è:
+- **non ridondante** se non esiste dipendenza $f\in F$ tale che $F -{f}$ implica $f$
+- **ridotto** se:
+	- non è ridondante
+	- non esiste un insieme $F'$ equivalente a $F$ ottenuto eliminando attributi dai primi membri di una o più dipendenze di $F$
+
+**Esempio**
+$F_{1}=\{A \to B; AB\to C; A \to C\}$ ridondante e equivalente a $F_2$ 
+$F_{2}=\{A \to B; AB\to C\}$ non ridondante ma non ridotto
+$F_{3}=\{A \to B; A\to C\}$ **ridotto**
+
+**Calcolo copertura ridotta**
+1. Sostituiamo l'insieme dato con quello equivalente che ha tutti i secondi membri costituiti da singoli attributi
+2. Eliminiamo le dipendenze funzionali
+3. Per ogni dipendenza verifichiamo se esistono attributi eliminabili a primo membro
+
+In pratica, per ogni dipendenza $Y \to A \in F$, verifichiamo se esiste $Y \subseteq X$ tale che $F$ è equivalente a $F - \{X \to A\}\cup\{Y \to A\}$. 
+
+**Sintesi di schemi in 3NF**
+Dati uno schema $R(U)$ e un insieme di dipendenze $F$ di $U$
+1. Viene calcolata una copertura ridotta $G$ di $F$;
+2. G viene partizionato in sottoinsiemi tali che a ogni insieme appartengono dipendenze che hanno primi membri con la stessa chiusura;
+3. Viene costruito un insieme $U$ di sottoinsiemi di $U$, uno per ciascuna partizione di dipendenze, con tutti gli attributi coinvolti nella partizione;
+4. Se un elemento di $U$ è propriamente contenuto in un altro, allora esso viene eliminato da $U$; 
+5. Viene costruito uno schema di relazione $R_{i}(U_{i})$ per ciascun elemento $U_{i}\in U$ con associate le dipendenze in G i cui attributi sono tutti contenuti in $U_{i}$;
+6. Se nessuno degli $U_{i}$ è chiave per $R(U)$, allora viene calcolata una chiave $K$ di $R(U)$ e viene aggiunto allo schema generato uno schema di relazione sugli attributi K, senza dipendenze.
+
+**Esempio**
+Schema: $R(MCGRDSPA)$
+FD: $M \to RSDG,\: MS\to CD,\:G\to R,\:D \to S,\:S\to D,\:MPD\to AM$ 
+- Al passo 1 si ottiene la copertura ridotta: $$M\to D,\:M\to G,\:M\to C,\:G\to R,D \to S,\: S\to D, MP \to A$$
+- Al passo 2 si partiziona la copertura negli insiemi: $$G_{1}=\{M\to D,\:M\to G,\:M\to C\}$$ $$G_{2}=\{G\to R\}$$ $$G_{3}=\{D\to S,\:S\to D\}$$ $$G_{4}=\{MP\to A\}$$
+ - I passi 3, 4, 5 costruiscono uno schema di relazione per ciascuna partizione (senza eliminazioni), con le dipendenze corrispondenti.
+ - Il passo 6 non ha effetti, perché MP è chiave per R.
+ - Quindi viene generato lo schema con le relazioni:
+	 - $R_{1}(MDGC)$ con le dipendenze $\{M\to D,\:M\to G,\:M \to C\}$
+	 - $R_{2}(GR)$ con le dipendenze $\{G\to R\}$
+	 - $R_{3}(DS)$ con le dipendenze $\{D\to S,\:S\to D\}$
+	 - $R_{4}(MPA)$ con le dipendenze $\{MP\to A\}$
+
+### Progettazione e normalizzazione
+La teoria della normalizzazione può essere usata:
+- nella progettazione logica per verificare lo schema relazionale finale
+- durante la progettazione concettuale per verificare la qualità dello schema concettuale
+
