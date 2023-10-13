@@ -53,7 +53,77 @@ Per storare i file, molti SO considerano le **directory** come metodo per raggru
 Le gerarchie del processo e dei file sono organizzate come alberi ma la loro affinità va oltre questo.
 Le gerarchie del processo hanno generalmente vita breve, al massimo qualche minuto, mentre la gerarchia della directory è il contrario, la vita può esistere anche anni. Anche la proprietà e la protezione differiscono per processi e file, generalmente solo un processo padre può accedere al processo figlio, ma esistono meccanismi che ignorano questa gerarchia per permettere che file e directory siano letti da un gruppo più ampio del solo proprietario.
 
+Ogni file nella gerarchia delle directory puo' essere specificato dando il nome del percorso (**path name**) a partire dall' inizio della gerarchia delle directory ovvero la directory principale (**root directory**). 
 
+In ogni istante, ogni percorso ha la sua directory di lavoro corrente.
+I processi possono cambiare la loro directory di lavoro inviando una chiamata di sistema che specifichi la nuova directory di lavoro.
 
+Prima che un file possa essere letto o scritto, deve essere aperto per controllare i permessi. Se aperto allora il sistema restituisce un numero intero chiamato **descrittore del file** da usare nelle operazioni successive, se invece l'accesso e' proibito viene restituito concodice di errore.
+
+Un altro importante concetto in UNIX e' il file system montato che permette a tutti i dispositivi USB esterni (CD-ROM, DVD, ecc...) di essere connessi direttamente all'albero principale fornendo una modalita' piu' elegante di gestione.
+
+> *Ex*:  Poniamo il caso che si abbia una unita' CD-ROM esterna e si voglia leggere il suo contenuto al'interno.
+> Per eseguire questa operazione in maniera semplice, UNIX dato che non permette nomi di percorso preceduti dal nome del dispositivo esterno o dal numero dei dispositivi, si ricorre al comando **mount** che permette al fyle system dell'unita' CD-ROM di essere collegato al file system della directory root
+
+Se un sistema ha piu' dispositivi, questi possono essere montati tutti in un signolo albero senza nessun problema.
+
+Un altro importante concetto in UNIX e' il **file speciale**. 
+I file speciali sono pensati per far si che i dispositivi di I/O siano visti come file. Questo sistema permette che vengano gestiti dalle stesse chiamate di sistema usate per leggere e scrivere i file.
+
+Esistono due tipi di file speciali:
+- **File speciali a blocchi**: sono usati per modellare dispositivi costituiti da un insieme di blocchi indirizzabili casualmente, come i dischi.
+- **File speciali a caratteri**: sono usati per modellare tutti quei dispositivi che accettano una sequenza di caratteri in output (Stampanti, Modem, ecc...). Convenzionalmente i file a caratteri sono contenuti nella cartella $/dev$
+
+# Pipe
+Una pipe e' vista come uno pseudofile che permette la connessione tra un processo A e un processo B
+
+>*Ex*: Se due processi A e B vogliono comunicare tramite una pipe, devono prima configurarla.
+>Se A vuole mandare dei file a B, scrive sulla pipe come se fosse un file di output. Infatti l'implementazione di una pipe e' molto simile a quella di un file. Il processo B puo' leggere i dati di una pipe come se fosse un file di input. 
+
+Quindi in UNIX le comunicazioni tra processi sono molto simili alla normale scrittura e lettura di un file 
+
+# Input/Output
+Tutti i computer hanno la possibilita' di acquisire dispositivi di Input e produrre un Output. Di conseguenza ogni sistema operativo ha un sottosistema di I/O per gestire i dispositivi. Parte del software di I/O e' indipendente dai dispositivi, quindi si applica alla maggior parte dei dispositivi, invece i driver sono specifici per particolari dispositivi.
+
+# Protezione
+I file in UNIX sono protetti da un codice binario di 9 bit.
+Esistono tre campi di 3 bit ognuno (proprietario, membri del gruppo a cui il proprietario appartiene, per tutti gli altri). Ogni campo ha un bit per l'accesso in scrittura, lettura ed esecuzione, conosciuti anche come **bit rwx**.
+
+> *Ex*: $rwxr-x--x$: il proprietario puo' leggere, scrivere ed eseguire, il gruppo a cui appartiene il proprietario puo' leggere ed eseguire e tutti gli altri possono solo eseguire.
+
+Per una directory $x$ significa permesso di ricerca.
+
+# Shell
+La shell e' l'interprete di comandi in UNIX. 
+E' l'interfaccia principale fra un utente al terminale e il sistema operativo, assumendo che l'utente non stia utilizzando un'interfaccia grafica ovviamente.
+Ne esistono molte $sh,\ csh,\ ksh,\ bash,\ zsh,\ ecc...$ ma la originale e' $sh$.
+**Prompt**, carattere simile al dollaro che avvisa l'utente che la shell e' in attesa di input.
+
+>*Ex*: dando $date$ come input in una shell, questa creera' un processo figlio che eseguir' $date$. Mentre il processo figlio e' in esecuzione, la shell rimane in attesa che esso termini. Una volta terminato la shell riscrive il prompt e legge la prossima riga in input.
+
+L'utente puo' specificare che lo standard output sia diretto verso un file, 
+
+>*Ex*: $date>file$ 
+
+Stesso modo puo' essere ridiretto lo standard input, 
+
+>*Ex*: $sort<file1 \ >file2$ 
+
+Fa si che il $sort$ abbia come input $file1$ e che l'output sia mandato in $file2$ 
+
+L'output di un programma puo' essere usato come input di un altro, connettendoli con una pipe (|),
+
+>*Ex*: $cat \ file1 \ file2 \ file3 \ | \ sort>/dev/lp$ 
+
+Lancio $cat$ per concatenare tre file e invio l'output $sort$ per ordinare le righe in ordine alfabetico. L'output di $sort$ e' inviato a $/dev/lv$ 
+
+Se un utente inserisce il carattere & dopo il comando, la shell in genere non attende la fine dello stesso, restituisce immediatamente il prompt,
+
+>*Ex*: $cat \ file1 \ file2 \ file3 \ | \ sort>/dev/lp$ $\&$ 
+
+Inizia l'ordinamento come un lavoro in backgroud, permettendo all'utente di continuare a lavorare normalmente, mentre l'ordinamento sta procedendo.
+
+# Chiamate di sistema
+WIP
 
 
