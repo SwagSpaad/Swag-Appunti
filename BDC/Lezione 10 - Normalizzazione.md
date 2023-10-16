@@ -468,3 +468,30 @@ La teoria della normalizzazione può essere usata:
 - nella progettazione logica per verificare lo schema relazionale finale
 - durante la progettazione concettuale per verificare la qualità dello schema concettuale
 
+
+![[BDC/img/img75.png|center|500]]
+
+### Analisi dell'entità
+L'entità viola la forma normale a causa della dipendenza $$\text{PartitaIVA} \to \text{NomeFornitore Indirizzo}$$
+Possiamo quindi decomporre sulla base di questa dipendenza.
+
+![[BDC/img/img76.png|center|500]]
+
+
+
+![[BDC/img/img77.png|center|500]]
+
+### Analisi della relationship
+La relationship viola la terza forma normale a causa della dipendenza $$\text{Professore}\to \text{Dipartimento}$$
+Possiamo decomporre sulla base di questa dipendenza
+
+![[BDC/img/img78.png|center|500]]
+
+### Ulteriore analisi sulle dipendenze
+La relationship TESI è in BCNF sulla base delle dipendenze $$\begin{align}
+\text{Studente}&\to \text{CorsoDiLaurea} \\
+\text{Studente}&\to\text{Professore}
+\end{align}$$ le due proprietà sono indipendenti e questo suggerisce una nuova decomposizione
+
+![[BDC/img/img79.png|center|500]]
+
