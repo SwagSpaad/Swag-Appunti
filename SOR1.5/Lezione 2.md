@@ -124,6 +124,4 @@ Se un utente inserisce il carattere & dopo il comando, la shell in genere non at
 Inizia l'ordinamento come un lavoro in backgroud, permettendo all'utente di continuare a lavorare normalmente, mentre l'ordinamento sta procedendo.
 
 # Chiamate di sistema
-WIP
-
 
