@@ -124,4 +124,84 @@ Se un utente inserisce il carattere & dopo il comando, la shell in genere non at
 Inizia l'ordinamento come un lavoro in backgroud, permettendo all'utente di continuare a lavorare normalmente, mentre l'ordinamento sta procedendo.
 
 # Chiamate di sistema
+Le chiamate di sistema sono un meccanismo che il processo utilizza per richiedere un servizio a livello kernel del sistema operativo sul computer.
+Il meccanismo delle chiamate è altamente specifico del sistema operativo e dell'hardware, si necessita di molta più efficienza.
+**Soluzione**:
+- Fare in modo che le chiamate di sistema siano integrate nelle librerie C (libc)
+Tipicamente si esporta una chiamata di libreria per ogni chiamata di sistema.
+UNIX libc si basa sulla libreria C POSIX
+
+## 10 passi per effettuare la chiamata [read(fd, buffer, nbytes)]
+- **Preparazione dei parametri**: il programma chiamante prepara i parametri, solitamente vengono memorizzati nei registri o nello stack (RDI, RSI, RDX)
+- **Chiamata alla procedura di libreria**: il programma effettua la chiamata alla procedura di libreria
+- **Collocazione del numero di chiamata**: colloca il numero della chiamata di sistema in un registro, come il RAX
+- **Passaggio a modalità kernel**: si esegue un'istruzione "*trap*"
+	- Si passa da mod utente a mod kernel
+		- L'istruzione "*trap*" è simile ad una chiamata di sistema, ma cambia la modalità da utente a kernel
+		- Può saltare solo a indirizzi specifici o indici di una tabella di memoria, a differenza di una chiamata di sistema
+- **Esecuzione del gestore di chiamate di sistema**
+- **Ritorno alla procedura di libreria utente**:
+	- Dopo, il controllo può essere restituito alla procedura di libreria utente, dopo l'istruzione "*trap*"
+- **Possibilità di blocco**: La chiamata di sistema può bloccare il chiamante, ad esempio, se l'input desiderato non è disponibile
+	- Il sistema può quindi eseguire altri processi
+- **Ripresa dopo il blocco**: Quando l'input o le condizioni desiderate sono disponibili, il processo bloccato viene ripreso tornando alla procedura di libreria utente e procedendo all'istruzione successiva
+
+## Chiamate di sistema per la gestione dei processi
+
+**Alcune delle principali chiamate di sistema**
+
+| Call                                           | Description                                                         |
+| ---------------------------------------------- | ------------------------------------------------------------------- |
+| $pid \ fork()$                                 | Crea processo simile al genitore                                    |
+| $pid \ waitpid(pid, \ \&statloc, \ options)$   | Attendere che processo filgio termini                               |
+| $s \ = \ execve(name, \ argv, \ environp)$     | Sostituire l'immagine centrale di un processo                       |
+| $exit(status)$                                 | Termina processo e restituisce lo stato                             |
+| $fd \ = \ open(file, \ how, \ ...)$            | Apre un file per la lettura, la scrittura o entrambe le operazioni. |
+| $s \ = \ close(fd)$                            | Chiude un file aperto                                               |
+| $n \ = \ read(fd, \ buffer, \ nbytes)$         | Legge dati da un file in un buffer                                  |
+| $n \ = \ write(fd, \ buffer, \ nbytes)$        | Scrive dati da un buffer in un file                                 |
+| $Position \ = \ lseek(fd, \ offset, \ whence)$ | Sposta il puntatore del file                                        |
+| $s \ = \ stat(name, \ \&buf)$                  | Ottiene informazioni sullo sttao di un file                                                                     |
+
+- **Pid**: ProcessID
+- **fd**: Descrittore del file
+- **n**: Conteggio di byte
+- **position**: È un offset all'interno del file
+
+## Chiamate di sistema per la gestione del file system
+
+| Call                                     | Description                                    |
+| ---------------------------------------- | ---------------------------------------------- |
+| $s \ = \ mkdir(name, \ mode)$            | Crea dir                                       |
+| $s \ = \ rmdir(name)$                    | rm dir empty                                   |
+| $s \ = \ link(name1, \ name2)$           | Crea una nuova voce, nome2, che punta a nome 1 |
+| $s \ = \ unlink(name)$                   | rm voce dir                                    |
+| $s \ = \ mount(spacial, \ name, \ flag)$ | Monta file system                              |
+| $s \ = \ mount(spacial, \ name, \ flag)$ | Smonta file system                                                |
+
+## Altre chiamate
+
+| Call                          | Description                |
+| ----------------------------- | -------------------------- |
+| $s \ = \ chdir(dirname)$      | Cambia dir lavoro          |
+| $s \ = \ chmod(name, \ mode)$ | Modifica bit di protezione |
+| $s \ = \ kill(pid, \ signal)$ | Invia segnale a processo   |
+| $s \ = \ time(\$seconds)$     | Ottieni il tempo dal 1 Gennaio                           |
+
+## Ex:
+```C
+#define TRUE 1
+while(TRUE){
+	type_prompt();
+	read_command(command, parameters);
+	if(fork() !=0){
+		/*ParentCode*/
+		waitpid(-1, &status, 0);
+	}
+	else{
+		/*ChildCode*/
+		execve(command, parameters, 0);
+	}
+}
+```
 
