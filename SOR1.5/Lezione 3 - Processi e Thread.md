@@ -65,6 +65,7 @@ Il SO alloca le risorse ai processi, ma per farlo deve verificare lo stato dei p
 tramite lo *Scheduler*:
 
 ![[SOR1.5/img/img4.png|center|600]]
+
 # Informazioni associate ad un processo
 - ID (PID), Utente (UID), Gruppo (GID)
 - Spazio degli indirizzi di memoria
@@ -73,6 +74,15 @@ tramite lo *Scheduler*:
 - **Segnali**
 - **Interrupt**
 Queste info sono memorizzate nella tabella dei processi del sistema operativo
+
+# Modello della multiprogrammazione
+L'utilizzo della multiprogrammazione puo' migliorare l'utilizzo della CPU.
+Un processo medio solitamente esegue calcoli solo per il 20% del tempo in cui risiede in memoria, quindi teoricamente con 5 processi la CPU sarebbe utilizzata al 100%.
+Questo modello e' irrealisticamente ottimista dato che presuppone che tutti i processi non siano in attesa di I/O nello stesso momento.
+Sotto un punto di vista statistico si ottiene un modello piu' realistico.
+Supponiamo che un processo impieghi una frazione $p$ del suo tempo in attesa che l'I/O sia completato. Con $n$ processi in memoria contemporaneamente, la probabilita' che tutti gli $n$ processi stiano aspettando l'I/O e' $p^{n}$ .
+Quindi la formula dell'utilizzo della CPU e':$$CPU=1-p^n$$ 
+---SCREENSHOT Multiprogrammazione---
 
 # Signals VS Interrupts
 I segnali e gli interrupt sono meccanismi utilizzati nel SO e nelle applicazioni per gestire eventi asincroni
@@ -133,3 +143,30 @@ int main() {
 - Salva il contesto
 - Esegue il codice gestione del segnale
 - Ripristina il contesto originale
+
+# Thread
+Perche' e' favorevole avere una specie di processo all'interno di un'altro processo?
+Ci sono molte ragioni per avere questi sottoprocessi chiamati thread.
+La ragione principale e' che in molte applicazioni ci sono molteplici attivita' contemporanee.
+Suddividendo una di tali applicazioni in molteplici thread sequenziali eseguiti in parallelo, il modello di programmazione diventa piu' semplice.
+Una seconda ragione e' che i thread e' che, dato che sono piu' leggeri dei processi, essi sono piu' veloci da creare e cancellare. E' utile quando il numero di thread cresce dinamicamente e rapidamente.
+Una terza ragione per avere i thread e' data dalle prestazioni. I thread non producono un guadagno di prestazioni quando sono CPU Bound, ma quando c'e' un'attivita' considerevole, anche in presenza di un consistevole I/O, permettono alle attivita' di sovrapporsi, velocizando l'applicazione.
+In conclusione i thread sono utili sui sistemi con piu' CPU, dove e' possibile il vero parallelismo.
+**Thread dispatcher**:
+Thread che lavora in background
+```C
+while(TRUE){
+	get next request(&buf);
+	handoff work(&buf);
+}
+```
+**Thread worker**
+Thread che lavora quando avviene una richiesta dal client
+```C
+while(True){
+wait for work(&buf);
+	look for page in cache(&buf, &page);
+	if(page not in cache(&page))
+		read page from disk(&buf, &page);
+	return page(&page);
+}
