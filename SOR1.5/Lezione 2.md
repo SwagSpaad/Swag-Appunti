@@ -188,7 +188,7 @@ UNIX libc si basa sulla libreria C POSIX
 | $s \ = \ kill(pid, \ signal)$ | Invia segnale a processo   |
 | $s \ = \ time(\$seconds)$     | Ottieni il tempo dal 1 Gennaio                           |
 
-## Ex:
+
 ```C
 #define TRUE 1
 while(TRUE){
@@ -205,3 +205,17 @@ while(TRUE){
 }
 ```
 
+# Struttura di un SO
+## Monolitico
+---SCREENSHOT Monolitico---
+
+Il sistema monolitico e' l'organizzazione piu' comune: in questo approccio l'intero SO viene eseguito come programma singolo e in modalita' kernel.
+Il SO e' scritto come una raccolta di procedure, collegate all'interno di un solo programma binario eseguibile. Quando viene usata questa tecnica, ogni procedura del sistema e' libera di richiamarne un'altra se fornisce delle info utili e necessarie.
+Con questo metodo, per costruire un SO, prima si compilano tutte le procedure individuali per poi fonderle tutte insieme in un file unico eseguibile, usando il linker di sistema
+All'interno dei sistemi monolitici pero' e' possibile trovare qualche struttura.
+I servizi forniti dal sistema operativo sono richiesti mettendo i parametri in un luogo definito per poi eseguire una $Trap$.
+Questa istruzione fa passare il SO da modalita' utente a modalita' kernel . Successivamente il SO va a prendere i parametri e determina quale chiamata di sistema va realizzata, dopo indicizza tutto in una tabella che ha nella posizione $k$ un puntatore alla procedura che svolge la chiamata di sistema $k$.
+Questa e' la struttura base:
+- Programma principale che richiama la procedura di servizio richiesta
+- Insieme di procedure di servizio che realizzano chiamate di sistema
+- Insieme di procedure di supporto che aiutano le procedure di servizio
