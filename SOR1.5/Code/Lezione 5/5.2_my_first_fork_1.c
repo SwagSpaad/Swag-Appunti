@@ -14,9 +14,9 @@ int main(){
 	int pid, child_status;
 
 	if ((pid = fork()) == 0) {
-    	printf("I am the child and I see the PID %d\n", pid);
+		printf("I am the child and I see the PID %d\n", pid);
  	} else { 
  		wait(&child_status); // Wait for child
- 		printf("I am the parent, I see the child's PID (%d) and the statud (%d)\n", pid, child_status);
+ 		printf("I am the parent, I see the child's PID (%d) and the status (%d)\n", pid, child_status);
 	}
 }

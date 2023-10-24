@@ -12,7 +12,7 @@
 #   dalla linea di comando (ad es. ./myscript.sh), senza dover chiamare esplicitamente
 #   l'interprete (bash myscript.sh).
 
-CC=clang #o gcc?
+CC=gcc #clang o gcc?
 
 #-O0 Means “no optimization”: this level compiles the fastest and generates the most debuggable code.
 #-O1 Somewhere between -O0 and -O2.
