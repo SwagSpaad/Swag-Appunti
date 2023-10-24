@@ -15,6 +15,6 @@ Tutti i contributi sono i benvenuti, e sono essenziali per mantenere questa repo
 ## Contatti
 
 - [lvnc](https://t.me/Levvonci)
-- [Spaad](https://t.me/Spaad)
+- [Spaad](https://t.me/Spaadd)
 
 Buono studio!
