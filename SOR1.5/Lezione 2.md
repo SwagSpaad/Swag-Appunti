@@ -204,6 +204,7 @@ while(TRUE){
 	}
 }
 ```
+<<<<<<< HEAD
 
 # Struttura di un SO
 ## Monolitico
@@ -219,3 +220,5 @@ Questa e' la struttura base:
 - Programma principale che richiama la procedura di servizio richiesta
 - Insieme di procedure di servizio che realizzano chiamate di sistema
 - Insieme di procedure di supporto che aiutano le procedure di servizio
+=======
+>>>>>>> a574f5b (SOR1.5)
