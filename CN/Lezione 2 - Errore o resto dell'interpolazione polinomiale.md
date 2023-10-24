@@ -4,7 +4,7 @@
 **Teorema**
 Sia $f: [a,b] \to R$ di classe $C^{n+1}[a,b]$ (ovvero una classe di funzioni continue, derivabili n+1 volte, con le derivate continue nell intervallo $[a,b]$) e sia $p(x)$ il polinomio di interpolazione di $f(x)$ sugli $n+1$ nodi distinti $x_0,x_1,\dots,x_n \in [a,b]$ . 
 Allora $\forall X \in [a,b]$ $\exists \:\xi = \xi(x)\in (a,b)$ tale che$$f(x)-p(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_{0})(x-x_{1})\dots(x-x_{n}) \:\: (\star)$$ **Dim.**
-Sia $x\in [a,b]$ fissato. 
+Sia $x\in [a,b]$ fissato.  ^e77fd4
 - Se $x$ coincide con uno dei nodi $x_{i}$ allora $(\star)$ è soddisfatta con un qualsiasi $\xi \in (a,b)$ perché entrambi i membri vengono uguali a $0$
 - Supponiamo ora che x non coincide con nessuno dei nodi $x_i$
 Definiamo $\pi(y)=(y-x_{0})(y-x_{1})\dots(y-x_{n})$ e $r(y)=f(y)-p(y)$.

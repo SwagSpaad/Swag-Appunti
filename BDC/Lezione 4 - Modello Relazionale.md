@@ -63,7 +63,7 @@ Relazione rappresentata attraverso una tabella:
 Se $t$ è una tupla su $X$ e $A$ è un **attributo**, con $A \in X$ allora $t[A]$ indica un valore di $t$ su $A$ 
 
 *EX*:
-Se $t$ è la prima tupla allora...$$t[Cognome] \rightarrow 'Rossi'$$
+Se $t$ è la prima tupla allora...$$t[Cognome] \rightarrow \text{'Rossi'}$$
 
 | Nome  | Cognome | Matricola | Voto medio |
 | ----- | ------- | --------- | ---------- |
@@ -89,7 +89,7 @@ In una *tabella* che rappresenta una *relazione*:
 | ----- | ------- | --------- | ---------- |
 | Mario | Rossi   | 1         | 24         |
 | Luigi | Bianchi | 2         | 28         |
-| Rosa  | Rossa   | 3         | 26           |
+| Rosa  | Rossa   | 3         | 26         | 
 
 - No due righe uguali:
 
