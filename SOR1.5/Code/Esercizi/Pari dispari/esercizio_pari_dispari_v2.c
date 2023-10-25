@@ -14,10 +14,10 @@
 #include <time.h>
 #include <unistd.h> 
 
-#define STDIN 0
-#define STDOUT 1
-#define PIPE_RD 1 
-#define PIPE_WR 0
+#define STDIN 1
+#define STDOUT 0
+#define PIPE_RD 0 
+#define PIPE_WR 1
 
 #define SOGLIA 190
 
@@ -38,31 +38,32 @@ int main(){
   }
 
   if((pid_pari = fork()) == 0){ //processo figlio P1 creato
-    close(fd_pari[0]);
-
+    close(fd_pari[STDOUT]);
+    srand(getpid());
     while(1){
       if(((p = generate_numbers()) % 2) == 0){ //il numero generato è pari
-        write(fd_pari[1], &p, sizeof(int));
+        write(fd_pari[PIPE_WR], &p, sizeof(int));
       }
     }
-    close(fd_pari[1]);
-  } else{
+    close(fd_pari[STDIN]);
+  } else {
+    srand(getpid());
       if((pid_dispari = fork()) == 0){ //processo figlio P2 creato
-      close(fd_dispari[0]);
+      close(fd_dispari[STDOUT]);
 
       while(1){
         if(((d = generate_numbers()) % 2) == 1){ //il numero è dispari
-          write(fd_dispari[1], &d, sizeof(int));
+          write(fd_dispari[PIPE_WR], &d, sizeof(int));
         }
       }
-    close(fd_dispari[1]);
-  }else{
+    close(fd_dispari[STDIN]);
+  } else {
     while(1){ //sono il padre
-      close(fd_dispari[1]);
-      close(fd_pari[1]);
+      close(fd_dispari[STDIN]);
+      close(fd_pari[STDIN]);
 
-      read(fd_pari[0], &p, sizeof(int));
-      read(fd_dispari[0], &d, sizeof(int));
+      read(fd_pari[PIPE_RD], &p, sizeof(int));
+      read(fd_dispari[PIPE_RD], &d, sizeof(int));
 
 
       somma = p + d;
@@ -75,12 +76,12 @@ int main(){
       }
 
     }
-      close(fd_pari[0]);
-      close(fd_dispari[0]);
+      close(fd_pari[STDOUT]);
+      close(fd_dispari[STDOUT]);
 
       wait(NULL);
       wait(NULL);
   }
-  }
   return 0;
+}
 }
