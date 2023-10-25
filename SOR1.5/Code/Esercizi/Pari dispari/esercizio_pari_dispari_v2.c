@@ -16,9 +16,71 @@
 
 #define STDIN 0
 #define STDOUT 1
-#define PIPE_RD 0 
-#define PIPE_WR 1
+#define PIPE_RD 1 
+#define PIPE_WR 0
+
+#define SOGLIA 190
+
+int generate_numbers(){
+  int n = rand() % 101; //genera numeri casuali tra 0 e 100 
+  return n;
+}
 
 int main(){
+  pid_t pid_pari, pid_dispari;
+  int fd_pari[2], fd_dispari[2];
   
+  int p, d, somma, num;
+  
+  if(pipe(fd_pari) == -1 || pipe(fd_dispari) == -1){
+    perror("Errore nella creazione della pipe!\n");
+    exit(1);
+  }
+
+  if((pid_pari = fork()) == 0){ //processo figlio P1 creato
+    close(fd_pari[0]);
+
+    while(1){
+      if(((p = generate_numbers()) % 2) == 0){ //il numero generato è pari
+        write(fd_pari[1], &p, sizeof(int));
+      }
+    }
+    close(fd_pari[1]);
+  } else{
+      if((pid_dispari = fork()) == 0){ //processo figlio P2 creato
+      close(fd_dispari[0]);
+
+      while(1){
+        if(((d = generate_numbers()) % 2) == 1){ //il numero è dispari
+          write(fd_dispari[1], &d, sizeof(int));
+        }
+      }
+    close(fd_dispari[1]);
+  }else{
+    while(1){ //sono il padre
+      close(fd_dispari[1]);
+      close(fd_pari[1]);
+
+      read(fd_pari[0], &p, sizeof(int));
+      read(fd_dispari[0], &d, sizeof(int));
+
+
+      somma = p + d;
+      printf("%d + %d = %d\n", p, d, somma);
+      if (somma > SOGLIA){
+        kill(pid_pari, SIGTERM);
+        kill(pid_dispari, SIGTERM);
+        printf("La soglia di %d è stata superata! Termino l'esecuzione.\n", SOGLIA);
+        break;
+      }
+
+    }
+      close(fd_pari[0]);
+      close(fd_dispari[0]);
+
+      wait(NULL);
+      wait(NULL);
+  }
+  }
+  return 0;
 }
