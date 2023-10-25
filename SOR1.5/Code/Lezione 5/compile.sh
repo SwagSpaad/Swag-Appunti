@@ -12,7 +12,11 @@
 #   dalla linea di comando (ad es. ./myscript.sh), senza dover chiamare esplicitamente
 #   l'interprete (bash myscript.sh).
 
+<<<<<<< HEAD:SOR1.5/Code/Lezione 5/compile.sh
 CC=gcc #clang o gcc?
+=======
+CC=gcc #o gcc?
+>>>>>>> 042c3ed (SOR1.5):SOR1.5/Code/5_elementi_di_programmazione_concorrente_code/compile.sh
 
 #-O0 Means “no optimization”: this level compiles the fastest and generates the most debuggable code.
 #-O1 Somewhere between -O0 and -O2.
