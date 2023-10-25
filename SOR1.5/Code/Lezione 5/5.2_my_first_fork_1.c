@@ -12,7 +12,7 @@
 int main(){
 
 	int pid, child_status;
-
+	
 	if ((pid = fork()) == 0) {
 <<<<<<< HEAD:SOR1.5/Code/Lezione 5/5.2_my_first_fork_1.c
 		printf("I am the child and I see the PID %d\n", pid);
