@@ -84,7 +84,7 @@ Collegamento logico tra due o più entità.
 
 *EX*:
 
-- Le persone, un modello di automobile, i movimenti contabili, le prove sostenue da uno studente
+- Le persone, un modello di automobile, i movimenti contabili, le prove sostenute da uno studente
 - Gli studenti vengono classificati nel tipo entità Studente
 - I diversi modelli di automobile sono classificabili nel tipo entità Automobile
 
@@ -236,7 +236,7 @@ un'associzione tra **E1** ed **E2** si dice **molti a molti** (**N:N**) quando a
 Può accadere che sussista **l'associazione IS-A** tra due entità, e cioè che ogni istanza di una sia anche istanza dell'altra.
 La associazione IS-A nel modello ER si può definire tra le due entità, che si dicono "entità padre" ed "entità figlia"
 
-L'associazione IS-A si rppresenta nel diagramma dello schema concettuale mediante una freccia dalla sottoentità alla entità padre.
+L'associazione IS-A si rappresenta nel diagramma dello schema concettuale mediante una freccia dalla sottoentità alla entità padre.
 Vige la regola che un'entità può avere al massimo una entità padre. In altre parole, il modello ER non ammette ereditarietà multipla
 
 ![[BDC/img/img29.png|center|800]]

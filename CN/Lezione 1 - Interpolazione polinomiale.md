@@ -11,7 +11,7 @@ Una scelta comune per la sua semplicità è $\mathcal C = \mathbb R_{n}[x]=$  sp
 $\exists! \: p(x)\in \mathcal C=\mathbb R_{n}[x]\: t.c.\: p(x_{i})=f(x_{i})\: \forall \: i = 0,\dots,\:n$
  
 **Teorema**
-Siano $(x_0,y_0),\:(x_1,y_1),\dots,(x_n,y_{n})\in \mathbb R^2$ tali che $x_{0},\: x_{1},\dots,\: x_{n}$ sono tutti distinti. Allora $\exists! \text{ polinomio } p(x)\in \mathbb R_{n}[x] \text{ tale che }  p(x_{i})=y_{i} \: \forall\: i=0,\:1,\dots,\:n$
+Siano $(x_0,y_0),\:(x_1,y_1),\dots,(x_n,y_{n})\in \mathbb R^2$ tali che $x_{0},\: x_{1},\dots,\: x_{n}$ sono tutti distinti. Allora $\exists! \text{ polinomio } p(x)\in \mathbb R_{n}[x] \text{ tale che }  p(x_{i})=y_{i} \: \forall\: i=0,\:1,\dots,\:n$ ^0c2fd0
 
 *Dim. 1*
 Un polinomio $p(x)=a_{0}+a_{1}x+\dots+a_{n}x^{n}\in \mathbb R_{n}[x]$ soddisfa la proprietà $p(x_i)=y_i$ $\forall\:i=0,\dots,n$ se e solo se 
