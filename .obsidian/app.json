@@ -11,5 +11,8 @@
   "spellcheck": false,
   "promptDelete": false,
   "showLineNumber": false,
-  "vimMode": false
+  "vimMode": false,
+  "rightToLeft": false,
+  "showInlineTitle": true,
+  "strictLineBreaks": false
 }

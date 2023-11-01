@@ -1,12 +1,12 @@
 [
   "obsidian-git",
   "obsidian-image-toolkit",
-  "quick-latex",
   "obsidian-style-settings",
   "obsidian-mind-map",
   "table-editor-obsidian",
   "obsidian-checklist-plugin",
   "obsidian-advanced-slides",
   "cm-editor-syntax-highlight-obsidian",
-  "execute-code"
+  "execute-code",
+  "quick-latex"
 ]
