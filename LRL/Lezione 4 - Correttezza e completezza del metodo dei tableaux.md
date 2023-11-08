@@ -17,7 +17,7 @@ Ricordiamo che con il metodo dei tableaux quello che facciamo è costruire una s
 ![[LRL/img/img12.png|center|300]]
 
 a seconda che la formula che si sta espandendo sia una $\alpha$-formula o una $\beta$-formula.
-Per esempio, con riferimento al caso visto in dettaglio nella [[Lezione 4 - Il metodo dei Tableaux per la logica proposizionale|lezione 4]], il primo tableaux $T_0$ è la [[Lezione 4 - Il metodo dei Tableaux per la logica proposizionale#^b44b98|negazione]] di $\mathcal F$. Siccome $T_0$  è una $\alpha$-formula, $T_1$ è ottenuto estendendo $T_0$ tramite una regola $\alpha$.
+Per esempio, con riferimento al caso visto in dettaglio nella [[Lezione 3 - Il metodo dei Tableaux per la logica proposizionale|lezione 4]], il primo tableaux $T_0$ è la [[Lezione 3 - Il metodo dei Tableaux per la logica proposizionale#^b44b98|negazione]] di $\mathcal F$. Siccome $T_0$  è una $\alpha$-formula, $T_1$ è ottenuto estendendo $T_0$ tramite una regola $\alpha$.
 
 ![[LRL/img/img13.png|center|400]]
 
@@ -51,7 +51,7 @@ Per dimostrare la correttezza del metodo dei tableaux, abbiamo utilizzato la def
 >$H_1$ : Se S contiene una $\alpha$-formula, allora S contiene anche entrambe le sue componenti $\alpha_1$ e $\alpha_2$.
 >$H_2$ : Se S contiene una $\beta$-formula, allora S contiene anche almeno una delle sue componenti $\beta_1$ e $\beta_2$
 
-Diciamo che un tableau è completo se è chiuso, oppure se ogni formula $\mathcal F$ (che non sia una variabile o una variabile negata) sui rami aperti del tableau è stata espansa. Per esempio il tableau della [[Lezione 4 - Il metodo dei Tableaux per la logica proposizionale|lezione precedente]] non è completo perché le formule 3 e 4 non sono state espanse.
+Diciamo che un tableau è completo se è chiuso, oppure se ogni formula $\mathcal F$ (che non sia una variabile o una variabile negata) sui rami aperti del tableau è stata espansa. Per esempio il tableau della [[Lezione 3 - Il metodo dei Tableaux per la logica proposizionale|lezione precedente]] non è completo perché le formule 3 e 4 non sono state espanse.
 
 >**Teorema** (completezza)
 >Se $\mathcal F$ è una tautologia allora è dimostrabile col metodo dei tableaux.

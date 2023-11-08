@@ -1,3 +1,14 @@
 # Sommario
 ---
-- **[[BDC/Lezione 1 - Introduzione]]** -  
+- **[[BDC/Lezione 1 - Introduzione|Lezione 1 - Introduzione]]** -  
+- [[Lezione 2 - Modelli dei Dati]]
+- [[Lezione 3 - Vincoli d'integrità]]
+- [[Lezione 4 - Modello Relazionale]]
+- [[Lezione 5 - Modello concettuale - Modello entità-relazioni]]
+- [[Lezione 6 - Progettazione Logica]]
+- [[Lezione 7 - Metodologie di progettazione di basi di dati]]
+- [[Lezione 8 - Algebra Relazionale]]
+- [[Lezione 9 - Calcolo Relazionale]]
+- [[Lezione 10 - Normalizzazione]]
+- [[Lezione 11 - Organizzazione fisica dei dati]]
+- [[Lezione 12 - Gestione delle Transazioni]]

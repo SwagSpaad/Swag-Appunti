@@ -116,3 +116,4 @@ A^{3}&=XDX^{-1}XDX^{-1}XDX^{-1}=XD^{3}X^{-1},\\
 Pertanto fissato un polinomio $p(\lambda)=a_{0}+a_{1}\lambda+a_{2}\lambda^{2}+\dots+a_{m}\lambda^{m}$, si ha $$p(A)=a_{0}I+a_{1}A+a_{2}A^{2}+\dots+a_{m}A^{m}=X(a_{0}I+a_{1}D+a_{m}D^{m})X^{-1}=Xp(D)X^{-1},$$ dove $$p(D)=a_{0}I+a_{1}D+a_{2}D^{2}+\dots+a_{m}D^{m}=
 \begin{bmatrix}p(\lambda_{1}) &   &   &  \\  & p(\lambda_{2}) &   &  \\  &   & \ddots &  \\   &   &   & p(\lambda_{n})\end{bmatrix}$$
 In conclusione la forumal $p(A)=Xp(D)X^{-1}$ ci sta dicendo che $p(A)$ è diagonalizzabile con autovalori $p(\lambda_{1}),p(\lambda_{2}),\dots,p(\lambda_{n})$ (e con corrispondenti autovettori dati dalle colonne di $X$).
+

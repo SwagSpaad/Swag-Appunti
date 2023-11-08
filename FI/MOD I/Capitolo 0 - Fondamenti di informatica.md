@@ -8,4 +8,13 @@
 - [[FI/MOD I/Lezione 6 - ASF|Lezione 6]] - Automi a stati finiti deterministici e non deterministici
 - [[FI/MOD I/Lezione 7 - Equivalenza tra ASFD e ASFND|Lezione 7]] - Equivalenza tra ASFD e ASFND
 - [[Lezione 8 - RE, RG e ASF|Lezione 8]] - Espressioni regolari, grammatiche regolari e ASF
-- Lezione 9 -
+- [[Lezione 9 - Sempre su RE,RG e ASF]] 
+- [[Lezione 10 - Minimizzazione di ASF]]
+- [[Lezione 11 - Pumping Lemma per RL, Linguaggi CF]]
+- [[Lezione 12 - Sempre su Linguaggi CF]]
+- [[Lezione 13 - CNF, GNF]]
+- [[Lezione 14 - Pumping Lemma per CF]]
+- [[Lezione 15 - Grammatiche Ambigue, Automi a Pila]]
+- [[Lezione 16 - PDA non deterministici]]
+- [[Lezione 17 - Macchine di Turing]]
+- [[Lezione 18 - Parsing]]

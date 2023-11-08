@@ -34,7 +34,7 @@ Ragioniamo intuitivamente. La formula è un'implicazione quindi l'unico caso in 
 # Sintassi e semantica
 I simboli utilizzati nella logica del primo ordine sono:
 - I **connettivi** ($\lnot, \land,\lor,\implies,\dots$) usati anche nella logica proposizionale
-- Le variabili ($x, y, z,\dots$ oppure $x_{1},x_{2},\dots$) che chiameremo **individuali** per distinguere dalle [[Lezione 3 - Introduzione alla logica proposizionale#^dcf684|variabili booleane]] della logica proposizionale. Le variabili individuali assumono valori in qualunque dominio.
+- Le variabili ($x, y, z,\dots$ oppure $x_{1},x_{2},\dots$) che chiameremo **individuali** per distinguere dalle [[Lezione 2 - Introduzione alla logica proposizionale#^dcf684|variabili booleane]] della logica proposizionale. Le variabili individuali assumono valori in qualunque dominio.
 - Le **lettere predicative** ($P, Q, R, \dots$ oppure $P_{1},P_{2},\dots$). A volte per indicare il numero di argomenti si utilizza un apice ($P^{(n)}$)
 - I quantificatori ($\forall$ e $\exists$)
 - Le **costanti** ($a,b,c,\dots$ oppure $a_{1},a_{2}, \dots$) servono ad indicare elementi specifici del dominio.

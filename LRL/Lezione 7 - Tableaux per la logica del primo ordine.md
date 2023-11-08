@@ -1,5 +1,5 @@
 ----
-Il metodo dei tableaux visto nella [[Lezione 4 - Il metodo dei Tableaux per la logica proposizionale|lezione 4]] si può estendere anche alla logica del primo ordine. Vediamo come.
+Il metodo dei tableaux visto nella [[Lezione 3 - Il metodo dei Tableaux per la logica proposizionale|lezione 4]] si può estendere anche alla logica del primo ordine. Vediamo come.
 
 # Le regole per i quantificatori
 Abbiamo visto che le formule della logica proposizionale si possono classificare in $\alpha$-formule per quelle di tipo AND e in $\beta$-formule per quelle di tipo OR.

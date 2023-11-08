@@ -1,0 +1,7 @@
+- [[Lezione 1 - Interpolazione polinomiale]]
+- [[Lezione 2 - Errore o resto dell'interpolazione polinomiale]]
+- [[Lezione 3 - Forma di Newton del polinomio d'interpolazione]]
+- [[Lezione 4 - Aggiunta di un nodo di interpolazione]]
+- [[Lezione 5 - Formula dei trapezi ed errore]]
+- [[Lezione 6 - Estrapolazione]]
+- [[Lezione 7 - Richiami di algebra lineare]]

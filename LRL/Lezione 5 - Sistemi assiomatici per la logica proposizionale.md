@@ -1,6 +1,6 @@
 ----
 # Sistemi assiomatici
-Un sistema formale consiste in schemi di assiomi e regole di inferenza, oltre che dall'insieme di simboli che vengono usati nelle definizioni che stabiliscono quali sequenze di simboli sono "formule". Nel caso della logica proposizionale gli schemi di assiomi sono un insieme di [[Lezione 3 - Introduzione alla logica proposizionale#^65fc78|formule ben formate]] e le regole di inferenza, sono relazioni di formule di questo tipo "dalle formule $X_1, \: \dots, X_n$ segue la formula $Y$".
+Un sistema formale consiste in schemi di assiomi e regole di inferenza, oltre che dall'insieme di simboli che vengono usati nelle definizioni che stabiliscono quali sequenze di simboli sono "formule". Nel caso della logica proposizionale gli schemi di assiomi sono un insieme di [[Lezione 2 - Introduzione alla logica proposizionale#^65fc78|formule ben formate]] e le regole di inferenza, sono relazioni di formule di questo tipo "dalle formule $X_1, \: \dots, X_n$ segue la formula $Y$".
 Vediamo un esempio considerando questi due assiomi:
 - $A_{1}\: : \: X \implies (Y \implies X)$
 - $A_{2}\: : \: (X \implies (Y \implies Z)) \implies ((X \implies Y)\implies Z)$
