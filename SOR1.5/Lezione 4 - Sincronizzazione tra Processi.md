@@ -148,8 +148,6 @@ Il Futex utilizza un intero allineato a 32 bit come lock comune, che può assume
 Il Futex è uno strumento utile per migliorare le prestazioni nelle situazioni di poca concorrenza, evitando l'uso oneroso delle chiamate di sistema nella gestione dei lock. Tuttavia, quando ci sono molte contese per il lock, i vantaggi della gestione completamente in utente del mutex o del semaforo diventano più evidenti. Inoltre, la gestione del Futex richiede un controllo più accurato sulle prestazioni del sistema e sulle caratteristiche specifiche dei processi per ottenere il massimo vantaggio.
 
 # Mutex nei Pthread
-Sincronizzazione dei thread con Pthreads
-
 I Pthreads sono una implementazione standard delle funzionalità di sincronizzazione dei thread basate su POSIX. Il meccanismo base per la sincronizzazione utilizza una variabile mutex, che può essere lock o unlock, e protegge una regione critica del codice. Un thread che vuole accedere a questa regione controlla il lock della variabile mutex; se è libero, il thread può accedere subito e mette il lock in stato atomico. Se il lock è già bloccato, il thread attendente viene bloccato fino a quando non diventa disponibile. Se ci sono più thread in attesa dello stesso lock, quando diventa disponibile, solo uno può continuare a mettere il lock in stato lockato.
 
 Le principali chiamate relative ai mutex includono la creazione e distruzione della variabile, l'acquisizione del lock e il rilascio del lock. I lock non sono obbligatori e il programmatore deve assicurarsi che i thread li utilizzino correttamente.
