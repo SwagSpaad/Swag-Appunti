@@ -54,5 +54,17 @@ Lo swapping può portare alla frammentazione della memoria, perciò è necessari
 
 Vale la pena sottolineare quanta memoria dovrebbe essere allocata per un processo quando viene creato o quando ne viene fatto lo swapping dal disco. Se i processi sono creati con una dimensione fissa, l'allocazione è semplice, ma se ci si aspetta che i segmenti dei dati possono crescere, ad esempio allocando memoria dinamicamente dallo heap, un'idea è quella di allocare un po' di memoria extra ad ogni swapping 
 
-![[Pasted image 20231114173707.png|center|700]]
+![[SOR1.5/img/img11.png|center|700]]
+
+Nel caso in cui i processi abbiano due segmenti che crescono, come (b) in foto in cui i processi A e B hanno il segmento dati e il segmento stack, si propone una sistemazione alternativa: ogni processo ha uno stack in cima alla sua memoria allocata che cresce *verso il basso* e il segmento dati oltre il testo del programma che cresce vesro l'alto. La memoria in mezzo a loro può essere usata da ciascun segmento. 
+Nel caso in cui la memoria venga esaurita viene eseguito:
+- il trasferimento del processo
+- lo swapping 
+- la terminazione del processo
+
+# Gestione della memoria libera
+Quando la memoria è assegnata dinamicamente, il sistema deve gestirla. Ci sono due metodi per tener traccia dell'utilizzo della memoria: 
+- *bitmap* che tiene traccia di quali blocchi vengono allocati 
+- una *lista* collegata che tiene traccia della memoria non allocata
+Questo tracciamento non riguarda solo la memoria, ma anche risorse come i file system
 
