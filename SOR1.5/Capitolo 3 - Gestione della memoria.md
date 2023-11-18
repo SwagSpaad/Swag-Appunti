@@ -67,4 +67,7 @@ Quando la memoria è assegnata dinamicamente, il sistema deve gestirla. Ci sono 
 - *bitmap* che tiene traccia di quali blocchi vengono allocati 
 - una *lista* collegata che tiene traccia della memoria non allocata
 Questo tracciamento non riguarda solo la memoria, ma anche risorse come i file system
-
+## Bitmap
+La memoria, con una bitmap, e' divisa in unita' di allocazione piccole come ualche parola o grandi come molti KB. A ogni unita' di allocazione, corrisponde un bit della bitmap, se 0, l'unita' e' libera, se 1 l'unita' e' utilizzata
+Una cosa molto importante e' l'unita' di allocazione , piu' piccola e', maggiore e' la bitmap.
+Una memoria di $32^n$ bit usera' $n$ bit di mappa. Cosi' la bitmap occupera' solo $1/32$  della memoria.
