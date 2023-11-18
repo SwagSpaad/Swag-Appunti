@@ -111,8 +111,6 @@ Le azioni atomiche, come gruppi di operazioni correlate eseguite insieme senza i
 I semafori e le operazioni di sincronizzazione furono introdotti per la prima volta nel linguaggio di programmazione Algol 68.
 
 # Produttore-Consumatore con Semfaori
-Soluzione del problema produttore-consumatore con l'uso di semafori
-
 I semafori sono un metodo efficace per risolvere problemi di sincronizzazione tra processi che condividono risorse. Estratto dalla figura 2.28, la soluzione al problema del produttore-consumatore può essere implementata utilizzando due semafori: "full" e "empty". Il semaforo "full" indica quando il buffer è pieno, mentre il semaforo "empty" indica quando il buffer è vuoto.
 
 Per garantire che i processi funzionino correttamente, le operazioni di "down" e "up" devono essere eseguite in modo non divisible. Ciò significa che le chiamate del sistema sono utilizzate per proteggere il semaforo, disabilitando temporaneamente gli interrupt durante l'esecuzione delle istruzioni necessarie per aggiornare il valore del semaforo e svegliare eventuali processi in attesa.
