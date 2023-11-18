@@ -67,7 +67,25 @@ Quando la memoria è assegnata dinamicamente, il sistema deve gestirla. Ci sono 
 - *bitmap* che tiene traccia di quali blocchi vengono allocati 
 - una *lista* collegata che tiene traccia della memoria non allocata
 Questo tracciamento non riguarda solo la memoria, ma anche risorse come i file system
+
 ## Bitmap
 La memoria, con una bitmap, e' divisa in unita' di allocazione piccole come ualche parola o grandi come molti KB. A ogni unita' di allocazione, corrisponde un bit della bitmap, se 0, l'unita' e' libera, se 1 l'unita' e' utilizzata
 Una cosa molto importante e' l'unita' di allocazione , piu' piccola e', maggiore e' la bitmap.
 Una memoria di $32^n$ bit usera' $n$ bit di mappa. Cosi' la bitmap occupera' solo $1/32$  della memoria.
+Dato che la dimensione della bitmap dipende solo dalla dimensione della memoria e dalla dimensione dell'unita' di allocazione, una bitmap fornisce un metodo molto semplice per tener traccia di parole di memoria in una quantita' fissa di memoria.
+Una delle limitazioni piu' grandi che gioca a sfavore della bitmap e' che se si stabilisce di portare un processo di $k$ unita' in memoria, il gestore della memoria deve cercare nella bitmap una serie di un numero $k$ di bit 0 consecutivi. Questo processo e' molto molto lento.
+
+## Linked list
+Utilizzare delle liste di segmenti di memoria allocati e liberi, in cui un segmento o contiene un processo o e' uno spazio vuoto fra due processi. Ogni voce della lista specifica uno spazio vuoto o un processo, l'indirizzo da cui parte, la lunghezza e il puntatore alla voce successiva.
+Quando processi e spazi vuoti sono tenuti su una lista ordinata per indirizzo, molti algoritmi possono essere usati per allocare la memoria per un processo creato.
+Esistono diversi algoritmi:
+- FirstFit: il gestore della memoria scorre la lista dei segmenti finche' non trova uno spazio vuoto abbastanza grande
+- NextFit: lavora allo stesso modo di FirstFit, ma tiene traccia di ogni posto dove ha tovato uno spazio adatto. Quando riparte, cerca nella lista dal punto dove era rimasto l'ultima volta, invece ri ripartire dall'inizio
+- BestFit: cerca all'interno di una lista, dall'inizio alla fine, uno spazio che sia il piu' piccolo possibile ma comunque adatto, piuttosto che impossessarsi di uno spazio grande che potrebbe essere necessario in seguito
+- WorstFit: quello meno utilizzato e meno ottimizzato, prende lo spazio piu' grande ogni volta
+- QuickFit: mantiene delle liste divise per alcune delle dimensioni piu' comuni richieste. Con questo algoritmo la ricerca degli spazi e' molto veloce, ma presenta lo stesso svantagio di tutti gli schemi ordinati per dimensione, infatti, quando un processo finisce o fa lo swapping su disco, trovare i suoi vicini per vedere se sia possibile unirlo a loro e' dispendioso.
+- BuddyAllocation: algoritmo che divide la memoria in partizioni per soddisfare una richiesta di memoria nel miglior modo possibile, suddivide la memoria in maniera ricorsiva in due meta' finche' il blocco ottenuto e' grande appena a sufficienza per essere usato.
+
+Il BuddyAlgorithm pero' puo' causare frammentazione interna dato che, se siu necessita di unn pezzo costituito da 65 pagine, si deve richiedere un pezzo da 128 pagine.
+Per risolvere questo problema, Linux dispone di una seconda allocazione di memoria, ovvero *l'accollatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
+Poiche' il kernel spesso crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*. Queste cache consistono di puntatori a uno o piu' slab che possono memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab puo' essere pieno, parzialmente pieno, o vuoto.
