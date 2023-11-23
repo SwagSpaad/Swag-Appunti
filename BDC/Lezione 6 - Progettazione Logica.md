@@ -10,7 +10,7 @@
 
 ![[BDC/img/img38.png|center|900]]
 
-# ER $\rightarrow$ Modello relazionale -1:1
+# ER $\rightarrow$ Modello relazionale - 1:1
 
 Dal modello ER al modello relazionale:
 La **relazione 1:1** diventa un'unica relazione che contiene gli attributi della prima e della seconda entità
@@ -61,7 +61,7 @@ La **relazione 1:1** diventa un'unica relazione che contiene gli attributi della
 
 ![[BDC/img/img45.png|center|900]]
 
-# ER $\rightarrow$ Modello relazionale -1:N
+# ER $\rightarrow$ Modello relazionale - 1:N
 ### Dal modello ER al modello relazione:
 
 - La **relazione 1:N** viene rappresentata aggiungendo, agli attributi dall'entità che svolge il **ruolo a molti**, l'identificatori univoco dell'entità col ruolo a uno. Questo identificatore prende il nome di **chiave esterna (foreign key=FK)** dell'entità associata. Eventuali attributi dell'associazione vengono inseriti anch'essi nell'entità con ruolo a molti, insieme alla chiave esterna.
@@ -98,7 +98,7 @@ La **relazione 1:1** diventa un'unica relazione che contiene gli attributi della
 
 La **relazione ricorsiva 1:N** oltre che con due relazioni è traducibile con una sola relazione che contiene due volte l'attributo identificatore, una volta come chiave esterna con un nome che riflette il ruolo dell'entità
 
-# ER $\rightarrow$ Modello relazionale -N:N
+# ER $\rightarrow$ Modello relazionale - N:N
 
 ### Dal modello ER al modello relazionale:
 

@@ -52,7 +52,7 @@ All'inizio solo il processo A è in memoria, in seguito vengono creati o viene f
 
 Lo swapping può portare alla frammentazione della memoria, perciò è necessario ricompattarla, spostando i processi il più in basso possibile. Questa tecnica è detta **memory compaction**, ma di solito non viene eseguita perché richiede molto tempo di CPU. Per esempio su una macchina da 16 GB che copia 8 byte in 8 ns, servono 16 secondi per compattare la memoria.
 
-Vale la pena sottolineare quanta memoria dovrebbe essere allocata per un processo quando viene creato o quando ne viene fatto lo swapping dal disco. Se i processi sono creati con una dimensione fissa, l'allocazione è semplice, ma se ci si aspetta che i segmenti dei dati possono crescere, ad esempio allocando memoria dinamicamente dallo heap, un'idea è quella di allocare un po' di memoria extra ad ogni swapping 
+Vale la pena sottolineare quanta memoria dovrebbe essere allocata per un processo quando viene creato o quando ne viene fatto lo swapping dal disco. Se i processi sono creati con una dimensione fissa, l'allocazione è semplice, ma se ci si aspetta che i segmenti dei dati possono crescere, ad esempio allocando memoria dinamicamente dallo heap, un'idea è quella di allocare un pò di memoria extra ad ogni swapping 
 
 ![[SOR1.5/img/img11.png|center|700]]
 
@@ -69,23 +69,28 @@ Quando la memoria è assegnata dinamicamente, il sistema deve gestirla. Ci sono 
 Questo tracciamento non riguarda solo la memoria, ma anche risorse come i file system
 
 ## Bitmap
-La memoria, con una bitmap, e' divisa in unita' di allocazione piccole come ualche parola o grandi come molti KB. A ogni unita' di allocazione, corrisponde un bit della bitmap, se 0, l'unita' e' libera, se 1 l'unita' e' utilizzata
-Una cosa molto importante e' l'unita' di allocazione , piu' piccola e', maggiore e' la bitmap.
-Una memoria di $32^n$ bit usera' $n$ bit di mappa. Cosi' la bitmap occupera' solo $1/32$  della memoria.
-Dato che la dimensione della bitmap dipende solo dalla dimensione della memoria e dalla dimensione dell'unita' di allocazione, una bitmap fornisce un metodo molto semplice per tener traccia di parole di memoria in una quantita' fissa di memoria.
-Una delle limitazioni piu' grandi che gioca a sfavore della bitmap e' che se si stabilisce di portare un processo di $k$ unita' in memoria, il gestore della memoria deve cercare nella bitmap una serie di un numero $k$ di bit 0 consecutivi. Questo processo e' molto molto lento.
+La memoria, con una bitmap, è divisa in unità di allocazione, a cui corrisponde un bit della bitmap: 0 se l'unità è libera, 1 se l'unità è utilizzata. Più piccola è l'unità di allocazione, maggiore è la bitmap. Se si sceglie un'unità di allocazione grande, la bitmap sarà più piccola, ma una quantità di memoria potrebbe essere sprecata nell'ultima unità del processo, se la dimensione del processo non è esattamente un multiplo dell'unità di allocazione.
+Una bitmap fornisce un metodo molto semplice per tener traccia di parole di memoria in una quantità fissa di memoria. 
+Lo svantaggio della bitmap è che per poter eseguire un processo di $k$ unità in memoria, il gestore della memoria deve cercare nella bitmap una serie di $k$ bit 0 consecutivi, il che è molto molto lento.
+
+![[SOR1.5/img/img12.png|center|900]]
 
 ## Linked list
-Utilizzare delle liste di segmenti di memoria allocati e liberi, in cui un segmento o contiene un processo o e' uno spazio vuoto fra due processi. Ogni voce della lista specifica uno spazio vuoto o un processo, l'indirizzo da cui parte, la lunghezza e il puntatore alla voce successiva.
+Utilizzare delle liste di segmenti di memoria allocati e liberi, in cui un segmento o contiene un processo o è uno spazio vuoto fra due processi. Ogni voce della lista specifica uno spazio vuoto o un processo, l'indirizzo da cui parte, la lunghezza e il puntatore alla voce successiva.
+Nella pratica viene usata una doppia linked list, infatti un processo che finisce ha due vicini (fatta eccezione per quelli all'inizio della lista e alla fine) e con due puntatori è più facile trovare la voce precedente e vedere se è possibile l'unione. L'utilizzo di doppie linked list porta a 4 situazioni, che vediamo in figura.
+
+![[SOR1.5/img/img13.png|center|600]]
+
+## Schemi di allocazione della memoria
 Quando processi e spazi vuoti sono tenuti su una lista ordinata per indirizzo, molti algoritmi possono essere usati per allocare la memoria per un processo creato.
 Esistono diversi algoritmi:
-- FirstFit: il gestore della memoria scorre la lista dei segmenti finche' non trova uno spazio vuoto abbastanza grande
-- NextFit: lavora allo stesso modo di FirstFit, ma tiene traccia di ogni posto dove ha tovato uno spazio adatto. Quando riparte, cerca nella lista dal punto dove era rimasto l'ultima volta, invece ri ripartire dall'inizio
-- BestFit: cerca all'interno di una lista, dall'inizio alla fine, uno spazio che sia il piu' piccolo possibile ma comunque adatto, piuttosto che impossessarsi di uno spazio grande che potrebbe essere necessario in seguito
-- WorstFit: quello meno utilizzato e meno ottimizzato, prende lo spazio piu' grande ogni volta
-- QuickFit: mantiene delle liste divise per alcune delle dimensioni piu' comuni richieste. Con questo algoritmo la ricerca degli spazi e' molto veloce, ma presenta lo stesso svantagio di tutti gli schemi ordinati per dimensione, infatti, quando un processo finisce o fa lo swapping su disco, trovare i suoi vicini per vedere se sia possibile unirlo a loro e' dispendioso.
-- BuddyAllocation: algoritmo che divide la memoria in partizioni per soddisfare una richiesta di memoria nel miglior modo possibile, suddivide la memoria in maniera ricorsiva in due meta' finche' il blocco ottenuto e' grande appena a sufficienza per essere usato.
+- *FirstFit*: il gestore della memoria scorre la lista dei segmenti finchè non trova uno spazio vuoto abbastanza grande
+- *NextFit*: lavora allo stesso modo di FirstFit, ma tiene traccia di ogni posto dove ha tovato uno spazio adatto. Quando riparte, cerca nella lista dal punto dove era rimasto l'ultima volta, invece ri ripartire dall'inizio
+- *BestFit*: cerca all'interno di una lista, dall'inizio alla fine, uno spazio che sia il più piccolo possibile ma comunque adatto, piuttosto che impossessarsi di uno spazio grande che potrebbe essere necessario in seguito
+- *WorstFit*: quello meno utilizzato e meno ottimizzato, prende lo spazio più grande ogni volta
+- *QuickFit*: mantiene delle liste divise per alcune delle dimensioni più comuni richieste. Con questo algoritmo la ricerca degli spazi è molto veloce, ma presenta lo stesso svantagio di tutti gli schemi ordinati per dimensione, infatti, quando un processo finisce o fa lo swapping su disco, trovare i suoi vicini per vedere se sia possibile unirlo a loro è dispendioso.
 
+<<<<<<< HEAD
 Il BuddyAlgorithm pero' puo' causare frammentazione interna dato che, se siu necessita di unn pezzo costituito da 65 pagine, si deve richiedere un pezzo da 128 pagine.
 Per risolvere questo problema, Linux dispone di una seconda allocazione di memoria, ovvero *l'accollatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
 Poiche' il kernel spesso crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*. Queste cache consistono di puntatori a uno o piu' slab che possono memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab puo' essere pieno, parzialmente pieno, o vuoto.
@@ -103,3 +108,34 @@ Nei computer senza memoria virtuale, l'indirizzo virtuale viene situato direttam
 Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non vanno direttamente nel bus, ma nella **MMU** (memory managment unit) che mappa gli indirizzi virtuali con spazi della memoria fisica.
 
 
+=======
+### Buddy Allocation
+Il principale meccanismo per l'allocazione della memoria in Linux è basato sull'algoritmo di *Buddy Memory Allocation*, che opera nel seguente modo: inizialmente la memoria consiste di un singolo pezzo. All'arrivo di una richiesta di memoria, questa viene arrotondata ad una potenza di 2 e l'intero pezzo di memoria viene diviso a metà. Se ci sono pezzi ancora troppo grandi, il più basso viene diviso ancora finché non è della dimensione richiesta.
+
+![[SOR1.5/img/img14.png|center|500]]
+
+In figura vediamo un esempio di come opera l'algoritmo di Buddy Memory: 
+- la memoria inizialmente di 64 pagine (a);
+- Arriva una richiesta di 7 pagine, che viene arrotondata alla potenza di 2 più vicina, quindi 8;
+- L'intero pezzo di memoria viene diviso a metà (b);
+- Siccome uno spazio di 32 pagine per una richiesta di 8 è ancora troppo grande, viene diviso a metà lo spazio più basso (c) e viene ripetuta la divisione (d)
+- Ora abbiamo un pezzo di memoria della dimensione corretta che viene allocata.
+
+![[SOR1.5/img/img15.png|center|500]]
+
+- In seguito arriva una richiesta di 8 pagine, che viene immediatamente soddisfatta (e);
+- Arriva una richiesta di 4 pagine, il pezzo più piccolo disponibile viene diviso a metà (f) e diviso di nuovo per ottenere due spazi da 4 (g), che viene allocato.
+- Il secondo pezzo di 8 pagine viene rilasciato (h) e in seguito anche il primo pezzo. Poiché i due pezzi di otto pagine adiacenti vengono dallo stesso pezzo di 16 pagine, vengono riuniti per ottenerlo (i).
+
+Il BuddyAlgorithm però può causare frammentazione interna dato che, se si necessita di un pezzo costituito da 65 pagine, si deve richiedere un pezzo da 128 pagine.
+Per risolvere questo problema, Linux dispone di una seconda allocazione di memoria, ovvero *l'allocatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
+Poichè il kernel spesso crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*, che consistono in puntatori a uno o più slab che possono memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab può essere pieno, parzialmente pieno, o vuoto. Quando un oggetto viene deallocato, non viene immediatamente restituito al sistema come memoria libera, ma viene mantenuto nella cache, in modo che in caso di una nuova richiesta dello stesso tipo di oggetto, possa essere immediatamente reallocata evitando rallentamenti a causa dell'inizializzazione. 
+
+![[SOR1.5/img/img16.png|center|700]]
+
+Lo slab in foto contiene: 
+- un puntatore all'inizio della memoria con gli slot degli oggetti (freccia start)
+- un puntatore all'indice del prossimo slot libero
+- *bufctl*, un array di indici dei prossimi slot liberi
+- gli slot per gli oggetti
+>>>>>>> 53831a7 (ziopera)

@@ -313,6 +313,46 @@ x_{n}^{(k)}\to x_{n}
 
 # Norme matriciali
 ## Il concetto di norma matriciale
+Si vuole introdurre un concetto di distanza sullo spazio delle matrici per misurare la "vicinanza" di due matrici $A,B\in\mathbb C^{n\times n}$. A questo scopo si può interpretare una matrice $A\in\mathbb C^{n\times n}$ come un vettore di $n^2$ componenti e utilizzare come distanza una delle [[#Norme vettoriali|norme vettoriali]] già introdotte. Questo procedimento è senz'altro corretto, ma spesso conduce a norme che "non si comportano bene" rispetto al prodotto di matrici e pertanto sono di scarso interesse. Diamo comunque qui la definizione generale di norma matriciale e ci
+riserviamo di trattare le norme matriciali interessanti nella sezione successiva.
+
+**Def.**
+Una funzione $||\cdot||:\mathbb{C}^{n\times n}\to\mathbb R$ si dice norma matriciale se soddisfa le seguenti proprietà:
+- $||A||\ge0$ per ogni $A\in\mathbb{C}^{n\times n}$ e $||A||=0$ se e solo se $A=0\text{ [ positività ]}$ 
+- $||\alpha A||=|\alpha|\:||A||$ per ogni $\alpha\in\mathbb{C}$ e ogni $A\in\mathbb C^{n\times n}\text{ [ omogeneità ]}$
+- $||A+B||\le||A||+||B||$ per ogni $A,B\in\mathbb C^{n\times n}\text{ [ disuguaglianza triangolare ]}$  
+Data una norma vettoriale $||\cdot||:\mathbb{C}^{n\times n}\to\mathbb R$, definiamo la distanza fra due matrici $A,B\in\mathbb C^{n\times n}$ come $||A-B||$.
+
+Un esempio di norma matriciale è dato dall'analoga della norma $\infty$ tra vettori: data $A \in \mathbb C^{n\times n}$, s'immagina $A$ come se fosse un vettore di $n^{2}$ componenti e si definisce la sua norma come se fosse la norma $\infty$ del vettore di $n^{2}$ componenti:$$|A|_{\infty}=\max_{i,j=1,\dots,n}|a_{ij}|$$
+In modo analogo si possono definire le norme $|A|_{1}$ e $|A|_{2}$. Purtroppo, la norma $|\cdot|_{\infty}$ "non si comporta bene" rispetto al prodotto di matrici perché non è submoltiplicativa: date due matrici $A,B \in \mathbb C^{n\times n}$, non è detto che risulti $|AB|_{\infty}\le|A|_{\infty}|B|_{\infty}$. Ecco un esempio: $$\begin{align*}
+&A=\begin{bmatrix}1 & 1\\
+0 & 1\end{bmatrix}, \:\:\:\:\: |A|_{\infty}=1\\
+&B=\begin{bmatrix}1 & 0\\
+1 & 1\end{bmatrix}, \:\:\:\:\: |B|_{\infty}=1 \\
+&AB=\begin{bmatrix}2 & 1\\
+1 & 1\end{bmatrix},\:\:\:\:\: |AB|_\infty=2
+\end{align*}$$
+## Norme matriciali indotte
+Vogliamo introdurre una classe di norme matriciali interessanti e ricavarne alcune proprietà.
+
+**Def.**
+Data una norma vettoriale $||\cdot||$ in $\mathbb C^{n}$ e una matrice $A \in \mathbb C^{n\times n}$, definiamo il numero $$||A||=\max_{\underline{x}\ne\underline{0}} \frac{||A\underline{x}||}{||\underline{x}||}= \max_{\underline{x}\ne\underline{0}}\bigg|\bigg|A\left(\frac{\underline{x}}{||\underline{x}||}\right)\bigg|\bigg|=\max_{||\underline y||=1}||A\underline y|| $$ Si può dimostrare che $||\cdot||:\mathbb{C}^{n\times n}\to\mathbb R$ è una norma matriciale che prende il nome di norma matriciale indotta dalla norma vettoriale $||\cdot||$. 
+Si osservi che la norma matriciale indotta dalla norma vettoriale $||\cdot||$ viene volutamente denotata con lo stesso simbolo $||\cdot||$. Il seguente teorema mette in luce interessanti proprietà delle norme matriciali indotte.
+
+### Teorema
+Sia $||\cdot||:\mathbb{C}^{n\times n}\to\mathbb R$ una norma matriciale indotta dalla norma vettoriale $||\cdot||$ e siano $A,B\in\mathbb C^{n\times n}$. Allora valgono le seguenti proprietà.
+1. $||I||=1$
+2. $||A\underline x|| \le ||A||\:||\underline x||$ per ogni $\underline x \in\mathbb C^n$ 
+3. $||A||$ è la più piccola costante $C$ che soddisfa $||A\underline x||\le C||\underline x||$ per ogni $\underline x\in\mathbb C^n$ 
+4. $||AB||\le ||A||\: ||B||\:\:\:\:\: \text{[ submoltiplicatività ]}$
+5. $\rho(A)\le||A||$
+
+**Dim.**
+1. Risulta $$||I||=\max_{||\underline x||=1} ||I\underline x||=\max_{||\underline x||=1}||\underline x||=1$$
+2. Per ogni $\underline{x}\ne\underline{0}$ si ha $$\frac{||A\underline{x}||}{||\underline{x}||}\le\max_{\underline{y}\ne\underline{0}}\frac{||A\underline{y}||}{||\underline{y}||}=||A||\implies||A\underline{x}||\le||A||\:||\underline{x}||$$ La disuguaglianza precedente vale ovviamente anche per $\underline x=\underline 0$.
+3. Presa una qualsiasi costante $C$ che soddisfa $||A\underline x||\le C||\underline x||$ per ogni $\underline x\in\mathbb C^n$, si ha $$\frac{||A\underline{x}||}{||\underline{x}||}\le C \text{ per ogni }\underline x\ne \underline 0\implies ||A||=\max_{\underline x=\underline 0}\frac{||A\underline{x}||}{||\underline{x}||}\le C$$
+4. Per ogni $\underline x\in\mathbb C^{n}$ si ha $$||AB\underline x||\le ||A||\:||B\underline x||\le||A||\:||B||\:||\underline x||$$ Concludiamo che $||AB||\le||A||\:||B||$ in quanto $||AB||$ è la più piccola costante $C$ che soddisfa $||AB\underline x||\le C||\underline x||$ per ogni $\underline x\in \mathbb C^n$.
+5. Sia $\lambda$ un autovalore di $A$ di modulo massimo e sia $\underline x\ne\underline 0$ un corrispondente autovettore. Dall'equazione $A\underline x=\lambda\underline x$ otteniamo $$||A\underline x||=||\lambda\underline x||=|\lambda|\:||\underline x||=\rho(A)||\underline x||\implies \rho(A)=\frac{||A\underline{x}||}{||\underline{x}||}\le\max_{\underline y\ne\underline 0}\frac{||A\underline{y}||}{||\underline{y}||}=||A||.\:\:\: \square $$
 ## Le norme 1, 2, $\infty$
 ## Equivalenza delle norme matriciali
 ## Successioni di matrici
