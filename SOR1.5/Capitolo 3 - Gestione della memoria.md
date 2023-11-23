@@ -89,3 +89,17 @@ Esistono diversi algoritmi:
 Il BuddyAlgorithm pero' puo' causare frammentazione interna dato che, se siu necessita di unn pezzo costituito da 65 pagine, si deve richiedere un pezzo da 128 pagine.
 Per risolvere questo problema, Linux dispone di una seconda allocazione di memoria, ovvero *l'accollatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
 Poiche' il kernel spesso crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*. Queste cache consistono di puntatori a uno o piu' slab che possono memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab puo' essere pieno, parzialmente pieno, o vuoto.
+
+# Memoria Virtuale
+L'idea della **memoria virtuale** nasce dalla gestione del software bloat. Nonostante le dimensioni della memoria aumentino rapidamente, quella dei software aumenta ancora più velocemente.
+L'idea di base è che ogni programma ha il proprio spaio di indirizzi personale, suddiviso in pezzi, chiamati *Pagine*.
+Ogni pagina è un intervallo contiguo di indirizzi. Ogni pagina è mappata sulla memoria fisica, ma non per forza tutte si devono trovare sulla memoria fisica per eseguire il programma. Quando un programma fa riferimento a una parte del proprio spazio di indirizzi che si trova nella memoria fisica, l'hardware esegue il mappaggio necessario diretto e il SO è allertato di andare a prendere il pezzo mancate e rieseguire l'operazione fallita in precedenza.
+Quindi con la memoria virtuale invece di avere una rilocazione separata solo per i segmenti dati e testo, l'intero spazio degli inidirizzi può essere rimappato sulla memoria fisica in unità equamente piccole.
+
+## Paginazione
+La maggior parte dei sistemi di memoria virtuale usa una tecnica chiamata **paginazione** o **paging**. Su qualsiasi computer i programmi referenziano un insieme di indirizzi di memoria. Gli indirizzi possono essere creati dall'indicizzazione, registri base, registri segmento ed altri modi.
+Questi indirizzi creati dal programma vengono chiamati **indirizzi virtuali** e vanno a formare lo **spazio virtuale degli indirizzi**.
+Nei computer senza memoria virtuale, l'indirizzo virtuale viene situato direttamente nel bus, provocando la lettura o scrittura della parola della memoria fisica con lo stesso indirizzo.
+Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non vanno direttamente nel bus, ma nella **MMU** (memory managment unit) che mappa gli indirizzi virtuali con spazi della memoria fisica.
+
+
