@@ -90,25 +90,6 @@ Esistono diversi algoritmi:
 - *WorstFit*: quello meno utilizzato e meno ottimizzato, prende lo spazio più grande ogni volta
 - *QuickFit*: mantiene delle liste divise per alcune delle dimensioni più comuni richieste. Con questo algoritmo la ricerca degli spazi è molto veloce, ma presenta lo stesso svantagio di tutti gli schemi ordinati per dimensione, infatti, quando un processo finisce o fa lo swapping su disco, trovare i suoi vicini per vedere se sia possibile unirlo a loro è dispendioso.
 
-<<<<<<< HEAD
-Il BuddyAlgorithm pero' puo' causare frammentazione interna dato che, se siu necessita di unn pezzo costituito da 65 pagine, si deve richiedere un pezzo da 128 pagine.
-Per risolvere questo problema, Linux dispone di una seconda allocazione di memoria, ovvero *l'accollatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
-Poiche' il kernel spesso crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*. Queste cache consistono di puntatori a uno o piu' slab che possono memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab puo' essere pieno, parzialmente pieno, o vuoto.
-
-# Memoria Virtuale
-L'idea della **memoria virtuale** nasce dalla gestione del software bloat. Nonostante le dimensioni della memoria aumentino rapidamente, quella dei software aumenta ancora più velocemente.
-L'idea di base è che ogni programma ha il proprio spaio di indirizzi personale, suddiviso in pezzi, chiamati *Pagine*.
-Ogni pagina è un intervallo contiguo di indirizzi. Ogni pagina è mappata sulla memoria fisica, ma non per forza tutte si devono trovare sulla memoria fisica per eseguire il programma. Quando un programma fa riferimento a una parte del proprio spazio di indirizzi che si trova nella memoria fisica, l'hardware esegue il mappaggio necessario diretto e il SO è allertato di andare a prendere il pezzo mancate e rieseguire l'operazione fallita in precedenza.
-Quindi con la memoria virtuale invece di avere una rilocazione separata solo per i segmenti dati e testo, l'intero spazio degli inidirizzi può essere rimappato sulla memoria fisica in unità equamente piccole.
-
-## Paginazione
-La maggior parte dei sistemi di memoria virtuale usa una tecnica chiamata **paginazione** o **paging**. Su qualsiasi computer i programmi referenziano un insieme di indirizzi di memoria. Gli indirizzi possono essere creati dall'indicizzazione, registri base, registri segmento ed altri modi.
-Questi indirizzi creati dal programma vengono chiamati **indirizzi virtuali** e vanno a formare lo **spazio virtuale degli indirizzi**.
-Nei computer senza memoria virtuale, l'indirizzo virtuale viene situato direttamente nel bus, provocando la lettura o scrittura della parola della memoria fisica con lo stesso indirizzo.
-Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non vanno direttamente nel bus, ma nella **MMU** (memory managment unit) che mappa gli indirizzi virtuali con spazi della memoria fisica.
-
-
-=======
 ### Buddy Allocation
 Il principale meccanismo per l'allocazione della memoria in Linux è basato sull'algoritmo di *Buddy Memory Allocation*, che opera nel seguente modo: inizialmente la memoria consiste di un singolo pezzo. All'arrivo di una richiesta di memoria, questa viene arrotondata ad una potenza di 2 e l'intero pezzo di memoria viene diviso a metà. Se ci sono pezzi ancora troppo grandi, il più basso viene diviso ancora finché non è della dimensione richiesta.
 
@@ -127,9 +108,9 @@ In figura vediamo un esempio di come opera l'algoritmo di Buddy Memory:
 - Arriva una richiesta di 4 pagine, il pezzo più piccolo disponibile viene diviso a metà (f) e diviso di nuovo per ottenere due spazi da 4 (g), che viene allocato.
 - Il secondo pezzo di 8 pagine viene rilasciato (h) e in seguito anche il primo pezzo. Poiché i due pezzi di otto pagine adiacenti vengono dallo stesso pezzo di 16 pagine, vengono riuniti per ottenerlo (i).
 
-Il BuddyAlgorithm però può causare frammentazione interna dato che, se si necessita di un pezzo costituito da 65 pagine, si deve richiedere un pezzo da 128 pagine.
-Per risolvere questo problema, Linux dispone di una seconda allocazione di memoria, ovvero *l'allocatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
-Poichè il kernel spesso crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*, che consistono in puntatori a uno o più slab che possono memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab può essere pieno, parzialmente pieno, o vuoto. Quando un oggetto viene deallocato, non viene immediatamente restituito al sistema come memoria libera, ma viene mantenuto nella cache, in modo che in caso di una nuova richiesta dello stesso tipo di oggetto, possa essere immediatamente reallocata evitando rallentamenti a causa dell'inizializzazione. 
+Il BuddyAlgorithm però può causare frammentazione interna dato che, se siu necessita di unn pezzo costituito da 65 pagine, si deve richiedere un pezzo da 128 pagine.
+Per risolvere questo problema, Linux utilizza *l'allocatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
+Poichè il kernel crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*, contenenti puntatori a uno o più slab capaci di memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab può essere pieno, parzialmente pieno, o vuoto. Quando un oggetto viene deallocato, non viene immediatamente restituito al sistema come memoria libera, ma rimane nella cache, in modo che in caso di una nuova richiesta dello stesso tipo di oggetto, possa essere immediatamente reallocata evitando ritardi dovuti alla reinizializzazione. 
 
 ![[SOR1.5/img/img16.png|center|700]]
 
@@ -138,4 +119,17 @@ Lo slab in foto contiene:
 - un puntatore all'indice del prossimo slot libero
 - *bufctl*, un array di indici dei prossimi slot liberi
 - gli slot per gli oggetti
->>>>>>> 53831a7 (ziopera)
+
+# Memoria Virtuale
+L'idea della **memoria virtuale** nasce dalla gestione del software bloat, poiché le dimensioni dei software aumentano ancora più velocemente rispetto alla memoria disponibile. Lo [[#Swapping|swapping]] non era una soluzione efficace,a causa delle limitazioni nella velocità dei dischi.
+Negli anni '60 furono introdotte delle tecnice come l'*overlay*, che divideva i programmi in piccoli pezzi e solo l'overlay necessario era caricato in memoria. Questa soluzione non trovò successo, perché la suddivisione del programma andava fatta manualmente e questo era un processo lento, noioso e poteva portare errori.
+
+La memoria virtuale si basa sull'idea che ogni programma abbia il proprio spazio di indirizzi personale, suddiviso in *pagine*, un intervallo contiguo di indirizzi. Ogni pagina è mappata sulla memoria fisica, ma non è necessario che siano tutte presenti sulla memoria fisica per eseguire il programma. Quando un programma fa riferimento a una parte del suo spazio di indirizzi non presente in memoria fisica, l'hardware esegue il mappaggio necessario diretto e il SO si occupa di recuperare il pezzo mancate e rieseguire l'operazione fallita in precedenza.
+In questo modo, l'intero spazio degli inidirizzi può essere rimappato sulla memoria fisica in unità più piccole, consentendo una gestione più efficiente dei programmi.
+
+## Paginazione
+La maggior parte dei sistemi di memoria virtuale usa una tecnica chiamata **paginazione** o **paging**. Su qualsiasi computer i programmi referenziano un insieme di indirizzi di memoria. Gli indirizzi possono essere creati dall'indicizzazione, registri base, registri segmento ed altri modi.
+Questi indirizzi creati dal programma vengono chiamati **indirizzi virtuali** e vanno a formare lo **spazio virtuale degli indirizzi**.
+Nei computer senza memoria virtuale, l'indirizzo virtuale viene situato direttamente nel bus, provocando la lettura o scrittura della parola della memoria fisica con lo stesso indirizzo.
+Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non vanno direttamente nel bus, ma nella **MMU** (memory managment unit) che mappa gli indirizzi virtuali con spazi della memoria fisica.
+
