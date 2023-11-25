@@ -132,4 +132,28 @@ La maggior parte dei sistemi di memoria virtuale usa una tecnica chiamata **pagi
 Questi indirizzi creati dal programma vengono chiamati **indirizzi virtuali** e vanno a formare lo **spazio virtuale degli indirizzi**.
 Nei computer senza memoria virtuale, l'indirizzo virtuale viene situato direttamente nel bus, provocando la lettura o scrittura della parola della memoria fisica con lo stesso indirizzo.
 Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non vanno direttamente nel bus, ma nella **MMU** (memory managment unit) che mappa gli indirizzi virtuali con spazi della memoria fisica.
+Lo spazio  degli indirizzi virtuali e' suddiviso in unita' di dimensioni fissa, chiamate **pagine**. Le unita' corrispondenti nella memoria fisica sono chiamate **frame** o **page frame**.
+Le pagine e i frame sono generalmente della stessa dimensione. 
+Nei sistemi reali le pagine vanno dai 512 byte fino a 64 KB. 
+Con 64 KB di spazio degli indirizzi virtuale e 32 KB di memoria fisica otteniamo 16 pagine virtuali e 8 frame. I trasferimenti tra la RAM e il disco sono sempre pagine intere.
+Ogni pagina contiene esattamente 4096 indirizzi da un multiplo di 4096 a un multiplo di 4096 successivo.
+>Ex1: 
+>Quando un programma prova ad accedere all'indirizzo 0 usando:
+>`MOV REG, 0`
+>l'indirizzo virtuale 0 e' inviato alla MMU. La MMU verifica che questo indirizzo si trova nella pagina 0, che secondo il mappaggio, e' il frame 2.
+>Trasforma cosi' l'indirizzo in 8192 e lo invia esternamente sul bus. Dato che la memoria non conosce l'MMU, lei ha semplicemente eseguito una richiesta per leggere o scrivere l'indirizzo 8192. Cosi' l'MMU ha mappato tutti gli indirizzi virtuali fra 0 e 4095 sugli indirizzi fisici tra 8192 a 12287.
 
+>Ex2:
+>L'istruzione:
+>`MOV REG, 8192`
+>viene trasformata in:
+>`MOV REG, 24576`
+>dato che l'indirizzo virtuale 8192 e' mappato sul 24576.
+
+Ma, che cosa dovesse accadere se il programma referenziasse degli indirizzi non mappati usando:
+`MOV REG, 32780`
+che e' di 12 byte all'interno di una pagina virtuale da 8?
+In questo caso, l'MMU rileva che la pagina non e' mappata e causa un **trap** della CPU verso il SO. Questo trap e' comunemente chiamato **page fault**.
+Il SO preleva un frame poco utilizzato e ne scrive il suo contenuto su disco, poi prende la pagina appena referenziata e la mette nel frame appena liberato, cambia la mappa e riavvia l'istruzione che era in trap.
+
+## MMU
