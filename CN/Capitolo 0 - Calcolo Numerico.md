@@ -1,0 +1,7 @@
+- [[Capitolo 1 - Interpolazione polinomiale]]
+- [[Capitolo 1.2 - Errore o resto dell'interpolazione polinomiale]]
+- [[Capitolo 1.3 - Forma di Newton del polinomio d'interpolazione]]
+- [[Capitolo 1.4 - Aggiunta di un nodo di interpolazione]]
+- [[Capitolo 2.1 - Formula dei trapezi ed errore]]
+- [[Capitolo 2.2 - Estrapolazione]]
+- [[Capitolo 3 - Richiami di algebra lineare]]

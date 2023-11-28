@@ -9,7 +9,8 @@ Si sceglie una classe $\mathcal C$ di funzioni da $[a,b] \to \mathbb R$ e si vuo
 Una scelta comune per la sua semplicità è $\mathcal C = \mathbb R_{n}[x]=$  spazio dei polinomi di grado minore uguale di n = $\{a_{0}+a_{1}x+\dots+a_{n}x^{n}\: : \: a_{0},\:a_{1},\dots,\: a_{n} \in \mathbb R\}$.
 
 $\exists! \: p(x)\in \mathcal C=\mathbb R_{n}[x]\: t.c.\: p(x_{i})=f(x_{i})\: \forall \: i = 0,\dots,\:n$
- 
+
+## Esistenza ed unicità
 **Teorema**
 Siano $(x_0,y_0),\:(x_1,y_1),\dots,(x_n,y_{n})\in \mathbb R^2$ tali che $x_{0},\: x_{1},\dots,\: x_{n}$ sono tutti distinti. Allora $\exists! \text{ polinomio } p(x)\in \mathbb R_{n}[x] \text{ tale che }  p(x_{i})=y_{i} \: \forall\: i=0,\:1,\dots,\:n$ ^0c2fd0
 
@@ -110,6 +111,7 @@ Dimostriamo ora l'unicità. Supponiamo che $q(x)$ sia un altro polinomio in $\ma
 per certi $\beta_0,\beta_1,\dots,\beta_n\in\mathbb R$. Valutando $q(x)$ nei punti $x_0,x_1,\dots,x_n$ otteniamo che $\forall\:i=0,\dots,n$ $$q(x_i)=\beta_0L_0(x_i)+\beta_1L_1(x_i)+\dots+\beta_nL_n(x_i)=\beta_i$$
 ma $q(x_i)=y_i$ per $(\triangle)$, quidni possiamo scrivere $$q(x)=y_0L_0(x)+y_1L_1(x)+\dots+y_nL_n(x)=p(x)$$Questo dimostra che $p(x)$ è l'unico polinomio in $\mathbb R_n[x]$ t.c. $p(x_i)=y_{i}\:\: \forall\: i=0,\dots,n$. $\square$
 
+## Forma canonica e forma di Lagrange
 **Def.**
 Siano $(x_0,y_0),(x_1,y_1),\dots,(x_n,y_n)\in\mathbb R^2$  con $x_0,x_1,\dots,x_n$ distinti. L'unico polinomio $p(x)\in \mathbb R_n[x]$ t.c. $p(x_i)=y_{i}\:\forall i=0,\dots,n$ si chiama **polinomio di interploazione** dei dati  $(x_0,y_0),(x_1,y_1),\dots,(x_n,y_n)$ o anche **polinomio di interpolazione** dei valori $y_0,\dots,y_n$ sui nodi $x_0,\dots,x_n$.
 
@@ -118,7 +120,7 @@ Siano $(x_0,y_0),(x_1,y_1),\dots,(x_n,y_n)\in\mathbb R^2$  con $x_0,x_1,\dots,x_
 si chiama j-esimo polinomio di Lagrange relativo ai nodi $x_0,x_{1},\dots,x_n$. La $(\$\$)$ si chiama *forma di Lagrange* del polinomio di interpolazione 
 - Se gli $y_{i}$ sono i valori nei punti $x_{i}$ di una funzione $f:[a,b] \to \mathbb R$, cioé se risulta $y_i=f(x_{i}) \:\forall \:i=0,\dots,n$, allora il polinomio $p(x)$ si chiama anche **polinomio di interpolazione della funzione $f(x)$** sui nodi $x_0,\dots,x_n$.
 
-## Esempio
+### Esempio
 Della funzione $\sin(x)$ sono noti i valori nei tre punti $x_0=0,\:x_1=\frac{\pi}{6},\:x_2=\frac{\pi}{4}$ e sono dati da $\sin(x_0)=0,\:\sin(x_1)=\frac{1}{2},\: \sin(x_2)=\frac{\sqrt{2}}{2}$.
 Scrivere in forma canonica e in forma di Lagrange il polinomio di interpolazione $p(x)$ di $\sin(x)$ sui nodi $x_0,\:x_1,\:x_2$.
 

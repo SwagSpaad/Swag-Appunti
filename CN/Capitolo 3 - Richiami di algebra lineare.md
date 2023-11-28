@@ -374,6 +374,7 @@ Tutte le norme matriciali in $\mathbb C^{n\times n}$ sono equivalenti, nel senso
 Una successione di matrici $A^{(0)},A^{(1)},A^{(2)},\dots$ in $\mathbb C^{n\times n}$ si dice convergente alla matrice $A\in\mathbb C^{n\times n}$ rispetto alla norma matriciale $||\cdot||$ se $||A^{(k)}-A||\to0$. Poiché tutte le norme matriciali sono equivalenti per il [[#Equivalenza delle norme matriciali#Teorema|teorema]], se una successione di matrici converge ad $A$ rispetot a una norma $||\cdot||$, allora converge ad $A$ rispetto a tutte le norme.
 La dimostrazione è identica a quella fatta per i [[#Successioni di vettori|vettori]], quindi è omessa.
 
+
 Una successione di matrici $A^{(0)},A^{(1)},A^{(2)},\dots$ in $\mathbb C^{n\times n}$ si dice convergente (componente per componente) alla matrice $A\in \mathbb C^{n\times n}$ se $A^{(k)}\to A$ componente per componente, cioé se $$\begin{align*}
 a_{ij}^{(k)}\to a_{ij}\text{ per ogni }i,j=1,\dots,n &\iff |a_{ij}^{(k)}-a_{ij}|\to0\text{ per ogni }i,j=1,\dots,n\\
 &\iff \max_{i,j=1,\dots,n}|a_{ij}^{(k)}-a_{ij}|\to0\\
