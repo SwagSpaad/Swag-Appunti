@@ -157,3 +157,14 @@ In questo caso, l'MMU rileva che la pagina non e' mappata e causa un **trap** de
 Il SO preleva un frame poco utilizzato e ne scrive il suo contenuto su disco, poi prende la pagina appena referenziata e la mette nel frame appena liberato, cambia la mappa e riavvia l'istruzione che era in trap.
 
 ## MMU
+La **Memory Managment Unit** è una classe di componenti hardware che gestisce le richieste di acesso di memoria da parte della CPU. 
+>Ex:
+>Indirizzo virtuale = 8196 (0010000000000100)
+>Mappato usando la mappa della MMU.
+>L'inidrizzo virtuale di 16 bit in ingresso è suddiviso in un numero di pagina di 4 bit e un offset di 12 bit.
+>Con 4 bit per il numero di pagina, si possono avere 16 pagine e con 12 bit di offset possiamo indirizzare 4096 byte per pagina.
+>Il numero di pagina è usato come indice nella **Tabella delle pagine** che porta al numero di frame corrispondente alla pagina virtuale. Se il bit *presente / assente* è 0, avviene un trap al SO. Se il bit è 1, il numero di frame trovato nella tabella delle pagine viene copiato nei tre bit più significativi del registro di output, insieme all'offset di 12 bit che è copiato senza modifiche dall'inidirizzo virtuale in arrivo. Insieme formano un indirizzo fisico di 15 bit. Il registro di output è poi messo sul bus di memoria come indirizzo fisico di memoria
+
+![[SOR1.5/img/img17.png|center|700]]
+
+## Tabelle delle pagine
