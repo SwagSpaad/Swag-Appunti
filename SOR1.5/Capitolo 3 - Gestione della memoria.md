@@ -168,3 +168,9 @@ La **Memory Managment Unit** è una classe di componenti hardware che gestisce l
 ![[SOR1.5/img/img17.png|center|700]]
 
 ## Tabelle delle pagine
+In una semplice implementazione si può sintetizzare il mappaggio degli indirizzi virtuali sugli indirizzi fisici come segue: l'indirizzo virtuale è diviso in un di pagina virtuale e un offset.
+>Ex:
+>Con un indirizzo di 16 bit e una dimensione di pagina 4KB, i 4 bit superiori potrebbero specificare una delle 16 pagine virtuali e i 12 bit più bassi specificherebbero il byte di offset nella pagina selezionata.
+
+È possibile avere differenti divisioni di bit per pagina, come 3 , 5 o un numero diverso, ma questo implica che avrò anche una dimensione diversa della pagina.
+Il numero di pagina virtuale è utilizzato come indice nella tabella delle pagine per trovare la voce per quella pagina virtuale.
