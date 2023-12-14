@@ -1,10 +1,10 @@
 {
   "pdfExportSettings": {
-    "includeName": true,
+    "includeName": false,
     "pageSize": "A4",
     "landscape": false,
     "margin": "0",
-    "downscalePercent": 85
+    "downscalePercent": 65
   },
   "alwaysUpdateLinks": true,
   "spellcheckLanguages": null,
@@ -14,5 +14,6 @@
   "vimMode": false,
   "rightToLeft": false,
   "showInlineTitle": true,
-  "strictLineBreaks": false
+  "strictLineBreaks": false,
+  "focusNewTab": false
 }

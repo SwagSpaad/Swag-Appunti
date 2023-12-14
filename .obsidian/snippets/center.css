@@ -4,3 +4,8 @@ img[alt*="center"] {
     margin-right: auto;
 }
 
+.HyperMD-codeblock.HyperMD-codeblock-bg.cm-line {
+    width: 1000px;
+    max-width: 1000px !important
+}
+

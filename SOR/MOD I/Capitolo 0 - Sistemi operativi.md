@@ -1,8 +1,0 @@
-# Sommario
----
-- **[[Lezione 1 - Introduzione sui sistemi operativi|Lezione 1]]** - Introduzione al corso. Introduzione sui sistemi operativi. Struttura della memoria. Struttura di I/O.
-- **[[Lezione 2 - Tipologie di sistemi|Lezione 2]]** - Sistemi a singolo processore. Sistemi multiprocessore. Cluster. Struttura del sistema operativo. Sistemi operativi batch multiprogrammati. Sistemi operativi time sharing. Sistemi in tempo reale. Sistemi embedded real-time. Sistemi operativi per personal computer.
-- **[[Lezione 3 - Operazioni del sistema operativo|Lezione 3]]** - Operazioni del sistema operativo. Timer. Ambienti di elaborazione. Computing tradizionale e mobile. Sistemi paralleli e distribuiti. Struttura e organizzazione software dei sistemi operativi. Struttura monolitica. Struttura stratificata. Struttura a microkernel. Struttura modulare. Struttura ibrida.
-- **[[Lezione 4 - Gestione dei processi|Lezione 4]]** - Principali componenti del sistema operativo. Gestione dei processi. Concetto di processo. Stati di un processo. Transizioni di stato di un processo. Descrittore del processo (PCB). Code di processi. Scheduler. Cambio di contesto.
-- **[[Lezione 5 - Operazione sui processi|Lezione 5]]** - Operazioni sui processi. Creazione e terminazione dei processi.  Creazione dei processi in POSIX. `fork()`. Famiglia di funzioni `exec()`. Terminazione di processi. Le funzioni `exit()`, `wait()` e `waitpid()`. 
-- **[[Lezione 6 - Comunicazione tra processi|Lezione 6]]** - Comunicazione tra processi. Memoria condivisa. Modello produttore-consumatore. Esempio di comunicazioni tra processi non sincronizzati. Memoria condivisa in POSIX.  Esempi applicativi.
