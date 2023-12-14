@@ -243,3 +243,25 @@ Se un thread causa un errore di pagina, il kernel verifica la disponibilità di 
 
 Vari metodi per combinare i vantaggi dei thread utente con i thread del kernel. Una possibilità è usare i thread del kernel e fare il multiplexing dei thread utente su alcuni thread del kernel. Con questo approccio, il programmatore decide quanti thread del kernel usare e quanti thread utente multiplexare. Nell'implementazione ibrida, il kernel è a conoscenza solo dei thread del kernel, ma ogni thread del kernel può gestire più thread a livello utente. 
 
+# Comunicazione fra processi
+I processi necessitano di comunicare tra loro, basta pensare che in una pipeline di shell, l'output del primo processo deve essere passato al secondo e così via. Quindi la necessità è quella che i processi comunichino senza bisogno degli interrupt. Nei paragrafi esamineremo i problemi relativi alla *comunicazione tra processi* o **IPC** (**InterProcess Communication**). In breve i problemi da affrontare sono tre: 
+- come un processo possa passare informazioni ad un altro
+- essere sicuri che due o più processi non vadano ad accavallarsi
+- corretta sequenzialità quando vi sono delle dipendenze (il processo A produce dati che il processo B deve stampare, B deve attendere che A abbia prodotto i dati prima di stampare)
+
+## Race conditions
+In alcuni sistemi operativi i processi che stanno lavorando insieme possono condividere una memoria comune che ciascuno può leggere e scrivere e che si trova in memoria principale o in un file condiviso (la posizione *non* modifica la natura della comunicazione o i relativi problemi). 
+
+>**Esempio**
+>Consideriamo uno spool di stampa. Quando un processo vuole stampare un file, inserisce il suo nome in una **directory di spool**. Il **demone di stampa** verifica se ci sia qualche file da stampare, che in caso stampa rimuovendo il loro nome dalla directory. Immaginiamo che la directory abbia $n$ posti ognuno in grado di contenere il nome di un file e abbia anche due variabili condivise: `out` che punta al file successivo da stampare e `in` che punta al primo posto libero nella directory. 
+>A un certo istante i posti 0 e 3 sono vuoti (i file sono stati già stampati) mentre i posti 4 e 6 sono pieni. Supponiamo che simultaneamente i processi A e B decidano di voler accodare un file per stamparlo. Cosa succede? 
+>Il processo A legge `in` e memorizza il valore 7 in una variabile locale chiamata `next_free_slot`. Subito dopo avviene un interrupt del clock e la CPU decide che il processo A è stato eseguito abbastanza, passando al processo B, che legge `in`, memorizzando anch'esso il valore 7. A questo punto entrambi i processi ritengono che il primo slot disponibile sia 7. Il processo B continua ad essere eseguito, salvando il nome del file da stampare nello slot 7. All'esecuzione del processo A, esso legge `next_free_slot = 7` scrivendo il nome del file da stampare al suo interno e aggiornando `in`. La directory di spool ora è coerente al suo interno, ma il processo B è in attesa di un output che non sarà mai emesso, dato che il suo file è stato cancellato dal processo A.
+
+Situazioni del genere, in cui due o più processi stanno leggendo o scrivendo gli stessi dati e il risultato finale dipende da chi viene scelto per l'esecuzione, sono chiamate **race condition**. Vediamo ora come evitarle.
+
+### Regioni critiche
+L'idea è quella di proibire agli altri processi di leggere e scrivere dati condivisi in uso da un processo in quel momento. Un processo, durante la sua esecuzione, è impegnato in calcoli interni ed attività che non portano a race condition, ma al momento in cui deve accedere in memoria o a file condivisi possono verificarsi le race condition. La parte di programma in cui si accede alla memoria condivisa è chiamata **regione critica**. Per evitare le race condition servono quattro condizioni: 
+- Due processi non possono trovarsi contemporaneamente all'interno delle rispettive regioni critiche.
+- Non si possono fare ipotesi sulla velocità o sul numero di CPU.
+-  Nessun processo in esecuzione al di fuori della propria regione critica può bloccare altri processi.
+- Nessun processo deve aspettare all'infinito per entrare nella propria regione critica.
