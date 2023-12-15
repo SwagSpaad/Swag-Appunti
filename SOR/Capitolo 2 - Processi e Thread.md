@@ -265,3 +265,90 @@ L'idea è quella di proibire agli altri processi di leggere e scrivere dati cond
 - Non si possono fare ipotesi sulla velocità o sul numero di CPU.
 -  Nessun processo in esecuzione al di fuori della propria regione critica può bloccare altri processi.
 - Nessun processo deve aspettare all'infinito per entrare nella propria regione critica.
+
+Il comportamento che si vorrebbe ottenere è illustrato in figura.
+
+![[SOR/img/img32.png|center|700]]
+
+**Non** sono soluzioni alla race condition:
+- Disibilitare gli interrupt: impedisce che la CPU venga riallocata, ma funziona solo per sistemi a CPU singola
+- Bloccare le variabili: proteggere le regioni critiche con variabili 0/1. Le "corse" si verificano ora sulle variabili di blocco
+#### Esclusione con busy waiting
+Una terza (non) soluzione è quella mostrata nei due codici in figura 
+
+![[SOR/img/img33.png|center|700]]
+
+L'azione di testare continuamente una variabile finché non assume un valore si chiama *busy waiting*, che andrebbe generalmente evitato perché consuma CPU. Ha senso utilizzare il busy waiting quando ci si aspetta che il tempo di attesa sia breve. Con questa soluzione un processo fuori dalla regione critica può effettivamente bloccare un altro processo, andando contro al terzo punto delle condizioni per evitare le race condition. 
+
+##### Soluzione di Peterson
+Alice e Bob vogliono usare *un'unica postazione computer* in un ufficio, ma ci sono delle regole: 
+- solo una persona per volta può utilizzare il computer
+- se entrambi vogliono usarlo contemporaneamente, devono decidere chi va per primo 
+
+```C
+#define N 2     /*numero di processi*/
+int turn;       /*a chi tocca?*/
+int interested[N]; /*tutti i valori inizialmente a 0*/
+
+void enter_region(int process); /*process è 0 o 1*/
+{
+	int other;  /*numero dell'altro processo*/
+	other = 1 - process;  /*l'opposto del processo*/
+	interested[process] = TRUE;  /*mostra che si è interessati*/
+	turn = process; /*imposta il flag*/
+	while(turn == process && interested[other] == TRUE); 
+}
+
+void leave_region(int process);  /*process: chi esce*/
+{
+	interested[process] = FALSE; /*indica l'uscita dalla regione critica*/
+}
+
+```
+
+**Idea** dell'algoritmo:
+- Alice e Bob devono segnalare il loro interesse a usare il computer
+- Se l'altro non è interessato, la persona interessata può usarlo subito
+- Se entrambi mostrano interesse, registrano il loro nome su un foglio. Ma se scrivono allo stesso tempo, l'ultimo nome sul foglio ha la precedenza
+- La persona che non ha la precedenza aspetta finché l'altra ha finito
+- Una volta finito, la persona che ha usato il computer segnala che ha finito e l'altra può iniziare
+
+#### Mutua esclusione nella CPU
+Come è realizzata la mutua esclusione nella CPU? È possibile utilizzare due istruzioni in assembly: 
+- TSL (Test and Set Lock): Legge il contenuto della parola della memoria "`lock`", salva al suo interno un valore non zero e blocca l'accesso alla memoria per le altre CPU.
+- XCHG: scambia i contenuti di due posizione atomicamente. Istruzione utilizzata in tutte le CPU x86 Intel per sincronizzazione di basso livello.
+
+**TLS**
+Vediamo come funziona brevemente l'istruzione `TLS`. Essa utilizza una variabile condivisa, detta `lock`. 
+Quando `lock` è a 0:
+- Un processo può impostare `lock` a 1 con l'istruzione `TLS` e accedere alla memoria condivisa.
+- Al termine il processo resetta `lock` a 0.
+Vediamo come può essere utilizzata l'istruzione per impedire l'accesso contemporaneo alla regione critica nel pezzo di codice sottostante.
+
+```Assembly
+enter_region:
+	TSL REGISTER, LOCK | copia il lock in register e lo imposta a 1
+	CMP REGISTER, #0   | il lock era a zero?
+	JNE enter_region   | se non era zero, il lock era impostato. Riesegui il ciclo
+	RET                | torna al chiamante; siamo nella regione critica
+
+leave_region:
+	MOVE LOCK, #0      | memorizza 0 in lock
+	RET                | torna al chiamante
+``` 
+
+Prima di entrare nella regione critica, un processo chiama `enter_region`, che va in busy waiting  finché il `lock` non è libero. Per uscire dalla regione critica chiama `leave_region` che salva 0 nella variabile `lock`. Come tutte le soluzioni basate sulle regioni critiche, i processi devono chiamare `enter_region` e `leave_region` al momento giusto perché il metodo funzioni
+
+**XCHG**
+```Assembly
+enter_region:
+	MOVE REGISTER, #1   | mette 1 nel registro
+	XCHG REGISTER, LOCK | scambia il contenuto di register e di lock
+	CMP REGISTER, #0    | il lock era zero?
+	JNE enter_region    | se non era zero, il lock era impostato. Riesegui il ciclo
+	RET                 | torna al chiamante; siamo nella regione critica
+
+leave_region:
+	MOVE LOCK, #0      | memorizza 0 in lock
+	RET                | torna al chiamante
+```
