@@ -352,3 +352,99 @@ leave_region:
 	MOVE LOCK, #0      | memorizza 0 in lock
 	RET                | torna al chiamante
 ```
+
+Le soluzioni viste ora sono corrette, ma entrambe hanno bisogno del busy waiting. Quello che fanno queste soluzioni, sostanzialmente, è questo: quando un processo vuole entrare nella sua regione critica, controlla se l'ingresso è consentito; in caso contrario il processo si pone in attesa in un ciclo corto finché non è consentito l'accesso.
+Questi approcci, però, consentono ad un processo di tenere occupata la CPU, sprecando il tempo della CPU e quindi le risorse. La soluzione è quella di lasciare che un processo in attesa di entrare nella regione critica restituisca volontariamente la CPU allo scheduler. 
+Questa soluzione è realizzata mediante l'uso di `sleep` e `wakeup`. La prima è una chiamata di sistema che provoca il blocco del chiamante, mentre la seconda ha un parametro, ovvero il processo che va risvegliato. 
+
+![[SOR/img/img34.png|center|700]]
+
+#### Problema produttore-consumatore
+In questo problema, due processi condividono un buffer di dimensione fissa. Il produttore mette informazioni nel buffer, mentre il consumatore le preleva. Il problema sorge quando il produttore vuole inserire degli elementi nel buffer quando questo è pieno. La soluzione del produttore è quella di entrare in sleep, per essere risvegliato dal consumatore quando ha rimosso uno o più elementi. Analogamente, il consumatore dorme se il buffer è vuoto e viene risvegliato quando il produttore ha inserito qualcosa. 
+
+Per tener traccia del numero di elementi nel buffer ci sarà bisogno di una variabile, `count`. Se il numero massimo di elementi nel buffer è $N$, il codice del produttore controllerà prima se `count` è uguale ad $N$. Se lo è si mette in sleep, altrimenti aggiunge elementi aggiornando `count`. Il codice del consumatore è simile: prima controlla se `count` è $0$; se lo è entra in sleep, altrimenti rimuove elementi e decrementa `count`. 
+
+```C
+#define N 100
+int count = 0;
+
+void producer(void){
+	int item;
+
+	while(TRUE){
+		item = produce_item();
+		if(count == N) 
+			sleep();
+		insert_item(item);
+		count++;
+		if(count == 1)
+			wakeup(consumer);
+	}
+}
+
+void consumer(void){
+	int item;
+
+	while(TRUE){
+	if(count == 0)
+		sleep();
+	item = remove_item();
+	count--;
+	if(count == N-1)
+		wakeup(consumer);
+	consume_item(item);
+	}
+}
+```
+
+In questo codice possono accadere la *race condition*, perché l'accesso a `count` non è vincolato. Pensiamo a questa situazione: il buffer è vuoto e il consumatore ha verificato se `count` è  a $0$. In quel momento lo scheduler decide di fermare temporaneamente l'esecuzione del consumatore ed eseguire il produttore, che inserisce un elemento nel buffer, incrementando `count` ad $1$. Siccome prima `count` era a $0$ e quindi il consumatore dovrebbe essere in sleep, il produttore chiama `wakeup`, ma il consumatore, non essendo logicamente in `sleep` (il blocco dell'esecuzione è avvenuto tra l'if e la sleep nel consumatore), il segnale di risveglio viene perso. Quando il consumatore sarà eseguito la volta successiva, controllerà il valore di `count` che aveva letto in precedenza, troverà $0$ ed entra in `sleep`. In seguito il produttore riempirà il buffer, andando poi in sleep ed entrambi i processi si trovano addormentati. 
+Il problema sta nel caso che un `wakeup` inviato ad un processo non ancora dormiente, viene perso. 
+Per risolvere questo problema basta aggiungere un **bit di attesa wakeup**: quando ad un processo non ancora dormiente è inviato un `wakeup`, viene impostato il bit di attesa. Più tardi, quando il processo tenta di entrare in `sleep`, se il bit di attesa è accesso, lo spegne, ma il processo rimane sveglio. 
+
+#### Semafori
+Dijkstra suggerì di contare il numero di wakeup per uso futuro, tramite una variabile intera, introducendo un nuovo tipo di variabile, detto **semaforo**. Questa variabile può assumere valore $0$, indica che non sono stati salvati wakeup, o un valore positivo se uno o più wakeup sono in attesa. Le operazioni possibili sono due `up` e `down`:
+- `down`: se il valore del semaforo è maggiore di zero, questo valore viene decrementato e il processo continua la sua esecuzione. Se il valore del semaforo è zero, il processo che ha invocato `down` viene messo in sleep senza completare il down.
+- `up`: incrementa il valore del semaforo. Se il valore è zero, ci sono dei processi in coda d'attesa incapaci di completare il down; uno di loro è scelto dal sistema, viene risvegliato e completa il suo down. In questo modo, dopo un `up` su un semaforo a $0$, il semaforo rimarrà sempre a $0$, ma ci sarà un processo in meno in stato di sleep. 
+Le azioni di un semaforo come il controllo del valore, l'incremento/decremento e andare in stato di sleep sono **azioni atomiche indivisibili**. È garantito, quindi, che una volta che l'operazione sul semaforo è avviata, nessun altro processo può accedere al semaforo finché l'operazione non è completata o bloccata. Questo è essenziale per risolvere i problemi di sincronizzazione ed evitare race condition. 
+
+Vediamo ora come risolvere il problema del produttore-consumatore utilizzando i semafori. 
+
+```C
+#define N 100
+typedef int semaphore;
+semaphore mutex = 1;    /*controlla l'accesso alla regione critica*/
+semaphore empty = N;    /*conta i posti vuoti nel buffer*/
+semaphore full = 0;     /*conta i posti pieni nel buffer*/
+
+void producer(void){
+	int item;
+
+	while(TRUE){
+		item = produce_item();  /*genera un item da mettere nel buffer*/
+		down(&empty);           /*decrementa empty*/
+		down(&mutex);           /*entra nella regione critica*/
+		insert_item(item);
+		up(&mutex);             /*lascia la regione critica*/
+		up(&full);              /*incrementa il contatore dei posti pieni*/
+	}
+}
+
+void consumer(void){
+	int item;
+	
+	while(TRUE){
+		down(&full);             /*decrementa il contatore dei posti pieni*/
+		down(&mutex);            /*entra nella regione critica*/
+		item = remove_item();
+		up(&mutex);              /*esce dalla regione critica*/
+		up(&empty);              /*incrementa il contatore dei posti vuoti*/
+		consume_item(item);
+	}
+}
+```
+
+#### Mutex
+I **mutex** sono una versione semplificata dei semafori, utili per gestire la mutua esclusione di risorse o codice condiviso, quando non bisogna contare accessi o altri fenomeni. 
+Un mutex è una variabile che si può trovare in due stati: *locked* o *unlocked*. Un bit basta per rappresentare i due stati, ma viene usato un intero, $0$ per unlocked, 1 per locked. Le procedure per un mutex sono due: `mutex_lock` e `mutex_unlock`. 
+Quando un thread vuole accedere ad una regione critica, chiama `mutex_lock`; se il mutex è unlocked, il thread può entrare; se è locked, il thread attende. 
+Al termine dell'accesso il thread chiama `mutex_unlock`, per liberare la risorsa. 
