@@ -1,3 +1,4 @@
+****
 # Processi
 In questo capitolo iniziamo uno studio dettagliato di come sono progettati e costruiti i sistemi operativi. Il concetto fondamentale di ogni SO è quello di *processo*, un'astrazione di un programma in esecuzione. All'avvio del computer vengono fatti partire in modo non evidente molti processi, come un processo per il controllo delle mail in arrivo, un altro per il controllo dei virus e così via. Tutte queste attività devono essere gestite ed un sistema multiprogrammato risulta molto pratico. 
 In ogni sistema multiprogrammato la CPU passa da processo a processo rapidamente, eseguendone ognuno per decine o centinaia di millisecondi. Mentre la CPU esegue un solo processo per volta, nel corso di 1 secondo può lavorare su parecchi processi, dando l'illusione di parallelismo. 
