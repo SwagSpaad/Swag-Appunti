@@ -447,4 +447,204 @@ void consumer(void){
 I **mutex** sono una versione semplificata dei semafori, utili per gestire la mutua esclusione di risorse o codice condiviso, quando non bisogna contare accessi o altri fenomeni. 
 Un mutex è una variabile che si può trovare in due stati: *locked* o *unlocked*. Un bit basta per rappresentare i due stati, ma viene usato un intero, $0$ per unlocked, 1 per locked. Le procedure per un mutex sono due: `mutex_lock` e `mutex_unlock`. 
 Quando un thread vuole accedere ad una regione critica, chiama `mutex_lock`; se il mutex è unlocked, il thread può entrare; se è locked, il thread attende. 
-Al termine dell'accesso il thread chiama `mutex_unlock`, per liberare la risorsa. 
+Al termine dell'accesso il thread chiama `mutex_unlock`, per liberare la risorsa. Il codice di `mutex_lock` è simile al codice di [[#Mutua esclusione nella CPU|enter_region]], con la differenza che quando `enter_region` non riesce ad entrare nella regione critica, continua a testare il lock (busy waiting). Quando, invece, un thread non può acquisire il lock nel `mutex_lock` chiama `thread_yield` per cedere la CPU ad un altro thread, chiamando lo scheduler di un thread nello spazio utente.
+
+Vediamo come il codice di `mutex_lock` e `mutex_unlock` sono simili ad `enter_region` e `leave_region`.
+
+```Assembly
+mutex_lock:
+	TSL REGISTER, MUTEX   | copia mutex nel registro e lo imposta ad 1
+	CMP REGISTER, #0      | mutex era zero?
+	JZE ok                | se era zero il mutex era unlock, salta ad ok
+	CALL thread_yield     | il mutex è occupato; schedula un altro thread
+	JMP mutex_lock        | prova di nuovo
+ok: RET                   | ritorna al chiamante; siamo nella regione critica
+
+mutex_unlock:
+	MOVE MUTEX, #0        | metti 0 in mutex 
+	RET                   | torna al chiamante
+```
+
+Alcuni pacchetti di thread offrono la chiamata `mutex_trylock`, che o acquisisce il lock oppure restituisce un errore, senza bloccare. 
+
+#### Futex
+L'efficienza nella sincronizzazione diventa cruciale con l'aumento del parallelismo, perché spin lock, mutex e busy waiting sono efficaci per attese brevi, ma nelle attese lunghe sprecano CPU. Passare al kernel per bloccare processi funziona bene solo in caso di contese frequenti, mentre se ci sono poche contese è troppo oneroso.
+Una soluzione che cerca di mettere insieme entrambi gli approcci è quella dei **futex (fast user space mutex)**, una caratteristica tipica di Linux per implementare lock basici (simili al mutex) evitando il kernel finché non è necessario, *migliorando quindi le prestazioni*. 
+Un futex è costituito di due parti: 
+- un *servizio kernel*: fornisce una "coda d'attesa" che consente a più processi di attendere un lock. I processi non sono in esecuzione a meno che il kernel non li sblocchi. Inserire un processo in coda d'attesa richiede una chiamata di sistema onerosa, è quindi opportuno evitarlo. 
+- una *libreria utente*
+In assenza di contese il futex opera nello spazio utente: i processi condividono una variabile lock comune. Supponiamo che, inizialmente, il lock abbia valore $1$, ovvero libero. Un thread si appropria del lock eseguendo un istruzione "decrement and test". Il thread verifica i risultati per controllare se il lock era libero o no, se non era locked, il thread se ne appropria, mentre se c'è contesa, passa al kernel per mettesi in coda d'attesa. Il costo del passaggio al kernel è giustificato dal fatto che il thread sarebbe stato comunque bloccato. 
+Quando un thread ha terminato di utilizzare il lock, lo rilascia con un istruzione "increment and test" e verifica il risultato per vedere se ci sono thread nella lista d'attesa e nel caso fa sapere al kernel di sbloccarne uno; in assenza di contese, il kernel non viene chiamato in causa. 
+
+La libreria Pthreads fornisce delle funzioni per la sincronizzazione dei thread. Il meccanismo base impiega una variabile mutex, locked o unlocked, a guardia della regione critica. Un thread che desidera accedere alla regione critica, prova a mettere in lock il mutex. Se il mutex è unlocked, l'accesso è immediato e viene impostato il lock, se invece è locked il thread attende. 
+
+| Thread call              | Descrizione                                               | 
+| ------------------------ | --------------------------------------------------------- |
+| `pthread_mutex_init`     | Crea un mutex                                             |
+| `pthread_mutex_destroy`  | Distrugge un mutex esistente                              |
+| `pthread_mutex_lock`     | Acquisisce un lock e si blocca                            |
+| `pthread_mutex_trylock`  | Acquisisce un lock o fallisce                             |
+| `pthread_mutex_unlock`   | Rilascia un lock                                          |
+| `pthread_cond_init`      | Crea una variabile condizione                             |
+| `pthread_cond_destroy`   | Elimina una variabile condizione                          |
+| `pthread_cond_wait`      | Si blocca in attesa di un segnale                         |
+| `pthread_cond_signal`    | Invia un segnale ad un altro thread e lo risveglia        |
+| `pthread_cond_broadcast` | Invia un segnale a molteplici thread e li risveglia tutti |
+
+**Semafori o mutex**
+- Finalità:
+	- **Mutex**: È utilizzato principalmente per *garantire la mutua esclusione*. È destinato a proteggere l'accesso a una risorsa condivisa, garantendo che un solo thread possa accedervi per volta
+	- **Semaforo**: Può essere utilizzato per *controllare l'accesso a una risorsa condivisa*, ma è anche spesso usato per la sincronizzazione tra thread
+- Semantica:
+	- **Mutex**: di solito ha una semantica di "proprietà", il che significa che solo il thread che ha aquisito il mutex può rilasciarlo
+	- **Semaforo**: Non ha una semantica di proprietà. Qualsiasi thread può aumentare o diminuire il conteggio del semaforo, indipendentemente da chi lo ha modificato l'ultima volta
+- Casistica:
+	- Per *l'esclusione mutua*: Un **mutex** è generalmente preferibile. È più semplice (ha solo operazioni di lock/unlock) e spesso offre una semantica più rigorosa e un comportamento più prevedibile
+	- Per la *sincronizzazione tra thread*: Un **semaforo** può essere più adatto, specialmente quando si tratta di coordinare tra diversi thread o di gestire risorse con un numero limitato di istanze disponibili
+
+#### Monitor
+La comunicazione tra processi utilizzando *mutex e semafori non è semplice*, perché programmare con i semafori richiede molta attenzione: piccoli errori possono causare comportamenti indesiderati come race conditions e deadlock. 
+Per semplificare la scrittura di programmi corretti, Hansen e Hoare proposero una primitiva di sincronizzazione ad alto livello, detta **monitor**. 
+Un monitor raggruppa procedure, variabili e strutture dati. I processi possono chiamare le procedure di un monitor, ma non possono accedere direttamente alle sue strutture dati interne. I monitor hanno una proprietà che li rende utili per ottenere la *mutua esclusione*, ovvero solo un processo può essere attivo in un monitor in un dato momento. Il *compilatore si occupa di gestire la mutua esclusione*, riducendo la probabilità di errori da parte del programmatore, che non deve conoscere come il compilatore realizza la mutua esclusione.
+Sebbene i monitor forniscano un modo semplice per ottenere la mutua esclusione, abbiamo anche bisogno di un modo per bloccare i processi quando non possono andare avanti. La soluzione sta nell'introduzione delle **variabili di condizione** e delle **operazioni su di esse**, `wait` e `signal`. 
+Quando una procedura di un monitor scopre che non può continuare (ad esempio il produttore trova il buffer pieno), effettua una `wait` su qualche variabile di condizione, bloccandosi e consentendo l'accesso al monitor ad un processo che era stato bloccato in precedenza. A differenza dei semafori, le variabili condizionali non accumulano segnali, quindi se un segnale viene inviato e non c'è un processo in attesa, il segnale viene perso. 
+Linguaggi come Java supportano i monitor, permettendo una sincronizzazione e mutua esclusione più sicura e semplice in contesti multithreading. In Java, i metodi dichiarati con la parola chiave `synchronized`, garantiscono che una volta che un qualunque thread ha iniziato a eseguire quel metodo, non sarà consentito a un altro thread di iniziare ad eseguire alcun altro metodo `synchronized` di quell'oggetto.
+
+Nel seguente blocco vediamo un esempio di monitor.
+```
+monitor example
+	integer i;
+	condition c;
+	
+	procedure producer();
+	.
+	.
+	.
+	end;
+	
+	procedure consumer();
+	.
+	.
+	.
+	end;
+```
+
+```C
+monitor ProdCons{
+	condition full, empty;
+	int count = 0;
+	void enter(int item){
+		if (count == N) 
+			wait(full);
+		insert_item(item);
+		count++;
+		if (count == 1)
+			signal(empty);
+	}
+	void remove(int *item){
+		if (count == 0)
+			wait(empty);
+		*item = remove_item();
+		count--;
+		if (count == N-1)
+			signal(full);
+	}
+}
+
+void producer(){
+	int item;
+	while(TRUE){
+		item = produce_item();
+		ProdCons.enter(item);
+	}
+}
+
+void consumer(){
+	int item;
+	while(TRUE){
+		ProdCons.remove(&item);
+		consume_item(item); 
+	}
+}
+```
+
+**Differenza tra sleep/wakeup e wait/signal
+
+- *Sleep/wakeup*: è1 un meccanismo primitivo per mettere un processo/thread in attesa (sleep) e poi risvegliarlo (wakeup).
+	- Problema: possono portare a race conditions.
+		- Immagina che il figlio A voglia svegliare il figlio B. Se il processo A chiama `wakeup` per il processo B proprio mentre B sta chiamando `sleep`, potrebbe accadere che B dorma indeterminatamente perché ha perso il segnale di wakeup.
+- *Wait/signal*: **la differenza cruciale** sta nel fatto che wait e signal sono protetti dalla mutua esclusione nei monitor, infatti una volta che un processo/thread entra in una procedura del monitor, ha l'esclusività completa di quella procedura fin quando non termina o chiama `wait`.
+- Se un thread/processo chiama wait all'interno del monitor, può essere certo che non verrà interrotto (per esempio dallo scheduler) finché non ha terminato di posizionarsi in uno stato di attesa; questo elimina la possibilità di perdere il segnale come per sleep e wakeup.
+
+#### Scambio di messaggi
+Lo **scambio di messaggi** è un metodo di comunicazione tra processi che usa due primitive: `send` e `receive`, che come i [[#Semafori|semafori]] e diversamente dai [[#Monitor|monitor]] sono chiamate di sistema piuttosto che costrutti del linguaggio. 
+I sistemi a scambio di messaggio presentano problematiche e questioni di progettazioni assenti invece nei semafori e nei monitor, soprattutto se i processi comunicanti sono su macchine differenti connessi da una rete. 
+Questi problemi sono:
+- la perdita di messaggi
+- la necessità di acknowledgment per confermare la ricezione del messaggio
+- la gestione dei messagig duplicati
+- l'autenticazione e la denominazione dei processi
+Malgrado l'inaffidabilità, lo scambio di messaggi è cruciale nello studio delle reti.
+
+Vediamo ora come il problema produttore-consumatore può essere risolto con lo scambio di messaggi e senza memoria condivisa. 
+
+```C
+#define N 100 /*numero di posti nel buffer*/
+
+void producer(){
+	int item;
+	message msg;
+
+	while(TRUE){
+		item = produce_item();  /*genera qualcosa da mettere nel buffer*/
+		receive(consumer, &msg); /*aspetta che ne arrivi uno vuoto*/
+		build_message(&msg, item); /*costruisci un messaggio da spedire*/
+		send(consumer, &msg); /*manda il messaggio al consumatore*/
+	}
+} 
+
+void consumer(){
+	int item, i;
+	message msg;
+
+	for(i = 0, i < N, i++){
+		send(producer, &msg); /*invia N messaggi vuoti*/
+	}
+	while(TRUE){
+		receive(producer, &msg); /*prende un messaggio che contiene un elemento*/
+		item = extract_item(); /*estrae l'elemento dal messaggio*/
+		send(producer, &msg);  /*ne manda indietro uno vuoto*/
+		consume_item(item); /*fa qualcosa con l'elemento*/
+	}
+}
+```
+
+Nella soluzione sono utilizzati $N$ messaggi, analoghi agli $N$ posti disponibili del buffer nella memoria condivisa. Il consumatore invia al produttore $N$ messaggi vuoti, mentre il produttore, una volta ricevuto un messaggio vuoto, lo riempie e lo invia indietro al consumatore. Se il produttore lavora più velocemente del consumatore, tutti i messaggi finiranno per essere pieni, in attesa del consumatore; in questo caso il produttore si bloccherà in attesa che ritorni un messaggio vuoto. Il discorso è analogo se il consumatore lavorasse più velocemente del produttore. 
+
+Vediamo ora come vengono indirizzati i messaggi: 
+- indirizzo univoco per ogni processo
+- introduzione di **mailbox**, una nuova struttura dati utilizzata come buffer. Le chiamate di `send` e `receive` fanno riferimento alla mailbox e non ai processi. Quando un processo prova ad inviare un messaggio ad una mailbox piena, è sospeso finché un messaggio è rimosso dalla mailbox.
+
+#### Barriere
+Le barriere sono un meccanismo di sincronizzazione pensato per gruppi di processi piuttosto che per situazioni come il problema del produttore-consumatore. Alcune applicazioni sono suddivise in fasi ed hanno la regola che nessun processo può avanzare alla fase successiva finché tutti i processi non sono pronti a passare alla fase successiva. Le barriere sono d'aiuto proprio in queste circostanze. Quando un processo raggiunge una barriera, si mette in attesa finché tutti gli altri processi non l'abbiano raggiunta. 
+
+![[SOR/img/img35.png|center|600]]
+
+>**Esempio**
+>Un esempio di applicazione sta in un problema di rilassamento di ingegneria o fisica. Supponiamo di avere una matrice contenente dei valori iniziali, che possono rappresentare temperature in vari punti su un foglio di metallo. L'idea potrebbe essere di calcolare quanto occorre per l'effetto di propagazione nel foglio di una fiamma in un angolo. Partendo dai valori attuali, alla matrice è applicata una trasformazione per ottenerne una seconda versione, per esempio applicando le leggi della termodinamica per vedere le temperature ad un intervallo deltaT successivo. Il processo è ripetuto più volte, riportando le temperature nei punti di test come funzione del tempo mentre il foglio si scalda. 
+>Supponiamo che questa matrice sia molto grande, ad esempio 1 milione per un milione, processi differenti lavorano su parti diverse della matrice, calcolando i nuovi elementi della matrice. Nessun processo può avanzare ad un iterazione successiva $n+1$, finché tutti i processi non hanno completato l'iterazione $n$. Per risolvere questo problema si attua l'utilizzo delle barriere.
+
+#### Ready-copy-update
+I migliori lock sono quelli che non si usano e la domanda è se è possibile permettere accessi in lettura e scrittura concorrenti a strutture dati condivise senza l'utilizzo di lock. La risposta (a primo impatto) è no. Supponiamo due processi A e B in cui A ordina un'array di numeri e B ne calcola la media. Poiché A sposta avanti e indietro i valori nell'array, B potrebbe trovare più volte gli stessi valori e calcolare quindi una media errata. Il principio base di **ready-copy-update** sta nel consentire letture simultanee leggendo una verisone vecchia o nuova della struttura, ma mai un mix delle due. 
+
+I processi in lettura attraversano l'albero dalla radice alle foglie. In foto sotto viene aggiunto un nodo X appena prima di renderlo visibile sull'albero, inizializzando tutti i valori nel nodo X compresi i puntatori ai figli. Con un'operazione unica e atomica si fa in modo che X diventi figlio di A. Tutti i processi stanno ora leggendo la versione nuova della struttura.
+
+![[SOR/img/img36.png|center|700]]
+
+In figura vengono eliminati B e D. Per primo si fa in modo che il puntatore al figlio sinistro di A punti a C: tutti i processi in lettura che si trovano in A continuano con il nodo C senza mai vedere né B né D, quindi vedono solamente la nuova versione. Tutti i processi in lettura sul nodo B e D vedono invece la versione vecchia.
+
+![[SOR/img/img37.png|center|700]]
+
+
+L'unico problema sta nel sapere quando liberare B e D, per questo bisogna rimanere in attesa finché l'ultimo processo in lettura non abbia liberato B e D. L'operazione **RCU** determina il tempo massimo per un processo in lettura per trattenere un riferimento, dopo questo periodo, può richiedere la memoria in tutta sicurezza. I processi in lettura accedono alla struttura dati in una **sezione critica read-side**, che può contenere qualsiasi codice, purché non si blocchi o vada in sleep, in questo modo possiamo conoscere quanto tempo al massimo occorre rimanere in attesa. 
+Si definisce **grace period** il tempo in cui ogni thread esce almeno una volta dalla sezione critica. Il tutto funziona perfettamente se si attende un periodo pari almeno al grace period, prima di liberare la memoria. 
