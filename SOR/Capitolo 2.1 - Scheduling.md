@@ -113,7 +113,7 @@ In un computer militare i processi avviati dal generale potrebbero iniziare a pr
 
 Spesso è conveniente raggrupare i processi in *classi di priorità* e usare lo scheduling a priorità fra le classi, ma all'interno di ciascuna classe utilizzare lo [[#Round-robin scheduling|scheduling round-robin]]. 
 
-![[img41.png|center|700]]
+![[SOR/img/img41.png|center|700]]
 
 In figura è rappresentato un sistema con 4 classi di priorità, finché ci sono processi nella classe di priorità 4 (la più alta), viene eseguito ciascun processo della classe per un quanto di tempo in stile round-robin, ignorando i processi delle altre classi di priorità. Quando la classe di priorità 4 è vuota, si passa alla classe 3 eseguendo i processi in round-robin e così via. È importante rivedere periodicamente le priorità per evitare che i processi a bassa priorità non vengono mai eseguiti.
 ## Shortest process next
@@ -179,7 +179,7 @@ Consideriamo per primo i thread a livello utente. Siccome il kernel non è a con
 >Consideriamo il caso che i thread di $A$ abbiano un burst di CPU da 5ms su 50ms di quanto. Di conseguenza ognuno lavora per un breve istante per poi cedere la CPU allo scheduler dei thread. 
 >La possibile sequenza di esecuzione potrebbe essere: $A1,A2,A3,A1,A2\dots$ 
 
-![[img42.png|center|500]]
+![[SOR/img/img42.png|center|500]]
 
 ### Thread a livello kernel
 In questo caso il kernel preleva un particolare thread da eseguire, senza tener conto del processo a cui appartiene. Al thread viene assegnato un quanto, che se eccede viene sospeso forzatamente. 
@@ -187,7 +187,7 @@ In questo caso il kernel preleva un particolare thread da eseguire, senza tener 
 >**Esempio (in figura)**
 >Con un quanto di 50ms, ma con i thread che si bloccano dopo 5ms, l'ordine di esecuzione dei thread potrebbe essere $A1,B1,A2,B2,A3,B3$, cosa che era impossibile con i thread utente
 
-![[img43.png|center|500]]
+![[SOR/img/img43.png|center|500]]
 
 ## Differenza tra thread a livello utente e kernel
 La principale differenza tra i thread utente e kernel sta nelle prestazioni: effettuare uno scambio di thread utente richiede una manciata di istruzioni macchina, mentre con i thread a livello kernel occorre fare uno *scambio completo di contesto*, che è più lento. D'altra parte, con i thread a livello kernel, un thread bloccato in attesa di I/O non sospende l'intero processo, come invece avviene con i thread utente.
