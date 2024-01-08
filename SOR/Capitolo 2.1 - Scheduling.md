@@ -11,7 +11,7 @@ La situazione è diversa se consideriamo i server in rete, in cui la CPU spesso 
 ## Comportamento dei processi
 Quasi tutti i processi alternano fasi di elaborazione CPU a richieste di I/O. 
 
-![[img38.png|center|700]]
+![[SOR/img/img38.png|center|700]]
 
 Alcuni processi spendono la loro maggior parte del loro tempo in elaborazione, con attese di I/O non molto frequenti (**CPU-bound** (a)), mentre altri spendono il loro tempo in attesa di I/O, con burst di CPU brevi; sono processi dalla bassa necessità di calcoli, ma con molte richieste di I/O (**I/O-bound** (b)). 
 Con **CPU più veloci** i processi tendono ad essere più **I/O-bound**, perché le CPU stanno migliorando più velocemente rispetto i dischi. 
@@ -70,7 +70,7 @@ Vediamo un esempio: ci sono 4 job, detti A, B, C e D con tempi di esecuzione ris
 - Se sono eseguiti secondo l'algoritmo SJF
 	- 4 min per B, 8 per C, 12 per D, 20 per A (11 minuti di media)
 
-![[img39.png|center|500]]
+![[SOR/img/img39.png|center|500]]
 
 Questo algoritmo è ottimale nel minimizzare il tempo di turnaround medio (il tempo dallo start all'end di un job), *quando tutti i job sono disponibili contemporaneamente*. Se così non fosse, l'algoritmo non è ottimale; pensiamo a 5 job detti A, B, C, D ed E con tempi 2, 4, 1, 1, 1 e arrivi a 0, 0, 3, 3, 3. All'inizio possono essere scelti solo A e B: 
 - scegliendo A (shortest job) abbiamo: 
@@ -96,7 +96,7 @@ Gli algoritmi di scheduling che vedremo sono i seguenti:
 
 L'implementazione è semplice: lo scheduler deve mantenere una lista dei processi eseguibili, una volta esaurito il quanto di tempo, il processo viene spostato alla fine della lista.
 
-![[img40.png|center|700]]
+![[SOR/img/img40.png|center|700]]
 
 L'unico "problema" del round-robin è la durata del quanto. La scelta del quanto di tempo influisce sull'efficienza. Supponiamo che ci voglia 1ms per il cambio di contesto e abbiamo un quanto di 4ms: *il 20% del tempo di CPU è sprecato per il cambio di contesto!*  
 Scegliendo un quanto di tempo lungo, diciamo 100ms, in presenza di molti processi si ha un tempo di attesa alla risposta troppo lungo (se ci sono 50 processi, l'ultimo prima di essere eseguito aspetta 5 secondi). Un quanto tra 20 e 50 ms è ragionevole per bilanciare efficienza e reattività. 
@@ -106,10 +106,91 @@ Lo scheduling [[#Round-robin scheduling|round-robin]] presuppone che tutti i pro
 A ciascun processo viene assegnata una priorità ed il processo con la priorità più alta tra quelli pronti viene eseguito. 
 Per impedire che i processi con priorità più alta siano eseguiti indeterminatamente, *lo scheduler può abbassare la priorità del processo in esecuzione ad ogni interrupt del clock*. Se la priorità scende sotto quella del processo successivo, avviene il cambio.
 
-![[Pasted image 20240102200512.png|center|700]]
-
 In alternativa, a ciascun processo può essere associato un quanto di tempo massimo in cui può essere eseguito. All'esaurimento del quanto viene eseguito il processo successivo con la massima priorità. 
+
+Le priorità possono essere assegnate dinamicamente o staticamente. 
+In un computer militare i processi avviati dal generale potrebbero iniziare a priorità 100, quelli dei colonnelli a 90, dai maggiori a 80 e così via; questo è un esempio di *priorità assegnata staticamente*. La priorità assegnata dinamicamente viene utilizzata quando ci si basa sull'utilizzo della CPU o sul comportamento I/O-bound.
+
+Spesso è conveniente raggrupare i processi in *classi di priorità* e usare lo scheduling a priorità fra le classi, ma all'interno di ciascuna classe utilizzare lo [[#Round-robin scheduling|scheduling round-robin]]. 
+
+![[img41.png|center|700]]
+
+In figura è rappresentato un sistema con 4 classi di priorità, finché ci sono processi nella classe di priorità 4 (la più alta), viene eseguito ciascun processo della classe per un quanto di tempo in stile round-robin, ignorando i processi delle altre classi di priorità. Quando la classe di priorità 4 è vuota, si passa alla classe 3 eseguendo i processi in round-robin e così via. È importante rivedere periodicamente le priorità per evitare che i processi a bassa priorità non vengono mai eseguiti.
 ## Shortest process next
+L'algoritmo [[#Shortest job first (SJF)|shortest job first]] produce il minor tempo medio di risposta sui sistemi batch; l'obiettivo è quello di applicarlo anche ai sistemi interattivi. I processi interattivi seguono lo schema di attesa/esecuzione di un comando. Se consideriamo l'esecuzione di ogni comando come un job, potremmo minimizzare il tempo di risposta eseguendo il lavoro più breve per primo. Il problema è però identificare quale degli attuali processi sia il più breve. 
+Un approccio è quello di fare stime basate sul comportamento passato. Supponiamo che il tempo stimato sia $T_{0}$. Indichiamo con $T_{1}$ il tempo di esecuzione successivo. Possiamo ora aggiornare la nostra stima facendo una somma pesata dei numeri, ossia $aT_{0}+(1-a)T_{1}$. Tramite la scelta di $a$ possiamo decidere se avere il processo di stima che dimentica in breve tempo le esecuzioni precedenti o le ricorda a lungo. Con $a=\frac{1}{2}$ abbiamo queste stime: $$T_{0},\:\:\:\:\frac{T_{0}}{2}+ \frac{T_{1}}{2},\:\:\:\: \frac{T_{0}}{4}+ \frac{T_{1}}{4}+ \frac{T_{2}}{2},\:\:\:\: \frac{T_{0}}{8}+ \frac{T_{1}}{8}+ \frac{T_{2}}{4}+ \frac{T_{3}}{2}$$
+Dopo 3 esecuzioni, il peso di $T_0$ nella stima è sceso a $\frac{1}{8}$. 
+La tecnica di stimare il valore successivo di una serie prendendo la media pesata del valore attuale misurato e la stima precedente è detta **aging** ed è applicabile in situazioni dove si basa la previsione sui valori passati.
 ## Guaranteed scheduling
+Il concetto principale è quello di fare promesse reali agli utenti sulle prestazioni e poi rispettarle. La promessa base è che se ci sono $n$ utenti collegati oppure $n$ processi su un sistema a singolo utente, ciascuno otterrà $\approx \frac{1}{n}$ della potenza della CPU. 
+Per mantenere questa promessa, il sistema deve tenere traccia di quanta CPU ha ricevuto ogni processo dal momento della sua creazione. Dopodiché calcola quanto tempo di CPU ogni processo dovrebbe avere, cioé $\frac{\text{tempo di creazione}}{n}$. Se supponiamo un tempo di creazione di 100 secondi e 10 processi nel sistema, ogni processo ha diritto a 10 secondi di CPU ($\frac{100}{10}$)
+A questo punto viene valutato il rapporto tra il tempo di CPU consumato e il tempo di CPU dovuto:
+- Rapporto di $0,5$: il processo ha avuto la metà di quanto dovuto
+- Rapporto di $2,0$: il processo ha avuto il doppio di quanto dovuto
+L'algoritmo esegue il processo col rapporto minore finché non supera il rapporto del concorrente più vicino.
 ## Lottery scheduling
+Mantenere le promesse è una bella idea, ma di difficile realizzazione. Il concetto di questo algoritmo è quello di dare ad ogni processo dei "biglietti della lotteria" per le risorse del sistema, come il tempo di CPU. Ogni volta che deve essere presa una decisione di scheduling si pesca un biglietto della lotteria e il processo che ha quel biglietto si aggiudica la risorsa.
+Facendo 50 estrazioni al secondo, il vincitore riceve 20ms di tempo della CPU. Ai processi più importanti, basta assegnare più biglietti per aumentare la probabilità di estrazione. Se ci sono 100 biglietti non estratti e un processo ha 20 biglietti, ha il 20% delle possibilità di essere estratto e a lungo termine si prenderà il 20% del tempo della CPU. 
+
+Questo algoritmo ha delle proprietà interessanti: 
+- è *reattivo*, infatti alla nascita di un nuovo processo, esso può ottenere biglietti e partecipare all'estrazione successiva, avendo una possibilità immediata di ottenere la CPU.
+- nella *cooperazione tra processi*, i processi cooperanti possono scambiarsi i propri biglietti per aumentare le probabilità di esecuzione. 
+	- Per esempio quando un processo client manda un messaggio ad un processo server e poi si blocca, può donare tutti i suoi biglietti al server per aumentare la possibilità che il server sia il prossimo ad essere eseguito. Quando il server ha terminato, restituisce tutti i biglietti al client per lo stesso scopo. 
+- può essere utilizzato come soluzione a *problemi complessi* dove altri metodi falliscono
+	- pensiamo ad un server video in cui molti processi stanno inviando stream video ai loro client, ma a frame rate diversi, diciamo 10, 20 e 25 frame/s. Assegnando a questi processi rispettivamente 10, 20 e 25 biglietti, essi divideranno automaticamente la CPU nelle proporzioni corrette, ovvero 10, 20 e 25%.
 ## Fair-share scheduling
+Tradizionalmente ogni processo è oggetto di scheduling individualmente, senza considerare a chi appartiene. Di conseguenza se l'utente 1 ha 9 processi e l'utente 2 ne ha solo 1, con il round-robin o con stesse priorità, l'utente 1 si prenderà il 90% della CPU, mentre l'utente 2 avrà solo il 10% della CPU.
+L'approccio fair-share, per evitare questa situazione, prima di schedulare i processi, prende in considerazione a chi appartiene il processo. In questo modello, a ogni utente viene assegnata una porzione di CPU, indipendentemente dal numero di processi che possiede. 
+
+Come esempio consideriamo 2 utenti con il 50% di CPU ciascuno. L'utente 1 ha 4 processi, detti A, B, C e D, mentre l'utente 2 ha il solo processo E. 
+Utilizzando lo scheduling round-robin abbiamo la seguente sequenza: **A** *E* **B** *E* **C** *E* **D** *E* **A** *E*..
+Se l'utente 1 avesse diritto al doppio del tempo di CPU rispetto all'utente 2 abbiamo la seguente sequenza: **AB** *E* **CD** *E* **AB** *E* **CD** *E*...
+# Scheduling nei sistemi real-time
+Un sistema real-time è un sistema in cui il tempo di risposta gioca un ruolo fondamentale. Per esempio un computer all'interno di un lettore CD, prende i bit così come arrivano dal drive e li converte in musica in un intervallo di tempo molto stretto; se i calcoli impiegassero troppo tempo, la musica suonerebbe in modo strano. Altri sistemi real-time riguardano i computer per il monitoraggio dei pazienti in terapia intensiva oppure per il pilota automatico degli aerei. Ritardi o mancati tempi di risposta possono portare gravi problemi. 
+
+I sistemi real-time si suddividono in due categorie: 
+- **hard real-time**: nel caso di scadenze assolute da rispettare
+- **soft real-time**: qualche scadenza mancata è tollerabile
+Gli eventi cui un sistema real-time deve rispondere sono categorizzati in:
+ - **periodici**: avvengono ad intervalli regolari
+ - **non periodici**: avvengono in modo imprevedibile
+Un sistema real-time è detto **schedulabile** se la CPU è in grado di gestire la somma totale del tempo richiesto dai processi. Per esempio, se ci sono $m$ eventi periodici, e l'avento $i$ avviene con un periodo $P_{i}$ e richiede $C_{i}$ secondi di tempo della CPU per gestire ogni evento, allora il carico di eventi può essere gestito se e solo se $$\sum\limits_{i=1}^{m} \frac{C_{i}}{P_{i}}\le1$$
+>**Esempio**
+>Consideriamo un sistema soft real-time con tre eventi periodici di 100, 200 e 500 ms. Se questi eventi richiedessero rispettivamente 50, 30 e 100 millisecondi di tempo di CPU per evento, il sistema è schedulabile, infatti $$\frac{50}{100}+ \frac{30}{200}+ \frac{100}{500}=0.2+0.15+0.2\le1$$ Se si aggiungesse un nuovo evento con un periodo di 1 secondo, il sistema rimane schedulabile comunque se non occorrono più di 150ms di tempo di CPU per l'evento.
+ 
+Gli algoritmi di scheduling real-time possono essere:
+- **statici**: le decisioni di scheduling sono prese prima dell'inizio dell'esecuzione da parte del sistema. Richiede una perfetta conoscenza delle esigenze e delle scadenze.
+- **dinamici**: le decisioni di scheduling vengono prese durante l'esecuzione
+
+# Processi e scheduling
+Finora abbiamo presupposto che tutti i processi nel sistema appartengano a diversi utenti  e che siano di conseguenza in competizione per la CPU. Questo è vero, ma a volte accade che un processo abbia molti figli eseguiti sotto il suo controllo, ad esempio un sistema di gestione di una base di dati può avere molti figli, ognuno dei quali ha delle funzioni specifiche da eseguire. È possibile che il processo principale abbia un'idea di quale dei suoi figli sia il più importante, ma nessuno scheduler presentato accetta input dai processi utente riguardo alle decisioni di scheduling, portando spesso a soluzioni non ottime. 
+La soluzione a questo problema sta nel separare il **meccanismo di scheduling** dalla **politica di scheduling**. Il vantaggio sta nel fatto che l'algoritmo di scheduling può essere parametrizzato, ma i parametri possono essere riempiti dai processi utenti. 
+
+>**Esempio**
+>Consideriamo di nuovo l'esempio del database, supponendo che il kernel adoperi un algoritmo di scheduling con priorità, ma fornendo una chiamata di sistema tramite cui un processo può impostare e cambiare la priorità dei suoi figli. In questo modo il padre può controllare nel dettaglio come sono schedulati i suoi figli, anche se non ne fa lo scheduling. In questo caso il meccanismo sta nel kernel, mentre la politica è impostata da un processo utente.
+
+## Scheduling a thread
+Quando molti processi hanno molteplici thread, abbiamo due livelli di parallelismo presenti: processi e thread. Lo scheduling si differenzia a seconda che siano supportati i *[[Capitolo 2 - Processi e Thread#Implementazione nello spazio utente|thread a livello utente]]* o a *[[Capitolo 2 - Processi e Thread#Implementazione nello spazio kernel|livello kernel]]*. 
+
+### Thread a livello utente
+Consideriamo per primo i thread a livello utente. Siccome il kernel non è a conoscenza dell'esistenza dei thread, opera come sempre, prendendo un processo, diciamo $A$, assegnandogli la CPU per il suo quanto. Lo scheduler di thread interno ad $A$ decide quale thread eseguire, diciamo $A1$. Poiché per questi thread non ci sono interrupt del clock, questo può continuare l'esecuzione quanto vuole; se utilizza l'intero quanto del processo, il kernel selezionerà un nuovo processo da eseguire. Quando il processo $A$ verrà rieseguito, il thread $A1$ riprenderà l'esecuzione, continuando a consumare il quanto di $A$ finché non è finito. Questo porta al risultato che *consumare l'intero quanto di un processo da parte dal thread influenza solo il processo interno e non tutti gli altri*. 
+
+>**Esempio (in figura)**
+>Consideriamo il caso che i thread di $A$ abbiano un burst di CPU da 5ms su 50ms di quanto. Di conseguenza ognuno lavora per un breve istante per poi cedere la CPU allo scheduler dei thread. 
+>La possibile sequenza di esecuzione potrebbe essere: $A1,A2,A3,A1,A2\dots$ 
+
+![[img42.png|center|500]]
+
+### Thread a livello kernel
+In questo caso il kernel preleva un particolare thread da eseguire, senza tener conto del processo a cui appartiene. Al thread viene assegnato un quanto, che se eccede viene sospeso forzatamente. 
+
+>**Esempio (in figura)**
+>Con un quanto di 50ms, ma con i thread che si bloccano dopo 5ms, l'ordine di esecuzione dei thread potrebbe essere $A1,B1,A2,B2,A3,B3$, cosa che era impossibile con i thread utente
+
+![[img43.png|center|500]]
+
+## Differenza tra thread a livello utente e kernel
+La principale differenza tra i thread utente e kernel sta nelle prestazioni: effettuare uno scambio di thread utente richiede una manciata di istruzioni macchina, mentre con i thread a livello kernel occorre fare uno *scambio completo di contesto*, che è più lento. D'altra parte, con i thread a livello kernel, un thread bloccato in attesa di I/O non sospende l'intero processo, come invece avviene con i thread utente.
+Poiché il kernel sa che il passaggio da un thread nel processo $A$ ad un thread nel processo $B$ è più costoso di eseguire un altro thread nel processo $A$, può tenere conto di questa informazione quando deve prendere una decisione, dando ad esempio la preferenza ai thread dello stesso processo. 
+Un altro fattore importante è che i thread utente possono utilizzare uno scheduler di thread specifico dell'applicazione, permettendo maggiore controllo e ottimizzazione dell'applicazione rispetto allo scheduler del kernel. 
+
