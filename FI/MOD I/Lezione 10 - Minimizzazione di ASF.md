@@ -53,7 +53,7 @@ Per ogni coppia $(p,q)$ non ancora marcata, si considerano, per ogni $q\in\Sigma
 - Se nessuna delle coppie $(r,s)$ è marcata come distinguibile allora si inserisce $(p,q)$ nella lista associata ad ognuna di esse
 - Altrimenti p e q veongono riconosciuti distinguibili e la corrispondente casella viene marcata; qualora questa contenga una lista di coppie si procede (ricorsivamente) con la marcatura delle relative caselle.
 
-![[FI/img/img36.png|center|500]]
+![[FI/MOD I/img/img36.png|center|500]]
 
 Una volta identificate le coppie di stati indistinguibili, ricordando che la relazione di indistinguibilità è una relazione di equivalenza, l'automa equivalente con il minimo numero di stati è dato evidentemente da $\mathcal A'=\langle\Sigma,Q',\delta',q_0',F'\rangle$, in cui:
 
@@ -63,22 +63,22 @@ Una volta identificate le coppie di stati indistinguibili, ricordando che la rel
 
 **Esempio**
 
-![[FI/img/img37.png|center|500]]
+![[FI/MOD I/img/img37.png|center|500]]
 
 **Passo inziale**: $q_0,q_1$, finali, distinguibili da tutti gli altri
 
 Tutte le coppie in cui uno dei stati è $q_o\:o\:q_1$ e l'altro non è $q_o\:o\:q_1$ sono marcate 
 
-![[FI/img/img38.png|center|500]]
+![[FI/MOD I/img/img38.png|center|500]]
 
 Consideriamo le coppie di stati scandendo le celle da sinistra verso destra e dall'alto verso il basso
 $(q_0,q_1)$ è distinguibile se lo è la coppia $(q_2,q_5)$, in quanto $\delta(q_0,b)=q_2$ e $\delta(q_1,b)=q_5$: quindi $(0,1)$ inserito nella lista associata
 
-![[FI/img/img39.png|center|500]]
+![[FI/MOD I/img/img39.png|center|500]]
 
 $(q_2,q_3)$ sono distinguibili in quanto $\delta(q_2,a)=q_4$ e $\delta(q_3,a)=q_0$, e la coppia $(q_0,q_4)$ è distinguibile (perchè la cella $(0,4)$ è marcata): quindi viene marcata anche la cella $(2,3)$
 
-![[FI/img/img40.png|center|500]]
+![[FI/MOD I/img/img40.png|center|500]]
 
 Proseguendo, l'algoritmo determina che:
 
@@ -94,11 +94,11 @@ Proseguendo, l'algoritmo determina che:
 
 Si ottiene quindi:
 
-![[FI/img/img41.png|center|500]]
+![[FI/MOD I/img/img41.png|center|500]]
 
 Mantenendo le sole indicazioni delle coppie distinguibili e non si ottiene:
 
-![[FI/img/img42.png|center|500]]
+![[FI/MOD I/img/img42.png|center|500]]
 
 Quindi avremo le coppie di stati indistinguibili, che saranno.
 - $q_0,q_1$
@@ -109,7 +109,7 @@ E sono anche 3 classi di equivalenza
 A questo punto l'automa equivalente con il minimo numero di stati risultante dal procedimento è mostrato sotto:
 lo stato $q_0$ corrisponde alla classe d'equivalenza $\lbrace q_0,q_1\rbrace$, lo stato $q_1$ corrisponde alla classe $\lbrace q_3,q_6\rbrace$ e lo stato $q_3$ corrisponde alla classe $\lbrace q_2,q_4,q_5\rbrace$ e quindi:
 
-![[FI/img/img43.png|center|400]]
+![[FI/MOD I/img/img43.png|center|400]]
 
 
 ## Decidibilità di predicati

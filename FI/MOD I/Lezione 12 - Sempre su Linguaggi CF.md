@@ -20,7 +20,7 @@ Costruzione di una sequenza $N_0,N_1,...,N_k=N$ di sottoinsiemi di $V_N$, con $N
 La costruzione termina quando $N_{k+1}=N_k, k\geq0$
 $\varepsilon\in L(\mathcal G)\iff S\in N$
 
-![[FI/img/img46.png|center|500]]
+![[FI/MOD I/img/img46.png|center|500]]
 
 **Esempio**
 Consideriamo la grammatica $\mathcal G=\langle\{a,b\},\{S,A,B\},P,S\rangle$, le cui produzioni sono:
@@ -70,7 +70,7 @@ Un non terminale $A$ è fecondo se e solo se vale una delle seguenti condizioni:
 - esiste $w\in V_T^+|A\to w\in P$
 - esiste $\alpha\in(V_N\cup V_T)^\star|A\to\alpha\in P$ e tutti i simboli non terminali in $\alpha$ sono fecondi
 
-![[FI/img/img47.png|center|600]]
+![[FI/MOD I/img/img47.png|center|600]]
 
 è necessario verificare che i simboli rimasti siano generabili a partire dall'assioma.
 Ciò può essere effettuato in modo iterativo osservando che $A$ è generabile a partire da $S$ se vale una delle due condizioni seguenti:

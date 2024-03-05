@@ -21,11 +21,11 @@ Dato un qualunque automa $\mathcal A$ non deterministico, un automa **generalizz
 
 Infatti, avremo una situazione del genere
 
-![[FI/img/img28.png|center|500]]
+![[FI/MOD I/img/img28.png|center|500]]
 
 Le espressioni regolari possono essere comunque complesse
 
-![[FI/img/img29.png|center|500]]
+![[FI/MOD I/img/img29.png|center|500]]
 
 In effetti, se esistono n cammini $q_iq_jq_h(h=k_1,...,k_n)$, allora si ha che:
 $$\overline r_{ik}=r_{ik_1}+r_{ij}r_{jj}^\star r_{jk_1}+r_{ik_2}+r_{ij}r_{jj}^\star r_{jk_2}+...+r_{ik_n}+r_{ij}r_{jj}^\star r_{jk_n}$$
@@ -56,8 +56,8 @@ Costruiamo da $A_1,A_2$ un automa $A=\langle\Sigma,Q,\delta_N,q_0,F\rangle$ che 
 4. La funzione di transizione $\delta_N$ è definita come: $$\begin{cases}\delta_N(q,a)&=\delta_{N_1}(q,a)&se\:q\in Q_1,a\in\Sigma_1\\\delta_N(q,a)&=\delta_{N_2}(q,a)&se\:q\in Q_2,a\in\Sigma_2\\\delta_N(q_0,a)&=\delta_{N_1}(q_{0_1},a)\cup\delta_{N_1}(q_{0_2},a)&a\in\Sigma\end{cases}$$
 **Esempio**
 
-![[FI/img/img30.png|center|500]]
-![[FI/img/img31.png|center|500]]
+![[FI/MOD I/img/img30.png|center|500]]
+![[FI/MOD I/img/img31.png|center|500]]
 
 
 ### Complemento
@@ -91,8 +91,8 @@ Costruiamo da $A_1,\:A_2$ un automa $A=\langle\Sigma,Q,\delta_N,q_0,F\rangle$ ch
 
 **Esempio**
 
-![[FI/img/img32.png|center|500]]
-![[FI/img/img33.png|center|500]]
+![[FI/MOD I/img/img32.png|center|500]]
+![[FI/MOD I/img/img33.png|center|500]]
 
 ### Iterazione
 
@@ -102,8 +102,8 @@ Infatti, sia $A=\langle\Sigma,Q,\delta_{N},q,F\rangle$ un ASFD che accetta $L$
 Costruiamo da $A$ un automa $A'=\langle\Sigma,Q\cup\lbrace q_0'\rbrace,\delta',q_0',F\cup\lbrace q_0'\rbrace\rangle$ che riconosce il linguaggio $L^\star$ ponendo:
 $$\begin{cases}\delta'(q,a)&=\delta(q,a)&\forall q\in Q-F\\\delta'(q,a)&=\delta(q,a)\cup\delta(q_0,a)&\forall q\in F\\\delta'(q_0',a)&=\delta(q_0,a)\end{cases}$$
 **Esempio**
-![[FI/img/img34.png|center|500]]
-![[FI/img/img35.png|center|500]]
+![[FI/MOD I/img/img34.png|center|500]]
+![[FI/MOD I/img/img35.png|center|500]]
 
 
 

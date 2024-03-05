@@ -14,7 +14,7 @@ Essa genera tutte le espressioni aritmetiche sulla variabile a, ma come si vede 
 
 Ad esempio la stringa $a+a*a$ può venire derivata mediante due diversi alberi 
 
-![[FI/img/img53.png|center|600]]
+![[FI/MOD I/img/img53.png|center|600]]
 
 Se si pone $a=3$, nel primo albero avremo che la stringa genererà il numero 12, mentre il secondo genererà il numero 18
 
@@ -128,11 +128,11 @@ Ad ogni passo l'automa, a partire dallo stato attuale,dal carattere letto sul na
 
 La convenzione è che il primo carattere della stringa diventi il simbolo di pila affiorante. Si noti che se la stringa che viene inserita nella pila è la stringa vuota,ciò equivale a dire che il simbolo precedente affiorante nella pila è stato cancellato
 
-![[FI/img/img54.png|center|600]]
+![[FI/MOD I/img/img54.png|center|600]]
 
 **Esempio**
 
-![[FI/img/img55.png|center|600]]
+![[FI/MOD I/img/img55.png|center|600]]
 
 ## Configurazioni
 

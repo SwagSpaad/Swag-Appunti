@@ -114,17 +114,17 @@ Quindi, il linguaggio $L$ sarà descritto dall'espressione regolare
 $$r_{0(n-1)}^n$$
 **Esempio**
 
-![[FI/img/img23.png|center|500]]
+![[FI/MOD I/img/img23.png|center|500]]
 
 Assumiamo l'ordinamento $q_0=q_0,q_1=q_1,q_2=q_3,q_3=q_2$ tra gli stati. 
 Allora:
 
-![[FI/img/img24.png|center|400]]
+![[FI/MOD I/img/img24.png|center|400]]
 
 E quindi:
-![[FI/img/img25.png|center|500]]
-![[FI/img/img26.png|center|500]]
-![[FI/img/img27.png|center|500]]
+![[FI/MOD I/img/img25.png|center|500]]
+![[FI/MOD I/img/img26.png|center|500]]
+![[FI/MOD I/img/img27.png|center|500]]
 
 E quindi il linguaggio accettato dall'automa sarà descritto dall'espressione regolare 
 $$r_{03}^4$$

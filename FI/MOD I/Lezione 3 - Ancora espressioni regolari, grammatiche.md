@@ -129,7 +129,7 @@ può essere generato dalla grammatica $G$ in cui $V_T=\lbrace a,b,c\rbrace$ e $V
 
 Per generare la stringa $aabbcc$ si può procedere come segue:
 
-![[FI/img/img4.png|center|200]]
+![[FI/MOD I/img/img4.png|center|200]]
 
 Ciò mostra che $S \:\overset{*}{\implies}\: aabbcc$, ed in particolare $S \:\overset{i}{\implies}\: aabbcc$, per ogni $i \geq 8$ . 
 #### Forme di frase

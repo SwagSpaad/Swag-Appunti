@@ -426,7 +426,12 @@ L'operatore di **join esterno** (**outer join**) prevede che tutte le tuple dian
 - *Right join*: Contribuiscono tutte le ennuple del secondo operando eventualmente estese con valori nulli
 - *Full join*: Contribuiscono tutte le ennuple del primo e secondo operando eventualmente estese con valori nulli
 
-# Left join
+Altre Operazioni Relazionali  
+Operazioni di Chiusura Ricorsiva  
+• Un altro tipo di operazione che, in generale, non può essere speciﬁcato  
+in algebra relazionale di base è la chiusura ricorsiva. Questa operazione  
+si applica ad un’associazione ricorsiva.  
+• Un esempio di operazione ricorsiva è la ricerca di tutti i super# Left join
 
 Ritorno tutte le tuple dalla relazione di sinistra a prescindere dal fatto che siano combinabili con quelle della relazione di destra.
 Assegna valori nulli per i record che non matchano.

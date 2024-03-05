@@ -13,7 +13,7 @@ tale che valga una delle seguenti condizioni:
 
 Le espressioni regolari consentono di rappresentare linguaggi mediante una opportuna interpretazione dei simboli che le compongono. Nella tabella seguente si mostra la corrispondenza tra un'espressione regolare $r$ e il linguaggio $\mathcal L(r)$ che essa rappresenta
 
-![[FI/img/img3.png|center|300]]
+![[FI/MOD I/img/img3.png|center|300]]
 
 **Esempio**
 L'espressione regolare $r=((a+b)^\star a)$ rappresenta il linguaggio

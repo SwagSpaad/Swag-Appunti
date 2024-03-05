@@ -124,53 +124,92 @@ Lo slab in foto contiene:
 L'idea della **memoria virtuale** nasce dalla gestione del software bloat, poiché le dimensioni dei software aumentano ancora più velocemente rispetto alla memoria disponibile. Lo [[#Swapping|swapping]] non era una soluzione efficace,a causa delle limitazioni nella velocità dei dischi.
 Negli anni '60 furono introdotte delle tecnice come l'*overlay*, che divideva i programmi in piccoli pezzi e solo l'overlay necessario era caricato in memoria. Questa soluzione non trovò successo, perché la suddivisione del programma andava fatta manualmente e questo era un processo lento, noioso e poteva portare errori.
 
-La memoria virtuale si basa sull'idea che ogni programma abbia il proprio spazio di indirizzi personale, suddiviso in *pagine*, un intervallo contiguo di indirizzi. Ogni pagina è mappata sulla memoria fisica, ma non è necessario che siano tutte presenti sulla memoria fisica per eseguire il programma. Quando un programma fa riferimento a una parte del suo spazio di indirizzi non presente in memoria fisica, l'hardware esegue il mappaggio necessario diretto e il SO si occupa di recuperare il pezzo mancate e rieseguire l'operazione fallita in precedenza.
+La memoria virtuale si basa sull'idea che ogni programma abbia il proprio spazio di indirizzi personale, suddiviso in *pagine*, un intervallo contiguo di indirizzi. Ogni pagina è mappata sulla memoria fisica, ma non è necessario che siano tutte presenti sulla memoria fisica per eseguire il programma. Quando un programma fa riferimento a una parte del suo spazio di indirizzi non presente in memoria fisica, l'hardware esegue il mappaggio necessario e il SO si occupa di recuperare il pezzo mancante e rieseguire l'operazione fallita in precedenza.
 In questo modo, l'intero spazio degli inidirizzi può essere rimappato sulla memoria fisica in unità più piccole, consentendo una gestione più efficiente dei programmi.
 
 ## Paginazione
-La maggior parte dei sistemi di memoria virtuale usa una tecnica chiamata **paginazione** o **paging**. Su qualsiasi computer i programmi referenziano un insieme di indirizzi di memoria. Gli indirizzi possono essere creati dall'indicizzazione, registri base, registri segmento ed altri modi.
+La maggior parte dei sistemi di memoria virtuale usa una tecnica chiamata **paginazione** o **paging**. Su qualsiasi computer i programmi referenziano un insieme di indirizzi di memoria. Gli indirizzi possono essere generati usando l'indicizzazione, i registri base, i registri segmento ed altri modi.
 Questi indirizzi creati dal programma vengono chiamati **indirizzi virtuali** e vanno a formare lo **spazio virtuale degli indirizzi**.
 Nei computer senza memoria virtuale, l'indirizzo virtuale viene situato direttamente nel bus, provocando la lettura o scrittura della parola della memoria fisica con lo stesso indirizzo.
-Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non vanno direttamente nel bus, ma nella **MMU** (memory managment unit) che mappa gli indirizzi virtuali con spazi della memoria fisica.
-Lo spazio  degli indirizzi virtuali e' suddiviso in unita' di dimensioni fissa, chiamate **pagine**. Le unita' corrispondenti nella memoria fisica sono chiamate **frame** o **page frame**.
-Le pagine e i frame sono generalmente della stessa dimensione. 
-Nei sistemi reali le pagine vanno dai 512 byte fino a 64 KB. 
-Con 64 KB di spazio degli indirizzi virtuale e 32 KB di memoria fisica otteniamo 16 pagine virtuali e 8 frame. I trasferimenti tra la RAM e il disco sono sempre pagine intere.
-Ogni pagina contiene esattamente 4096 indirizzi da un multiplo di 4096 a un multiplo di 4096 successivo.
->Ex1: 
->Quando un programma prova ad accedere all'indirizzo 0 usando:
->`MOV REG, 0`
->l'indirizzo virtuale 0 e' inviato alla MMU. La MMU verifica che questo indirizzo si trova nella pagina 0, che secondo il mappaggio, e' il frame 2.
->Trasforma cosi' l'indirizzo in 8192 e lo invia esternamente sul bus. Dato che la memoria non conosce l'MMU, lei ha semplicemente eseguito una richiesta per leggere o scrivere l'indirizzo 8192. Cosi' l'MMU ha mappato tutti gli indirizzi virtuali fra 0 e 4095 sugli indirizzi fisici tra 8192 a 12287.
+Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non vanno direttamente nel bus, ma nella **MMU** (memory managment unit) che traduce gli indirizzi virtuali nei corrispondenti indirizzi della memoria fisica.
 
->Ex2:
->L'istruzione:
->`MOV REG, 8192`
->viene trasformata in:
->`MOV REG, 24576`
->dato che l'indirizzo virtuale 8192 e' mappato sul 24576.
+>**Esempio**
+>Il funzionamento del mappaggio è rappresentato nella figura sotto
+>![[img44.png|center|300]]
+>Il computer genera indirizzi di 16bit, da 0 a 64K-1, che corrispondono agli indirizzi virtuali (sx). Questo computer ha però solamente 32KB di memoria fisica. Sebbene possano essere scritti programmi di 64KB, questi non possono essere interamente caricati in memoria. Lo spazio degli indirizzi virtuali è suddiviso in unità di dimensioni fissa, chiamate **pagine**. Le unità corrispondenti nella memoria fisica sono chiamate **frame** o **page frame**. Le pagine e i frame sono generalmente della stessa dimensione. 
+>I trasferimenti tra la RAM e il disco sono sempre pagine intere. Ogni pagina contiene esattamente 4096 indirizzi da un multiplo di 4096 a un multiplo di 4096 successivo.
+>>**Esempio  1**
+>>Quando un programma prova ad accedere all'indirizzo 0 usando:
+>>`MOV REG, 0`
+>>l'indirizzo virtuale 0 è inviato alla MMU. La MMU verifica che questo indirizzo si trova nella pagina 0 (da 0 a 4095), che secondo il mappaggio, è il frame 2 (da 8192 a 12287). Trasforma così l'indirizzo in 8192 e lo invia esternamente sul bus. Dato che la memoria non conosce l'MMU, lei ha semplicemente eseguito una richiesta per leggere o scrivere l'indirizzo 8192. Così l'MMU ha mappato tutti gli indirizzi virtuali fra 0 e 4095 sugli indirizzi fisici tra 8192 a 12287.
+>
+>>**Esempio 2**
+>>Allo stesso modo, l'istruzione 
+>>`MOV REG, 8192` 
+>>viene trasformata in:
+>>`MOV REG, 24576` 
+>>poiché l'indirizzo virtuale 8192 è mappato sul frame fisico 6 all'indirizzo 24576.
+>
+>La capacità di mappare le 16 pagine virtuali su qualsiasi degli 8 frame non risolve, però, il problema che lo spazio degli indirizzi virtuali è maggiore della memoria fisica, infatti abbiamo mappato solo 8 frame fisici, le altre pagine della memoria virtuali, segnate con una x non sono mappate. Nell'hardware un bit **presente/assente** tiene traccia di quali pagine sono presenti fisicamente in memoria.
+> 
+>>**Esempio 3**
+>>Cosa succede se il programma referenziasse degli indirizzi non mappati, ad esempio utilizzando l'istruzione
+>>`MOV REG, 32780`
+>>che è di 12 byte all'interno di una pagina virtuale da 8 (che parte da 32768)?
+>>In questo caso, l'MMU rileva che la pagina non è mappata (x in figura) e causa un **trap** della CPU verso il SO, detto **page fault**. Il SO preleva un frame poco utilizzato e lo sposta su disco, poi prende la pagina appena referenziata e la mette nel frame appena liberato, aggiorna la mappa della MMU e riavvia l'istruzione che era in trap.
 
-Ma, che cosa dovesse accadere se il programma referenziasse degli indirizzi non mappati usando:
-`MOV REG, 32780`
-che e' di 12 byte all'interno di una pagina virtuale da 8?
-In questo caso, l'MMU rileva che la pagina non e' mappata e causa un **trap** della CPU verso il SO. Questo trap e' comunemente chiamato **page fault**.
-Il SO preleva un frame poco utilizzato e ne scrive il suo contenuto su disco, poi prende la pagina appena referenziata e la mette nel frame appena liberato, cambia la mappa e riavvia l'istruzione che era in trap.
-
-## MMU
+### MMU
 La **Memory Managment Unit** è una classe di componenti hardware che gestisce le richieste di acesso di memoria da parte della CPU. 
->Ex:
->Indirizzo virtuale = 8196 (0010000000000100)
->Mappato usando la mappa della MMU.
->L'inidrizzo virtuale di 16 bit in ingresso è suddiviso in un numero di pagina di 4 bit e un offset di 12 bit.
->Con 4 bit per il numero di pagina, si possono avere 16 pagine e con 12 bit di offset possiamo indirizzare 4096 byte per pagina.
->Il numero di pagina è usato come indice nella **Tabella delle pagine** che porta al numero di frame corrispondente alla pagina virtuale. Se il bit *presente / assente* è 0, avviene un trap al SO. Se il bit è 1, il numero di frame trovato nella tabella delle pagine viene copiato nei tre bit più significativi del registro di output, insieme all'offset di 12 bit che è copiato senza modifiche dall'inidirizzo virtuale in arrivo. Insieme formano un indirizzo fisico di 15 bit. Il registro di output è poi messo sul bus di memoria come indirizzo fisico di memoria
+Vediamo come si comporta. Supponiamo di avere l'indirizzo virtuale 8196, che in binario è rappresentato 0010000000000100, che è mappato usando la mappa della MMU in figura sopra.
+L'inidrizzo virtuale di 16 bit in ingresso è suddiviso in un numero di pagina di 4 bit e un offset di 12 bit.
+Con 4 bit per il numero di pagina, si possono avere 16 pagine e con 12 bit di offset possiamo indirizzare 4096 byte per pagina.
+Il numero di pagina è usato come indice nella **tabella delle pagine** che porta al numero di frame corrispondente alla pagina virtuale. Se il bit *presente / assente* è 0, avviene un trap al SO. Se il bit è 1, il numero di frame trovato nella tabella delle pagine viene copiato nei tre bit più significativi del registro di output, insieme all'offset di 12 bit che è copiato senza modifiche dall'inidirizzo virtuale in arrivo. Insieme formano un indirizzo fisico di 15 bit. Il registro di output è poi messo sul bus di memoria come indirizzo fisico di memoria
 
 ![[SOR/img/img17.png|center|700]]
 
 ## Tabelle delle pagine
-In una semplice implementazione si può sintetizzare il mappaggio degli indirizzi virtuali sugli indirizzi fisici come segue: l'indirizzo virtuale è diviso in un di pagina virtuale e un offset.
->Ex:
+In una semplice implementazione si può sintetizzare il mappaggio degli indirizzi irtuali sugli indirizzi fisici come segue: l'indirizzo virtuale è diviso in un di pagina virtuale (i bit più significativi) e un offset (i bit meno significativi)
+
+>**Esempio**
 >Con un indirizzo di 16 bit e una dimensione di pagina 4KB, i 4 bit superiori potrebbero specificare una delle 16 pagine virtuali e i 12 bit più bassi specificherebbero il byte di offset nella pagina selezionata.
 
-È possibile avere differenti divisioni di bit per pagina, come 3 , 5 o un numero diverso, ma questo implica che avrò anche una dimensione diversa della pagina.
-Il numero di pagina virtuale è utilizzato come indice nella tabella delle pagine per trovare la voce per quella pagina virtuale.
+È possibile avere differenti divisioni di bit per pagina, come 3, 5 o un numero diverso, ma questo implica che avrò anche una dimensione diversa della pagina.
+Il numero di pagina virtuale è utilizzato come indice nella tabella delle pagine per trovare la voce per quella pagina virtuale. Il numero di frame è rintracciato dalla voce della tabella delle pagine, e viene allegato alla parte finale più significativa dell'offset per formare l'indirizzo fisico da inviare alla memoria.
+
+### Struttura della page table
+Il layout di una voce dipende dalla macchina, così come la dimensione (di solito 32 bit), ma il tipo di informazioni è simile in tutte le macchine. 
+Il campo più importante è il **numero del frame**. I restanti valori sono:
+- *bit presente/assente*: indica se la pagina è presente in memoria (1) o se non lo è, causando un *page fault* (0)
+- *bit protezione*: specifica i tipi di accesso consentiti (lettura, scrittura, esecuzione)
+- *bit supervisor*: stabilisce se la pagina è accessibile solo al SO o anche ai programmi utente
+- *bit modificato (M) e riferimento (R)*: tengono traccia dell'uso della pagina
+	- il bit modificato è impostato quando si scrive una pagina, per segnalare che la pagina è stata modificata e quindi va riscritta sul disco. 
+	- il bit riferimento viene impostato ogni volta che si accede alla pagina, per aiutare il SO a decidere quali pagine sono meno utilizzate in modo da scaricarle quando si verifica un page fault
+
+![[img45.png]]
+
+## Velocizzare la paginazione
+In ogni sistema di paginazione devono essere affrontate due sfide principali: 
+- **mappatura veloce**: il mappaggio avviene per ogni riferimento alla memoria, di conseguenza per ogni istruzione è necessario fare due o più riferimenti alla tabella della pagina. 
+- **dimensione della tabella delle pagine**: tutti i computer utilizzano indirizzi virtuali di 32 bit. Con una pagina di 4 KB, uno spazio degli indirizzi di 32 bit dispone di 1 milione di pagine e di conseguenza la tabella delle pagine deve avere un milione di voci. Inoltre ogni processo richiede una propria tabella delle pagine. 
+La necessità di un mappaggio delle pagine grande e veloce è un limite significativo dovuto al modo in cui sono costruiti i computer.
+Un primo approccio semplice è quello di avere una sola tabella delle pagine che consiste in un registro hardware veloce, caricato all'avvio del processo. Durante l'esecuzione non sono quindi necessari riferimenti alla memoria per la tabella delle pagine. Il *vantaggio* di questo metodo è la semplicità e che non richiede riferimenti alla memoria durante il mappaggio. Lo *svantaggio* è il costo con tabelle delle pagine grandi, a causa dell'inefficienza della ricarica di ogni tabella ad ogni cambio di contesto. 
+Il secondo approccio è il caricamento della tabella in memoria RAM, con un registro che punta al suo inizio. Il *vantaggio* è la facilità con il quale il mappaggio viene cambiato ad ogni cambio di contesto, poiché richiede la ricarica di un solo registro. Lo *svantaggio* è che richiede più riferimenti alla memoria per la lettura delle pagine durante l'esecuzione di ogni istruzione, rallentando la mappatura
+
+### TLB (translation lookaside buffer)
+Esaminiamo ora alcuni schemi implementati per velocizzare la paginazione e per gestire grandi spazi degli indirizzi virtuali. 
+Il punto di partenza delle tecniche di ottimizzazione è che la tabella delle pagine sta in memoria e questo ha un impatto enorme sulle prestazione, infatti ogni istruzione richiede l'accesso alla memoria per prelevare l'istruzione stessa e un ulteriore accesso per la tabella delle pagine. Raddoppiando gli accessi alla memoria, le prestazioni vengono dimezzate. 
+I progettisti di comupter hanno osservato che la maggior parte dei programmi tende a fare un gran numero di riferimenti a un piccolo numero di pagine quindi solo una piccola parte della tabella delle pagine viene letta frequentemente.  
+La soluzione è stata quella di equipaggiare i computer di un piccolo dispositivo hardware detto **TLB (translation lookaside buffer)** per mappare gli indirizzi virutali sugli indirizzi fisici senza passare dalla tabella delle pagine, riducendo gli accessi alla memoria. 
+
+#### Funzionamento e gestione del TLB
+Consiste di un piccolo numero di voci, 8 nel caso in figura, ma raramente più di 256, ciascuna con il numero di pagina virtuale, bit modificato, codice di protezione e frame fisico. 
+Vediamo il funzionamento. Alla richiesta di un indirizzo virtuale, la MMU controlla prima nel TLB se è presente il suo numero di pagina, se è trovato ed è valido, il frame viene direttamente prelevato dal TLB, altrimenti in caso di *TLB miss*, avviene una normale ricerca nella tabella delle pagine e la voce trovata rimpiazza una voce nel TLB. 
+
+![[img46.png|center|500]]
+
+Le modifiche ai permessi di una pagina nella tabella delle pagine richiedono l'aggiornamento del TLB. Per garantire la coerenza, la voce corrispondente nel TLB viene eliminata o aggiornata. 
+
+#### Gestione software del TLB
+Alcune macchine RISC gestiscono le voci del TLB tramite software. Quando si verifica un TLB miss, la MMU non ricerca automaticamente nella tabella delle pagine, ma viene generato un errore ed interviene il sistema operativo, che cerca la pagina, aggiorna il TLB e riavvia l'istruzione. Tutto questo deve avvenire con una manciata di istruzioni, poiché i TLB miss si verificano più spesso dei page fault, visto il numero limitato di voci.
+Aumentare la dimensione del TLB è costoso e richiede compromessi nella prograttazione dei chip. 

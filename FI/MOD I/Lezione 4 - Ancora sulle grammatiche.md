@@ -110,7 +110,7 @@ le grammatiche sinistre differiscono dalle grammatiche lineari destre in quanto 
 ## Gerarchia di Chomsky
 Per ogni $0\leq n\leq 2$, ogni grammatica di tipo n+1 è anche di tipo n: pertanto l'insieme dei linguaggi di tipo n contiene tutti i linguaggi di tipo n+1, formando quindi una gerarchai, detta **Gerarchia di Chomsky**
 
-![[FI/img/img5.png|center|200]]
+![[FI/MOD I/img/img5.png|center|200]]
 
 ## Grammatiche con $\epsilon$-produzioni
 Dalle definizioni, non è possibile generare la stringa vuota con grammatiche di tipo 1, 2, 3.

@@ -13,13 +13,13 @@ Un **automa a stati finiti deterministico** (ASFD) è una quintupla $\mathcal A=
 >**Oss.** 
 >Un ASFD è la specializzazione più semplice e di fatto è il modello più debole dal punto di vista espressivo e computazionale.
 
-![[FI/img/img11.png|center|400]]
+![[FI/MOD I/img/img11.png|center|400]]
 
 Si assume che il nastro sia read-only, e può essere letto solo da sinistra verso destra
 
 ### Funzione di transizione
 
-![[FI/img/img12.png|center|400]]
+![[FI/MOD I/img/img12.png|center|400]]
 
 La funzione $\delta$ si rappresenta con una tabella, come in figura, dove i valori di $Q$ sono le righe, mentre i valori di $\Sigma$ sono le colonne.
 Quindi questa tabella ci dice che
@@ -36,7 +36,7 @@ Il grafo prende nome di **grafo di transizione**:
 Esempio:
 $\delta(q_i,a_j)=q_k$ viene rappresentato con 
 
-![[FI/img/img13.png|center|400]]
+![[FI/MOD I/img/img13.png|center|400]]
 
 ### Configurazione di un ASF
 Dato un automa a stati finiti $\mathcal A=\langle\Sigma,Q,\delta,q_0,F\rangle$, una configurazione di $\mathcal A$ è una coppia (q, x), con $q\in Q$ e $x\in\Sigma^\star$
@@ -61,7 +61,7 @@ $$L(\mathcal A)=\lbrace x\in\Sigma^\star|(q_0,x)\underset{\mathcal A}{\overset{\
 **Esempio**
 La stringa aab è accettata dall'automa a stati finiti deterministico
 
-![[FI/img/img14.png|center|500]]
+![[FI/MOD I/img/img14.png|center|500]]
 
 Infatti, a partire dalla configurazione iniziale $(q_0,aab)$ l'automa raggiunge la configurazione di accettazione $(q_1,\epsilon)$ per mezzo della computazione 
 $$(q_0,aab)\vdash(q_0,ab)\vdash(q_0,b)\vdash(q_1,\epsilon)$$
@@ -108,12 +108,12 @@ Un **automa a stati non deterministico** è una quintupla $\mathcal A_N=\langle\
 
 **Esempio funzione di transizione ASFND**
 
-![[FI/img/img15.png|center|300]]
+![[FI/MOD I/img/img15.png|center|300]]
 
 **Esempio**
 Un ASFND può essere descritto, così come un ASFD, tramite un grafo di transizione
 
-![[FI/img/img16.png|center|500]]
+![[FI/MOD I/img/img16.png|center|500]]
 
 ### Computazioni di un ASFND
 
@@ -138,7 +138,7 @@ la quale però non presenta continuazioni possibili
 
 Albero delle computazioni corrispondente
 
-![[FI/img/img17.png|center|500]]
+![[FI/MOD I/img/img17.png|center|500]]
 
 Alternativamente, possiamo considerare che l'automa definisca la computazione non deterministica:
 $$(\lbrace q_0\rbrace,bba)\vdash(\lbrace q_0,q_1\rbrace,ba)\vdash(\lbrace q_0,q_1,q_3\rbrace,a)\vdash(\lbrace q_0,q_1,q_3\rbrace,\epsilon)$$
@@ -166,7 +166,7 @@ $$L(\mathcal A_N)=\lbrace x\in\Sigma^\star|\overline\delta_N(q_0,x)\cap F\neq\em
 
 Un **$\epsilon$-ASFND** è un ASFND con $\delta_N:Q\times(\Sigma\cup\lbrace\epsilon\rbrace)\to \mathcal P(Q)$, nella quale sono quindi ammesse $\epsilon$-transizioni
 
-![[FI/img/img18.png|center|350]]
+![[FI/MOD I/img/img18.png|center|350]]
 
 **Oss.** 
 $$L(ASFND)\subseteq L(\epsilon-ASFND)$$
@@ -227,6 +227,6 @@ Problema: mostrare che i due automi sono equivalenti
 
 Per l'automa precedente, si ottiene:
 
-![[FI/img/img19.png|center|350]]
+![[FI/MOD I/img/img19.png|center|350]]
 
 

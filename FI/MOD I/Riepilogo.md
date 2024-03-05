@@ -20,7 +20,7 @@ $$\phi\to\psi\:\:\underbrace {X...X}_{|\phi|-|\psi|}$$
 
 **Automi deterministici**: Ad ogni stringa di input associa una sola computazione, e quindi una singola sequenza di configurazioni.
 
-![[FI/img/img7.png|center|500]]
+![[FI/MOD I/img/img7.png|center|500]]
 
 Un automa deterministico, data una stringa in input, può eseguire una sola computazione: se la computazione termina in una configurazione di accettazione, allora la stringa viene accettata.
 
@@ -29,7 +29,7 @@ Un automa deterministico, data una stringa in input, può eseguire una sola comp
 La funzione di transizione associa ad almeno una configurazione c più di una configurazione successiva
 Per ogni computazione che conduce a $c$ sono definite continuazioni diverse, che definiscono diverse computazioni
 
-![[FI/img/img8.png|center|500]]
+![[FI/MOD I/img/img8.png|center|500]]
 
 Nell'immagine possiamo vedere nel dettaglio questo discorso dell'associare ad una configurazione $c$ più di una configurazione.
 

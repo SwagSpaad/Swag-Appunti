@@ -7,7 +7,7 @@ Se la computazione termina, restituisce, secondo una qualche modalità, un valor
 
 Nel caso del problema di riconoscimento, il valore restituito è booleano
 
-![[FI/img/img6.png|center|300]]
+![[FI/MOD I/img/img6.png|center|300]]
 
 "Si" lo abbiamo se $x\in L$, altrimenti avremo "No" $x\not\in L$
 ### Composizione
@@ -82,7 +82,7 @@ la computazione **termina**
 ### Automi deterministici
 Ad ogni stringa di input associa una sola computazione, e quindi una singola sequenza di configurazioni.
 
-![[FI/img/img7.png|center|500]]
+![[FI/MOD I/img/img7.png|center|500]]
 
 Un automa deterministico, data una stringa in input, può eseguire una sola computazione: se la computazione termina in una configurazione di accettazione, allora la stringa viene accettata.
 
@@ -105,7 +105,7 @@ Associa ad ogni stringa in input un numero qualunque, in generale maggiore di un
 La funzione di transizione associa ad almeno una configurazione c più di una configurazione successiva
 Per ogni computazione che conduce a $c$ sono definite continuazioni diverse, che definiscono diverse computazioni
 
-![[FI/img/img8.png|center|500]]
+![[FI/MOD I/img/img8.png|center|500]]
 
 Nell'immagine possiamo vedere nel dettaglio questo discorso dell'associare ad una configurazione $c$ più di una configurazione.
 
@@ -118,7 +118,7 @@ Transizioni che un automa può eseguire senza leggere alcun carattere in input.
 La presenza di $\epsilon$-transizioni introduce non determinismo
 Se da una configurazione $c$ un automa può passare o meno in un'altra configurazione $c'$ senza leggere caratteri in input, sono possibili due diverse continuazioni della computazione attuale, l'una da $c$ e l'altra $c'$
 
-![[FI/img/img9.png|center|350]]
+![[FI/MOD I/img/img9.png|center|350]]
 
 - Computazione 1: $...c_0c_1c_2...$
 - Computazione 2: $...c_0c_3...$
@@ -143,7 +143,7 @@ Un insieme di configurazioni è di accettazione se include almeno una configuraz
 
 ### Albero di computazione
 
-![[FI/img/img10.png|center|350]]
+![[FI/MOD I/img/img10.png|center|350]]
 
 $c_0$ è il primo insieme
 $c_1,c_2,c_3$ è il secondo insieme
