@@ -153,7 +153,7 @@ La tabella in 3NF risulta quindi:
 | -------------- | --------------- |
 
 ## Forma normale di Boyce-Codd
-Una relazione è in **forma normale di Boyce-Codd (BCNF)** se è in 1NF se per ogni FD $X \to A$ in R, $X$ è una superchiave di R.
+Una relazione è in **forma normale di Boyce-Codd (BCNF)** se è in 3NF se per ogni FD $X \to A$ in R, $X$ è una superchiave di R.
 
 **Oss.**
 Ogni forma normale è strettamente più forte della precedente:
