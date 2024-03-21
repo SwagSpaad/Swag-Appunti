@@ -60,3 +60,16 @@ Una **computazione** di una macchina di Turing $T$ è una sequenza $SG_{0},SG_{1
 - $SG_0$ è uno *stato globale iniziale*, ossia uno stato globale nel quale lo stato interno è $q_{0}$ e la testina è posizionata sul carattere più a sinistra del nastro
 - per ogni $0\le i\le h-1$, esiste una transizione da $SG_{i}\to SG_{i+1}$ oppure per ogni $h\ge i+1$, $SG_{h}$ non è definito
 Se esiste un indice $h$ tale che $SG_{h}$ è uno stato globale dal quale non può avvenire alcuna *transizione* allora la **computazione termina** e questo accade quando lo stato interno nel quale $T$ si trova in $SG_{h}$ è uno stato finale oppure quando $P$ non contiene una quintupla che possa essere eseguita in $SG_{h}$ 
+
+# Trasduttori e riconoscitori
+Nelle dispense sono presenti diversi tipi di macchine di Turing: quella che *ordina* gli elementi del nastro, quella che *verifica* se una parola è palindroma, quella che esegue la *somma* di due numeri. Mentre per la prima e la terza operazione il risultato è qualcosa che viene scritto sul nastro, per l'operazione di *verifica* ha come risultato lo stato interno in cui termina.
+Macchine del primo tipo sono dette **trasduttori** e hanno il compito di *calcolare valori* e lo stato finale non ha importanza per il risultato, per questo l'insieme degli stati finali di una macchina di tipo trasduttore è costituito da un solo elemento, detto $q_{F}$. Le macchine di tipo trasduttore hanno sempre un *nastro di output* sul quale viene scritto il valore della funzione da calcolare
+Il compito delle macchine di tipo **riconoscitore** è quello di decidere se l'input appartiene ad un insieme, quindi l'insieme degli stati finali di una macchina riconoscitore è *sempre* costituito da due stati, ovvero $\{q_{A},q_{R}\}$, rispettivamente *stato di accettazione $q_{A}$* e *stato di rigetto $q_{R}$* 
+
+Indichiamo con $O_{T}(x)$ l'esito della computazione $T(x)$ della macchina $T$ sull'input $x$. 
+>**Esito della computazione per macchine trasduttori**
+>Sia $T$ una macchina di Turing di tipo trasduttore; la funzione $O_{T}(x):\Sigma^{*}\to \Sigma^{*}$ è definita per i soli $x\in \Sigma^{*}$ tali che $T(x)$ termina, e per tali $x$, il valore $O_{T}(x)$ è la parola calcolata da tale computazione (scritta sul nastro di output). 
+
+>**Esito della computazione per macchine riconoscitori**
+>Sia $T$ una macchina di Turing di tipo riconoscitore; la funzione $O_{T}(x):\Sigma^{*}\to\{q_A,q_R\}$ è definita per i soli $x\in \Sigma^{*}$ tali che $T(x)$ termina, e per tali $x$, il valore $O_{T}(x)$ è lo stato finale di terminazione della computazione. 
+

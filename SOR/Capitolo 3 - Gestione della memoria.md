@@ -135,7 +135,7 @@ Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non v
 
 >**Esempio**
 >Il funzionamento del mappaggio è rappresentato nella figura sotto
->![[img44.png|center|300]]
+>![[SOR/img/img44.png|center|300]]
 >Il computer genera indirizzi di 16bit, da 0 a 64K-1, che corrispondono agli indirizzi virtuali (sx). Questo computer ha però solamente 32KB di memoria fisica. Sebbene possano essere scritti programmi di 64KB, questi non possono essere interamente caricati in memoria. Lo spazio degli indirizzi virtuali è suddiviso in unità di dimensioni fissa, chiamate **pagine**. Le unità corrispondenti nella memoria fisica sono chiamate **frame** o **page frame**. Le pagine e i frame sono generalmente della stessa dimensione. 
 >I trasferimenti tra la RAM e il disco sono sempre pagine intere. Ogni pagina contiene esattamente 4096 indirizzi da un multiplo di 4096 a un multiplo di 4096 successivo.
 >>**Esempio  1**
@@ -186,7 +186,7 @@ Il campo più importante è il **numero del frame**. I restanti valori sono:
 	- il bit modificato è impostato quando si scrive una pagina, per segnalare che la pagina è stata modificata e quindi va riscritta sul disco. 
 	- il bit riferimento viene impostato ogni volta che si accede alla pagina, per aiutare il SO a decidere quali pagine sono meno utilizzate in modo da scaricarle quando si verifica un page fault
 
-![[img45.png]]
+![[SOR/img/img45.png]]
 
 ## Velocizzare la paginazione
 In ogni sistema di paginazione devono essere affrontate due sfide principali: 
@@ -206,7 +206,7 @@ La soluzione è stata quella di equipaggiare i computer di un piccolo dispositiv
 Consiste di un piccolo numero di voci, 8 nel caso in figura, ma raramente più di 256, ciascuna con il numero di pagina virtuale, bit modificato, codice di protezione e frame fisico. 
 Vediamo il funzionamento. Alla richiesta di un indirizzo virtuale, la MMU controlla prima nel TLB se è presente il suo numero di pagina, se è trovato ed è valido, il frame viene direttamente prelevato dal TLB, altrimenti in caso di *TLB miss*, avviene una normale ricerca nella tabella delle pagine e la voce trovata rimpiazza una voce nel TLB. 
 
-![[img46.png|center|500]]
+![[SOR/img/img46.png|center|500]]
 
 Le modifiche ai permessi di una pagina nella tabella delle pagine richiedono l'aggiornamento del TLB. Per garantire la coerenza, la voce corrispondente nel TLB viene eliminata o aggiornata. 
 
