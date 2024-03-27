@@ -58,4 +58,7 @@ Tempo suddiviso in frame di durata fissa ripartiti in un numero fisso di slot, c
 
 ## Commutazione di pacchetto VS Commutazione di circuito 
 
-
+La commutazione di pacchetto èw una vincitrice assoluta?
+Ottima per i dati a raffica ma:
+**Eccessiva congestione**: ritardo e perdita di pacchetti in caso di buffer e overflow
+**Riatardi end-to-end variabili e imprevedibili**: a causa della varibilità e imprevedibilità dei ritardi di accodamento
