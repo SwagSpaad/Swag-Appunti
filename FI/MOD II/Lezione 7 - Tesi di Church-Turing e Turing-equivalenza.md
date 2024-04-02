@@ -35,7 +35,7 @@ Per la dimostrazione ci limitiamo al caso in cui il programma contenga solamente
 - Ad ogni istruzione di loop in $\mathscr P$ corrisponde uno stato $q_i:i>0$ in $T$
 - Lo stato iniziale di $T$ è $q_{0}$ 
 
-![[Pasted image 20240327143059.png|center|600]]
+![[FI/MOD II/img/img8.png|center|600]]
 
 Vediamo quindi come costruire una quintupla partendo da un'istruzione in $\mathscr P$. Per semplicità, assumiamo di scrivere una singola istruzione per linea di codice, per avere una corrispondenza fra linee di codice e stati della macchina. 
 

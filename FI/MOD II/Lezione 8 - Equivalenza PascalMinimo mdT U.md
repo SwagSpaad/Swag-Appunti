@@ -29,6 +29,6 @@ Nel programma $\mathscr P$ vengono anche utilizzate le seguenti variabili
 - $i$ e $j$ variabili di iterazione
 - $\text{trovata}$ è una variabile booleana utilizzata per verificare il ritrovamento della corretta quintupla da eseguire
 
-![[Pasted image 20240327161421.png|center|600]]
+![[FI/MOD II/img/img9.png|center|600]]
 
 In figura viene descritto il programma $\mathscr P$ che simula la macchina di Turing universale.  
