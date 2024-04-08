@@ -32,3 +32,4 @@ Nel programma $\mathscr P$ vengono anche utilizzate le seguenti variabili
 ![[FI/MOD II/img/img9.png|center|600]]
 
 In figura viene descritto il programma $\mathscr P$ che simula la macchina di Turing universale.  
+Esso consiste in un unico loop tra le linee 5-25 nel quale, fissato lo stato attuale $q$ e la posizione di $t$ sul nastro e quindi il simbolo letto $N[t]$, cerca la quintupla che inizia con la coppia $(q,N[t])$ e se esiste, la esegue. Le variabili $\text{primaCella}$ e $\text{ultimaCella}$ vengono utilizzate nel caso in cui il movimento della testina vada oltre alla lunghezza della stringa memorizzata in $N$, in quel caso ne aggiorna la lunghezza. 

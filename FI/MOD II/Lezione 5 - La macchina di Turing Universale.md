@@ -48,7 +48,7 @@ La macchina di Turing Universale $U$ è una macchina che utilizza 4 nastri a tes
 
 ![[FI/MOD II/img/img7.png|center|500]]
 
-Assumiamo che $T$ sia descritta dalla parola $p_{T}\in[Q_{t}\cup\{0,1,\oplus,\otimes,-\}]^*$ seguente $$p_{t}=\omega_{0}-\omega_{1}\otimes \omega_{1_{1}}-b_{1_{1}}-b_{1_{2}}-\omega_{1_{2}}-m_{1}\oplus\dots\oplus\omega_{h_{1}}-b_{h_{1}}-b_{h_{2}}-\omega_{h_{2}}-m_{h}\oplus$$
+Assumiamo che $T$ sia descritta dalla parola $\rho_{T}\in[Q_{t}\cup\{0,1,\oplus,\otimes,-\}]^*$ seguente $$\rho_{T}=\omega_{0}-\omega_{1}\otimes \omega_{1_{1}}-b_{1_{1}}-b_{1_{2}}-\omega_{1_{2}}-m_{1}\oplus\dots\oplus\omega_{h_{1}}-b_{h_{1}}-b_{h_{2}}-\omega_{h_{2}}-m_{h}\oplus$$
 dove $\omega_{0}$ e $\omega_1$ indicano rispettivamente stato iniziale e di accettazione di $T$.
 
 La macchina $U$ per simulare il comportamento della macchina $T$ esegue il seguente algoritmo
