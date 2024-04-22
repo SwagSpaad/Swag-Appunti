@@ -136,7 +136,7 @@ Poiché $f$ è calcolabile e poiché la simulazione della computazione $NT(x)$ n
 - se $x\in L$, allora poiché $NT$ accetta $x$ in $f(|x|)$ passi, la simulazione di $NT(x)$ durante la terza fase termina nello stato di accettazione prima che venga letto $\square$ sul terzo nastro e, dunque, $NT^{'}$ accetta $x$
 - se $x\not\in L$ allora, o la simulazione di $NT(x)$ durante la terza fase termina nello stato di rigetto prima che venga letto $\square$ sul terzo nastro, oppure la simulazione di $NT(x)$ durante la terza fase non termina prima che venga letto $\square$ sul terzo nastro; in entrambi i casi $NT^{'}$ rigetta $x$
 
-Questo dimostra che $NT^{'}$ decide $L$ e quindi $L$ è decidibile.
+Questo dimostra che $NT^{'}$ decide $L$ e quindi $L$ è decidibile. $\square$
 
 Nel paragrafo 6.2 della [dispensa 6](http://informatica.uniroma2.it/upload/2023/FO/D06LinguaggiEComplessita.pdf) si dimostra che **tutti i modelli di calcolo deterministici sono fra loro polinomialmente correlati**, ovvero per ogni macchina di Turing $T$ di un determinato tipo (ad un nastro, a $k$ nastri, alfabeto binario ecc.) esistono una macchina di Turing $T'$ (di un altro di quei tipi) ed un polinomio $p$ tali che $T'$ risolve lo stesso problema risolto da $T$ e, per ogni $x$, $\text{dtime}(T',x)\le p(\text{dspace}(T,x))$ e $\text{dtime}(T',x)\le p(\text{dspace}(T,x))$. 
 Anche il modello Macchina di Turing è polinomialmente correlato con il PascalMinimo, quindi possiamo scrivere un algoritmo $A$ in PascalMinimo e se $A$ trova la soluzione di un istanza $x$ del problema eseguendo $f(|x|)$ istruzioni, allora esiste una macchina di Turing $T$ ad un nastro che risolve lo stesso problema, ed esiste un polinomio $p$ tale che $\text{dtime}(T,x)\le p(f(|x|))$.
