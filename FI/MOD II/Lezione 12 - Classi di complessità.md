@@ -106,4 +106,34 @@ Sia $L\subseteq \{0,1\}^{*}$ tale che $L\in\text{DTIME}[f(n)]$: allora esiste un
 
 Questo teorema ci dice che, se collochiamo un linguaggio $L$ in una classe di complessità $\text{DTIME}[f(n)]$, allora $L$ appartiene anche a tutte le classi $\text{DTIME}[g(n)]$ tali che $f(n)\le g(n)$ definitivamente.
 
- 
+**Teorema 6.13** (Gap Theorem)
+Esiste una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ tale che $$\text{DTIME}[2^{f(n)}]\subseteq\text{DTIME}[f(n)]$$
+
+Dagli ultimi due teoremi visti, osserviamo che, se collochiamo un linguaggio $L$ in $\text{DTIME}[f(n)]$, allora $L$ appartiene a **tutte** le classi $\text{DTIME}[f(n)^{k}]$ per ogni $k\in\mathbb{N}$, per il teorema 6.12 (infatti $f(n)\le f(n)^{k}$ definitivamente). Quindi abbiamo una gerarchia infinita di classi di complessità $$\text{DTIME}[f(n)]\subseteq\text{DTIME}[f(n)^{2}]\subseteq\dots\text{DTIME}[f(n)^{k}]$$ e sempre per il teorema 6.12, data una funzione $f$ totale e calcolabile ed una funzione $g$ tale che $f(n)\le g(n)$ definitivamente, allora $$\text{DTIME}[f(n)]\subseteq\text{DTIME}[g(n)]$$
+D'altra parte, nella definizione di una teoria della complessità in grado di classificare i linguaggi in classi di complessità crescente, sarebbe preferibile che $\text{DTIME}[f(n)]$ **NON fosse contenuto in** $\text{DTIME}[g(n)]$ **quando $f(n)$ è molto più grande di $g(n)$**, ad esempio quando $f(n)=2^{g(n)}$, ma abbiamo visto che questo è contraddetto dal **Gap Theorem**.
+
+# Funzioni time/space-constructible
+In questo paragrafo sono introdotte delle funzioni totali e calcolabili che, per essere calcolate, utilizzano quantità di risorse (tempo di calcolo o spazio di memoria) proporzionali al loro valore. 
+
+**Def 6.1** 
+Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è time-constructible se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dtime}(T,n)\in O(f(n))$.
+
+**Def. 6.2**
+Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è space-constructible se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dspace}(T,n)\in O(f(n))$.
+
+Queste funzioni possono essere calcolate in tempo e spazio proporzionale al suo valore.
+Sono time/space-constructible tutte le funzioni "regolari", come ad esempio le funzioni polinomiali e le funzioni esponenziali del tipo $2^{f(n)}$ dove $f(n)$ è una funzione time/space-constructible.
+
+La funzione $f(n)$ che si trova nella dimostrazione del **gap theorem** è totale e calcolabile, ma non time-constructible. 
+
+È possibile mostrare che quando una funzione time-constructible $f$ cresce molto più velocemente di una funzione $g$, la classe $\text{DTIME}[g(n)]$ è contenuta strettamente nella classe $\text{DTIME}[f(n)]$. 
+In effetti sussistono i seguenti teoremi di gerarchia: 
+
+**Teorema 6.14** Teorema di gerarchia spaziale
+Siano $f:\mathbb{N}\to\mathbb{N}$ e $g:\mathbb{N}\to\mathbb{N}$ due funzioni tali che $f$ è space-constructible e $$\lim_{n\to\infty} \frac{g(n)}{f(n)}=0$$Allora, $\text{DSPACE}[g(n)]\subset\text{DSPACE}[f(n)]$, ossia, esiste un linguaggio $L$ tale che $L\in\text{DSPACE}[f(n)]$ e $L\not\in\text{DSPACE}[g(n)]$.
+
+**Teorema 6.14** Teorema di gerarchia temporale
+Siano $f:\mathbb{N}\to\mathbb{N}$ e $g:\mathbb{N}\to\mathbb{N}$ due funzioni tali che $f$ è space-constructible e $$\lim_{n\to\infty} \frac{g(n)\log(g(n))}{f(n)}=0$$Allora, $\text{DTIME}[g(n)]\subset\text{DTIME}[f(n)]$, ossia, esiste un linguaggio $L$ tale che $L\in\text{DTIME}[f(n)]$ e $L\not\in\text{DTIME}[g(n)]$.
+
+Quindi, il teorema di gerarchia temporale ci dice che quando f è time-constructible
+$\text{DTIME}[f(n)]$ **non è contenuto** in $\text{DTIME}[g(n)]$ quando $f(n)$ è molto più grande di $g(n)$ - ad esempio, quando $f(n) = 2^{g(n)}$. 
