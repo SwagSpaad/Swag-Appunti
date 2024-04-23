@@ -101,11 +101,13 @@ $$\begin{align*}
 &\langle q_{11},(b,a,\square,y),(b,a,\square,y),q_\text{statoCorretto},(f,f,d,f)\rangle&\forall y\in\{0,1\}\land\forall a,b\in\{0,1,\square\}
 \end{align*}$$
 		1. Se nello stato $q_\text{statoCorretto}$ legge lo stesso simbolo sui nastri $N_1$ e $N_2$, allora ha trovato la quintupla da eseguire, quindi sposta la testina di $N_1$ a destra di due posizioni ed entra in $q_\text{scrivi}$ 
+
 $$\begin{align*}
 &\langle q_\text{statoCorretto},(a,a,x,y),(a,a,x,y),q_\text{statoCorretto}^{'},(d,f,f,f) \rangle\\
 &\langle q_\text{statoCorretto}^{'},(-,a,x,y),(-,a,x,y),q_\text{scrivi},(d,f,f,f) \rangle
 \end{align*}$$
 		2. Se nello stato $q_\text{statoCorretto}$ legge simboli differenti sui nastri $N_1$ e $N_2$, allora la quintupla che sta scandendo su $N_1$ non è quella corretta, quindi entra in $q_2$, sposta la testina di $N_1$ a destra fino a posizionarla sul primo simbolo successivo al carattere $\oplus$ e se tale simbolo è $0$ oppure $1$ allora entra in $q_1$, altrimenti rigetta 
+
 $$\begin{align*}
 &\langle q_\text{statoCorretto},(b,a,x,y),(b,a,x,y),q_{2},(d,f,f,f)\rangle&\forall x,y\in\{0,1\}\land\forall a,b\in\{0,1,\square\}:a\neq b\\
 &\langle q_2,(z,a,x,y),(z,a,x,y),q_{2},(d,f,f,f)\rangle&\forall a\in\{0,1,\square\}\land\forall z\in\{0,1,-\} \\

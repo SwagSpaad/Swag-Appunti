@@ -81,5 +81,29 @@ Poiché $$\begin{align*}
 \text{dtime}(T,x)&\le\text{dspace}(T,x)|Q|(|\Sigma|+1)^{\text{dspace}(T,x)}=\text{dspace}(T,x)|Q|3^\text{dspace(T,x)}=\\\\
 &=2^{\log(\text{dspace}(T,x))}|Q|\bigg[2^{\log(3)}\bigg]^{\text{dspace(T,x)}}\\\\
 &=|Q|2^{\log(\text{dspace}(T,x))+\text{dspace}(T,x)\log(3)}\le|Q|2^{[1+\log(3)]\text{ dspace}(T,x)}
-\end{align*}$$ allora $\text{dtime}(T,x)\in O(2^{O(1)f(|x|)})$ e dunque $L\in\text{DTIME}[2^{O(1)f(n)}]$
+\end{align*}$$ allora $\text{dtime}(T,x)\in O(2^{O(1)f(|x|)})$ e dunque $L\in\text{DTIME}[2^{O(1)f(n)}]$. $\square$
 
+**Teorema 6.11**
+Per ogni funzione calcolabile e totale $f:\mathbb{N}\to\mathbb{N}$ $$\text{DTIME}[f(n)]=\text{coDTIME}[f(n)]\:\:e\:\:\text{DSPACE}[f(n)]=\text{coDTIME}[f(n)]$$ 
+**Dim.**
+Sia $L\subseteq\{0,1\}^{*}$ tale che $L\in\text{DTIME}[f(n)]$: allora, esiste una macchina di Turing deterministica $T$ che decide $L$ e tale che, per ogni $x\in\{0,1\}^{*}$, $\text{dtime}(T,x)\in O(f(|x|))$. 
+Poiché $T$ decide $L$, allora $T(x)=q_{A}$ se $x\in L$ e $T(x)=q_{R}$ se $x\in\{0,1\}^{*}-L=L^{C}$.
+Costruiamo una macchina $T^{'}$, identica a $T$, ma con gli stati di accettazione e rigetto invertiti. Allora e $T^{'}(x)=q_{R}$ se $x\in L$ e $T(x)=q_{A}$ se $x\in\{0,1\}^{*}-L=L^{C}$. Quindi $T^{'}$ decide $L^{C}$ e, per ogni $x\in\{0,1\}^{*}$, $\text{dtime}(T,x)\in O(f(|x|))$, quindi $L^{C}\in\text{DTIME}[f(n)]$. 
+Poiché $L$ è un qualunque linguaggio in $\text{DTIME}[f(n)]$ e, quindi, $L^{C}$ è un qualunque linguaggio in $\text{coDTIME}[f(n)]$, questo significa che:
+- per ogni linguaggio $L^{C}\in\text{coDTIME}[f(n)]$, $L^{C}\in\text{DTIME}[f(n)]$ - ovvero $\text{coDTIME}[f(n)]\subseteq\text{DTIME}[f(n)]$ 
+- per ogni linguaggio $L\in\text{DTIME}[f(n)]$, poiché $L^{C}\in\text{coDTIME}[f(n)]$, allora $L\in\text{coDTIME}[f(n)]$, ossia $\text{DTIME}[f(n)]\subseteq\text{coDTIME}[f(n)]$. 
+Questi ultimi due punti dimostrano che $\text{DTIME}[f(n)]=\text{coDTIME}[f(n)]$. $\square$
+
+**Teorema 6.12** 
+Per ogni coppia di funzioni $f:\mathbb{N}\to\mathbb{N}$ e $g:\mathbb{N}\to\mathbb{N}$ tali che $\exists n_{0}\in\mathbb{N}\::\:\forall n\ge n_{0}$ allora $f(n)\le g(n)$ - ossia $f(n)\le g(n)$ *definitivamente* $$\begin{align*}
+\text{DTIME}[f(n)]&\subseteq \text{DTIME}[g(n)]\\
+\text{NTIME}[f(n)]&\subseteq \text{NTIME}[g(n)]\\
+\text{DSPACE}[f(n)] &\subseteq  \text{DSPACE}[g(n)]\\
+\text{NSPACE}[f(n)] &\subseteq  \text{NSPACE}[g(n)]
+\end{align*}$$
+**Dim.**
+Sia $L\subseteq \{0,1\}^{*}$ tale che $L\in\text{DTIME}[f(n)]$: allora esiste una macchina di Turing deterministica $T$ che decide $L$ e tale che $\text{dtime}(T,x)\in O(f(|x|))\subseteq O(g(|x|))$. Questo significa che $L\in\text{DTIME}[g(n)]$. $\square$
+
+Questo teorema ci dice che, se collochiamo un linguaggio $L$ in una classe di complessità $\text{DTIME}[f(n)]$, allora $L$ appartiene anche a tutte le classi $\text{DTIME}[g(n)]$ tali che $f(n)\le g(n)$ definitivamente.
+
+ 
