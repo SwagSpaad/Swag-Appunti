@@ -116,10 +116,10 @@ D'altra parte, nella definizione di una teoria della complessità in grado di cl
 In questo paragrafo sono introdotte delle funzioni totali e calcolabili che, per essere calcolate, utilizzano quantità di risorse (tempo di calcolo o spazio di memoria) proporzionali al loro valore. 
 
 **Def 6.1** 
-Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è time-constructible se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dtime}(T,n)\in O(f(n))$.
+Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è *time-constructibl*e se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dtime}(T,n)\in O(f(n))$.
 
 **Def. 6.2**
-Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è space-constructible se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dspace}(T,n)\in O(f(n))$.
+Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è *space-constructible* se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dspace}(T,n)\in O(f(n))$.
 
 Queste funzioni possono essere calcolate in tempo e spazio proporzionale al suo valore.
 Sono time/space-constructible tutte le funzioni "regolari", come ad esempio le funzioni polinomiali e le funzioni esponenziali del tipo $2^{f(n)}$ dove $f(n)$ è una funzione time/space-constructible.
@@ -132,8 +132,8 @@ In effetti sussistono i seguenti teoremi di gerarchia:
 **Teorema 6.14** Teorema di gerarchia spaziale
 Siano $f:\mathbb{N}\to\mathbb{N}$ e $g:\mathbb{N}\to\mathbb{N}$ due funzioni tali che $f$ è space-constructible e $$\lim_{n\to\infty} \frac{g(n)}{f(n)}=0$$Allora, $\text{DSPACE}[g(n)]\subset\text{DSPACE}[f(n)]$, ossia, esiste un linguaggio $L$ tale che $L\in\text{DSPACE}[f(n)]$ e $L\not\in\text{DSPACE}[g(n)]$.
 
-**Teorema 6.14** Teorema di gerarchia temporale
-Siano $f:\mathbb{N}\to\mathbb{N}$ e $g:\mathbb{N}\to\mathbb{N}$ due funzioni tali che $f$ è space-constructible e $$\lim_{n\to\infty} \frac{g(n)\log(g(n))}{f(n)}=0$$Allora, $\text{DTIME}[g(n)]\subset\text{DTIME}[f(n)]$, ossia, esiste un linguaggio $L$ tale che $L\in\text{DTIME}[f(n)]$ e $L\not\in\text{DTIME}[g(n)]$.
+**Teorema 6.15** Teorema di gerarchia temporale
+Siano $f:\mathbb{N}\to\mathbb{N}$ e $g:\mathbb{N}\to\mathbb{N}$ due funzioni tali che $f$ è space-constructible e $$\lim_{n\to\infty} \frac{g(n)\log(g(n))}{f(n)}=0$$Allora, $\text{DTIME}[g(n)]\subset\text{DTIME}[f(n)]$, ossia, esiste un linguaggio $L$ tale che $L\in\text{DTIME}[f(n)]$ e $L\not\in\text{DTIME}[g(n)]$. ^598cac
 
 Quindi, il teorema di gerarchia temporale ci dice che quando f è time-constructible
 $\text{DTIME}[f(n)]$ **non è contenuto** in $\text{DTIME}[g(n)]$ quando $f(n)$ è molto più grande di $g(n)$ - ad esempio, quando $f(n) = 2^{g(n)}$. 

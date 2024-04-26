@@ -1,4 +1,4 @@
-*****
+xex*****
 # Introduzione alla complessità
 Abbiamo in precedenza studiato cosa si intende per problema risolvibile, decidibile, accettabile e abbiamo visto che esistono problemi non risolvibili. Ma siamo davvero sicuri che possiamo risolvere i problemi risolvibili?
 
