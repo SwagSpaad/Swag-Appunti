@@ -119,4 +119,5 @@ Nel campo ddella calcolabilità, le riduzioni si rivelano utili tanto per dimost
 
 Allo stesso modo, le riduzioni polinomiali sono uno strumento utile tanto per dimostrare che un linguaggio è in $\textbf{P}$, quanto per dimostrare che un linguaggio *probabilmente* non è in $\textbf{P}.$ Dato un linguaggio $L_{1}$:
 - se dimostro che $L_{1}\preceq L_{2}$ per un qualche altro linguaggio $L_{2}\in\textbf{P}$, allora posso concludere che anche $L_{1}\in\textbf{P}$ 
-- se dimostro che $L_{0}\preceq L_{1}$, per un qualche altro linguaggio $L_{0}$, allora posso concludere che **$L_{1}$ non può essere più facile di $L_{0}$, ovvero se $L_{0}$ probabilmente non appartiene a $\textbf{P}$ allora anche $L_{1}$ probabilmente non appartiene a $\textbf{P}$.
+- se dimostro che $L_{0}\preceq L_{1}$, per un qualche altro linguaggio $L_{0}$, allora posso concludere che **$L_{1}$ non può essere più facile di $L_{0}$, 
+- ovvero se $L_{0}$ probabilmente non appartiene a $\textbf{P}$ allora anche $L_{1}$ probabilmente non appartiene a $\textbf{P}$.
