@@ -79,3 +79,44 @@ Siccome d'ora in poi faremo sempre riferimento alla riducibilità polinomiale, p
 
 In particolare: abbiamo due linguaggi $L_{1}\subseteq\Sigma_{1}^{*}$ e $L_{2}\subseteq\Sigma_{2}^{*}$ e sappiamo che $L_{1}\preceq L_{2}$. Abbiamo appena dimostrato che se $L_{2}\in\textbf{P}$ allora $L_{1}\in\textbf{P}$, infatti, in questo caso, esiste una costante $k$ tale che $L_{2}\in \text{DTIME}[n^{k}]$, allora da quanto visto nell'esempio $L_{1}\in\text{DTIME}[n^{c}+(n^{c})^{k}]\subseteq\textbf{P}$.
 
+Tutte le [[Lezione 13 - Funzioni time e space-constructible e specifiche classi di complessità#Specifiche classi di complessità|classi di complessità]] introdotte nella [[Lezione 13 - Funzioni time e space-constructible e specifiche classi di complessità|lezione 13]] sono chiuse rispetto alla riducibilità polinomiale.
+
+**Teorema 6.21**
+La classe $\textbf{P}$ è chiusa rispetto alla riducibilità polinomiale
+
+Questo teorema dimostra solo il caso visto nell'esempio precedente, quindi "se $L_{1}\preceq L_{2}$ e $L_{2}\in\textbf{P}$ allora $L_{1}\in\textbf{P}$"
+
+Allo stesso modo si dimostra che quando $L_{1}\preceq L_{2}$ se $L_{2}\in\textbf{EXPTIME}$ allora $L_{1}\in\textbf{EXPTIME}$ e così per le altre classi di complessità.
+
+**Teorema 6.22**
+Le classi $\textbf{NP},\:\textbf{PSPACE},\:\textbf{EXPTIME},\:\textbf{NEXPTIME}$ sono chiuse rispetto alla riducibilità polinomiale.
+
+
+# Linguaggi NP-completi
+
+**Def.**
+Un linguaggio $L\subseteq\Sigma^{*}$ è $\textbf{NP}$-completo rispetto alla riducibilità polinomiale se:
+- $L\in\textbf{NP}$
+- per ogni altro $L_{0}\in\textbf{NP}$ vale che $L_{0}\preceq L$
+
+I linguaggi $\textbf{NP}$-completi sono particolarmente importanti per il loro rualo di possibili *linguaggi separatori* fra le classi $\textbf{P}$ e $\textbf{NP}$.
+
+**Corollario**
+Se $\textbf{P}\neq\textbf{NP}$ allora, per ogni linguaggio $\textbf{NP}$-completo $L$, $L\not\in\textbf{P}$
+
+**Dim.**
+Supponiamo che $L$ sia un linguaggio $\textbf{NP}$-completo e che $L\in\textbf{P}$. 
+Poiché $L$ è  $\textbf{NP}$-completo allora, per ogni linguaggio $L_{0}\in\textbf{NP}$, $L_{0}\preceq L$, ma se $L\in\textbf{P}$, poiché $\textbf{P}$ è chiusa rispetto a $\preceq$, questo implica che, per ogni $L_{0}\in\textbf{NP}$, $L_{0}\in\textbf{P}$, ossia $\textbf{P}=\textbf{NP}$, contraddicendo l'ipotesi. $\square$
+
+Qual è il senso di questo corollario? Intanto diciamo che è molto improbabile che un linguaggio $\textbf{NP}$-completo appartenga a $\textbf{P}$, perché si sospetta che $\textbf{P}\neq\textbf{NP}$ secondo la **congettura fondamentale della complessità computazionale**.
+Quindi se vogliamo dimostrare che non esiste un algoritmo deterministico che decide in tempo polinomiale un linguaggio che è in $\textbf{NP}$, allora dobbiamo dimostrare che quel linguaggio è $\textbf{NP}$-completo. Se, invece, abbiamo un linguaggio $\textbf{NP}$-completo e progettiamo un algortimo *deterministico* che decide quel linguaggio in tempo polinomiale le opzioni sono due:
+- abbiamo risolto la congettura
+- abbiamo sbagliato qualcosa
+
+Nel campo ddella calcolabilità, le riduzioni si rivelano utili tanto per dimostrare che un linguaggio è accettabile/decidibile, quanto per dimostrare che un linguaggio non è accettabile/decidibile. Dato un linguaggio $L_{1}$:
+- se dimostro che $L_{1}\preceq L_{2}$, per un qualche altro linguaggio $L_2$ decidibile, allora posso concludere che anche $L_1$ è decidibile
+- se dimostro che $L_{0}\preceq L_{1}$, per un qualche linguaggio $L_{0}$ non decidibile, allora posso concludere che anche $L_{1}$ è  non decidibile
+
+Allo stesso modo, le riduzioni polinomiali sono uno strumento utile tanto per dimostrare che un linguaggio è in $\textbf{P}$, quanto per dimostrare che un linguaggio *probabilmente* non è in $\textbf{P}.$ Dato un linguaggio $L_{1}$:
+- se dimostro che $L_{1}\preceq L_{2}$ per un qualche altro linguaggio $L_{2}\in\textbf{P}$, allora posso concludere che anche $L_{1}\in\textbf{P}$ 
+- se dimostro che $L_{0}\preceq L_{1}$, per un qualche altro linguaggio $L_{0}$, allora posso concludere che **$L_{1}$ non può essere più facile di $L_{0}$, ovvero se $L_{0}$ probabilmente non appartiene a $\textbf{P}$ allora anche $L_{1}$ probabilmente non appartiene a $\textbf{P}$.

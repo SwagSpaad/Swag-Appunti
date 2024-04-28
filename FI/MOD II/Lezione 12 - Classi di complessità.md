@@ -1,4 +1,4 @@
-*******
+x*******
 In questa lezione iniziamo il processo di classificazione dei linguaggi in base alle risorse tempo e spazio sufficienti alla loro decisione/accettazione. 
 Vediamo intanto due teoremi, che mostrano che il numero di istruzioni e di celle che occorrono per *decidire deterministicamente* un linguaggio possono essere individuati solo *a meno di costanti moltiplicative*.
 
