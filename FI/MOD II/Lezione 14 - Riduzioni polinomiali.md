@@ -82,7 +82,7 @@ In particolare: abbiamo due linguaggi $L_{1}\subseteq\Sigma_{1}^{*}$ e $L_{2}\su
 Tutte le [[Lezione 13 - Funzioni time e space-constructible e specifiche classi di complessità#Specifiche classi di complessità|classi di complessità]] introdotte nella [[Lezione 13 - Funzioni time e space-constructible e specifiche classi di complessità|lezione 13]] sono chiuse rispetto alla riducibilità polinomiale.
 
 **Teorema 6.21**
-La classe $\textbf{P}$ è chiusa rispetto alla riducibilità polinomiale
+La classe $\textbf{P}$ è chiusa rispetto alla riducibilità polinomiale ^31c469
 
 Questo teorema dimostra solo il caso visto nell'esempio precedente, quindi "se $L_{1}\preceq L_{2}$ e $L_{2}\in\textbf{P}$ allora $L_{1}\in\textbf{P}$"
 

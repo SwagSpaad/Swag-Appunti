@@ -6,7 +6,7 @@ Facciamo un breve esempio con le torri di Hanoi: la leggenda narra che 64 dischi
 
 Consideriamo il problema con 3 dischi 
 
-![[Pasted image 20240417112536.png|center|500]]
+![[FI/MOD II/img/img11.png|center|500]]
 
 Vediamo che il numero minimo di spostamenti per risolvere il problema è 7, e meglio di così non si può fare. 
 Per una torre di 4 dischi è necessario: 
