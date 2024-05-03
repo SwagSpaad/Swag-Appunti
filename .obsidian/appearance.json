@@ -1,16 +1,17 @@
 {
-  "baseFontSize": 24,
+  "baseFontSize": 30,
   "enabledCssSnippets": [
     "center",
-    "table_center"
+    "table_center",
+    "transparent"
   ],
-  "accentColor": "",
-  "cssTheme": "Catppuccin",
+  "accentColor": "#ffffff",
+  "cssTheme": "Minimal",
   "textFontFamily": "Helvetica Neue,Cantarell",
   "baseFontSizeAction": false,
   "interfaceFontFamily": "ProFont IIx Nerd Font Mono",
   "monospaceFontFamily": "",
-  "showViewHeader": true,
+  "showViewHeader": false,
   "nativeMenus": false,
   "theme": "obsidian",
   "translucency": true
