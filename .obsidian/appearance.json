@@ -6,7 +6,7 @@
     "transparent"
   ],
   "accentColor": "#ffffff",
-  "cssTheme": "Minimal",
+  "cssTheme": "Catppuccin",
   "textFontFamily": "Helvetica Neue,Cantarell",
   "baseFontSizeAction": false,
   "interfaceFontFamily": "ProFont IIx Nerd Font Mono",
