@@ -67,7 +67,7 @@ $NT_{1}$ **accetta** $L$, infatti, per ogni $x\in L$: poiché $NT$ accetta $L$, 
 
 D'altra parte, per ogni $x\not\in L$: poiché $NT$ accetta $L$, allora $NT(x)$ non accetta (rigetta o non termina) e allora non esiste alcuna computazione deterministica di $NT(x)$ che termina in $q_A$, e allora stesso modo non esiste in $NT_{1}(x)$ una computazione deterministica che accetta e, quindi, $NT_{1}(x)$ non accetta
 
-![[Pasted image 20240429134523.png|center|600]]
+![[FI/MOD II/img/img13.png|center|600]]
 
 Quindi abbiamo un linguaggio $L\subseteq\{0,1\}^{*}$ accettato dalla macchina non deterministica $NT_{1}$ e ora applichiamo la stessa tecnica utilizzata nella dimostrazione del [[#^6dd54d|teorema 6.11]]: costruiamo una nuova macchina $NT_{1}^{C}$ invertendo gli stati di accettazione e rigetto di $NT_{1}$. Quello che ci aspettiamo è che $NT_{1}^{C}$ accetti $L^{C}$, vediamo.
 Scegliamo $x\in\{0,1\}^{*}$ e poniamo $x=x_{1}x_{2}\dots x_{n}$. Se $x\in L^{C}$:

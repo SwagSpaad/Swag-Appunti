@@ -99,7 +99,7 @@ La nostra $f$ dell'istanza $\langle X,f\rangle$ di **3SAT** è definita su $\{\t
 
 >**Esempio**
 >Se $X=\{x_{1},x_{2},x_{3}\}$ e $f=c_{1}\land c_{2}$ con $c_{1}=x_{1}\lor x_{2}\lor x_{3}$ e $c_{2}=x_{1}\lor \lnot x_{2}\lor\lnot x_{3}$ rappresentiamo $f$ nel seguente modo 
->![[Pasted image 20240507150430.png|center|500]]  
+>![[FI/MOD II/img/img14.png|center|500]]  
 >Codificando "vero" con $1$ e "falso" con 0 e scrivendo le righe della tabella una di seguito l'altra separate da $2$, quindi la tabella è codificata nel seguente modo $$1111\ 2\ 1101\ 2\ 1011\ 2\ 1001\ 2\ 0110\ 2\ 0101\ 2\ 0011\ 2\ 0000$$
 
 Consideriamo il seguente algoritmo che verifica, dato $\langle f,X\rangle\in I_\text{3SAT}$ se $f$ è *soddisfacibile*, ossia, se esiste un assegnazione $a$ di valori in $\text{\{vero, falso\}}$ alle variabili di $X$ tali che $f(a(X))=\text{vero}$: 
