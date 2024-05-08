@@ -1,11 +1,5 @@
 # Including plugin and hotkey configurations
-<<<<<<< HEAD
-.obsidian/themes
-.obsidian/appearance.json
-.obsidian/workspace.json
-=======
-*.obsidian/
->>>>>>> 48da332 (edit)
+.obsidian/
 
 # MacOs
 .trash/
