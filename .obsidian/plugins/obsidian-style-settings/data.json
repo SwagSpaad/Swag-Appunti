@@ -1,0 +1,22 @@
+{
+  "catppuccin-theme-settings@@catppuccin-theme-accents": "ctp-accent-pink",
+  "catppuccin-interface-styles@@ctp-bold-folder-title": true,
+  "catppuccin-font-styles@@ctp-bold": "var(--ctp-flamingo)",
+  "catppuccin-font-styles@@ctp-italic": "var(--ctp-rosewater)",
+  "catppuccin-font-styles@@ctp-strikethrough": "var(--ctp-mauve)",
+  "catppuccin-font-styles@@ctp-blockquote": "var(--ctp-lavender)",
+  "catppuccin-heading-settings@@ctp-page-title": "var(--ctp-sapphire)",
+  "catppuccin-theme-settings@@catppuccin-theme-dark": "ctp-mocha",
+  "anuppuccin-theme-settings@@anuppuccin-theme-dark": "ctp-frappe",
+  "anuppuccin-theme-settings@@anuppuccin-theme-light": "ctp-latte",
+  "anuppuccin-theme-settings@@anuppuccin-theme-accents": "ctp-accent-teal",
+  "minimal-advanced@@cursor": "default",
+  "minimal-advanced@@styled-scrollbars": false,
+  "minimal-advanced@@hide-markdown": false,
+  "minimal-style@@ax1@@dark": "#00C1FF",
+  "minimal-style@@sp1@@dark": "#FFFFFF",
+  "minimal-style@@italic-color@@dark": "#D35EFF",
+  "minimal-style@@bold-color@@dark": "#C689FF",
+  "minimal-style@@ui2@@dark": "#FFFFFF",
+  "minimal-style@@ui1@@dark": "#000000"
+}
