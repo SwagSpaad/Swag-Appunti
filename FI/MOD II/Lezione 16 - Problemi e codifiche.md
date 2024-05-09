@@ -137,7 +137,7 @@ Ripensiamo alle codifiche $\chi_{1}$ e $\chi_{2}$:
 - la codifica di $\chi_{1}$ rappresenta di $\langle X,f\rangle$ solo l'informazione *strettamente necessaria*, ossia la **struttura di f**
 - la codifica di $\chi_{2}$ rappresenta, invece, $\langle X,f\rangle$ in forma estesa, infatti $\chi_{2}$ contiene la soluzione del problema così che, per trovare la soluzione è sufficiente leggere la codifica, ma questo significa che calcolare la codifica di $\chi_{2}$ ha richiesto molto tempo, ossia, **il tempo impiegato dalla computazione $T_{1}(\chi_{1}(X,f))$ lo dobbiamo impiegare noi per calcolare $\chi_{2}(X,f)$ se vogliamo utilizzare questa codifica**. In effetti $\chi_{2}$ è *esponenzialmente* più lunga di $\chi_{1}$
 
-Informalmente, **una codifica $\chi$ per un problema $\Gamma$ è irragionevole se esiste un'altra codifica $\chi^{'}$** tale che le parole in cui $\chi$ codifica le istanze di $\Gamma$ sono "più che polinomialmente" più lunghe delle parole in cui $\chi^{'}$ codifica le istanze di $\Gamma$.
+Informalmente, **una codifica $\chi$ per un problema $\Gamma$ è irragionevole se esiste un'altra codifica $\chi^{'}$** tale che le parole in cui $\chi$ codifica le istanze di $\Gamma$ sono "più che polinomialmente" lunghe delle parole in cui $\chi^{'}$ codifica le istanze di $\Gamma$.
 
 Questo significa che esiste una funzione più che polinomiale $f$ tale che, per qualche istanza $x$ di $\Gamma$ $|\chi(X)|\geq f(|\chi^{'}|)$, quindi $f:\mathbb{N}\to\mathbb{N}$ è più che polinomiale se, per ogni $k\in \mathbb{N}$, $f(n)\in \Omega(n^{k})$.
 Informalmente, il rapporto fra $|\chi(X)|$ e $|\chi^{'}(X)|$ è più grande di qualsiasi polinomio.
