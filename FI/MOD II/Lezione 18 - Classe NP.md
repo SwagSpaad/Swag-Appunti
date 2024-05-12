@@ -71,5 +71,90 @@ Ecco quindi perché continuiamo a parlare di linguaggi **accettati**, piuttosto 
 
 # La struttura dei problemi in NP
 Il **Genio** a "mezzo servizio" gioca un ruolo fondamentale per comprendere la struttura dei problemi che popolano la classe $NP$.
-E per comprendere questa struttura, facciamo un po' di esempi di problemi e di esempi di **algoritmi che li risolvono**
-E siccome ci accingiamo a progettare algoritmi che decidono problemi anziché linguaggi <<DA CONTINUARE>>
+E per comprendere questa struttura, facciamo un po' di esempi di problemi e di esempi di **algoritmi non deterministici che li risolvono**
+E siccome ci accingiamo a progettare algoritmi che decidono problemi anziché linguaggi, lí descriveremo ad "alto livello", utilizzeremo il PascalMinimo, mettendo da parte le macchine di Turing.
+Ma prima di fare ció, dobbiamo chiarire una piccola questione.
+
+**Quanto é potente questo Genio?** 
+Se disponiamo di un **Genio**, perché non gli chiediamo direttamente "l'istanza $x$ é un'istanza sí del mio problema?"
+Innanzitutto, perché delle risposte del **Genio** non mi fido:
+- Se gli chiedo di indicarmi quale quintupla eseguire ad un certo punto della computazione, poi posso verificare che mi ha indicato una quintupla che posso eseguire davvero
+- Se gli chiedo di dirmi se $x$ é un'istanza sí, poi come verificare effettivamente la risposta?
+Ma soprattutto, abbiamo **introdotto il Genio per modellare il non determinismo** 
+- Per questo gli chiediamo di scegliere quale quintupla eseguire a ciascun passo della computazione	
+- **E il numero di quintuple fra le quali scegliere é il grado di non determinismo della macchina**
+- Che é *Costante*
+Detto questo, va bene trasportare il **Genio** nel mondo degli algoritmi di alto livello, a patto che gli proporremo sempre di operare fra un numero *Costante* di opzioni.
+
+# Il problema 3Sat
+Dati un insieme $X$ di variabili booleane ed un predicato $f$, definito sulle variabili in $X$ e contenente i soli operatori $\land \ \lor \ \lnot$, decidere se esiste una assegnazione $a$ di valori in $\{Vero, Falso\}$ alle variabili in $X:f(a(X))= Vero$ 
+Consideriamo soltanto predicati $f$ in forma 3-congiuntiva normale (3CNF), ossia, 
+- $f$ é la congiunzione di un certo numero di clausole: $f= c_{1} \land c_{2} \ ...\land c_{m}$
+- Ciascuna $c_{j}$ é la disgiunzione ($\lor$) di tre letterali (3CNF), ad esempio $x_{1}\lor \lnot x_{2} \lor x_{3}$
+Questo problema prende il nome di 3Sat, ed é cosí formalizzato:
+- $\Im_{3Sat} = \{<X,f> \ : \ X$ é un insieme di variabili booleane $\land$ $f$ é un predicato su $X$ in 3CNF $\}$ 
+- $S_{3Sat}(X,f) = \{a:X \rightarrow \{Vero, Falso\}\}$ ($S$ insieme delle assegnazioni di veritá alle variabili $X$)
+- $\pi_{3Sat}(X,f,S_{3Sat}(X,f)) = \exists \ a \in S_{3Sat}(X,f):f(a(X)) = Vero$
+**Possibile algoritmo non deterministico:**
+![[FI/MOD II/img/img16.png|center|800]]
+Questo algoritmo é logicamente suddiviso in 2 parti:
+- La prima parte ha carattere prettamente non deterministico
+	- Serve a scegliere una assegnazione di veritá $a$ per le variabili in $f$ 
+- La seconda parte ha carattere prettamente deterministico
+	- Serve a verificare deterministicamente che l'assegnazione scelta soddisfi effettivamente $f$
+
+>[!Warning]
+>Poiché il numero di possibilitá fra le quali scegliere ad ogni passo é pari a 2, si tratta effettivamente di un algoritmo non deterministico.
+>Poiché l'algoritmo accetta se e solo se *esiste* una sequenza di scelte che soddisfa $f$, allora é un algoritmo che accetta 3Sat.
+
+**Complessitá:**
+- il primo *while* richiede tempo non deterministico lineare in $n = |X|$ 
+- il secondo *while* richiede tempo deterministico lineare in $O(|X| \cdot|f|) = O(3nm) = O(nm)$
+
+**Conclusione:**
+l'algoritmo accetta $<X,f> \ \in \ \Im_{3Sat}$ in tempo $O(|X|\cdot|f|)$, e questo prova che 3Sat $\in \ NP$
+
+# Il problema CLIQUE
+Il problema CLIQUE consiste nel decidere, dati un grafo non orientato $G=(V,E)$ ed un intero $k\in\mathbb{N}$, se $G$ contiene un sottografo completo di almeno $k$ nodi
+- Formalmente, il problema é descritto dalla tripla
+	- $\Im_{CLIQUE} = \{<G=(V,E),k> : \ G$ é un grafo non orientato $\land$ $k\in\mathbb{N}\}$ 
+	- $S_{CLIQUE} = (G = (V,E),k) = \{V' \subseteq V\}$ ($S$ é l'insieme dei sottoinsiemi di $V$) 
+	- $\pi_{CLIQUE}(G,K, S_{CLIQUE}(G,K))= \exists V' \in S(G,K):(\forall u,v \in V'[(u,v)\in E])\land |V'| \geq k$ (ovvero, scelti due nodi in $V'$, essi siano collegati da un arco)
+**Possibile algoritmo non deterministico:**
+![[FI/MOD II/img/img17.png|center|800]]
+Questo algoritmo é logicamente suddiviso in 2 parti:
+- La prima parte ha carattere prettamente non deterministico
+	- Serve a scegliere un sottoinsieme $V'$ di $V$ 
+- La seconda parte ha carattere prettamente deterministico
+	- Serve a verificare deterministicamente che il sottoinsieme scelto soddisfi effettivamente $\pi_{CLIQUE}(G,k,S_{CLIQUE}(G,k))$
+Questo algoritmo é esattamente come quello che accetta 3SAT.
+Dato che il numero di possibilitá fra le quali scegliere ad ogni passo é pari a 2, si tratta effettivamente, di un algoritmo non deterministico.
+Poiché l'algoritmo accetta se esiste una sequenza di scelte che soddisfa il predicato di CLIQUE $\pi_{CLIQUE}(G,k,S_{CLIQUE})\implies$ accetta CLIQUE
+**Complessitá**
+- il primo *while* richiede tempo non deterministico lineare in $n = |V|$
+- il secondo *while* richiede tempo deterministico in $O(|V|²(|V|+|E|))$ 
+**Conclusione:**
+l'algoritmo accetta $<G,k>\in \Im_{CLIQUE}$ in tempo $O(|V|^{2}|E|)$ e questo prova che CLIQUE $\in NP$
+
+# Ma allora...
+I tre problemi che abbiamo visto in questa lezione hanno in comune la struttura del predicato $\pi$
+- In tutti e tre i problemi $\pi$ ha la forma: esiste almeno un elemento di $S$ che soddisfa certe proprietá, che chiameremo $\eta$
+	- $\pi(x,S(x)) = \exists y \in S(x):\eta(x,y)$ 
+- Non solo, ma anche gli algoritmi decisionali che abbiamo analizzato seguivano lo stesso schema: dato input $x$ 
+	- F1(ND): sceglie una possibile soluzione $y\in S(x)$ 
+	- F2(D): verifica che $y$ soddisfa il predicato $\eta(x,y)$ 
+- E ancora:
+	- F1: sceglie una soluzione possibile che $y$, richiede tempo polinomiale $|x|$
+	- F2: verifica che $x$ e $y$ soddisfino il predicato $\eta$ , richiede tempo polinomiale in $|x|$ 
+Troppe conincidenze!!
+Beh, certamente, tutti i problemi decisionali che $\pi(x,S(x)) = \exists y \in S(x):\eta(x,y)$ possono essere risolti da un algoritmop non deterministico che opera in 2 fasi:
+- F1(ND): sceglie una possibile soluzione $y\in S(x)$ 
+- F2(D): verifica che $y$ soddisfa il predicato $\eta(x,y)$
+E tale algoritmo richiede tempo(ND) polinomiale se:
+- F1: sceglie una soluzione possibile che $y$, richiede tempo polinomiale $|x|$
+- F2: verifica che $x$ e $y$ soddisfino il predicato $\eta$ , richiede tempo polinomiale in $|x|$
+**Quindi:** 
+possiamo dire che ogni problema il cui predicato ha la forma $\pi(x,S(x)) = \exists y \in S(x):\eta(x,y)$ 
+- in cui la scelta di un elemento $y$ di $S(x)$ richiede tempo polinomiale in $|x|$
+- in cui la verifica che $y$ soddisfi il predicato $\eta$, richiede tempo polinomiale in $|x|$ 
+appartiene a $NP$
