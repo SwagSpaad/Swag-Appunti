@@ -48,7 +48,7 @@ Viceversa, sia $(i,x)\in\mathbb N\times\mathbb N$ tale che $U^{'}(i,x)$ accetta;
 **Teorema 5.5**
 Il linguaggio $L_{H}$ non è decidibile
 
-Per la dimostrazione andiamo prima a modificare la notazione. Osserviamo che, data una macchina $T$ ed un suo input $x$, il valore $o_{T}(x)$ è definito solo per gli $x$ tali che la computazione $T(x)$ termina. Poiché nella dimostrazione dobbiamo usare spesso la possibilità che una computazione non termini, indicheremo con $T(x)$ sia la computazione dalla macchina $T$ sull'input $x$ che il suo esito. Assumeremo quindi $$T(x)=\begin{cases}
+Per la dimostrazione andiamo prima a modificare la notazione. Osserviamo che, data una macchina $T$ ed un suo input $x$, il valore $O_{T}(x)$ è definito solo per gli $x$ tali che la computazione $T(x)$ termina. Poiché nella dimostrazione dobbiamo usare spesso la possibilità che una computazione non termini, indicheremo con $T(x)$ sia la computazione dalla macchina $T$ sull'input $x$ che il suo esito. Assumeremo quindi $$T(x)=\begin{cases}
 q\in Q_{f} & \text{se la computazione }T(x)\text{ termina} \\
  \\
 \text{non termina} & \text{se la computazione }T(x)\text{ non termina}
