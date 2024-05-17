@@ -36,14 +36,14 @@ Ora cerchiamo di capire che senso ha domandarsi se dato $(i,x)\in\mathbb N\times
 $L_{H}$ è un linguaggio accettabile
 
 **Dim.**
-Dobbiamo mostrare che esiste una macchina di Turing $T$ che per ogni $(i,x)\in \mathbb N\times\mathbb N$ allora $$o_{T}(i,x)=q_A\iff(i,x)\in L_{H}$$ La macchina che cerchiamo è una modifica della macchina universale $U$, che chiamiamo $U^{'}$, quindi una macchina a $4$ nastri. Su $N_{1}$ scriviamo il numero $i$ in notazione decimale e su $N_2$ scriviamo $x\in\{0,1\}^{*}$. $T$ inizia la sua computazione verificando che $i$ non contenga cifre 8 e 9 e che inizi con la cifra 2: se non è così la macchina rigetta, altrimenti cancella il $2$ iniziale e traduce quello che rimane nell'alfabeto di lavoro $\Sigma$ di $U$. 
+Dobbiamo mostrare che esiste una macchina di Turing $T$ che per ogni $(i,x)\in \mathbb N\times\mathbb N$ allora $$O_{T}(i,x)=q_A\iff(i,x)\in L_{H}$$ La macchina che cerchiamo è una modifica della macchina universale $U$, che chiamiamo $U^{'}$, quindi una macchina a $4$ nastri. Su $N_{1}$ scriviamo il numero $i$ in notazione decimale e su $N_2$ scriviamo $x\in\{0,1\}^{*}$. $U^{'}$ inizia la sua computazione verificando che $i$ non contenga cifre 8 e 9 e che inizi con la cifra 2: se non è così la macchina rigetta, altrimenti cancella il $2$ iniziale e traduce quello che rimane nell'alfabeto di lavoro $\Sigma$ di $U$. 
 In seguito $U^{'}$ simula la computazione di $U$ e se $U$ termina (sia nello stato di accettazione che di rigetto) allora $U^{'}$ termina nello stato di accettazione
 
 **Oss.**
 Se $i$ non è la codifica di una macchina di Turing, allora, poiché l'insieme delle quintuple di una qualsiasi macchina di Turing è [[Lezione 4 - Struttura di P e macchine non deterministiche#Totalità|totale]] e le computazioni con un input che non *rispettano le specifiche* non terminano, allora $U^{'}(i,x)$ non termina.
 
 Sia $(i,x)\in L_{H}$: allora, la computazione $T_{i}(x)$ termina, e quindi, la computazione $U^{'}(i,x)$ accetta. 
-Viceversa, sia $(i,x)\in\mathbb N\times\mathbb N$ tale che $U^{'}(i,x)$ accetta; poiché la computazione $U^{'}(i,x)$ simula la computazione $U(i,x)$, allora anche $U(i,x)$ termina e, dunque, $i$ è la codifica di una macchina di Turing e $T_{i}(x)$ termina, quindi $ia $(i,x)\in L_H$. $\square$
+Viceversa, sia $(i,x)\in\mathbb N\times\mathbb N$ tale che $U^{'}(i,x)$ accetta; poiché la computazione $U^{'}(i,x)$ simula la computazione $U(i,x)$, allora anche $U(i,x)$ termina e, dunque, $i$ è la codifica di una macchina di Turing e $T_{i}(x)$ termina, quindi $(i,x)\in L_H$. $\square$
 
 **Teorema 5.5**
 Il linguaggio $L_{H}$ non è decidibile
