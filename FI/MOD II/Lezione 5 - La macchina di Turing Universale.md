@@ -71,7 +71,7 @@ La macchina $U$ per simulare il comportamento della macchina $T$ esegue il segue
 3. Nello stato $q_\text{scrivi}$ inizia l'esecuzione della quintupla che ha individuato sul nastro $N_1$ scrivendo il nuovo simbolo su $N_2$, che legge sul nastro $N_1$, poi entra nello stato $q_\text{CambiaStato}$ spostandosi a destra di due posizioni
 4. Nello stato $q_\text{cambiaStato}$ prosegue l'esecuzione della quintupla individuata sul nastro $N_{1}$ modificando il contenuto del nastro $N_{3}$ scrivendoci lo stato che legge sul nastro $N_1$ ed entra nello stato $q_\text{muovi}$ muovendo due posizioni a destra la testina su $N_1$
 5. Nello stato $q_\text{muovi}$ termina l'esecuzione della quintupla letta sul nastro $N_1$, eseguendo il movimento letto sul nastro $N_2$ e la macchina entra nello stato $q_\text{riavvolgi}$
-6. Nello stato $q_\text{riavvolgi}$ viene riposizionata la testina di $N_1$ sul primo simbolo a destra del carattere $\otimes$ ed entra nello stato $q_1$
+6. Nello stato $q_\text{riavvolgi}$ viene riposizionata la testina di $N_1$ sul primo simbolo a destra del carattere $\otimes$ ed entra nello stato $q_1$eseguendo 
 
 >**Oss.**
 >La computazione $U(p_{T},x)$ rigetta ogni volta che $U$ non trova una quintupla da eseguire e lo stato scritto su $N_3$ non è uguale allo stato scritto su $N_4$, quindi U rigetta il suo input $(p_T,x)$ senza verificare che la computazione $T(x)$ abbia rigettato. 
