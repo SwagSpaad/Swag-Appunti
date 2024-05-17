@@ -29,3 +29,30 @@ O_{M}(x)=q_{R}\iff O_{M2}(x)=q_A
 \end{align*}$$
 
 # Funzioni Calcolabili
+## Th 3.2
+Un linguaggio $L$ è decidibile $\iff$ la funzione $\chi_L$ è calcolabile
+**Dim.**
+$L$ decidibile $\implies$ $\chi_{L}$ calcolabile
+- $L$ decidibile, quindi esiste mdT $M$ che accetta ogni stringa $x\in L$ e rifiuta ogni stringa $x\notin L$. 
+- A partire da $M$ costruiamo $M^{'}$ a due nastri che calcola $\chi_{L}$: 
+	- Dato input $x$ sul primo nastro, $M^{'}$ simula $M$. Se $M$ accetta, $M^{'}$ scrive $1$ sul secondo nastro, se $M$ rifiuta, $M^{'}$ scrive $0$ sul secondo nastro.
+	- Poiché $M$ decide $L$, termina per ogni input $x$, di conseguenza $M^{'}$ termina su ogni input $x$ restituendo $\chi_{L}(x)$. Questo dimostra che $\chi_{L}$ è calcolabile
+
+$\chi_{L}$ calcolabile $\implies$ $L$ decidibile
+- $\chi_{L}$ calcolabile, quindi esiste mdT $M^{'}$ che dato input $x$ calcola $\chi_L(x)$ e termina per ogni input. 
+- A partire da $M^{'}$ costruiamo $M$ che decide $L$:
+	- dato $x$ $M$ simula $M^{'}(x)$, se $M^{'}$ scrive $1$ allora $M$ accetta $x$, se $M^{'}$ scrive $0$ allora $M$ rigetta $x$
+Poiché $M'$ calcola $\chi_L$ e termina su ogni input, $M$ termina su ogni input $x$, accettando se $x\in L$ e rigettando se $x\notin L$.
+
+# Halting problem
+## Th 5.4
+$L_{H}$ è un linguaggio accettabile
+
+**Dim.**
+Costruzione macchina $U^{'}$ che è una modifica di macchina universale $U$.
+Su $N_{1}$ scriviamo codifica mdT $i$, su $N_2$ scriviamo input $x\in\{0,1\}^{*}$. 
+$U^{'}$ inizia la computazione verificando che $i$ sia la codifica di una mdT e quindi che non contenga $8\ e\ 9$ e che inizi con $2$. In seguito $U^{'}$ simula $U$ e se $U$ termina (sia in accettazione che rigetto) allora $U^{'}$ termina in accettazione.
+
+Dobbiamo dimostrare che esiste una mdT che per ogni $(i,x)\in\mathbb{N}\times\mathbb{N}$ allore $$O_{T}(i,x)=q_A\iff(i,x)\in L_{H}$$
+- $(\impliedby)$ Sia $(i,x)\in L_{H}$, allora la computazione $T_{i}(x)$ termina (definizione Halting Problem) e quindi $U^{'}(x)$ accetta
+- $(\implies)$ Sia $(i,x)\in\mathbb{N}\times\mathbb{N}$ tale che $U^{'}(i,x)$ accetta; poiché $U^{'}$ simula $U$, allora anche $U$ termina e dunque $i$ è la codifica di una mdT e $T_{i}$ termina, quindi $(i,x)\in L_{H}$. $\square$
