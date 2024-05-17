@@ -1,7 +1,7 @@
 *****
 Abbiamo visto che una macchina di Turing è un algoritmo, descritto nel linguaggio delle quintuple, che risolve un problema. L'input, per una macchina di Turing, è una *parola* costituita da caratteri di un certo alfabeto. 
 
-Abbiamo detto nella [[Lezione 4 - Struttura di P e macchine non deterministiche|lezione precedente]] che è sufficiante conoscere l'insieme $P$ per sapere tutto di una macchina di Turing $T$, ma $P$ non ci dice proprio tutto, infatti dobbiamo conoscere quale sia lo stato iniziale e gli stati finali della macchina. 
+Abbiamo detto nella [[Lezione 4 - Struttura di P e macchine non deterministiche|lezione precedente]] che è sufficiente conoscere l'insieme $P$ per sapere tutto di una macchina di Turing $T$, ma $P$ non ci dice proprio tutto, infatti dobbiamo conoscere quale sia lo stato iniziale e gli stati finali della macchina. 
 
 Quindi data una macchina $T$, se decidiamo di costruire una parola secondo i seguenti punti
 - il primo carattere della parola è $q_{0}$ che è seguito dal carattere $\text{"-"}\notin\Sigma$ 
@@ -64,17 +64,17 @@ La macchina $U$ per simulare il comportamento della macchina $T$ esegue il segue
 	- se nello stato $q_{1}$ legge lo stesso simbolo sui nastri $N_{1}$ e $N_{3}$, sposta la testina su $N_{1}$ a destra di due posizioni ed entra nello stato $q_\text{StatoCorretto}$ $$\begin{align*}
 &\langle q_{1},(x,a,x,y),(x,a,x,y),q_{1},(d,f,f,f)\rangle&\forall x,y\in Q_{T}\land \forall a\in\{0,1,\square\}\\
 &\langle q_{1},(-,a,x,y),(-,a,x,y),q_\text{StatoCorretto},(d,f,f,f)\rangle&\forall x,y\in Q_{T}\land \forall a\in\{0,1,\square\}\\
-\end{align*}$$ Ora la testina $N_{1}$ è posizionata sul secondo elemento, ovvero il carattere letto della quintupla che si sta esiminando
+\end{align*}$$ Ora la testina $N_{1}$ è posizionata sul secondo elemento, ovvero il carattere letto della quintupla che si sta esaminando
 		1. Se nello stato $q_\text{StatoCorretto}$ legge lo stesso simbolo sui nastri $N_{1}$ e $N_{2}$, allora ha trovato la quintupla da eseguire, quindi sposta $N_{1}$ a destra di due posizioni ed entra nello stato $q_\text{scrivi}$
 		2. Se nello stato $q_\text{StatoCorretto}$ legge simboli diversi sui nastri $N_{1}$ e $N_{2}$, allora la quintupla che sta leggendo su $N_1$ non è quella corretta, quindi entra nello stato $q_{2}$ e sposta la testina su $N_{1}$ sul primo simbolo successivo al primo $\oplus$ che incontra, e se questo simbolo non è $\square$ entra in $q_{1}$, altrimenti entra nello stato di rigetto
-	- se nello stato $q_{1}$ legge simboli differenti su $N_1$ e $N_3$ allora la quintupla che stiamo scandendo non è quella da eseguire (lo stato da cui parte è diverso), quindi entra nello stato $q_{3}$ e sposta al testina di $N_1$ sul primo simbolo successivo al primo $\oplus$ che incontra e se questo simbolo non è $\square$ entra nello stato $q_{1}$, altrimenti confronta lo stato attuale che legge su $N_3$ e lo confronta con lo stato di accettazione $\omega_{1}$ scritto su $N_4$ e se sono uguali entra nello stato di accettazione, altrimenti rigetta.
+	- se nello stato $q_{1}$ legge simboli differenti su $N_1$ e $N_3$ allora la quintupla che stiamo scandendo non è quella da eseguire (lo stato da cui parte è diverso), quindi entra nello stato $q_{3}$ e sposta la testina di $N_1$ sul primo simbolo successivo al primo $\oplus$ che incontra e se questo simbolo non è $\square$ entra nello stato $q_{1}$, altrimenti confronta lo stato attuale che legge su $N_3$ e lo confronta con lo stato di accettazione $\omega_{1}$ scritto su $N_4$ e se sono uguali entra nello stato di accettazione, altrimenti rigetta.
 3. Nello stato $q_\text{scrivi}$ inizia l'esecuzione della quintupla che ha individuato sul nastro $N_1$ scrivendo il nuovo simbolo su $N_2$, che legge sul nastro $N_1$, poi entra nello stato $q_\text{CambiaStato}$ spostandosi a destra di due posizioni
 4. Nello stato $q_\text{cambiaStato}$ prosegue l'esecuzione della quintupla individuata sul nastro $N_{1}$ modificando il contenuto del nastro $N_{3}$ scrivendoci lo stato che legge sul nastro $N_1$ ed entra nello stato $q_\text{muovi}$ muovendo due posizioni a destra la testina su $N_1$
 5. Nello stato $q_\text{muovi}$ termina l'esecuzione della quintupla letta sul nastro $N_1$, eseguendo il movimento letto sul nastro $N_2$ e la macchina entra nello stato $q_\text{riavvolgi}$
 6. Nello stato $q_\text{riavvolgi}$ viene riposizionata la testina di $N_1$ sul primo simbolo a destra del carattere $\otimes$ ed entra nello stato $q_1$eseguendo 
 
 >**Oss.**
->La computazione $U(p_{T},x)$ rigetta ogni volta che $U$ non trova una quintupla da eseguire e lo stato scritto su $N_3$ non è uguale allo stato scritto su $N_4$, quindi U rigetta il suo input $(p_T,x)$ senza verificare che la computazione $T(x)$ abbia rigettato. 
+>La computazione $U(p_{T},x)$ rigetta ogni volta che $U$ non trova una quintupla da eseguire e lo stato scritto su $N_3$ non è uguale allo stato scritto su $N_4$, quindi $U$ rigetta il suo input $(p_T,x)$ senza verificare che la computazione $T(x)$ abbia rigettato. 
 
 Osserviamo però che vogliamo una macchina $U$ che sappia simulare **qualsiasi** macchina di Turing $T$ e nella descrizione che abbiamo dato prima, la macchina utilizza l'insieme degli stati $Q_T$ come alfabeto della macchina $U$, ma ogni macchina $T$ ha un suo insieme degli stati $Q$ e un suo alfabeto $\Sigma$, quindi la prima cosa che potremmo pensare è che $U$ deve avere un alfabeto infinito, cosa non possibile in quanto sappiamo *che l'alfabeto di una macchina di Turing deve avere cardinalità costante*.
 
