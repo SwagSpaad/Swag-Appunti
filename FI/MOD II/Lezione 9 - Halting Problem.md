@@ -81,7 +81,7 @@ q_{A} & \text{se }(i,i)\not\in L_{H}  \\
 \text{non termina} & \text{se }(i,i)\in L_{H}
 \end{cases}$$
 Siccome abbiamo supposto che $T$ esiste, allora anche $T^*$ esiste e la possiamo codificare con un intero secondo le sostituzioni [[#^a81133|viste prima]]. Indichiamo con $k$ il codice di $T^{*}$ ottenuto applicando le sostituzioni, quindi $T^{*}=T_{k}$ e siccome $k$ è un numero intero, può essere input di $T^{*}$ e quindi di $T_{k}$. Ci chiediamo ora *qual è l'esito della computazione $T_{k}(k)$?* 
-- Se $T_{k}(k)=T^{*}(k)$ accettasse, allora $T^{'}(k,k)$ dovrebbe accettare anch'essa. Ma se $T^{'}(k,k)$ accetta, allora, poiché $k$ è la codifica di una macchina di Turing, $(k,k)\not\in L_H$ se $T_{k}(k)$ non termina. Dunque **$T_{k}(k)=T^{*}(k)$ accetta solo se $T_{k}(k)=T^{*}(k)$ non termina**.
+- Se $T_{k}(k)=T^{*}(k)$ accettasse, allora $T^{'}(k,k)$ dovrebbe accettare anch'essa. Ma se $T^{'}(k,k)$ accetta, allora, poiché $k$ è la codifica di una macchina di Turing, allora $(k,k)\not\in L_H$ e quindi $T_{k}(k)$ non termina. Dunque **$T_{k}(k)=T^{*}(k)$ accetta solo se $T_{k}(k)=T^{*}(k)$ non termina**.
 - $T_{k}(k)=T^{*}(k)$ non termina solo se $(k,k)\in L_{H}$, ossia se $T_{k}(k)$ termina, quindi **$T_{k}(k)=T^{*}(k)$ non termina solo se $T_{k}(k)=T^{*}(k)$ termina**.
 Quindi entrambi le ipotesi portano ad una contraddizione e poiché abbiamo supposto che $L_{H}$ è decidibile, abbiamo costruito una macchina che decide il linguaggio che in realtà non può esistere, portandoci alla conclusione che abbiamo sbagliato la supposizione che **$L_H$ sia decidibile**, dimostrando invece il contrario. $\square$ 
 
