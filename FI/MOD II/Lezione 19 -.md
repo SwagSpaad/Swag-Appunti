@@ -56,4 +56,57 @@ Se $x\not \in L$ non c'è verso, infatti il genio non può trovare una parola ch
 Siccome per ogni $x\in L$, $\text{ntime}(NT,x)\leq|x|^{k}$, allora posso fare in modo che, per ogni $x\in L$ e per ogni $y$ tale che $|y|\leq|x|^{k}$, $\text{dtime}(T,x,y)\leq|x|^{hk}$.
 
 ## Un po' di osservazioni
-Nell'enunciato del teorema si parla dell'esistenza di una $y_{x}\in\{0,1\}^{*}$, ma la $y_{x}$ che abbiamo tirato fuori nella dimostrazione mica è una parola in $\{0,1\}^{*}$, ma sappiamo bene come codificare una parola in binario.
+Nell'enunciato del teorema si parla dell'esistenza di una $y_{x}\in\{0,1\}^{*}$, ma la $y_{x}$ che abbiamo tirato fuori nella dimostrazione mica è una parola in $\{0,1\}^{*}$, ma sappiamo bene come codificare una parola in binario, ed abbiamo giá parlato di come trasformare una macchina di Turing definita su un alfabeto generico in una macchina di Turing definita sull'alfabeto $\{0,1\}$ in modo tale che esse siano polinomialmente correlate.
+Successivamente quel che ci chiediamo é: "$x\in L$"?
+Se il Genio risponde di "si", noi non gli crediamo, allora, per dimostrarci che ha detto la veritá, ci comunica la parola $y_{x}$ che poi noi successivamente verificheremo.
+
+Per questo, se $x\in L$, $y_{x}$ prende il nome di **Certificato** per $x$
+
+# Dimostrazione $\impliedby$
+
+**Teorema 9.1:** Un linguaggio $L \subseteq \Sigma^{*}$ appartiene ad $NP$ se e solo se:
+
+
+Esistono una macchina di Turing deterministica $T$ e due costanti $h,k \in \mathbb{N} : \forall x\in \Sigma^{*}$,
+
+$x\in L \iff \exists y_{x}\in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x,y_{x})$ accetta $\land \ dtime(T,x,y_{x})\in O(|x|^{h})$
+
+Dobbiamo dimostrare la seconda parte del teorema:
+
+Dato $L$, 
+
+Se esistono una macchina di Turing deterministica $T$ e due costanti $h,k \in \mathbb{N} : \forall x\in \Sigma^{*}$,
+
+$x\in L \iff \exists y_{x}\in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x,y_{x})$ accetta $\land \ dtime(T,x,y_{x})\in O(|x|^{h})$
+
+Bisogna dimostrare che $L\in NP$, ovvero che esistono una macchina di Turing non deterministica $NT$ e un intero $a$:
+
+$\forall x\in L, \ NT(x)$ accetta e $ntime(NT,x) \in O(|x|^{a})$
+
+$\forall x \notin L, \ NT(x)$ non accetta
+
+E come dimostriamo che esistono $NT$ ed $a$?
+
+1. Costruiamo $NT$ (sfruttando la nostra conoscenza delle parole in $L$ ed usando $T$)
+
+2. Dimostriamo che $NT$ accetta $L$
+
+3. Dimostriamo che, sulle parole di $L$, $NT$ opera in tempo polinomiale
+
+## Fase 1.
+
+Cosa sappiamo sulle parole di $L$?
+
+$x\in L \iff \exists y_{x}\in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x,y_{x})$ accetta $\land \ dtime(T,x,y_{x})\in O(|x|^{h})$
+
+$T, h, k$ li conoscimo, allora costruiamo una macchina $NT$ che opera in due fasi:$
+
+Con input $x$:
+
+1. $NT$ sceglie non deterministicamente una parola binaria $y$ di lunghezza $|y| \leq |x|^{k}$
+
+2. $NT$ invoca $T(x,y)$ e, se $T(x,y)$ accetta entro $O(|x|^h)$ passi, allora $NT$ accetta
+
+**Oss.**
+
+$f(n) = n^{k}$ é una funzione time-costructible - sia $T_{f}$ il trasduttore che la calcola, in unario, con $dtime(T_{f}, n) \in O(n^{k})$

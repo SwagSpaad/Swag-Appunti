@@ -11,7 +11,7 @@ La situazione è diversa se consideriamo i server in rete, in cui la CPU spesso 
 ## Comportamento dei processi
 Quasi tutti i processi alternano fasi di elaborazione CPU a richieste di I/O. 
 
-![[SOR/img/img38.png|center|700]]
+![[SOR/SO/img/img38.png|center|700]]
 
 Alcuni processi spendono la loro maggior parte del loro tempo in elaborazione, con attese di I/O non molto frequenti (**CPU-bound** (a)), mentre altri spendono il loro tempo in attesa di I/O, con burst di CPU brevi; sono processi dalla bassa necessità di calcoli, ma con molte richieste di I/O (**I/O-bound** (b)). 
 Con **CPU più veloci** i processi tendono ad essere più **I/O-bound**, perché le CPU stanno migliorando più velocemente rispetto i dischi. 
@@ -70,7 +70,7 @@ Vediamo un esempio: ci sono 4 job, detti A, B, C e D con tempi di esecuzione ris
 - Se sono eseguiti secondo l'algoritmo SJF
 	- 4 min per B, 8 per C, 12 per D, 20 per A (11 minuti di media)
 
-![[SOR/img/img39.png|center|500]]
+![[SOR/SO/img/img39.png|center|500]]
 
 Questo algoritmo è ottimale nel minimizzare il tempo di turnaround medio (il tempo dallo start all'end di un job), *quando tutti i job sono disponibili contemporaneamente*. Se così non fosse, l'algoritmo non è ottimale; pensiamo a 5 job detti A, B, C, D ed E con tempi 2, 4, 1, 1, 1 e arrivi a 0, 0, 3, 3, 3. All'inizio possono essere scelti solo A e B: 
 - scegliendo A (shortest job) abbiamo: 
@@ -96,7 +96,7 @@ Gli algoritmi di scheduling che vedremo sono i seguenti:
 
 L'implementazione è semplice: lo scheduler deve mantenere una lista dei processi eseguibili, una volta esaurito il quanto di tempo, il processo viene spostato alla fine della lista.
 
-![[SOR/img/img40.png|center|700]]
+![[SOR/SO/img/img40.png|center|700]]
 
 L'unico "problema" del round-robin è la durata del quanto. La scelta del quanto di tempo influisce sull'efficienza. Supponiamo che ci voglia 1ms per il cambio di contesto e abbiamo un quanto di 4ms: *il 20% del tempo di CPU è sprecato per il cambio di contesto!*  
 Scegliendo un quanto di tempo lungo, diciamo 100ms, in presenza di molti processi si ha un tempo di attesa alla risposta troppo lungo (se ci sono 50 processi, l'ultimo prima di essere eseguito aspetta 5 secondi). Un quanto tra 20 e 50 ms è ragionevole per bilanciare efficienza e reattività. 
@@ -113,7 +113,7 @@ In un computer militare i processi avviati dal generale potrebbero iniziare a pr
 
 Spesso è conveniente raggrupare i processi in *classi di priorità* e usare lo scheduling a priorità fra le classi, ma all'interno di ciascuna classe utilizzare lo [[#Round-robin scheduling|scheduling round-robin]]. 
 
-![[SOR/img/img41.png|center|700]]
+![[SOR/SO/img/img41.png|center|700]]
 
 In figura è rappresentato un sistema con 4 classi di priorità, finché ci sono processi nella classe di priorità 4 (la più alta), viene eseguito ciascun processo della classe per un quanto di tempo in stile round-robin, ignorando i processi delle altre classi di priorità. Quando la classe di priorità 4 è vuota, si passa alla classe 3 eseguendo i processi in round-robin e così via. È importante rivedere periodicamente le priorità per evitare che i processi a bassa priorità non vengono mai eseguiti.
 ## Shortest process next
@@ -179,7 +179,7 @@ Consideriamo per primo i thread a livello utente. Siccome il kernel non è a con
 >Consideriamo il caso che i thread di $A$ abbiano un burst di CPU da 5ms su 50ms di quanto. Di conseguenza ognuno lavora per un breve istante per poi cedere la CPU allo scheduler dei thread. 
 >La possibile sequenza di esecuzione potrebbe essere: $A1,A2,A3,A1,A2\dots$ 
 
-![[SOR/img/img42.png|center|500]]
+![[SOR/SO/img/img42.png|center|500]]
 
 ### Thread a livello kernel
 In questo caso il kernel preleva un particolare thread da eseguire, senza tener conto del processo a cui appartiene. Al thread viene assegnato un quanto, che se eccede viene sospeso forzatamente. 
@@ -187,7 +187,7 @@ In questo caso il kernel preleva un particolare thread da eseguire, senza tener 
 >**Esempio (in figura)**
 >Con un quanto di 50ms, ma con i thread che si bloccano dopo 5ms, l'ordine di esecuzione dei thread potrebbe essere $A1,B1,A2,B2,A3,B3$, cosa che era impossibile con i thread utente
 
-![[SOR/img/img43.png|center|500]]
+![[SOR/SO/img/img43.png|center|500]]
 
 ## Differenza tra thread a livello utente e kernel
 La principale differenza tra i thread utente e kernel sta nelle prestazioni: effettuare uno scambio di thread utente richiede una manciata di istruzioni macchina, mentre con i thread a livello kernel occorre fare uno *scambio completo di contesto*, che è più lento. D'altra parte, con i thread a livello kernel, un thread bloccato in attesa di I/O non sospende l'intero processo, come invece avviene con i thread utente.
