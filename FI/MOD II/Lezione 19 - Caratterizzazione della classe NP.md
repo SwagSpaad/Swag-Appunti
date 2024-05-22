@@ -110,3 +110,70 @@ Con input $x$:
 **Oss.**
 
 $f(n) = n^{k}$ é una funzione time-costructible - sia $T_{f}$ il trasduttore che la calcola, in unario, con $dtime(T_{f}, n) \in O(n^{k})$
+
+Vediamo ora nel dettaglio la Fase 1:
+
+Con input $x$:
+
+![[FI/MOD II/img/img18.png | center | 800]] 
+
+Assumiamo che se $x\in L$, $T$ accetta entro $c|x|^{h} \in O(|x|^{h}) passi$
+
+- anche $g(n) = cn^{h}$ è una funzione time-costructible 
+- sia $T_{g}$ il trasduttore che la calcola in unario, con $dtime(T_{g}, n) \in O(cn^{h})$
+
+Vediamo ora nel dettaglio la Fase 2:
+
+Con input $y$:
+
+![[FI/MOD II/img/img19.png | center | 800]]
+
+Se $x \in L$ allora esiste $y_{x} \in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x, y_{x})$ accetta
+
+- Allora *esiste una sequenza di scelte* nella Fase 1 che genera proprio $y_{x}$
+
+- Allora, nella Fase 2, $T(x, y_{x})$ accetta entro $c |x|^{h}$
+
+- Allora, anche la computazione deterministica di $NT(x)$  corrispondente alla sequenza di scelte che ha generato $y_{x}$ accetta
+
+**Questo dimostra che, se $x \in L$, allora $NT(x)$ accetta**
+
+Se $x \notin L$ allora non esiste alcuna $y_{x} \in \{0,1\}^{*} : |y_{x}|\leq|x|^{k} \land T(x, y_{x})$ accetta
+
+- Allora, *qualunque sia la sequenza di scelte* nella Fase 1 per generare una parola $y$, nella Fase 2, $T(x,y_{x})$ non accetta
+
+- Questo significa che nessuna computazione deterministica di $NT(x)$ accetta
+
+**Questo dimostra che, se $x\in L$, allora $NT(x)$ non accetta**
+
+3. Dimostriamo che, sulle parole di $L$, $NT$ opera in tempo polinomiale
+
+Fase 1:
+
+![[FI/MOD II/img/img18.png | center | 800]]
+
+Calcolare $B$ richiede $O(|x|^{k})$ passi
+
+Il ciclo *while* esegue $|x|^{k}$ iterazioni, in ciascuna della quali
+
+- Sceglie un valore in un insieme di dimensione costante e quindi, impiega un numero costante di operazioni
+
+- Incrementa di 1 una variabile, ovviamente assumendo che questo abbia costo costante (ma non è così)
+
+*Quindi*, complessivamente, il ciclo **while** esegue $O(B) = O(|x|^{k})$ operazioni
+
+Fase 2:
+
+![[FI/MOD II/img/img19.png | center | 800]] 
+
+Calcolare $A$ richiede $O(|x|^{h})$ passi
+
+il ciclo *while* esegue $c|x|^{h}$ iterazioni, in ciascuna delle quali,
+
+- Simula l' esecuzione di una istruzione della computazione $T(x,y)$ (costo costante)
+
+- Confronta lo stato in cui è entrato $T$ con $q_{a}$ (costo costante)
+
+- E, se non è $q_{a}$, incrementa di 1 una variabile (assumendo che abbia costo costante)
+
+**Quindi**, complessivamente, il ciclo *while* esegue $O(|x|^{h})$ operazioni
