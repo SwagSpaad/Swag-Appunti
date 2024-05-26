@@ -99,7 +99,7 @@ Sia u il nodo contenente l'elemento da cancellare. Per la procedura di eliminazi
 
 3. il nodo u ha due figli: si individua il predecessore di u, che chiamiamo v e lo sostituiamo. Dopodiché rimuoviamo fisicamente il predecessore. 
 
-![[img100.png|center|500]]
+![[ASD/MOD I/img/img100.png|center|500]]
 
 #### Costo delle operazioni
 - Tutte le operazioni hanno costo $O(h)$ dove h è l'altezza dell'albero
