@@ -85,7 +85,7 @@ Tiene all'interno della CPU lo stato di due o thread ma non c'è una esecuzione 
 ## La memoria
 |   |
 |---|
-|![[SOR/img/img3.png]]|
+|![[SOR/SO/img/img3.png]]|
 
 Problemi del sistema cache:
 
@@ -152,7 +152,7 @@ Le chiamate del sistema di gestione del processo sono quelle che hanno a che far
 
 Se un processo può creare uno o più processi (detti figli) e questi possono crearne a loro volta altri, arriviamo ad una struttura ad albero che vediamo sotto in figura. 
 
-![[SOR/img/img5.png|center|350]]
+![[SOR/SO/img/img5.png|center|350]]
 
 I processi cooperanti necessitano di comunicare l'uno con l'altro per sincronizzare le loro attività (**sincronizzazione tra processi**).
 Un processo ha a disposizione altre chiamate di sistema per richiedere più memoria, attendere che termini un processo figlio o sovrapporre il suo programma ad un altro.
@@ -177,7 +177,7 @@ I sistemi operativi utilizzano le **directory** come metodo per raggruppare i fi
 Ogni file nella gerarchia delle directory può essere specificato dando il suo **nome di percorso (path name)**, partendo dall'inizio della gerarchia delle directory, ovvero dalla **directory principale (root directory)**.
 
 In foto il file system di un dipartimento universitario.
-![[SOR/img/img6.png|center|700]]
+![[SOR/SO/img/img6.png|center|700]]
 
 Prima che un file possa essere letto o scritto, deve essere aperto e a quel punto sono controllati i permessi. Se l'accesso è consentito il sistema restituisce il **descrittore del file**, mentre se l'accesso è proibito viene restituito un codice d'errore.
 
@@ -244,7 +244,7 @@ Le chiamate di sistema sono eseguite con una serie di passaggi:
 	- *Possibilità di blocco*: la chiamata di sistema può bloccare il chiamante, ad esempio, se l'input desiderato non è disponibile. In questo caso il SO può eseguire altri processi.
 - *Ripresa dopo il blocco*: se l'input o le condizioni desiderate sono disponibili, il processo bloccato viene ripreso, tornando alla procedura di libreria utente e procedendo all'istruzione successiva.
 
-![[SOR/img/img18.png|center|600]]
+![[SOR/SO/img/img18.png|center|600]]
 
 ### Chiamate di sistema per la gestione dei processi
 
@@ -320,7 +320,7 @@ Quando è usata questa tecnica, ogni procedura nel sistema è libera di richiama
 
 Questa organizzazione suggerisce la seguente struttura per il sistema operativo
 
-![[SOR/img/img19.png|center|700]]
+![[SOR/SO/img/img19.png|center|700]]
 
 - Un programma principale che richiama la procedura di servizio 
 - Un insieme di procedure di servizio che realizzano le chiamate di sistema
@@ -340,9 +340,9 @@ Alcune considerazioni su questo sistema:
 L'organizzazione stratificata dei sistemi operativi è una generalizzazione dell'approccio monolitico.
 Il sistema THE implementò quest'idea con sei livelli gerarchici, che gestivano l'allocazione del processore, la memoria, la comunicazione, l'I/O, i dispositivi e gli utenti
 
-![[SOR/img/img20.png|center|600]]
+![[SOR/SO/img/img20.png|center|600]]
 
 Il sistema MULTICS usava anelli concentrici per definire i privilegi, con i livelli interni più privilegiati di quelli esterni. I vantaggi di questo modello sono la protezione delle risorse e dei dati critici ed una separazione chiara dei compiti. 
 
-![[SOR/img/img21.png|center|600]]
+![[SOR/SO/img/img21.png|center|600]]
 

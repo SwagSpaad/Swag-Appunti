@@ -107,8 +107,8 @@ Sia u il nodo contenente l'elemento da cancellare. Per la procedura di eliminazi
 
 Con un albero binario di ricerca bilanciato: h=$O(log(n))$
 
-![[img101.png|center|500]]
+![[ASD/MOD I/img/img101.png|center|500]]
 
 
-![[img102.png|center|600]]
+![[ASD/MOD I/img/img102.png|center|600]]
 

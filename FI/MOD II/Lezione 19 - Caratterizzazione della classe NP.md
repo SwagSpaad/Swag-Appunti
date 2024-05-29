@@ -56,4 +56,124 @@ Se $x\not \in L$ non c'è verso, infatti il genio non può trovare una parola ch
 Siccome per ogni $x\in L$, $\text{ntime}(NT,x)\leq|x|^{k}$, allora posso fare in modo che, per ogni $x\in L$ e per ogni $y$ tale che $|y|\leq|x|^{k}$, $\text{dtime}(T,x,y)\leq|x|^{hk}$.
 
 ## Un po' di osservazioni
-Nell'enunciato del teorema si parla dell'esistenza di una $y_{x}\in\{0,1\}^{*}$, ma la $y_{x}$ che abbiamo tirato fuori nella dimostrazione mica è una parola in $\{0,1\}^{*}$, ma sappiamo bene come codificare una parola in binario.
+Nell'enunciato del teorema si parla dell'esistenza di una $y_{x}\in\{0,1\}^{*}$, ma la $y_{x}$ che abbiamo tirato fuori nella dimostrazione mica è una parola in $\{0,1\}^{*}$, ma sappiamo bene come codificare una parola in binario, ed abbiamo giá parlato di come trasformare una macchina di Turing definita su un alfabeto generico in una macchina di Turing definita sull'alfabeto $\{0,1\}$ in modo tale che esse siano polinomialmente correlate.
+Successivamente quel che ci chiediamo é: "$x\in L$"?
+Se il Genio risponde di "si", noi non gli crediamo, allora, per dimostrarci che ha detto la veritá, ci comunica la parola $y_{x}$ che poi noi successivamente verificheremo.
+
+Per questo, se $x\in L$, $y_{x}$ prende il nome di **Certificato** per $x$
+
+# Dimostrazione $\impliedby$
+
+**Teorema 9.1:** Un linguaggio $L \subseteq \Sigma^{*}$ appartiene ad $NP$ se e solo se:
+
+
+Esistono una macchina di Turing deterministica $T$ e due costanti $h,k \in \mathbb{N} : \forall x\in \Sigma^{*}$,
+
+$x\in L \iff \exists y_{x}\in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x,y_{x})$ accetta $\land \ dtime(T,x,y_{x})\in O(|x|^{h})$
+
+Dobbiamo dimostrare la seconda parte del teorema:
+
+Dato $L$, 
+
+Se esistono una macchina di Turing deterministica $T$ e due costanti $h,k \in \mathbb{N} : \forall x\in \Sigma^{*}$,
+
+$x\in L \iff \exists y_{x}\in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x,y_{x})$ accetta $\land \ dtime(T,x,y_{x})\in O(|x|^{h})$
+
+Bisogna dimostrare che $L\in NP$, ovvero che esistono una macchina di Turing non deterministica $NT$ e un intero $a$:
+
+$\forall x\in L, \ NT(x)$ accetta e $ntime(NT,x) \in O(|x|^{a})$
+
+$\forall x \notin L, \ NT(x)$ non accetta
+
+E come dimostriamo che esistono $NT$ ed $a$?
+
+1. Costruiamo $NT$ (sfruttando la nostra conoscenza delle parole in $L$ ed usando $T$)
+
+2. Dimostriamo che $NT$ accetta $L$
+
+3. Dimostriamo che, sulle parole di $L$, $NT$ opera in tempo polinomiale
+
+## Fase 1.
+
+Cosa sappiamo sulle parole di $L$?
+
+$x\in L \iff \exists y_{x}\in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x,y_{x})$ accetta $\land \ dtime(T,x,y_{x})\in O(|x|^{h})$
+
+$T, h, k$ li conoscimo, allora costruiamo una macchina $NT$ che opera in due fasi:$
+
+Con input $x$:
+
+1. $NT$ sceglie non deterministicamente una parola binaria $y$ di lunghezza $|y| \leq |x|^{k}$
+
+2. $NT$ invoca $T(x,y)$ e, se $T(x,y)$ accetta entro $O(|x|^h)$ passi, allora $NT$ accetta
+
+**Oss.**
+
+$f(n) = n^{k}$ é una funzione time-costructible - sia $T_{f}$ il trasduttore che la calcola, in unario, con $dtime(T_{f}, n) \in O(n^{k})$
+
+Vediamo ora nel dettaglio la Fase 1:
+
+Con input $x$:
+
+![[FI/MOD II/img/img18.png | center | 800]] 
+
+Assumiamo che se $x\in L$, $T$ accetta entro $c|x|^{h} \in O(|x|^{h}) passi$
+
+- anche $g(n) = cn^{h}$ è una funzione time-costructible 
+- sia $T_{g}$ il trasduttore che la calcola in unario, con $dtime(T_{g}, n) \in O(cn^{h})$
+
+Vediamo ora nel dettaglio la Fase 2:
+
+Con input $y$:
+
+![[FI/MOD II/img/img19.png | center | 800]]
+
+Se $x \in L$ allora esiste $y_{x} \in \{0,1\}^{*}:|y_{x}| \leq |x|^{k} \land T(x, y_{x})$ accetta
+
+- Allora *esiste una sequenza di scelte* nella Fase 1 che genera proprio $y_{x}$
+
+- Allora, nella Fase 2, $T(x, y_{x})$ accetta entro $c |x|^{h}$
+
+- Allora, anche la computazione deterministica di $NT(x)$  corrispondente alla sequenza di scelte che ha generato $y_{x}$ accetta
+
+**Questo dimostra che, se $x \in L$, allora $NT(x)$ accetta**
+
+Se $x \notin L$ allora non esiste alcuna $y_{x} \in \{0,1\}^{*} : |y_{x}|\leq|x|^{k} \land T(x, y_{x})$ accetta
+
+- Allora, *qualunque sia la sequenza di scelte* nella Fase 1 per generare una parola $y$, nella Fase 2, $T(x,y_{x})$ non accetta
+
+- Questo significa che nessuna computazione deterministica di $NT(x)$ accetta
+
+**Questo dimostra che, se $x\in L$, allora $NT(x)$ non accetta**
+
+3. Dimostriamo che, sulle parole di $L$, $NT$ opera in tempo polinomiale
+
+Fase 1:
+
+![[FI/MOD II/img/img18.png | center | 800]]
+
+Calcolare $B$ richiede $O(|x|^{k})$ passi
+
+Il ciclo *while* esegue $|x|^{k}$ iterazioni, in ciascuna della quali
+
+- Sceglie un valore in un insieme di dimensione costante e quindi, impiega un numero costante di operazioni
+
+- Incrementa di 1 una variabile, ovviamente assumendo che questo abbia costo costante (ma non è così)
+
+*Quindi*, complessivamente, il ciclo **while** esegue $O(B) = O(|x|^{k})$ operazioni
+
+Fase 2:
+
+![[FI/MOD II/img/img19.png | center | 800]] 
+
+Calcolare $A$ richiede $O(|x|^{h})$ passi
+
+il ciclo *while* esegue $c|x|^{h}$ iterazioni, in ciascuna delle quali,
+
+- Simula l' esecuzione di una istruzione della computazione $T(x,y)$ (costo costante)
+
+- Confronta lo stato in cui è entrato $T$ con $q_{a}$ (costo costante)
+
+- E, se non è $q_{a}$, incrementa di 1 una variabile (assumendo che abbia costo costante)
+
+**Quindi**, complessivamente, il ciclo *while* esegue $O(|x|^{h})$ operazioni

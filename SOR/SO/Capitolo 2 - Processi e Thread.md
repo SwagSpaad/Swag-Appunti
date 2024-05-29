@@ -9,22 +9,22 @@ Concettualmente ogni processo ha la sua CPU virtuale, ma in realtà la CPU passa
 
 In figura sotto, è mostrato un computer che fa multiprogrammazione di quattro programmi in memoria. 
 
-![[SOR/img/img22.png|center|300]]
+![[SOR/SO/img/img22.png|center|300]]
 
 Nella prossima figura, sono mostrati quattro processi, ognuno col suo program counter personale, che girano indipendentemente dagli altri. Naturalmente c'è un solo program counter fisico ed ogni volta che si passa da un processo all'altro si salva il valore del program counter logico del primo e si ripristina il contatore del secondo.  
 
-![[SOR/img/img1.png|center|600]]
+![[SOR/SO/img/img1.png|center|600]]
 
 Nella vediamo che, osservati su un intervallo abbastanza lungo, tutti i processi hanno avuto un avanzamento, ma in un preciso istante solo un processo è realmente in esecuzione.
 
-![[SOR/img/img2.png|center|500]]
+![[SOR/SO/img/img2.png|center|500]]
 
 In linea di principio, i processi multipli sono reciprocamente indipendenti ed hanno bisogno di mezzi espliciti per interagire tra loro. La CPU può essere assegnata a turno a diversi processi, ma il sistema operativo normalmente non offre garanzie di tempistica o di ordine.
 
 ## Gerarchie di processi
 Un esempio in cui la gerarchia dei processi gioca un ruolo importante è l'inizializzazione di UNIX al suo avvio. Viene lanciato all'avvio un processo speciale chiamato *init*, presente nell'immagine di avvio, che legge un file che indica quanti terminali sono presenti, eseguendo la *fork* di un nuovo processo per ogni terminale, che attendono che qualcuno esegua il login. Se il login avviene correttamente, il processo di login esegue una shell che accetta i comandi che possono far partire nuovi processi. Tutti questi processi appartengono ad un solo albero con *init* come radice.
 
-![[SOR/img/img23.png|center|300]]
+![[SOR/SO/img/img23.png|center|300]]
 
 ## Creazione di processi
 Gli eventi che causano la creazione di processi sono quattro: 
@@ -55,7 +55,7 @@ verifica un evento esterno
 
 Il sistema operativo alloca risorse, come la CPU ai processi, tenendo conto degli stati dei processi. Le transizioni possibili sono quelle che vediamo in figura.
 
-![[SOR/img/img24.png|center|700]]
+![[SOR/SO/img/img24.png|center|700]]
 
 ## Tabella dei processi
 Per implementare il modello di processo, il sistema operativo mantiene una tabella detta *tabella dei processi*, con una voce per processo, che contiene importanti informazioni riguardo il processo come il suo program counter, il suo stato, il puntatore allo stack, l'allocazione della memoria, lo stato dei file aperti e tutte le informazioni relative al processo che vanno salvate in modo che possa essere riavviato come se non si fosse mai fermato. 
@@ -137,12 +137,12 @@ Quali sono le motivazioni di consentire più thread per processo? La ragione pri
 >Quando l'utente elimina una riga dalla pagina 1, il thread interattivo comunica al thread di impaginazione di rimpaginare l'intero libro. Nel frattempo, il thread interattivo rimane attivo, consentendo all'utente di continuare a lavorare senza ritardi. 
 >Introduciamo anche un terzo thread per il salvataggio automatico. In un contesto a singolo thread, l'avvio di un backup su disco bloccherebbe i comandi della tastiera e del mouse fino al completamento dell'operazione. L'utilizzo di thread consente invece una gestione più fluida: mentre il thread di salvataggio è attivo, gli altri thread possono continuare a operare senza essere vincolati dall'operazione di backup.
 >È chiaro che la stessa implementazione non può essere apportata con tre processi, perché entrambi hanno bisogno di operare sullo stesso documento, mentre avendo tre thread, che condividono una memoria comune, tutti hanno accesso allo stesso file.
->![[SOR/img/img25.png|center|500]]
+>![[SOR/SO/img/img25.png|center|500]]
 
 >**Esempio 2**
 >Consideriamo ora un server di un sito web. In ingresso arrivano richieste di pagine, che vengono inviate al client. In molti siti ci sono pagine più richieste di altre, ad esempio la homepage del sito della Sony è più richiesta della pagina con le specifiche di una macchinetta fotografica dello stesso sito. Questa caratteristica è utilizzata per migliorare le prestazioni mantenendo in memoria un insieme di pagine utilizzate frequentemente (cache) per non caricarle dal disco. Nella figura sotto vediamo un modo per organizzare il web server. 
 >Il primo thread, un **dispatcher**, legge le richieste di lavoro in arrivo alla rete e, dopo aver esaminato la richiesta sceglie un **thread worker** inattivo che gli fa gestire la richiesta. Il dispatcher risveglia il thread, che controlla se la richiesta possa essere esaudita dalla cache del server, a cui tutti i thread possono accedere, altrimenti avvia un'operazione di `read` per prendere la pagina dal disco, bloccandosi fino a completamento.
->![[SOR/img/img26.png|center|700]]
+>![[SOR/SO/img/img26.png|center|700]]
 
 Qui sotto possiamo vedere i codici del thread del dispatcher e del thread di lavoro
 ```C
@@ -169,7 +169,7 @@ I processi sono usati per raggruppare risorse, mentre i thread sono entità sche
 
 In figura vediamo due casi: il primo (a) in cui ci sono tre processi, ognuno col suo spazio degli indirizzi e un singolo thread di controllo, mentre nel secondo caso (b) vediamo un singolo processo con tre thread. Sebbene in entrambi i casi abbiamo tre thread, nella figura (a) ognuno di loro opera in un diverso spazio degli indirizzi, mentre nella figura (b) tutti e tre condividono lo stesso spazio.
 
-![[SOR/img/img27.png|center|700]]
+![[SOR/SO/img/img27.png|center|700]]
 
 Thread diversi nello stesso processo, però, non sono così indipendenti come processi diversi, perché avendo lo stesso spazio degli indirizzi, condividono anche le stesse variabili globali e siccome ogni thread può accedere a tutto l'indirizzo di memoria all'interno dello spazio degli indirizzi del processo, essi possono scrivere, modificare o eliminare lo stack di un altro thread. L'organizzazione in figura (a) viene utilizzata quando i tre processi non sono relazionati, mentre l'organizzazione (b) è appropriata quando i thread sono parte dello stesso lavoro e devono collaborare. 
 
@@ -188,7 +188,7 @@ La tabella sotto elenca gli elementi appartenenti ad un processo (e quindi condi
 ## Thread in POSIX
 Il package di thread per permettere la scrittura di programmi che usano i thread si chiama **Pthread**. In tabella vediamo alcune chiamate di funzione.
 
-![[SOR/img/img28.png|center|700]]
+![[SOR/SO/img/img28.png|center|700]]
 
 ```C
 #include<pthread.h>
@@ -225,7 +225,7 @@ I thread nello spazio utente sono gestiti dal kernel come processi ordinari a si
 Ogni processo che usa i thread a livello utente, ha bisogno di una *tabella dei thread*, che tiene traccia delle proprietà dei thread, come lo stato, il program counter, i registri ecc.
 Le procedure che salvano lo stato del thread e lo scheduler sono nello spazio utente, così è molto più efficace richiamarle perché **non servono trap, cambi di contesto** e svuotamento della cache, che rende il tutto più veloce. L'implementazione nello spazio utente permette di personalizzare l'algoritmo di scheduling per ogni processo. 
 
-![[SOR/img/img29.png|center|500]]
+![[SOR/SO/img/img29.png|center|500]]
 
 **Contro**
 Nonostante le migliori prestazioni, anche i thread a livello utente presentano degli svantaggi, primo fra tutti c'è il problema di come sono implementate le chiamate di sistema bloccanti, perché se un thread fa una chiamata che lo blocca, tutti gli altri thread nel processo vengono fermati. Analogo è il caso dei **page fault**. I computer sono impostati in modo tale che non tutto il programma sia in memoria principale e se il programma fa una chiamata ad un'istruzione non presente in memoria, si verifica un page fault e il SO va a prendere l'istruzione mancante dal disco. Nel mentre il processo è bloccato in attesa dell'istruzione. Se un thread causa un page fault, il kernel, ignorando l'esistenza del thread, blocca l'intero processo, sebbene altri thread potrebbero essere eseguibili. 
@@ -233,14 +233,14 @@ Se un thread inizial'esecuzione, non sarà eseguito nessun altro thread finché 
 Sebbene i thread a livello utente siano più veloci e flessibili, sono meno adatti per applicazioni in cui i thread si bloccano frequentemente, come un web server.
 ### Implementazione nello spazio kernel
 
-![[SOR/img/img30.png|center|500]]
+![[SOR/SO/img/img30.png|center|500]]
 
 Il kernel che gestisce i thread, elimina la necessità di un sistema [run-time](https://it.wikipedia.org/wiki/Run-time_system) per processo. Il kernel dispone di una tabella di thread che tiene traccia di tutti i thread nel sistema. Quando un thread vuole crearne uno nuovo o distruggerlo, fa una chiamata al kernel che esegue la creazione o la distruzione aggiornando la tabella dei thread. Le chiamate di sistema che potrebbero bloccare un thread vengono implementate come chiamate di sistema, che hanno costi più elevati rispetto le chiamate di procedura dei sistemi run-time. Se un thread si blocca, il kernel può eseguire un altro thread, sia dello stesso processo che di un altro.
 A causa dei costi più elevati per la creazione e distruzione di un thread nel kernel, alcuni sistemi "riciclano" i loro thread, che invece di essere distrutti vengono segnati come non eseguibili, ma le sue strutture dati non vengono intaccate. Successivamente quando deve essere creato un nuovo thread, ne viene riattivato uno vecchio, risparmiando un po' di overhead.
 Se un thread causa un errore di pagina, il kernel verifica la disponibilità di altri thread eseguibili nel processo e può eseguire uno di essi.
 ### Implementazione ibrida
 
-![[SOR/img/img31.png|center|500]]
+![[SOR/SO/img/img31.png|center|500]]
 
 Vari metodi per combinare i vantaggi dei thread utente con i thread del kernel. Una possibilità è usare i thread del kernel e fare il multiplexing dei thread utente su alcuni thread del kernel. Con questo approccio, il programmatore decide quanti thread del kernel usare e quanti thread utente multiplexare. Nell'implementazione ibrida, il kernel è a conoscenza solo dei thread del kernel, ma ogni thread del kernel può gestire più thread a livello utente. 
 
@@ -269,7 +269,7 @@ L'idea è quella di proibire agli altri processi di leggere e scrivere dati cond
 
 Il comportamento che si vorrebbe ottenere è illustrato in figura.
 
-![[SOR/img/img32.png|center|700]]
+![[SOR/SO/img/img32.png|center|700]]
 
 **Non** sono soluzioni alla race condition:
 - Disibilitare gli interrupt: impedisce che la CPU venga riallocata, ma funziona solo per sistemi a CPU singola
@@ -277,7 +277,7 @@ Il comportamento che si vorrebbe ottenere è illustrato in figura.
 #### Esclusione con busy waiting
 Una terza (non) soluzione è quella mostrata nei due codici in figura 
 
-![[SOR/img/img33.png|center|700]]
+![[SOR/SO/img/img33.png|center|700]]
 
 L'azione di testare continuamente una variabile finché non assume un valore si chiama *busy waiting*, che andrebbe generalmente evitato perché consuma CPU. Ha senso utilizzare il busy waiting quando ci si aspetta che il tempo di attesa sia breve. Con questa soluzione un processo fuori dalla regione critica può effettivamente bloccare un altro processo, andando contro al terzo punto delle condizioni per evitare le race condition. 
 
@@ -358,7 +358,7 @@ Le soluzioni viste ora sono corrette, ma entrambe hanno bisogno del busy waiting
 Questi approcci, però, consentono ad un processo di tenere occupata la CPU, sprecando il tempo della CPU e quindi le risorse. La soluzione è quella di lasciare che un processo in attesa di entrare nella regione critica restituisca volontariamente la CPU allo scheduler. 
 Questa soluzione è realizzata mediante l'uso di `sleep` e `wakeup`. La prima è una chiamata di sistema che provoca il blocco del chiamante, mentre la seconda ha un parametro, ovvero il processo che va risvegliato. 
 
-![[SOR/img/img34.png|center|700]]
+![[SOR/SO/img/img34.png|center|700]]
 
 #### Problema produttore-consumatore
 In questo problema, due processi condividono un buffer di dimensione fissa. Il produttore mette informazioni nel buffer, mentre il consumatore le preleva. Il problema sorge quando il produttore vuole inserire degli elementi nel buffer quando questo è pieno. La soluzione del produttore è quella di entrare in sleep, per essere risvegliato dal consumatore quando ha rimosso uno o più elementi. Analogamente, il consumatore dorme se il buffer è vuoto e viene risvegliato quando il produttore ha inserito qualcosa. 
@@ -629,7 +629,7 @@ Vediamo ora come vengono indirizzati i messaggi:
 #### Barriere
 Le barriere sono un meccanismo di sincronizzazione pensato per gruppi di processi piuttosto che per situazioni come il problema del produttore-consumatore. Alcune applicazioni sono suddivise in fasi ed hanno la regola che nessun processo può avanzare alla fase successiva finché tutti i processi non sono pronti a passare alla fase successiva. Le barriere sono d'aiuto proprio in queste circostanze. Quando un processo raggiunge una barriera, si mette in attesa finché tutti gli altri processi non l'abbiano raggiunta. 
 
-![[SOR/img/img35.png|center|600]]
+![[SOR/SO/img/img35.png|center|600]]
 
 >**Esempio**
 >Un esempio di applicazione sta in un problema di rilassamento di ingegneria o fisica. Supponiamo di avere una matrice contenente dei valori iniziali, che possono rappresentare temperature in vari punti su un foglio di metallo. L'idea potrebbe essere di calcolare quanto occorre per l'effetto di propagazione nel foglio di una fiamma in un angolo. Partendo dai valori attuali, alla matrice è applicata una trasformazione per ottenerne una seconda versione, per esempio applicando le leggi della termodinamica per vedere le temperature ad un intervallo deltaT successivo. Il processo è ripetuto più volte, riportando le temperature nei punti di test come funzione del tempo mentre il foglio si scalda. 
@@ -640,11 +640,11 @@ I migliori lock sono quelli che non si usano e la domanda è se è possibile per
 
 I processi in lettura attraversano l'albero dalla radice alle foglie. In foto sotto viene aggiunto un nodo X appena prima di renderlo visibile sull'albero, inizializzando tutti i valori nel nodo X compresi i puntatori ai figli. Con un'operazione unica e atomica si fa in modo che X diventi figlio di A. Tutti i processi stanno ora leggendo la versione nuova della struttura.
 
-![[SOR/img/img36.png|center|700]]
+![[SOR/SO/img/img36.png|center|700]]
 
 In figura vengono eliminati B e D. Per primo si fa in modo che il puntatore al figlio sinistro di A punti a C: tutti i processi in lettura che si trovano in A continuano con il nodo C senza mai vedere né B né D, quindi vedono solamente la nuova versione. Tutti i processi in lettura sul nodo B e D vedono invece la versione vecchia.
 
-![[SOR/img/img37.png|center|700]]
+![[SOR/SO/img/img37.png|center|700]]
 
 
 L'unico problema sta nel sapere quando liberare B e D, per questo bisogna rimanere in attesa finché l'ultimo processo in lettura non abbia liberato B e D. L'operazione **RCU** determina il tempo massimo per un processo in lettura per trattenere un riferimento, dopo questo periodo, può richiedere la memoria in tutta sicurezza. I processi in lettura accedono alla struttura dati in una **sezione critica read-side**, che può contenere qualsiasi codice, purché non si blocchi o vada in sleep, in questo modo possiamo conoscere quanto tempo al massimo occorre rimanere in attesa. 

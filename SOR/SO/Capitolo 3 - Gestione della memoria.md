@@ -13,7 +13,7 @@ La più semplice astrazione della memoria è l'assenza di astrazione. I primi co
 In queste condizioni non era possibile eseguire due programmi in memoria nello stesso tempo, perché se un programma avesse scritto un nuovo valore in posizione 2000, avrebbe cancellato qualunque valore ci avesse scritto il secondo programma. 
 Con questo modello esistono tre diverse possibilità, che vediamo sotto in figura
 
-![[SOR/img/img7.png|center|500]]
+![[SOR/SO/img/img7.png|center|500]]
 
 Il SO può trovarsi sul fondo della memoria nella *RAM* (mainframe e minicomputer), in cima alla memoria nella *ROM* (sistemi embedded) oppure posizionare i driver in cima alla memoria nella *ROM* e il resto del sistema nella *RAM* in fondo alla memoria.
 Il terzo modello è stato usato nei primi PC dove la parte di sistema nella ROM è chiamata *BIOS*. 
@@ -21,7 +21,7 @@ Il primo e il terzo modello hanno lo svantaggio che un difetto nel programma ute
 ### Multiprogrammazione
 Anche senza astrazione della memoria è possibile eseguire più programmi contemporaneamente. Il compito del SO è quello di salvare l'intero contenuto della memoria in un file su disco ed eseguire il programma succesivo. Questo metodo è detto **"swapping"**. 
 
-![[SOR/img/img8.png|center|500]]
+![[SOR/SO/img/img8.png|center|500]]
 
 Questa soluzione ha un'inconveniente importante descritto in figura: in memoria sono caricati consecutivamente due programmi senza astrazione dell'indirizzo, un programma da 16 KB che inizia con l'istruzione `JMP 24` ed un altro programma da 16 KB che inizia con l'istruzione `JMP 28`. L'esecuzione singola dei due programmi non crea problemi, ma al momento dell'esecuzione consecutiva, il primo programma esegue la sua istruzione `JMP 24` senza problemi, mentre al momento dell'esecuzione del secondo programma l'istruzione `JMP 28` salta all'istruzione `ADD` del primo programma (linea 28), causando un probabile errore. 
 Questo perché i due programmi fanno riferimento alla memoria fisica assoluta, cosa che non vogliamo perché questo può causare problemi come la distruzione del sistema operativo o la difficoltà nell'esecuzione contemporanea di più programmi.
@@ -33,7 +33,7 @@ Una soluzione, ora caduta in disuso, mappava lo spazio degli indirizzi di ogni p
 
 Ogni volta che un processo accede alla memoria, prima di inviare l'indirizzo sul bus di memoria, la CPU aggiunge il valore del registro base all'indirizzo generato tramite il processo e contemporaneamente controlla se l'indirizzo risultante sia uguale o maggiore del valore nel registro limite, nel cui caso è generato un errore e viene interrotto l'accesso. Il registro base mette quindi in atto la *rilocazione dinamica*, mentre il registro limite applica la *protezione*.
 
-![[SOR/img/img9.png|center|500]]
+![[SOR/SO/img/img9.png|center|500]]
 
 Il vantaggio di questo metodo è quello di offrire ad ogni processo uno spazio degli indirizzi separato e protetto, ma lo svantaggio è la necessità di eseguire somme e confronti ad ogni accesso alla memoria, causando un rallentamento delle operazioni.
 
@@ -46,7 +46,7 @@ Per gestire il sovraccarico di memoria sono stati sviluppati degli approcci diff
 ## Swapping
 In figura viene illustrato il funzionamento di un sistema di swapping.
 
-![[SOR/img/img10.png|center|700]]
+![[SOR/SO/img/img10.png|center|700]]
 
 All'inizio solo il processo A è in memoria, in seguito vengono creati o viene fatto lo *swapping* dal disco dei processi B e C. In (d) viene eseguito lo swapping su disco di A e caricato D ed esce B, per poi ricaricare A (g). Siccome A è in una posizione diversa, i suoi indirizzi devono essere rilocati dal software quando viene eseguito lo swapping. 
 
@@ -54,7 +54,7 @@ Lo swapping può portare alla frammentazione della memoria, perciò è necessari
 
 Vale la pena sottolineare quanta memoria dovrebbe essere allocata per un processo quando viene creato o quando ne viene fatto lo swapping dal disco. Se i processi sono creati con una dimensione fissa, l'allocazione è semplice, ma se ci si aspetta che i segmenti dei dati possono crescere, ad esempio allocando memoria dinamicamente dallo heap, un'idea è quella di allocare un pò di memoria extra ad ogni swapping 
 
-![[SOR/img/img11.png|center|700]]
+![[SOR/SO/img/img11.png|center|700]]
 
 Nel caso in cui i processi abbiano due segmenti che crescono, come (b) in foto in cui i processi A e B hanno il segmento dati e il segmento stack, si propone una sistemazione alternativa: ogni processo ha uno stack in cima alla sua memoria allocata che cresce *verso il basso* e il segmento dati oltre il testo del programma che cresce vesro l'alto. La memoria in mezzo a loro può essere usata da ciascun segmento. 
 Nel caso in cui la memoria venga esaurita viene eseguito:
@@ -73,13 +73,13 @@ La memoria, con una bitmap, è divisa in unità di allocazione, a cui corrispond
 Una bitmap fornisce un metodo molto semplice per tener traccia di parole di memoria in una quantità fissa di memoria. 
 Lo svantaggio della bitmap è che per poter eseguire un processo di $k$ unità in memoria, il gestore della memoria deve cercare nella bitmap una serie di $k$ bit 0 consecutivi, il che è molto molto lento.
 
-![[SOR/img/img12.png|center|900]]
+![[SOR/SO/img/img12.png|center|900]]
 
 ## Linked list
 Utilizzare delle liste di segmenti di memoria allocati e liberi, in cui un segmento o contiene un processo o è uno spazio vuoto fra due processi. Ogni voce della lista specifica uno spazio vuoto o un processo, l'indirizzo da cui parte, la lunghezza e il puntatore alla voce successiva.
 Nella pratica viene usata una doppia linked list, infatti un processo che finisce ha due vicini (fatta eccezione per quelli all'inizio della lista e alla fine) e con due puntatori è più facile trovare la voce precedente e vedere se è possibile l'unione. L'utilizzo di doppie linked list porta a 4 situazioni, che vediamo in figura.
 
-![[SOR/img/img13.png|center|600]]
+![[SOR/SO/img/img13.png|center|600]]
 
 ## Schemi di allocazione della memoria
 Quando processi e spazi vuoti sono tenuti su una lista ordinata per indirizzo, molti algoritmi possono essere usati per allocare la memoria per un processo creato.
@@ -93,7 +93,7 @@ Esistono diversi algoritmi:
 ### Buddy Allocation
 Il principale meccanismo per l'allocazione della memoria in Linux è basato sull'algoritmo di *Buddy Memory Allocation*, che opera nel seguente modo: inizialmente la memoria consiste di un singolo pezzo. All'arrivo di una richiesta di memoria, questa viene arrotondata ad una potenza di 2 e l'intero pezzo di memoria viene diviso a metà. Se ci sono pezzi ancora troppo grandi, il più basso viene diviso ancora finché non è della dimensione richiesta.
 
-![[SOR/img/img14.png|center|500]]
+![[SOR/SO/img/img14.png|center|500]]
 
 In figura vediamo un esempio di come opera l'algoritmo di Buddy Memory: 
 - la memoria inizialmente di 64 pagine (a);
@@ -102,7 +102,7 @@ In figura vediamo un esempio di come opera l'algoritmo di Buddy Memory:
 - Siccome uno spazio di 32 pagine per una richiesta di 8 è ancora troppo grande, viene diviso a metà lo spazio più basso (c) e viene ripetuta la divisione (d)
 - Ora abbiamo un pezzo di memoria della dimensione corretta che viene allocata.
 
-![[SOR/img/img15.png|center|500]]
+![[SOR/SO/img/img15.png|center|500]]
 
 - In seguito arriva una richiesta di 8 pagine, che viene immediatamente soddisfatta (e);
 - Arriva una richiesta di 4 pagine, il pezzo più piccolo disponibile viene diviso a metà (f) e diviso di nuovo per ottenere due spazi da 4 (g), che viene allocato.
@@ -112,7 +112,7 @@ Il BuddyAlgorithm però può causare frammentazione interna dato che, se siu nec
 Per risolvere questo problema, Linux utilizza *l'allocatore a slab*, che prende i pezzi usando l'algoritmo Buddy, ma poi da questi ritaglia gli *slab* e li gestisce separatamente.
 Poichè il kernel crea e distrugge oggetti di un certo tipo, si affida alle cosiddette *cache degli oggetti*, contenenti puntatori a uno o più slab capaci di memorizzare un certo numero di oggetti dello stesso tipo. Ogni slab può essere pieno, parzialmente pieno, o vuoto. Quando un oggetto viene deallocato, non viene immediatamente restituito al sistema come memoria libera, ma rimane nella cache, in modo che in caso di una nuova richiesta dello stesso tipo di oggetto, possa essere immediatamente reallocata evitando ritardi dovuti alla reinizializzazione. 
 
-![[SOR/img/img16.png|center|700]]
+![[SOR/SO/img/img16.png|center|700]]
 
 Lo slab in foto contiene: 
 - un puntatore all'inizio della memoria con gli slot degli oggetti (freccia start)
@@ -135,7 +135,7 @@ Quando invece la memoria virtuale viene utilizzata, gli indirizzi virtuali non v
 
 >**Esempio**
 >Il funzionamento del mappaggio è rappresentato nella figura sotto
->![[SOR/img/img44.png|center|300]]
+>![[SOR/SO/img/img44.png|center|300]]
 >Il computer genera indirizzi di 16bit, da 0 a 64K-1, che corrispondono agli indirizzi virtuali (sx). Questo computer ha però solamente 32KB di memoria fisica. Sebbene possano essere scritti programmi di 64KB, questi non possono essere interamente caricati in memoria. Lo spazio degli indirizzi virtuali è suddiviso in unità di dimensioni fissa, chiamate **pagine**. Le unità corrispondenti nella memoria fisica sono chiamate **frame** o **page frame**. Le pagine e i frame sono generalmente della stessa dimensione. 
 >I trasferimenti tra la RAM e il disco sono sempre pagine intere. Ogni pagina contiene esattamente 4096 indirizzi da un multiplo di 4096 a un multiplo di 4096 successivo.
 >>**Esempio  1**
@@ -165,7 +165,7 @@ L'inidrizzo virtuale di 16 bit in ingresso è suddiviso in un numero di pagina d
 Con 4 bit per il numero di pagina, si possono avere 16 pagine e con 12 bit di offset possiamo indirizzare 4096 byte per pagina.
 Il numero di pagina è usato come indice nella **tabella delle pagine** che porta al numero di frame corrispondente alla pagina virtuale. Se il bit *presente / assente* è 0, avviene un trap al SO. Se il bit è 1, il numero di frame trovato nella tabella delle pagine viene copiato nei tre bit più significativi del registro di output, insieme all'offset di 12 bit che è copiato senza modifiche dall'inidirizzo virtuale in arrivo. Insieme formano un indirizzo fisico di 15 bit. Il registro di output è poi messo sul bus di memoria come indirizzo fisico di memoria
 
-![[SOR/img/img17.png|center|700]]
+![[SOR/SO/img/img17.png|center|700]]
 
 ## Tabelle delle pagine
 In una semplice implementazione si può sintetizzare il mappaggio degli indirizzi irtuali sugli indirizzi fisici come segue: l'indirizzo virtuale è diviso in un di pagina virtuale (i bit più significativi) e un offset (i bit meno significativi)
@@ -186,7 +186,7 @@ Il campo più importante è il **numero del frame**. I restanti valori sono:
 	- il bit modificato è impostato quando si scrive una pagina, per segnalare che la pagina è stata modificata e quindi va riscritta sul disco. 
 	- il bit riferimento viene impostato ogni volta che si accede alla pagina, per aiutare il SO a decidere quali pagine sono meno utilizzate in modo da scaricarle quando si verifica un page fault
 
-![[SOR/img/img45.png]]
+![[SOR/SO/img/img45.png]]
 
 ## Velocizzare la paginazione
 In ogni sistema di paginazione devono essere affrontate due sfide principali: 
@@ -206,7 +206,7 @@ La soluzione è stata quella di equipaggiare i computer di un piccolo dispositiv
 Consiste di un piccolo numero di voci, 8 nel caso in figura, ma raramente più di 256, ciascuna con il numero di pagina virtuale, bit modificato, codice di protezione e frame fisico. 
 Vediamo il funzionamento. Alla richiesta di un indirizzo virtuale, la MMU controlla prima nel TLB se è presente il suo numero di pagina, se è trovato ed è valido, il frame viene direttamente prelevato dal TLB, altrimenti in caso di *TLB miss*, avviene una normale ricerca nella tabella delle pagine e la voce trovata rimpiazza una voce nel TLB. 
 
-![[SOR/img/img46.png|center|500]]
+![[SOR/SO/img/img46.png|center|500]]
 
 Le modifiche ai permessi di una pagina nella tabella delle pagine richiedono l'aggiornamento del TLB. Per garantire la coerenza, la voce corrispondente nel TLB viene eliminata o aggiornata. 
 
