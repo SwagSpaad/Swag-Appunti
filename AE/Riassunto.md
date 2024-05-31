@@ -191,11 +191,11 @@ Una ALU contiene 3 unità:
 - full adder
 - decoder per decidere quale operazione effettuare
 
-![[Pasted image 20240530133426.png|center|700]]
+![[AE/img/img105.png|center|700]]
 
 Le ALU ad un bit possono essere assemblate per costruire ALU  più bit
 
-![[Pasted image 20240530133914.png|center500]]
+![[AE/img/img106.png|center500]]
 
 ## Memorie
 ### SR Latch
@@ -224,7 +224,7 @@ Ha lo stesso scopo del D Latch ma nel D Latch la transizione avviene quando il s
 Utilizza 8 flip flop
 ![[AE/img/img24.png|center|600]]
 
-# Microarchitettura
+# Livello Microarchitettura
 Il livello di microarchitettura è sopra il livello logico digitale ed è responsabile dell'implementazione del livello ISA.
 
 Il microprogramma è composto da una sequenza di microistruzioni che costituiscono lo stato della macchina. 
@@ -247,7 +247,7 @@ I registri sono:
 - Top word On Stack
 - Op Code register (contiene l'ultima istruzione eseguita prima di un salto)
 - Holding
-![[Pasted image 20240530141552.png|center|600]]
+![[AE/img/img107.png|center|600]]
 
 Nel data path l'ALU richiede due input: A, collegato al registro **H**old di mantenimento e B collegato al bus **B**. Il bus B può essere caricato da 9 sorgenti diverse (i registri visti in precedenza). 
 L'ALU ha 6 linee di controllo:
@@ -255,6 +255,85 @@ L'ALU ha 6 linee di controllo:
 - ENA, ENB abilita il valore delle variabili A e B
 - INVA, esegue una sottrazione o inverte il valore di A
 - INC, incrementa
-![[Pasted image 20240530150028.png|center|500]]
+![[AE/img/img108.png|center|500]]
 
 La ALU agisce sugli operandi A e B ed è possibile spostare l'operando B nell'ingresso di A utilizzando la funzione che restituisce B (F0=0 F1=1) e memorizzare il risultato del bus C nel registro H. 
+
+La lettura e la scrittura di un registro avvengono in fasi diversi dello stesso ciclo di clock. Nella fase iniziale viene selezionato un registro come input destro della ALU e i suoi valori sono caricati sul bus B. Vengono effettuate operazioni sui dati e il risultato inviato sul bus C attraverso lo shifter. Verso la fine del ciclo di clock, un segnale attiva la memorizzazione dei valori sul bus C nei registri e questo consente lettura e scrittura in un solo ciclo, evitando inconsistenze dei dati.
+
+## Microistruzioni 
+Per controllare il data path abbiamo bisogno di 29 segnali suddivisi in  5 gruppi
+- 9 segnali per controllo scrittura dei dati dal bus C ai registri
+- 9 segnali per controllo abilitazione registri sul bus B per input ALU
+- 8 segnali per controllo funzioni ALU e shifter
+- 2 segnali per leggere (scrivere) attraverso MAR (MDR)
+- 1 segnale per indicare prelievo della memoria attraverso PC o MBR
+
+Durante un ciclo del data path, si caricano i valori dei registri sul bus B, si eseguono operazioni attraverso l'ALU e lo shifter, si guida il risultato sul bus C e si riscrivono i dati nei registri. Se viene eseguita un'operazione di lettura dalla memoria, essa inizia alla fine del ciclo di percorso dati, dopo il caricamento di MAR. 
+Quindi la letturaq della memoria iniziata alla fine del ciclo $k$, trasmette dati che non possono essere utilizzati nel ciclo $k+1$ ma soltanto nel ciclo $k+2$.
+
+Possiamo controllare il percorso dati con 24 segnali (quindi 24 bit). Questi segnali controllano il percorso dati solo per un ciclo, e quindi bisogna determinare cosa effettuare nel ciclo successivo. Per questo si adotta un formato della microistruzione che comprende i 24 bit di controllo e due campi aggiuntivi: NEXT_ADDRESS e JAM
+
+![[AE/img/img31.png|center|500]]
+
+- Addr: contiene indirizzo successiva microistruzione
+- JAM: determina come viene selezionata la successiva microistruzione
+- ALU: seleziona funzioni ALU e shifter
+- C: seleziona quali registri sono scritti dal bus C
+- Mem: selezione funzione della memoria
+- B: seleziona sorgente del bus B (4 bit, valori da 0 a 8)
+
+## Mic-1
+![[AE/img/img32.png|center|500]]
+
+La memoria di controllo memorizza le microistruzioni
+Il decoder decodifica le istruzioni in base all'opcode
+
+## IJVM
+Il livello di microarchitettura è responsabile dell'implementazione del livello ISA. Analizziamo un caso particolare ovvero l'**IJVM** . Abbiamo descritto al microarchitettura su cui implementeremo l'IJVM (ovvero la mic-1). La mic-1 contiene un microprogramma registrato in una ROM, responsabile di prlevare, decodificare ed eseguire le istruzioni IJVM.
+Ogni istruzione IJVM è costituita da uno o due campi, il primo campo di ogni istruzione è **OpCode** che identifica il tipo di istruzione (ADD, BRANCH ecc.)
+
+### Stack
+Concetto fondamentaqle nella gestione delle variabili locali. Il problema principale è dove memorizzare le variabili locali, dato che l'assegnazione di indirizzi assoluti non funziona, perché porterebbe a conflitti se una procedura è chiamata più volte.
+
+Si utilizza quindi lo stack per memorizzare le variabli locali. Si difenisce un registro LV che punta alla procedura corrente e il registro SP che punta all'ultimo elemento dello stack.
+
+Quando una procedura chiama un'altra procedura, lo spazio delle variabili della nuova procedura viene allocato sopra lo stack e vengono aggiornati i puntatori LV ed SP. Quando una procedura termina, lo spazio assegnato alle variabili viene liberato.
+
+### Insieme delle istruzioni IJVM
+
+![[AE/img/img35.png|center|500]]
+
+# Livello ISA
+Il livello ISA costituisce l'interfaccia tra Hardware e software. Teoricamente è possibile eseguire direttamente codice di alto livello sull'hardware, ma ciò comporterebbe la perdita di prestazioni ed inoltre è preferibile che i computer siano in grado di eseguire programmi scritti in linguaggi diversi anziché uno solo.
+L'approccio comune dei progettisti è quella di tradurre i vari linguaggi di alto livello in un formato comune, ovvero l'ISA, per poi costruire l'hardwaqre che esegue i programmi.
+
+L'ISA deve essere **retrocompatibile**, quindi in grado di far girare anche i programmi più vecchi.
+Ha due modalità operative: 
+- modalità kernel: esegue il sistema operativo e le operazioni sensibili
+- modalità utente: per eseguire i programmi utenti 
+
+## Proprietà livello isa
+Il livello ISA può essere visto come la rappresentazione della macchina dal punto di vista del programmatore in linguaggio macchina. Tuttavia, dato che ormai pochi programmatori scrivono direttamente in linguaggio macchina, possiamo dire ch eil codice di livello ISA è l'output di un compilatore.
+
+Per produrre il codice a livello ISA, i progetitsti dei compilatori hanno bisogno di comprendere il modello di memoria, i registri disponibili, i tipi di dati e le istruzioni accessibili. Tutte queste informazioni costituiscono il livello ISA
+
+Il livello ISA è descritto attraverso un documento di definizione del produttore ed ha lo scopo di mettere i diversi produttori di chip in grado di costruire macchine capaci di eseguire lo stesso codice ISA. 
+Ad esempio ARM pubblica la definizione del suo livello ISA con lo scopo di permettere ai produttori di produrre chip ARM che funzionino tutti nello stesso modo, ma con costi e prestazioni diverse. 
+
+L'ISA si compone di: 
+- modello di memoria
+- insieme dei registri
+- tipi di dati possibili
+- insieme delle istruzioni
+
+## Modello di memoria
+I computer organizzano la memoria in celle consecutive, solitamente di 8 bit, ovvero 1 byte. La preferenza di dividere la memoria in byta deriva dal fatto che i caratteri nella tablella ASCII occupano 7 bit, permettendo di utilizzare quindi un byte intero. Se dovesse diventare predominante, in futuro, lo standard UNICODE, questo potrebbe portare ad organizzare la memoria in celle da 2 byte, ovvero 16 bit.
+
+I byte vengono solitamente raggruppati in parole di 4 oppure 8 byte (32 o 64 bit). Alcune macchine richiedono che le parole siano allineate nei loro limiti e quindi una parola da 8 byte può iniziare solo agli indirizzi 0, 8 e 16 ecc., ma non agli indirizzi 1,2 ecc. (in figura parole di 8 byte allineate e non allineate).
+
+![[Pasted image 20240531130005.png|center|500]]
+
+L'allineamento è richiesto per ottimizzare la memoria, ma questo potrebbe anche causare delle difficoltà perché la capacità di leggere parole da indirizzi arbitrari richiede un hardware più complesso, rendendo il chip più grande e costoso. Gli ingegneri vorrebbero evitare questo, ma la richiesta di retrocompatibilità e di poter eseguire codice vecchio porta a compromessi (ad esempio l'8088 poteva referenziare qualsiasi indirizzo di memoria avendo un bus largo 1 byte).
+
+I processori dispongono di uno spazio di memoria lineare degli indirizzi che va da $2^{32}$ oppure $2^{64}$. Alcune macchine hanno spazi separati per istruzioni e dati, che consente l'esecuzioni di programmi e il recupero di istruzioni da spazi diversi, offrendo sicurezza e permettendo una più ampia selezione di indirizzi

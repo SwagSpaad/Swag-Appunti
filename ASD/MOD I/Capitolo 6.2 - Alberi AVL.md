@@ -28,7 +28,7 @@ Generalmente $\beta(v)$ è mantenuto come informazione addizionale nel record re
 >Per convenzione l'altezza di un albero vuoto = -1
 
 
-![[img105.png|center|500]]
+![[ASD/MOD I/img/img105.png|center|500]]
 
 è un albero AVL? Si, proprietà sui fattori di bilanciamento rispettata
 
@@ -41,12 +41,12 @@ Come dimostriamo che l'altezza di un albero AVL con n nodi sia $O(\log(n))$? L'i
 Tra tutti gli alberi AVL di altezza h, un **albero di fibonacci** ha il minimo numero di nodi.
 Un albero di fibonacci di altezza h, può essere costruito unendo, tramite l'aggiunta di una radice, un sottoalbero di altezza h-1 e un sottoalbero di altezza h-2. Per un albero di fibonacci, è facile osservare che il fattore di bilanciamento di ogni nodo interno è +1, e quindi questi alberi sono gli alberi bilanciati in altezza più vicini alla condizione di non bilanciamento. 
 
-![[img106.png|center|500]]
+![[ASD/MOD I/img/img106.png|center|500]]
 
 Come si genera l'i-esimo albero di Fibonacci? Sia $T_h$ un albero di fibonacci di altezza h.
 Sotto è riportato lo schema di costruzione di un generico albero di fibonacci di altezza h.
 
-![[img107.png|center|200]]
+![[ASD/MOD I/img/img107.png|center|200]]
 
 **Lemma**
 Sia $T_h$ un albero di fibonacci di altezza h e sia $n_h$ il numero dei suoi nodi. Allora risulta h = $O(\log(n_h))$
@@ -62,7 +62,7 @@ Sia h l'altezza dell'albero AVL. Consideriamo l'albero di fibonacci di altezza h
 
 **Posso utilizzare un albero AVL per implementare un dizionario?**
 
-![[img108.png|center|500]]
+![[ASD/MOD I/img/img108.png|center|500]]
 
 A seguito di operazioni di inserimento e cancellazione, il fattore di bilanciamento richiesto dagli alberi AVL è cambiato. È quindi necessario ripristinare il fattore di bilanciamento tramite determinate operazioni.
 
