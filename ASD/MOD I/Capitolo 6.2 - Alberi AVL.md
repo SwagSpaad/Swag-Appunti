@@ -16,11 +16,11 @@ Generalmente $\beta(v)$ è mantenuto come informazione addizionale nel record re
 
 **Esempi**
 
-![[img103.png|center|500]]
+![[ASD/MOD I/img/img103.png|center|500]]
 
 è un albero AVL? Si, tutti i nodi hanno fattore di bilanciamento = 0
 
-![[img104.png|center|350]]
+![[ASD/MOD I/img/img104.png|center|350]]
 
 è un albero AVL? No, Non vale la proprietà sui fattori di bilanciamento
 
