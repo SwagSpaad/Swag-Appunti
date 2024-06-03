@@ -72,7 +72,7 @@ A seguito di operazioni di inserimento e cancellazione, il fattore di bilanciame
 
 L'operazione search procede come in un BST, ma inserimenti e cancellazioni potrebbero sbilanciare l'albero, per questo si ripristina il bilanciamento mediante opportune rotazioni. 
 
-![[img109.png|center|500]]
+![[ASD/MOD I/img/img109.png|center|500]]
 
 La figura mostra la rotazione di base: si può ruotare su un nodo perno o verso destra o verso sinistra. La proprietà di ricerca è mantenuta dopo la rotazione, infatti l'ordine relativo alle chiavi dei sottoalberi $T_1, \:T_2, \:T_3$ e nei nodi u e v rimane invariato.
 Le rotazioni vengono effettuate sui nodi non bilanciati, in cui il fattore di bilanciamento in valore assoluto è $\geq 2$. 
@@ -88,16 +88,16 @@ Siccome questi casi sono simmetrici a coppie (SS - DD ed SD - DS), analizzeremo 
 Per ribilanciare il nodo v, basterà applicare una rotazione semplice verso destra su v, il cui fattore di bilanciamento passerà da 2 a 0. Si noti che l'altezza del sottoalbero coinvolto nella rotazione è h+3 prima 
 della rotazione, per via del sottoalbero $T_1$, ed è h+2 immediatamente dopo.
 
-![[img110.png|center|500]]
+![[ASD/MOD I/img/img110.png|center|500]]
 
 Sono possibili 2 sottocasi:
 - L'altezza di $T_2$ è h $\implies$ l'altezza dell'albero coinvolto nella rotazione passa da h+3 ad h+2
 
-![[img111.png|center|600]]
+![[ASD/MOD I/img/img111.png|center|600]]
 
 - L'altezza di $T_2$ è h+1 $\implies$ l'altezza dell'albero coinvolto nella rotazione rimani pari ad h+3
 
-![[img112.png|center|600]]
+![[ASD/MOD I/img/img112.png|center|600]]
 
 ##### Osservazioni sul caso SS
 - Dopo la rotazione l'albero è bilanciato (tutti i fattori di bilanciamento sono in modulo $\leq1$)

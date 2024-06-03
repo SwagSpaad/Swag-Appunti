@@ -328,12 +328,110 @@ L'ISA si compone di:
 - insieme delle istruzioni
 
 ## Modello di memoria
-I computer organizzano la memoria in celle consecutive, solitamente di 8 bit, ovvero 1 byte. La preferenza di dividere la memoria in byta deriva dal fatto che i caratteri nella tablella ASCII occupano 7 bit, permettendo di utilizzare quindi un byte intero. Se dovesse diventare predominante, in futuro, lo standard UNICODE, questo potrebbe portare ad organizzare la memoria in celle da 2 byte, ovvero 16 bit.
+I computer organizzano la memoria in celle consecutive di 8 bit (1 byte), scelta derivante dal fatto che i caratteri ASCII occupano 7 bit. Con l'eventuale predominanza dello standard UNICODE, la memoria potrebbe essere organizzata in celle da 2 byte (16 bit).
 
-I byte vengono solitamente raggruppati in parole di 4 oppure 8 byte (32 o 64 bit). Alcune macchine richiedono che le parole siano allineate nei loro limiti e quindi una parola da 8 byte può iniziare solo agli indirizzi 0, 8 e 16 ecc., ma non agli indirizzi 1,2 ecc. (in figura parole di 8 byte allineate e non allineate).
+I byte sono spesso raggruppati in parole di 4 o 8 byte (32 o 64 bit). Alcune macchine richiedono che queste parole siano allineate agli indirizzi multipli della loro dimensione (es. una parola da 8 byte può iniziare agli indirizzi 0, 8, 16, ecc.). L'allineamento ottimizza la memoria, ma richiede hardware più complesso e costoso, nonostante la retrocompatibilità possa necessitare l'accesso a indirizzi arbitrari, quindi a partire da indirizzi differenti dai multipli della dimensione (es. l'8088 con bus da 1 byte).
 
-![[Pasted image 20240531130005.png|center|500]]
+![[AE/img/img110.png|center|500]]
 
-L'allineamento è richiesto per ottimizzare la memoria, ma questo potrebbe anche causare delle difficoltà perché la capacità di leggere parole da indirizzi arbitrari richiede un hardware più complesso, rendendo il chip più grande e costoso. Gli ingegneri vorrebbero evitare questo, ma la richiesta di retrocompatibilità e di poter eseguire codice vecchio porta a compromessi (ad esempio l'8088 poteva referenziare qualsiasi indirizzo di memoria avendo un bus largo 1 byte).
+I processori hanno uno spazio di memoria lineare degli indirizzi che va da $2^{32}$ a $2^{64}$. Alcune macchine hanno spazi separati per istruzioni e dati, aumentando la sicurezza (è impossibile sovrascrivere il programma) e permettendo una maggiore selezione di indirizzi.
 
-I processori dispongono di uno spazio di memoria lineare degli indirizzi che va da $2^{32}$ oppure $2^{64}$. Alcune macchine hanno spazi separati per istruzioni e dati, che consente l'esecuzioni di programmi e il recupero di istruzioni da spazi diversi, offrendo sicurezza e permettendo una più ampia selezione di indirizzi
+La semantica della memoria richiede che un'istruzione LOAD, eseguita dopo una STORE sullo stesso indirizzo, restituisca il valore appena memorizzato. Tuttavia, il riordinamento delle microistruzioni può causare comportamenti inattesi. Le soluzioni a questo problema includono:
+
+- **Serializzare gli accessi alla memoria**: Ogni richiesta di accesso viene completata prima di emettere la successiva. Questa soluzione **semplifica la semantica** ma **degrada le prestazioni**.
+- **Nessuna garanzia di ordine**: Per forzare un ordine, il programma deve eseguire un'istruzione SYNC, che blocca le operazioni finché le precedenti non sono completate. Questo approccio **genera un carico di lavoro maggiore per il compilatore**, ma **consente all'hardware maggiore libertà di ottimizzazione**.
+## Registri
+Tutti i computer dispongono di registri visibili a livello ISA (Instruction Set Architecture) per controllare l'esecuzione dei programmi e memorizzare risultati temporanei. Registri come TOS (Top of Stack) e MAR (Memory Address Register) non sono visibili a livello ISA.
+
+I registri si dividono in due categorie:
+- Registri specializzati: **Program Counter (PC)**, **Stack Pointer (SP)**, registri visibili in modalità kernel (controllo cache, dispositivi I/O, ecc.)
+- **Registri di uso generale**: Utilizzati per memorizzare temporaneamente variabili locali. Possono essere simmetrici e intercambiabili oppure specializzati. Ad esempio, nel Pentium 4, il registro EDX è usato sia come registro d'uso generale sia per ricevere metà del prodotto in una moltiplicazione e metà del dividendo in una divisione.
+
+Nonostante l'intercambiabilità dei registri, i sistemi operativi e compilatori adottano convenzioni sull'uso dei registri; ignorarle può causare problemi nella gestione dei dati.
+
+Oltre ai registri visibili agli utenti, ci sono registri accessibili solo in modalità kernel, usati dal sistema operativo.
+
+Il registro di flag **Program Status Word (PSW)** è un ibrido tra modalità kernel e utente. Contiene bit necessari alla CPU, tra cui i codici di condizione, che riflettono lo stato dell'operazione più recente:
+
+- **N**: 1 se il risultato è negativo
+- **Z**: 1 se il risultato è zero
+- **V**: 1 se il risultato causa overflow
+- **C**: 1 se il risultato causa un riporto oltre l'ultimo bit significativo
+- **A**: 1 se c'è un riporto oltre il terzo bit
+- **P**: 1 se il risultato è pari
+
+Questi codici sono usati dalle istruzioni di confronto (CMP) e dai salti condizionali (ad esempio, BEQ branch on equal, salta se Z è 1, questo vuol dire che i due operandi sono uguali).
+Il PSW contiene anche campi per la modalità di esecuzione, bit di traccia, ecc. È leggibile in modalità utente, ma alcuni campi sono scrivibili solo in modalità kernel.
+## Modalità di indirizzamento
+### Immediato
+Il valore dell'operando è specificato direttamente nell'istruzione al posto del campo dell'indirizzo 
+``` 
+MOV R1 4 //carica la costante 4 nel registro R1
+```
+Presenta limitazioni nella dimensione dell'operando e nel numero di operandi forniti
+
+### Diretto
+L'istruzione contiene l'indirizzo di memoria completo dell'operando. 
+```
+MOV R1 [1234h] //carica in R1 il valore memorizzato nell'indirizzo di memoria 1234h
+```
+L'istruzione accederà quindi sempre alla stessa locazione da memoria, è utile per accedere a variabili globali con indirizzo noto.
+
+### Indirizzamento a registro
+Analogo all'indirizzamento diretto, ma specifica un registro invece di una locazione di memoria. 
+```
+MOV R1 R2 //il contenuto del registro R2 viene copiato nel registro R1
+```
+Modalità più utilizzata grazie alla velocità dei registri, tranne per il caso in cui un operando è trasferito dalla memoria in un registro (LOAD) o da un registro alla memoria (STORE)
+
+### A registro indiretto
+L'operando proviene o è destinato alla memL'oria, però il suo indirizzo non è specificato direttamente nell'istruzione, ma è contenuto in un registro. 
+Il vantaggio è quello di poter referenziare la memoria senza incorporare un intero indirizzo di memoria nell'istruzione.
+```
+MOV R1 (R2) //l'operando contenuto all'indirizzo contenuto in R2 viene copiato in R1
+```
+
+### Indicizzato
+Permette di referenziare una parola che si trova ad un offset dal contenuto di un registro. 
+```
+MOV R1, (R2 + 4) //copia in R1 il valore della zona di memoria 4 byte avanti rispetto l'indirizzo di R2 
+```
+Utile per accedere agli elementi di un array
+
+### Indicizzato esteso
+L'indirizzo di memoria è calcolato sommando tra loro il contenuto di due registri più un offset opzionale. Un registro funge da base (indirizzo di partenza) e l'altro da indice. 
+```
+MOV R1, (R2 + R3 + 4) //copia in R1 il valore all'indirizzo R2+R3 e poi 4 byte avanti al risultato
+```
+
+### A stack
+Lo stack risulta utile per quelle istruzioni senza indirizzi. È utilizzato per:
+- gestire le chiamate dei procedura 
+- calcolare espressioni aritmetiche 
+- salvare risultati intermedi
+Operazioni principali:
+- push: aggiunge elemento in cima dello stack
+- pop: preleva l'elemento in cima allo stack
+
+![[AE/img/img111.png|center|700]]
+
+### Notazione polacca
+Modo per scrivere le espressioni matematiche senza utilizzo di parentesi. Ideale per eseguire calcoli in computer dotati di stack. 
+Infatti l'espressione $$(8+2\times5)/(1+3\times2-4)$$
+in notazione polacca risulta $$8\ 2\ 5\times+\ 1\ 3\ 2\times +\ 4-\ /$$
+![[AE/img/img112.png|center|700]]
+
+
+# Trap e interrupt
+- Trap: chiamate di procedura automatiche che si attivano quando si verificano delle condizioni eccezionali causate da un programma. Ad esempio un overflow (quando un risultato aritmetico supera la capacità di rappresentazione) causa una trap. Sono gestite da un *gestore di trap*, che si occupa di gestire l'eccezione, ad esempio stampando un messaggio d'errore
+- Interrupt: cambiamenti nel flusso esecutivo generati da problemi esterni al programma. Interrompono il programma in esecuzione e trasferiscono il controllo ad un *gestore* e al loro compimento il gestore restituisce il controllo al programma esattamente da dove era stato interrotto. Al contrario delle trap, che avvengono sempre allo stesso punto dell'esecuzione di un programma, gli interrupt sono generati da eventi esterni, come la pressione di un tasto, pertanto non sono riproducibili. 
+
+Le trap sono generate da condizioni all'interno del programma (gestione software), mentre gli interrupt da eventi esterni all'esecuzione (gestione hardware).
+
+Dopo l'interruzione, sia la trap che l'interrupt devono far tornare il sistema nello stato precedente all'interruzione, garantendo una corretta ripresa dell'esecuzione del programma (trasparenza)
+
+Gli interrupt possono essere gestiti con priorità, dando precedenza a determinati eventi rispetto ad altri
+
+Durante un interrupt vengono salvati i registri di stato per poi ripristinarli alla fine dell'interruzione, garantendo il ritorno al flusso precedente
+
+# Linguaggio assemblativo (livello 5)
