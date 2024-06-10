@@ -113,7 +113,7 @@ Questo caso è più complesso e richiede l'applicazione di una doppia rotazione.
 
 ![[img113.png|center|300]]
 
-![[img114.png|center|700]]
+![[ASD/MOD I/img/img114.png|center|700]]
 
 - L'altezza dell'albero dopo la rotazione passa da h+3 a h+2, poichè $T_2,\: T_3$ sono alti al più h e il fattore di bilanciamento di w diventa 0, mentre i fattori di bilanciamento di z e v sono 0 oppure $\pm1$
 - Il caso SD può essere provocato sia da inserimenti (in $T_2$ o $T_3$), sia da cancellazioni che abbassano di 1 l'altezza di $T_4$

@@ -1,4 +1,4 @@
-	****
+*******
 Per risolvere un problema $\pi$ è necessario progettare una macchina di Turing $T_{\pi}$ apposita per risolvere quel problema. Una volta eseguite le istruzioni codificate nelle quintuple di $T_{\pi}$ su un dato input $x$, otteniamo una soluzione per l'istanza $x$ di $\pi$.
 Una macchina di Turing non è altro che un algoritmo, quindi il *modello di calcolo* **M**acchina di Turing è un linguaggio utilizzato per descrivere gli algoritmi. 
 

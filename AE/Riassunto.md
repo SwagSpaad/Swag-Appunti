@@ -89,37 +89,6 @@ Il pipeline divide l'esecuzione di un istruzione in un numero maggiore di parti 
 
 Avere più pipeline permette un parallelismo maggiore, rispetto ad averne una sola, ma affinché le due istruzioni possano essere eseguite in parallelo, non ci devono essere conflitti nell'uso delle risorse e nessuna delle due istruzioni deve dipendere dal risultato dell'altra
 
-# Architetture superscalari
-Il processore dispone di una sola pipeline con più unità funzionali in corrispondenza di alcuni stadi 
-
-![[AE/img/img104.png|center|500]]
-
-Affinché l'architettura abbia senso è necessario che la velocità di $S_{3}$ sia più alta rispetto a quella della fase $S_{4}$ 
-
-# Parallelismo nel processore
-Il parallelismo nel processore aiuta a migliorare le performance della CPU: con il pipelining e le architetture superscalari si può arrivare ad un fattore di miglioramento da 5 a 10. 
-Per incrementare notevolmente le performance occorre progettare sistemi con molte CPU, arrivando ad un fattore di migliormento di 50, 100 o più.
-
-Esistono tre differenti approcci:
-- computer con parallelismo sui dati
-- multiprocessori
-- multicomputer
-
-## Computer con parallelismo sui dati
-- Processori SIMD (Single Instruction Multiple Data): costituiti da un vasto numero di processori che eseguono la stessa istruzione su un insieme differente di dati
-- Processori vettoriali: esegue la stessa sequenza di operazioni su coppie di dati, ma tutte le addizioni sono svolte da un unico sommatore strutturato in pipeline
-
-Entrambe le architetture lavorano su array di dati, mentre il primo utilizza tanti sommatori quanti gli elementi del vettore, il secondo utilizza un solo sommatore e un unico registro vettoriale
-
-## Multiprocessori
-Architettura costituita da più CPU che condividono memoria comune. Poiché ciascuna CPU può leggere o scrivere qualsiasi zona della memoria comune, le CPU devono sincronizzarsi via software. 
-
-## Multicomputer
-I multiprocessori con molte CPU sono difficili da realizzare a causa delle connessioni di ciascuna CPU verso la memoria comune.
-I progettisti hanno superato il problema abbandonando il concetto di memoria comune e realizzando un elevato numero di CPU interconnesse, ciascuno con la propria memoria privata.
-Le CPU in un multicomputer comunicano attraverso lo scambio di messaggi.
-In architetture grandi la completa interconnessione non è fattibile così sono utilizzate topologie differenti come la griglia, l'anello o l'albero
-
 # Memoria cache
 Le CPU sono più veloci delle memorie, quindi il recupero di una parola dalla memoria può richiedere molti cicli di CPU. Per mitigare questo, si utilizza la memoria cache: una piccola quantità di memoria veloce combinata con una grande memoria lenta. La cache conserva le parole di memoria più frequentemente usate, e quando la CPU ha bisogno di una parola la cerca prima nella cache e, se non è presente, la richiede alla memoria
 
@@ -435,3 +404,275 @@ Gli interrupt possono essere gestiti con priorità, dando precedenza a determina
 Durante un interrupt vengono salvati i registri di stato per poi ripristinarli alla fine dell'interruzione, garantendo il ritorno al flusso precedente
 
 # Linguaggio assemblativo (livello 5)
+Il livello del linguaggio assemblativo è implementato tramite traduzione invece che interpretazione. 
+Un linguaggio assemblativo è un linguaggio nel quale ciascuna istruzione produce esattamente un'istruzione macchina. Utilizza abbreviazioni per le istruzioni e gli indirizzi ad esempio ADD per la somma, MUL per la moltiplicazione, rendendolo più leggibile rispetto alla rappresentazione binaria o ottale. 
+Il linguaggio assemblativo permette di **accedere a tutte le funzionalità e le istruzioni disponibili della macchina**, mentre un linguaggio ad alto livello non ha la stessa libertà, ad esempio non può accedere ai registri.
+
+Le ragioni per cui si dovrebbe programmare in linguaggio assemblativo sono: le prestazioni e le possibilità di accesso alla macchina, quindi è utile per quelle applicazioni dove servono dimensioni ridotte del programma, velocità e completo sfruttamento della macchina.
+
+Le istruzioni nel linguaggio assemblativo sono composte da quattro parti: 
+- campo etichetta: fornisce nomi simbolici agli indirizzi, necessarie per definire la destinazioni alle quali portano le istruzioni che effettuano salti e per poter accedere alle parole di dati memorizzate con nomi simbolici
+- campo codice operativo: contiene un'abbrevaizione simbolica del codice operativo o un comando per l'assemblatore. 
+- campo degli operandi: utilizzato per specificare gli indirizzi e i registri utilizzati come operandi dall'istruzione macchina. Nel caso di un'istruzione salto indica a quale indirizzo deve portare la diramazione. Gli operandi possono essere registri, costanti, locazioni di memoria ecc.
+- campo dei commenti
+
+| Etichetta | Codice Operativo | Operandi | Commenti                         |
+| --------- | ---------------- | -------- | -------------------------------- |
+| FORMULA:  | MOV              | EAX, I   | registro EAX = I                 |
+|           | ADD              | EAX, J   | registro EAX = I + J             |
+|           | MOV              | N, EAX   | N = I + J                        |
+|           |                  |          |                                  |
+| I         | DD               | 3        | riserva 4 byte inizializzati a 3 |
+| J         | DD               | 4        | riserva 4 byte inizializzati a 4 |
+| N         | DD               | 0        | riserva 4 byte inizializzati a 0 |
+codice che effettua la somma degli interi I e J
+
+## Pseudoistruzioni 
+Il linguaggio assemblativo può contenere dei comandi indirizzati all'assemblatore, detti pseudoistruzioni. Tra questi ci sono EQU (definisce un nuovo simbolo uguale a una data espressione es. BASE EQU 1000, BASE prende il valore 1000), DB (define byte), istruzioni condizionali come IF ed ENDIF.
+
+## Macroistruzioni
+Permettono di ripetere più volte una sequenza di istruzioni, trasformandola in una procedura e richiamandola quando richiesta. 
+
+$$\begin{align*}
+&MOV\ EAX,\ P \qquad\qquad SWAP &&MACRO\\ 
+&MOV\ EBX,\ Q \qquad\qquad &&MOV\ EAX,\ P\\
+&MOV\ Q,\ EAX \qquad\qquad &&MOV\ EBX,\ Q\\
+&MOV\ P,\ EBX \qquad\qquad &&MOV\ Q,\ EAX\\
+&\ &&MOV\ P,\ EBX\\
+&MOV\ EAX,\ P \qquad\qquad &&ENDM\\
+&MOV\ EBX,\ Q \\
+&MOV\ Q,\ EAX &&SWAP\\
+&MOV\ P,\ EBX \\
+&\ &&SWAP\\
+\end{align*}$$
+A sinistra il codice per scambiare due volte P e Q, mentre a destra viene definita una macro che viene richiamata con l'istruzione SWAP.
+Quando l'assemblatore incontra una definizione di macro, sostituisce il nome della macro col suo corpo
+
+## Macro vs procedure
+Le chiamate di macro sono istruzioni all'assemblatore che sostituiscono il nome della macro con il suo corpo quando avviene la chiamata. 
+Le chiamate di procedura sono istruzioni macchina che richiamano una procedura ed effettuano un salto nel corpo del codice
+
+## Macro con parametri
+Le macro possono avere dei parametri che vengono sostituiti con i valori specificati nella chiamata della macro $$\begin{align*}
+CHANGE\ \ &MACRO\ P1,\ P2\\
+&MOV\ EAX,\ P1\\
+&MOV\ EBX,\ P2\\
+&MOV\ P2,\ EAX\\
+&MOV\ P1,\ EBX\\
+&ENDM\\
+\\
+&CHANGE\ P,\ Q\\\\
+&CHANGE\ R,\ S
+\end{align*}$$
+## Processo di assemblaggio
+Dato che ogni programma in linguaggio assemblativo consiste in una serie di istruzioni che possono avere dei salti avanti, l'assemblatore non può conoscere in anticipo la posizione dell'istruzione richiamata in avanti.
+Si gestisce l'assemblaggio in 2 passate. 
+La prima passata costruisce la tabella dei simboli, che contiene i valori di tutti i simboli, le pseudoistruzioni e i codici operativi. La seconda passata genera il programma oggetto.
+
+## Collegamento e caricamento
+I programmi sono composti da più di una procedura e i compilatori traducono una procedura per volta, memorizzando il risultato della traduzione. Prima dell'esecuzione è necessario recuperare tutte le procedure e collegarle tra di loro in modo corretto. Il programma che esegue questi passi è detto **linker**.
+La traduzione di un programma richiede quindi due passi: 
+- compilazione delle procedure sorgenti
+- collegamento dei moduli oggetto
+ ![[AE/img/img113.png|center|1000]]
+ Il senso di tradurre ogni procedura sorgente come entità separata è un vantaggio, perché se dovesse leggere una serie di procedure sorgente e produrre direttamente un programma in linguaggio macchina, la modifica anche solo di un'istruzione richiederebbe una nuova traduzione di tutte le altre procedure, mentre mantenendole separate è necessario ritradurre solo la procedura modificata.
+
+## Compiti del linker
+Il linker crea un'immagine dello spazio di indirizzamento virtuale del programma e di posizionare tutti i moduli oggetto nelle locazioni corrette. 
+Opera nei seguenti passi: 
+- crea una tabella dei moduli oggetto e delle loro lunghezze
+- assegna un indirizzo di partenza per ciascun modulo in base a questa tabella
+- cerca le istruzioni che fanno riferimento alla memoria e aggiunge una costante di rilocazione uguale all'indirizzo di partenza del modulo
+- cerca le istruzioni che fanno riferimento ad altre procedure e inserisce in quei punti gli indirizzi delle procedure corrispondenti
+
+# Classificazione di Flynn
+![[AE/img/img114.png|center|800]]
+
+# Architetture superscalari
+L'idea è di emettere più istruzioni per ciclo di clock. 
+Due tipi di CPU ad emissione multipla: 
+- processori superscalari (in figura): composte da pipeline e più unità funzionali
+- processori VLIW (Very Long Instruction Word): indirizza le diverse unità funzionali con una sola linea di pipeline
+
+![[AE/img/img104.png|center|500]]
+
+# Parallelismo nel processore
+Il parallelismo nel processore aiuta a migliorare le performance della CPU: con il pipelining e le architetture superscalari si può arrivare ad un fattore di miglioramento da 5 a 10. 
+Per incrementare notevolmente le performance occorre progettare sistemi con molte CPU, arrivando ad un fattore di migliormento di 50, 100 o più.
+
+Esistono tre differenti approcci:
+- computer con parallelismo sui dati
+- multiprocessori
+- multicomputer
+
+## Computer con parallelismo sui dati
+- Processori SIMD (Single Instruction Multiple Data): costituiti da un vasto numero di processori che eseguono la stessa istruzione su un insieme differente di dati
+- Processori vettoriali: esegue la stessa sequenza di operazioni su coppie di dati, ma tutte le addizioni sono svolte da un unico sommatore strutturato in pipeline
+
+Entrambe le architetture lavorano su array di dati, mentre il primo utilizza tanti sommatori quanti gli elementi del vettore, il secondo utilizza un solo sommatore e un unico registro vettoriale
+
+## Multiprocessori
+Architettura costituita da più CPU che condividono memoria comune. Poiché ciascuna CPU può leggere o scrivere qualsiasi zona della memoria comune, le CPU devono sincronizzarsi via software. 
+Multiprocessori UMA (Uniform Memory Access): ogni parola può essere letta alla stessa velocità
+Multiprocessori NUMA (Non Uniform Memory Access): non tutte le parole possono essere lette alla stessa velocità
+
+## Multicomputer
+I multiprocessori con molte CPU sono difficili da realizzare a causa delle connessioni di ciascuna CPU verso la memoria comune.
+I progettisti hanno superato il problema abbandonando il concetto di memoria comune e realizzando un elevato numero di CPU interconnesse, ciascuno con la propria memoria privata.
+Le CPU in un multicomputer comunicano attraverso lo scambio di messaggi perché non c'è accesso diretto alla memoria delle altre CPU.
+In architetture grandi la completa interconnessione non è fattibile così sono utilizzate topologie differenti come la griglia, l'anello o l'albero
+
+I multicomputer grandi sono più semplici e meno costosi da costruire rispetto a multiprocessori di grandi dimensioni, ma programmare un multicomputer è più complesso a causa della comunicazione attraverso messaggi software. 
+## Multithreading nel chip
+Le CPU a pipeline presentano un problema: quando un riferimento in memoria non è presente nella cache, bisogna aspettare del tempo prima che la parola sia caricata, così in quel tempo la pipeline è in fase di stallo. 
+Il multithreading nel chip permette di mascherare queste situazioni in quanto la CPU gestisce più thread di controllo: se il thread 1 è bloccato, la CPU esegue il thread 2.
+
+### Multithreading a grana fine
+Consente alla CPU di eseguire più thread, commutando tra di essi ad ogni ciclo. Ogni thread ha il proprio set di registri. Nasconde gli stalli nell'esecuzione delle istruzioni consentendo ad altri thread di continuare l'esecuzione
+
+### Multithreading a grana grossa
+Il thread continua ad emettere istruzioni finché non spreca un ciclo di clock, ovvero va in stallo, a quel punto l'esecuzione viene commutata su un altro thread. 
+Dato che si perde un ciclo ad ogni stallo, il multithreading a grana grossa è meno efficiente di quello a grana fine, ma richeide meno thread per mantenere la CPU occupata.
+
+![[Pasted image 20240604161943.png|center|900]]
+
+Il multithreading a grana fine è vantaggioso poiché anticipa gli stalli riducendo i cicli persi.
+
+### Multithreading simultaneo
+Ogni thread emette istruzioni finché possibile, ma se uno va in stallo la CPU esegue immediatamente un nuovo thread per mantenere la CPU pienamente impegnata
+
+## Multiprocessori in un solo chip
+Si inseriscono più CPU, detti core, all'interno dello stesso chip.
+
+I multiprocessori sono realizzati con core identici (multiprocessori omogenei) o con core con funzionalità specifiche (multiprocessori eterogenei).
+
+#### Multiprocessori omogenei
+Le CPU condividono la stessa cache di primo e secondo livello e la memoria principale.
+
+Due tipologie:
+- Duplice pipeline: c'è davvero un solo chip , ma dotato di duplice pipeline che permette di raddoppiare il throughput. Permette la condivisione di risorse come le unità funzionali
+- Multiprocessori separati: più core separati, ognuno con la sua CPU e la sua pipeline. In questo caso l'interazione tra CPU è meno semplice.
+
+#### Multiprocessori eterogenei
+Ogni core ha un compito specifico, come decoder audio/video, interfaccia di rete ecc.
+Siccome l'hardware è più avanti del software, esistono chip multicore, ma non abbiamo applicazioni in grado di sfruttare queste caratteristiche. 
+
+#### Comunicazione tra core
+Nei sistemi più piccoli basta un solo bus per mettere in comunicazione i core, ma in sistemi più grandi diventerebbe un collo di bottiglia. Il problema può essere risolto oprando per più bus o per un anello che attraversa tutti i core. Nell'anello la possibilità di comunicare avviene attraverso il passaggio di un token. Quando un core vuole comunicare, deve aspettare di ricevere il token e quando ha finito di comunicare lo reintroduce sull'anello per permettere agli altri core di comunciare.
+
+### UMA con architettura basata su bus
+I più semplici multiprocessori sono basati su un singolo bus che interconnette tutte le CPU alla memoria condivisa.
+
+![[AE/img/img46.png|center|350]]
+
+Una CPU che vuole leggere/scrivere una parola in memoria, se il bus è occupato, deve attendere che si liberi. Questa architettura funziona bene con due o tre CPU. Per aumentare il numero di CPU occorre aumentare il numero di memorie.
+
+### UMA con singolo bus e cache nelle CPU
+L'aggiunta di una memoria cache all'interno delle singole CPU può ridurre il traffico sul bus e il sistema può sopportare anche più di 3 CPU
+
+![[AE/img/img47.png|center|350]]
+
+Il caching viene eseguito su blocchi di 32 o 64 byte. Quando una parola è referenziata, l'intero blocco che la contiene, viene caricato nella CPU che l'ha richiesta. 
+Se una CPU scrive una parola in memoria contenuta in altri blocchi di cache, le altre CPU si troveranno a manipolare dati scaduti. Il processo di **snooping** garantisce che se una parola è presente in più cache e una CPU modifica il suo valore in memoria, essa è automaticamente rimossa in tutte le cache per garantire consistenza dei dati.
+
+### UMA con singolo bus e CPU dotate di RAM
+Un'altra soluzione è con l'aggiunta di memorie RAM in un bus dedicato per ogni CPU 
+
+![[AE/img/img48.png|center|250]]
+
+A questo punto la memoria condivisa è utilizzata esclusivamente per scrivere variabili condivise (globali). Questa soluzione riduce il traffico sul bus ma richiede una collaborazione attiva del compilatore che deve separare gli oggetti locali da quelli globali.
+
+### UMA con crossbar switch
+L'utilizzo di un singolo bus di interconnessione limita la dimensione del multiprocessore UMA a 16 o 32 CPU.
+Per andare oltre, occorre utilizzare una differente rete di interconnessione. Il circuito più semplice che permette di collegare $n$ CPU a $k$ memorie è il **crossbar switch**.
+
+![[AE/img/img49.png|center|400]]
+
+Ad ogni intersezione tra una linea orizzontale (CPU) e una verticale (RAM) c'è un **crosspoint**, un commutatore che può essere aperto o chiuso, a seconda che si voglia collegare o meno le linee corrispondenti. 
+- Vantaggio: si crea una rete non bloccante, ovvero non succede mai che venga negata a una CPU la connessione di cui ha bisogno perché la linea è già occupata. 
+- Svantaggio: problema della competizione per la memoria, qualora due, o più, CPU vogliono accedere allo stesso modulo nel medesimo istante. Il numero di crosspoint cresce come $n^{2}$, con 1000 CPU e 1000 RAM servirebbero milioni di crosspoint, cosa non possibile.
+
+### UMA con reti a commutazione multilivello
+Una progettazione basata su commutatori 2x2 (2 input, 2 output); i messaggi che arrivano nelle due linee di ingresso possono scambiarsi in una delle due linee di uscita. 
+Ogni messaggio contiene:
+- quale memoria utilizzare 
+- l'indirizzo del modulo
+- il codice dell'operazione
+- il valore di un operando
+Lo switch utilizza il campo modulo per scegliere dove spedire il messaggio.
+Una rete economica e semplice è la rete **Omega**
+
+![[AE/img/img50.png|center|500]] 
+
+A differenza del crossbar la Omega è una rete bloccante, non tutti gli insiemi di richieste possono essere processati contemporaneamente.
+- Funzionamento: supponiamo che la CPU 011 voglia leggere una parola dalla memoria 110. La CPU 011 invia un messaggio *read* contenente 110 nel campo modulo al commutatore 1D. Il commutatore legge il primo bit da sinistra e se è uno 0 instrada il messaggio verso l'output in alto, mentre se è 1 lo instrada verso l'output in basso. Siccome il bit più a sinistra è 1 il messaggio viene instradato verso il commutatore 2D. 2D quando riceve il messaggio legge il secondo bit da sinistra che essendo 1 lo instrada verso 3D che a questo punto legge il terzo (e ulitmo) bit da sinistra che è uno 0 e instrada il collegamento verso l'altro, quindi verso la memoria 110.
+## Sincronizzazione dei multiprocessori
+Le CPU di un multiprocessore hanno bisogno di sicnronizzarsi. Le regioni critiche del kernel e le tablle sono protette da mutex. 
+Se una CPU vuole accedere ad una regione critica del kernel, deve fare in modo che in quel momento nessun altro acceda alla stessa regione critica.
+La mutex si basa sull'istruzione TSL (Test and Set Lock) che con più CPU blocca il bus, impedendo l'accesso alle altre CPU e poi accedere alla memoria.
+
+## Scheduling dei multiprocessori
+### Timesharing
+Utilizza un vettore di liste di processi con diverse priorità di esecuzione. Assegna il tempo tra le CPU come se fossero in un sistema monoprocessore, bilanciando automaticamente il carico.
+
+Problemi: 
+- dispute per l'accesso alla struttura di scheduling con l'aumentare delle CPU
+- sovraccarico per il context switch quando un processo si blocca per l'I/O
+
+Alternativa: scheduling per affinità. L'obiettivo è far eseguire lo stesso processo alla stessa CPU, per sfruttare i blocchi già presenti nella cache della CPU su cui è già stato eseguito. Questo tipo di scheduling **distribuisce il carico equamente tra le CPU**, **migliora le performance e minimizza le dispute sulle liste dei processi perché ogni CPU tenta di riusare i propri processi**
+
+### Condivisione dello spazio
+Utile nei processi correlati. Supponiamo di avere un insieme di thread correlati; lo scheduler controlla se ci sono tante CPU libere quanti sono i thread: se esistono ad ogni thread viene assegnata una CPU dedicata ed è avviato, altrimenti nessun processo è avviato finché non sono disponibili un numero adeguato di CPU.
+Questo tipo di scheduling elimina il sovraccarico dovuto agli scambi di contesto, ma spreca tempo quando una CPU si blocca perché non c'è nulla da fare.
+
+### Schedulazione gang
+Si compone di tre passaggi:
+- schedula i thread correlati come un'unità (gang)
+- esegue contemporaneamente in diverse CPU i thread della stessa gang 
+- tutti i membri della gang iniziano e terminano la porzione di tempo contemporaneamente
+Il vantaggio è che, avendocontemporaneamente tutti i thread di un gruppo in esecuzione, questi possono comunicare più rapidamente ed efficientemente. 
+
+# Virtualizzazione
+Permette ad un singolo computer "reale" di ospitare più computer "virtuali", permettendo ad ogni macchina di eseguire il proprio sistema operativo.
+
+Vantaggi:
+- isolamento dei malfunzionamenti
+- risparmio di spazio
+- minor consumo energetico
+- possibilità di eseguire applicazioni legacy (vecchie)
+
+Ogni CPU con modalità kernel ed utente ha delle istruzioni che si comporta in modo differente in base alla modalità di esecuzione, queste istruzioni sono dette *istruzioni sensibili*. Esistono poi delle istruzioni dette *istruzioni privilegiate*, che possono essere eseguite solo in modalità kernel. 
+Una macchina **è virtualizzabile solo se le istruzioni sensibili sono un sottoinsieme di quelle privilegiate**.
+
+Nel 2005 AMD e Intel introducono la virtualizzazione sulle loro CPU creando dei contenitori per eseguire le macchine virtuali. 
+Gli hypervisor sono software che gestiscono la macchina virtuale consentando l'esecuzione simultanea di più sistemi operativi su una singola macchina fisica. 
+
+## Hypervisor di tipo 1
+Si trova nel sistema operativo reale e viene eseguito in modalità kernel.
+La macchina virtuale è vista come un processo in modalità utente e non può eseguire istruzioni sensibili anche se pensa di essere in modalità kernel (modalità virtuale del kernel).
+Quando la VM esegue un'istruzione sensibile avviene una trap nel kernel dell'hypervisor, che esamina l'istruzione e se è stata inviata dalla VM, la esegue, altrimenti simula il comportamento dell'hardware reale. 
+
+## Hypervisor di tipo 2
+È un programma utente che interpreta le istruzioni della VM e le traduce sul SO della macchina reale. Utilizza le risorse disponibili del sistema operativo host. Per eseguire un programma si utilizza la tecnica delle traduzione binaria: esegue la scansione del codice 
+
+## Differenza tra gli hypervisor
+Tipo 1: approccio trap-and-emulate. Genera troppi trap e un eccessivo sovraccarico per la gestione
+
+Tipo 2: utilizza la traduzione delle istruzioni sensibili, sostituendole con delle chiamate a procedura che emulano il comportamento. Il SO ospite non invierà mai alla macchina fisica delle istruzioni sensibili.
+
+# ARM
+L'architettura ARM è una famiglia di microprocessori RISC a 32 o 64 bit. È un architettura ampiamente diffusa in dispositivi come tablet, cellulari e apparecchi elettronici.
+
+La forza principale sta nella sua semplicità circuitale, che utilizza un minor numero di transistor e meno silicio, permettendo la realizzazione di chip piccoli con un basso consumo energetico, ma prestazioni notevoli rispetto la loro grandezza.
+
+Il modello business di ARM prevede la condivisione della licenza del design del suo microprocessore, permettendo alle aziende di sviluppo dei chip di produrre il proprio chip adattandolo alle loro esigenze e creando chip personalizzati.
+
+L'architettura ARM è progettata per massimizzare l'emissione di istruzioni, perché dispone di un gran numero di registri della stessa dimensione ed esegue l'elaborazione dei dati direttamente nel processore senza l'intervento della memoria, a cui accede solo con le istruzioni di LOAD e STORE.
+
+La decodifica è rapida grazie alle istruzioni dal formato regolare e una lunghezza fissa delle istruzioni. L'indirizzamento è effeciente perché richiede che il valore dell'operando sia specificato direttamente nell'istruzione (indirizzamento immediato) o in un registro del processore. 
+
+## Aspetti innovativi
+- data path che permette di effettuare una funzione aritmetica o logica ed operazione di scorrimento su più bit con una sola istruzione
+- modalità di indirizzamento con auto-incremento e auto-decremento per ottimizzare i cicli
+- possibilità di effettuare istruzioni di load/store multiple
+- le istruzioni possono prevedere una pre-condizione che vincola l'esecuzione dell'istruzione stessa

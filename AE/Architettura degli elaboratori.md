@@ -414,7 +414,7 @@ All'inizio di ogni ciclo di clock (fronte di discesa) MIR viene caricato con il 
 Subito dopo i segnali vengono propagati all'interno del data path ed uno dei registri vengono inviati attraverso il bus B alla ALU che calcola la funzione richiesta e produce sul bus C il risultato; sul fronte di salita i registri selezionati vengono caricati. 
 
 # Capitolo 5
-amore## Il livello ISA e un esempio: IJVM
+## Il livello ISA e un esempio: IJVM
 ---
 Il **livello ISA** (Istruction Set Architecture) descrive l'architettura delle istruzioni che la CPU è in grado di eseguire in Hardware (firmware). Ogni CPU ha un proprio ISA e quindi istruzioni diverse spesso non sono compatibili tra loro. 
 Il livello ISA è l'interfaccia tra i compilatori e l'hardware, quindi il linguaggio che entrambi possono comprendere. Questo livello deve essere retrocompatibile. 
