@@ -25,7 +25,7 @@ Ma che _non si riesce_ nemmeno a dimostrare che non possono essere risolti in te
  **Ma** allora perché continuiamo a dire che in $NP$ si trovano i linguaggi **accettati** in tempo non deterministico polinomiale? perche continuiamo a non usare la parola "**decisi**"?
  Per comprendere questo particolare dobbiamo tornare indietro di qualche lezione: il **Genio burlone e pasticcione** che costituisce uno dei modelli di una computazione non deterministica.
   > Quando durante una computazione non deterministica $NT(x)$, la macchina si trova in un certo stato $q$ e legge un certo simbolo $s$, e nell'insieme delle quintuple $NT$ essitono tante quintuple che iniziano con la coppia $(q,s)$, quale quintupla esegue $NT$?!
-  > (*Multiquintupla*) 
+>(*Multiquintupla*) 
 
 In questo caso il **Genio burlone e pasticcione** ha la risposta 
 

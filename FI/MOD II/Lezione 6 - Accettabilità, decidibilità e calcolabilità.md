@@ -1,4 +1,4 @@
-********
+aa********
 Abbiamo iniziato il corso cercando di capire come risolvere automaticamente i problemi e abbiamo studiato la soluzione proposta da Turing, che ha introdotto il modello di calcolo Macchina di Turing. 
 Ora ci domandiamo: 
 - utilizzando la macchina di Turing possiamo risolvere **tutti** i problemi, oppure esiste qualche problema non risolubile?
