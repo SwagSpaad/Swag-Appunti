@@ -52,12 +52,12 @@ Data una funzione totale e calcolabile $f$ $$\begin{align*}
 \end{align*}$$
 ## Classi complemento
 Sia $f$ una funzione totale e calcolabile.
-La classe $\text{coDTIME}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{DTIME}[f(n)]$ $$\text{coDTIME}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{DTIME}[f(n)]\}$$
-La classe $\text{coDSPACE}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{DSPACE}[f(n)]$ $$\text{coDSPACE}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{DSPACE}[f(n)]\}$$
-La classe $\text{coNTIME}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{NTIME}[f(n)]$ $$\text{coNTIME}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{NTIME}[f(n)]\}$$
-La classe $\text{coNSPACE}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{NSPACE}[f(n)]$ $$\text{coNSPACE}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{NSPACE}[f(n)]\}$$
+La classe $\text{coDTIME}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{DTIME}[f(n)]$ $$\text{coDTIME}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{dtime}[f(n)]\}$$
+La classe $\text{coDSPACE}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{DSPACE}[f(n)]$ $$\text{coDSPACE}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{dspace}[f(n)]\}$$
+La classe $\text{coNTIME}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{NTIME}[f(n)]$ $$\text{coNTIME}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{ntime}[f(n)]\}$$
+La classe $\text{coNSPACE}[f(n)]$ contiene i linguaggi il cui complemento è contenuto in $\text{NSPACE}[f(n)]$ $$\text{coNSPACE}[f(n)]=\{L\subseteq\{0,1\}^{*}\text{ tali che }L^{c}\in\text{nspace}[f(n)]\}$$
 **Oss.**
-Consideriamo i linguaggi definiti sull'alfabeto $\{0,1\}$ per comodità, ma potremmo utilizzare un alfabeto qualsiasi, infatti se un linguaggio è deciso da una macchian definita su un alfabeto qualsiasi, allora esiste anche una macchina definita su $\{0,1\}$ che lo decide.
+Consideriamo i linguaggi definiti sull'alfabeto $\{0,1\}$ per comodità, ma potremmo utilizzare un alfabeto qualsiasi, infatti se un linguaggio è deciso da una macchina definita su un alfabeto qualsiasi, allora esiste anche una macchina definita su $\{0,1\}$ che lo decide.
 
 Alla funzione $f$ che definisce una classe di complessità (ad esempio $\text{coDTIME}[f(n)]$), diamo il nome di **funzione limite**.
 
@@ -84,7 +84,7 @@ Poiché $$\begin{align*}
 \end{align*}$$ allora $\text{dtime}(T,x)\in O(2^{O(1)f(|x|)})$ e dunque $L\in\text{DTIME}[2^{O(1)f(n)}]$. $\square$
 
 **Teorema 6.11**
-Per ogni funzione calcolabile e totale $f:\mathbb{N}\to\mathbb{N}$ $$\text{DTIME}[f(n)]=\text{coDTIME}[f(n)]\:\:e\:\:\text{DSPACE}[f(n)]=\text{coDTIME}[f(n)]$$ 
+Per ogni funzione calcolabile e totale $f:\mathbb{N}\to\mathbb{N}$ $$\text{DTIME}[f(n)]=\text{coDTIME}[f(n)]\:\:e\:\:\text{DSPACE}[f(n)]=\text{coDSPACE}[f(n)]$$ 
 **Dim.**
 Sia $L\subseteq\{0,1\}^{*}$ tale che $L\in\text{DTIME}[f(n)]$: allora, esiste una macchina di Turing deterministica $T$ che decide $L$ e tale che, per ogni $x\in\{0,1\}^{*}$, $\text{dtime}(T,x)\in O(f(|x|))$. 
 Poiché $T$ decide $L$, allora $T(x)=q_{A}$ se $x\in L$ e $T(x)=q_{R}$ se $x\in\{0,1\}^{*}-L=L^{C}$.
@@ -116,7 +116,7 @@ D'altra parte, nella definizione di una teoria della complessità in grado di cl
 In questo paragrafo sono introdotte delle funzioni totali e calcolabili che, per essere calcolate, utilizzano quantità di risorse (tempo di calcolo o spazio di memoria) proporzionali al loro valore. 
 
 **Def 6.1** 
-Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è *time-constructibl*e se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dtime}(T,n)\in O(f(n))$.
+Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è *time-constructible* se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dtime}(T,n)\in O(f(n))$.
 
 **Def. 6.2**
 Una funzione totale e calcolabile $f:\mathbb{N}\to\mathbb{N}$ è *space-constructible* se esiste una macchina di Turing $T$ di tipo trasduttore che, preso in input un intero $n$ espresso in unario, scrive sul nastro di output il valore $f(n)$ in unario e $\text{dspace}(T,n)\in O(f(n))$.
