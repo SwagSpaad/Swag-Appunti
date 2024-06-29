@@ -128,7 +128,7 @@ int main() {
 # Thread
 Nei tradizionali SO, ogni processo dispone di uno spazio degli indirizzi e di un singolo thread di controllo, ma ci sono situazioni in cui ci possono essere molteplici thread di controllo in esecuzione in parallelo nello stesso spazio di indirizzi, come se fossero processi separati. 
 
-## Uso dei thread
+ì## Uso dei thread
 Quali sono le motivazioni di consentire più thread per processo? La ragione principale è che in molte applicazioni ci sono più attività contemporanee, che a volte potrebbero bloccarsi. Suddividendo l'applicazione in molteplici thread sequenziali eseguiti quasi in parallelo, il modello di programmazione diventa più semplice. Un altro motivo è che siccome i thread sono più leggeri dei processi, essi sono più facili e veloci da creare e cancellare.
 
 >**Esempio 1**

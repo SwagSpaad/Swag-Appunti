@@ -4,6 +4,7 @@
 Nei sistemi operativi tradizionali, ogni processo ha un singolo thread di controllo. Tuttavia, in molte situazioni è utile avere più thread di controllo nello stesso spazio di indirizzi, permettendo un'esecuzione quasi parallela. La multithread execution consente a un processo di avere N thread in esecuzione.
 ## Perché consentire più thread per processo?
 I thread sono miniprocessi leggeri, detti lightweight processes, poiché non hanno un proprio PID o spazio di indirizzamento. Offrono un parallelismo efficiente in termini di spazio e tempo, poiché non devono essere gestiti dallo scheduler ma dal processo stesso.
+
 > Esempio: Web Server
 > Un web server che crea un nuovo processo per ogni richiesta client avrebbe difficoltà a gestire milioni di richieste simultanee. Utilizzando thread invece di processi, ogni richiesta è gestita da un thread, molto più leggero di un processo e gestito direttamente dal web server. Questo permette al server di rispondere a N richieste durante il tempo allocato alla CPU.
 
@@ -19,7 +20,7 @@ I thread possono chiamare qualsiasi chiamata di sistema supportata dal sistema o
 ## Thread in POSIX
 - pthread_create: crea un nuovo thread.
 - pthread_exit: termina il thread chiamante.
-- pthread_join: attende l’uscita di un specifico thread.
+- pthread_join: attende l’uscita di uno specifico thread.
 - pthread_yield: rilascia la CPU per consentire l’esecuzione di un altro thread.
 - pthread_attr_init: crea e inizializza la struttura di attributi di un thread.
 - pthread_attr_destroy: rimuove la struttura di attributi di un thread.
@@ -27,8 +28,9 @@ I thread possono chiamare qualsiasi chiamata di sistema supportata dal sistema o
 ## Implementazione dei Thread nello Spazio Utente (JAVA)
 **Pro**:
 - Gestiti dal kernel come processi a singolo thread.
-- Compatibili con sistemi operativi che non supportano direttamente i thread.
-- Gestiti tramite una libreria.
+- Compatibili con sistemi operativi che non supportano direttamente i thread, gestiti tramite una libreria.
+- I processi che utilizzano i thread a livello utente hanno una tabella dei thread che mantiene le informazioni del thread
+- Procedure per il salvataggio del thread nello spazio utente per non effettuare trap e cambi di contesto
 - Permettono la personalizzazione dell'algoritmo di scheduling e maggiore scalabilità.
 
 **Contro**:

@@ -15,7 +15,7 @@ Gestire queste componenti richiede uno strano intermedio software: Il **Sistema 
 - Tastiera
 - Mouse
 - Display
-- INterfaccia di rete
+- Interfaccia di rete
 - DIspositivi I/O
 
 Doppia modalità supportate dall'hardware:
@@ -83,9 +83,9 @@ Tiene all'interno della CPU lo stato di due o thread ma non c'è una esecuzione 
 - Impatto delle cache
 
 ## La memoria
-|   |
-|---|
-|![[SOR/SO/img/img3.png]]|
+|                          |
+| ------------------------ |
+| ![[SOR/SO/img/img3.png]] |
 
 Problemi del sistema cache:
 
