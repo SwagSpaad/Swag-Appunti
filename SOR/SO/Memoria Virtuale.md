@@ -165,3 +165,74 @@ L'allocazione di memoria locale si riferisce a una politica di gestione della me
 | **Algoritmi di Sostituzione** | Considerano la memoria globale               | Considerano solo la memoria del processo corrente |
 
 In sintesi, l'allocazione di memoria globale offre una maggiore flessibilità e potenziale efficienza nell'uso della memoria complessiva del sistema, ma può portare a contese di risorse. L'allocazione locale di memoria offre un maggiore isolamento e semplicità di gestione, ma può risultare in un utilizzo inefficiente della memoria totale disponibile.
+
+# Segmentazione
+
+## Definizione
+
+La segmentazione è una tecnica di gestione della memoria utilizzata nei sistemi operativi per suddividere lo spazio di indirizzamento di un processo in segmenti di dimensioni variabili. Ogni segmento rappresenta una diversa unità logica del programma, come un modulo di codice, una tabella di dati, o uno stack.
+
+## Caratteristiche della Segmentazione
+
+- **Unità Logiche**: Ogni segmento rappresenta una parte logica distinta del programma, facilitando la protezione e la condivisione della memoria.
+- **Dimensioni Variabili**: A differenza della paginazione, dove tutte le pagine hanno la stessa dimensione, i segmenti possono avere dimensioni diverse in base alle necessità del programma.
+- **Indirizzamento**: Gli indirizzi di memoria in un sistema segmentato sono costituiti da una coppia (numero di segmento, offset), dove il numero di segmento identifica il segmento specifico e l'offset specifica la posizione all'interno di quel segmento.
+
+## Vantaggi della Segmentazione
+
+- **Protezione**: Ogni segmento può avere i propri permessi di accesso, migliorando la sicurezza del sistema.
+- **Condivisione**: I segmenti possono essere condivisi tra diversi processi, permettendo, ad esempio, la condivisione di librerie di codice.
+- **Riflettività Logica**: La segmentazione riflette più da vicino la struttura logica dei programmi rispetto alla paginazione.
+
+## Svantaggi della Segmentazione
+
+- **Frammentazione Esterna**: Con il tempo, la memoria può diventare frammentata, lasciando piccoli buchi tra i segmenti che non possono essere utilizzati efficacemente.
+- **Complessità di Gestione**: La gestione della memoria segmentata è più complessa rispetto ad altre tecniche come la paginazione.
+
+## Struttura della Segmentazione
+
+### 1. **Tabella dei Segmenti (Segment Table)**
+
+Ogni processo ha una tabella dei segmenti che contiene le informazioni sui suoi segmenti. Ogni voce della tabella include:
+
+- **Base**: L'indirizzo di partenza del segmento in memoria fisica.
+- **Limite**: La lunghezza del segmento.
+
+### 2. **Registro del Segmento**
+
+Il sistema operativo utilizza registri specifici per memorizzare le informazioni di base e limite dei segmenti attualmente in uso. Quando un processo viene eseguito, i registri del segmento vengono caricati con i valori appropriati dalla tabella dei segmenti del processo.
+
+### 3. **Conversione degli Indirizzi**
+
+Quando un processo accede a un indirizzo di memoria, il sistema operativo utilizza la tabella dei segmenti per convertire l'indirizzo logico (numero di segmento, offset) in un indirizzo fisico:
+
+- **Numero di Segmento**: Utilizzato per individuare la voce appropriata nella tabella dei segmenti.
+- **Offset**: Aggiunto alla base del segmento per ottenere l'indirizzo fisico.
+
+## Esempio di Utilizzo della Segmentazione
+
+Supponiamo che un processo abbia tre segmenti: un segmento di codice, un segmento di dati e un segmento di stack. La tabella dei segmenti potrebbe apparire come segue:
+
+| Numero di Segmento | Base  | Limite |
+|--------------------|-------|--------|
+| 0                  | 1000  | 400    |
+| 1                  | 2000  | 300    |
+| 2                  | 3000  | 500    |
+
+Per accedere a un indirizzo logico (1, 150), il sistema operativo:
+
+1. Trova la voce nella tabella dei segmenti con il numero di segmento 1.
+2. Aggiunge l'offset 150 alla base 2000 del segmento.
+3. Ottiene l'indirizzo fisico 2150.
+
+## Confronto con la Paginazione
+
+| Caratteristica            | Segmentazione                               | Paginazione                             |
+|---------------------------|---------------------------------------------|-----------------------------------------|
+| **Unità di Allocazione**  | Segmenti di dimensioni variabili            | Pagine di dimensioni fisse              |
+| **Indirizzamento**        | Coppia (numero di segmento, offset)         | Coppia (numero di pagina, offset)       |
+| **Frammentazione**        | Esterna                                     | Interna                                |
+| **Protezione e Condivisione** | Basata su segmenti                          | Basata su pagine                         |
+| **Riflettività Logica**   | Alta, rispecchia la struttura del programma | Bassa, divisione arbitraria in pagine   |
+
+In sintesi, la segmentazione offre una gestione della memoria che riflette più da vicino la struttura logica dei programmi e permette una maggiore flessibilità e protezione, ma può introdurre problemi di frammentazione esterna e maggiore complessità nella gestione rispetto alla paginazione.
