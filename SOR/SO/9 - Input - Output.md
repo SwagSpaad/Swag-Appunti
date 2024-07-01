@@ -94,10 +94,11 @@ return_to_user();
 ## Struttura del Software di I/O
 Il software di I/O é generalmente organizzato in quattro livelli, come mostrato nella tabella, ciascuno dei quali ha una funzione ben definita da eseguire e un'interfaccia ben definita verso i livelli adiacenti.
 
-|Software I/O a livello utente 		         |
-|Software del SO indipendente dal dispositivo|
-|Driver Dispositivo							 |
-|Gestore degli interrupt                     |
+| Software I/O a livello utente                |
+| -------------------------------------------- |
+| Software del SO indipendente dal dispositivo |
+| Driver Dispositivo                           |
+| Gestore degli interrupt                      |
 
 ## Gestore degli Interrupt
 1. **Salvataggio Registri:** Salva tutti i registri (incluso il PSW) non ancora salvati.
