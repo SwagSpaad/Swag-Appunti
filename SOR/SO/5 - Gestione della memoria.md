@@ -31,43 +31,39 @@ Esistono tre sottomodelli di organizzazione della memoria:
 Per permettere a più applicazioni di risiedere in memoria contemporaneamente senza interferenze, si devono risolvere due problemi: protezione e rilocazione.
 
 - **Protezione:** Etichettare pezzi di memoria con una chiave di protezione (IBM 360).
-- **Spazio degli indirizzi:** Un insieme di indirizzi che un processo può usare. Ogni processo ha il suo spazio degli indirizzi personale.
 
-Implementazione con registri base e limite:
+**Spazio degli indirizzi:** L'insieme di indirizzi che un processo può usare. Ogni processo ha il suo spazio degli indirizzi personale.
+
 - **Registro base:** Contiene l'indirizzo fisico di inizio di un programma.
 - **Registro limite:** Contiene la lunghezza del programma.
 
-Ogni volta che un processo fa riferimento alla memoria, l'hardware della CPU aggiunge automaticamente il valore di base all'indirizzo generato. Se l'indirizzo è maggiore o uguale al valore nel registro limite, viene generato un errore e l'accesso viene terminato.
+Ogni volta che un processo fa riferimento alla memoria, l'hardware della CPU aggiunge automaticamente il valore di base all'indirizzo richiesto dal processo. Se l'indirizzo è maggiore o uguale al valore nel registro limite, viene generato un errore e l'accesso viene terminato.
 
 - **Vantaggi:** Offre a ciascun processo uno spazio di indirizzi protetto e separato.
 - **Svantaggi:** Necessità di eseguire somme e confronti ad ogni accesso alla memoria, il che può essere lento.
 
 ### Swapping
-La strategia più semplice di gestione della memoria è lo swapping, che consiste nel prelevare ciascun processo nella sua totalità, eseguirlo per un certo tempo e quindi porlo nuovamente nella memoria non volatile. I processi inattivi vengono archiviati su memoria non volatile per non occupare memoria.
+La strategia più semplice di gestione della memoria è lo swapping, che consiste nel prelevare ciascun processo nella sua totalità, eseguirlo per un certo tempo e quindi porlo nuovamente nella memoria non volatile per non occupare memoria. Quando lo swapping crea spazi vuoti nella memoria (frammentazione), è possibile combinarli spostando tutti i processi il più in basso possibile (memory compaction), ma è un'operazione costosa in termini di tempo CPU.
 
-Un'altra strategia è la **memoria virtuale**, che consente ai programmi di essere eseguiti anche quando sono solo parzialmente nella memoria principale. Quando lo swapping crea spazi vuoti nella memoria (frammentazione), è possibile combinarli spostando tutti i processi il più in basso possibile (memory compaction), ma è un'operazione costosa in termini di tempo CPU.
-
+Un'altra strategia è la **memoria virtuale**, che consente ai programmi di essere eseguiti anche quando sono solo parzialmente nella memoria principale. 
+ 
 ### Allocazione della Memoria
-La quantità di memoria da allocare a un processo dipende dal suo modello:
+Quanta memoria allocare a un processo utilizzando lo swapping:
 - **Dimensione fissa:** Il sistema operativo alloca esattamente il necessario.
 - **Segmenti dati crescenti:** Se i segmenti dei dati dei processi possono crescere, può sorgere un problema di allocazione. Una soluzione è allocare memoria extra durante lo swapping o lo spostamento dei processi. Se un processo non può crescere nella memoria e l'area di swap è piena, deve essere sospeso o terminato.
 
 ## GESTIONE DELLA MEMORIA LIBERA
-
 Quando la memoria è assegnata dinamicamente, il sistema operativo deve gestirla. Ci sono due modi principali per tenere traccia dell'utilizzo della memoria: bitmap e liste.
 
 ### Bitmap
-
 La memoria è divisa in unità di allocazione, con ogni unità corrispondente a un bit nella bitmap. Un bit è 0 se l'unità è libera e 1 se è utilizzata. La dimensione della bitmap dipende dalla dimensione della memoria e dall'unità di allocazione. La ricerca di blocchi liberi può essere lenta, poiché richiede la scansione della bitmap.
 
 ### Liste
-
 Un altro metodo è mantenere una lista concatenata di segmenti di memoria allocati e liberi. Ogni voce della lista contiene informazioni come l'indirizzo di inizio, la lunghezza e un puntatore alla voce successiva. Le liste possono essere implementate come liste singole o doppie, con queste ultime che facilitano la gestione degli spazi liberi contigui.
 
 ## SCHEMI DI ALLOCAZIONE DELLA MEMORIA
 
 ### Schemi Comuni
-
 1. **First Fit**: Scansiona la lista dei segmenti finché non trova uno spazio libero abbastanza grande. È veloce ma può causare frammentazione.
 
 2. **Next Fit**: Simile al First Fit, ma inizia la ricerca dall'ultima posizione trovata anziché dall'inizio.
@@ -82,6 +78,6 @@ Un altro metodo è mantenere una lista concatenata di segmenti di memoria alloca
 
 ### Buddy Allocation (Allocatore Buddy)
 
-Questo metodo inizia con la memoria come un unico blocco contiguo e lo divide in blocchi di dimensioni potenza di 2. Quando un blocco viene rilasciato, cerca di unirlo con il suo "buddy" (blocco adiacente) per formare un blocco più grande. Questo processo può mitigare la frammentazione ma può avere frammentazione interna se un processo richiede un blocco più grande di quello disponibile.
+Questo metodo inizia con la memoria come un unico blocco contiguo e lo divide ad ogni richiesta in blocchi di dimensioni potenza di 2. Quando un blocco viene rilasciato, cerca di unirlo con il suo "buddy" (blocco adiacente) per formare un blocco più grande. Questo processo può mitigare la frammentazione ma può avere frammentazione interna se un processo richiede un blocco più grande di quello disponibile.
 
 Questi schemi e tecniche sono fondamentali per gestire dinamicamente l'allocazione e il rilascio della memoria nel sistema operativo, garantendo un utilizzo efficiente delle risorse disponibili.

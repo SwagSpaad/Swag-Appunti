@@ -2,9 +2,9 @@ La memoria virtuale è una tecnica di gestione della memoria che consente a un c
 
 ## Funzionamento della Memoria Virtuale
 
-1. **Indirizzamento Virtuale**: Ogni processo ha il proprio spazio di indirizzamento virtuale, che è separato dagli spazi di indirizzamento degli altri processi. Questo spazio di indirizzamento virtuale è diviso in pagine.
-2. **Mapping**: Gli indirizzi virtuali vengono mappati agli indirizzi fisici tramite una tabella delle pagine (page table). Questa tabella contiene le informazioni su dove le pagine virtuali risiedono nella memoria fisica.
-3. **Page Faults**: Quando un processo accede a una pagina che non è attualmente in memoria fisica (page fault), il sistema operativo deve caricare quella pagina dalla memoria di massa (come un disco rigido) nella memoria fisica.
+1. **Indirizzamento Virtuale**: Ogni processo ha il proprio spazio di indirizzamento virtuale separato dagli altri processi. Questo spazio di indirizzamento virtuale è diviso in pagine.
+2. **Mapping**: Gli indirizzi virtuali vengono mappati agli indirizzi fisici tramite una tabella delle pagine (page table). Questa tabella contiene le informazioni sulla posizione delle pagine virtuali nella memoria fisica.
+3. **Page Faults**: Quando un processo accede a una pagina che non è attualmente in memoria fisica si verifica un page fault e il sistema operativo deve caricare quella pagina dalla memoria di massa (come un disco rigido) nella memoria fisica.
 
 ## Struttura della Memoria Virtuale
 

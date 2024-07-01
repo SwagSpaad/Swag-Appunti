@@ -61,11 +61,15 @@ I sistemi batch sono utilizzati in attività aziendali periodiche come elaborazi
 
 #### (a) First-Come, First-Served
 
-Algoritmo di scheduling senza prelazione. I processi vengono assegnati alla CPU nell'ordine in cui arrivano. Vantaggi: facile da capire e da implementare, equo in base all'ordine di arrivo. Svantaggio: tempi di attesa lunghi per processi I/O-bound in presenza di un processo CPU-bound.
+Algoritmo di scheduling senza prelazione. I processi vengono assegnati alla CPU nell'ordine in cui arrivano. Quando il processo si blocca viene eseguito il successivo e quando entra nello stato di pronto torna in fondo alla coda. 
+Vantaggi: facile da capire e da implementare, equo in base all'ordine di arrivo. 
+Svantaggio: tempi di attesa lunghi per processi I/O-bound in presenza di un processo CPU-bound.
 
 #### (b) Shortest Job First
 
-Algoritmo di scheduling senza prelazione. Lo scheduler preleva il job più breve. Vantaggio: minimizza il tempo di turnaround medio quando tutti i job sono disponibili contemporaneamente. Svantaggio: se i job arrivano in momenti diversi, SJF potrebbe non essere ottimale.
+Algoritmo di scheduling senza prelazione. Lo scheduler preleva il job più breve. Tempi di esecuzione noti in anticipo.
+Vantaggio: minimizza il tempo di turnaround medio quando tutti i job sono disponibili contemporaneamente. 
+Svantaggio: se i job arrivano in momenti diversi, SJF potrebbe non essere ottimale.
 
 #### (c) Shortest Remaining Time Next
 
