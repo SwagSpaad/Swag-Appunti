@@ -2,13 +2,13 @@
 Un file system è un componente del sistema operativo che gestisce e organizza i dati su un dispositivo di archiviazione, come un disco rigido, una chiavetta USB o un'unità SSD. Fornisce una struttura per memorizzare, accedere e gestire i file e le directory, consentendo agli utenti e ai programmi di trovare e utilizzare i dati in modo efficiente. I file system più comuni includono NTFS, FAT32, ext4 e APFS.
 
 # File
-I file sono meccanismi di astrazione che permettono di salvare e leggere informazioni sul disco, nascondendo i dettagli tecnici all'utente. I file sono identificati da nomi, che possono variare per lunghezza e sensibilità alle maiuscole a seconda del sistema operativo (ad esempio, UNIX distingue tra maiuscole e minuscole, mentre MS-DOS no). Ogni file è solitamente identificato anche da un'estensione, che indica una caratteristica specifica del file (come .jpg per immagini o .c per codice sorgente in C). In alcuni sistemi come UNIX, le estensioni sono convenzionali, mentre in altri come Windows hanno significati specifici e sono associate a programmi particolari. Gli utenti possono registrare le estensioni nel sistema operativo e specificare i programmi associati. Ad esempio, un doppio clic su un file .docx avvia Microsoft Word con quel file, mentre Photoshop non aprirà file con estensione .docx.
+I file sono un meccanismo di astrazione che consente di salvare e leggere informazioni sul disco, nascondendo i dettagli di come e dove sono memorizzate. I file vengono identificati tramite nomi ed estensioni.
 
 ## Struttura dei File
-I file possono essere strutturati in modi diversi, a seconda delle esigenze del sistema operativo e delle applicazioni:2
-- **Sequenza non strutturata di byte:** I file sono visti dal sistema operativo come una serie non strutturata di byte. Il significato dei dati è determinato dai programmi a livello utente, non dal sistema operativo. Questo approccio, adottato da sistemi come UNIX, Linux, macOS e Windows, offre massima flessibilità.
-- **Sequenza di Record di lunghezza fissa:** Un file è una sequenza di record con struttura interna definita e lunghezza fissa, basato storicamente sul modello delle schede perforate a 80 colonne nei mainframe. Le operazioni di lettura e scrittura avvengono a unità di record. Questo modello, prevalente nei mainframe del passato, è meno comune nei sistemi moderni.
-- **File come albero di Record:** I file possono essere organizzati come alberi di record con lunghezze variabili e un campo chiave in posizione fissa, consentendo ricerche rapide basate su chiavi specifiche. Questo tipo di organizzazione è utilizzato principalmente nei mainframe per elaborazioni commerciali, come nei DBMS, ed è diverso dalle sequenze non strutturate di UNIX e Windows. Molti sistemi operativi supportano diversi tipi di file.
+I file possono essere strutturati in modi diversi, a seconda delle esigenze del sistema operativo e delle applicazioni:
+- **Sequenza Non Strutturata di Byte**: I file sono visti come una serie non strutturata di byte. Utilizzato da UNIX, Linux, macOS e Windows.
+- **Sequenza di Record di Lunghezza Fissa**: Un file è una sequenza di record con lunghezza fissa. Meno comune nei sistemi moderni.
+- **File come Albero di Record**: Il file è organizzato come un albero di record, con lunghezze variabili e un campo chiave fisso. Utilizzato in sistemi come DBMS.
 
 ## Tipi di File
 - **File e Directory Normali:** Utilizzati in sistemi come UNIX e Windows. I file normali contengono informazioni dell'utente e sono i più comuni. Le directory sono file di sistema che mantengono la struttura del file system.
@@ -19,20 +19,18 @@ I file possono essere strutturati in modi diversi, a seconda delle esigenze del 
   - File ASCII: Composti da righe di testo, visualizzabili e stampabili, con variazioni nella terminazione delle righe.
   - File Binari: Non leggibili come testo, con una struttura interna conosciuta dai programmi che li utilizzano, come file eseguibili o archivi.
 - **File Eseguibile - Componenti:**
-  - Intestazione (Header): Contiene un 'numero magico' per identificare il file come eseguibile, dimensioni delle parti del file, indirizzo di esecuzione iniziale (punto d'ingresso) e vari flag.
+  - Intestazione (Header): Contiene un numero che identifica il file come eseguibile, le dimensioni, l'indirizzo di esecuzione iniziale (punto d'ingresso) e vari flag.
   - Testo e Dati: Parti effettive del programma, da caricare e rilocare in memoria.
   - Tabella dei simboli: Utilizzata per il debug.
 - **File di Archivio:**
   - Descrizione: Raccolta di procedure di libreria (moduli) compilate ma non collegate.
   - Intestazione dei Moduli: Indicano nome, data di creazione, codice di protezione e dimensione.
-  - Carattere Binario: Stampare questi file produrrebbe caratteri incomprensibili.
+  - Carattere Binario: Non leggibile come testo.
 
 ## Metodi di Accesso ai File
-- **Accesso Sequenziale:** Nei primi sistemi operativi, il processo poteva leggere tutti i byte o i record in ordine, a partire dall'inizio, senza poter saltare o leggere in ordine sparso. Tuttavia, i file potevano essere riavvolti per ulteriori letture.
-
-- **Accesso Causale:** Introdotto con l'avvento dei dischi, permette la lettura di byte o record in qualsiasi ordine. Cruciale per applicazioni come i database, dove è necessario accedere rapidamente a record specifici. Ci sono due metodi per specificare la posizione di lettura:
-  - Ogni operazione di lettura fornisce la posizione iniziale.
-  - L'operazione speciale seek imposta la posizione corrente, da cui il file può essere letto sequenzialmente. Questo metodo è usato in UNIX e Windows.
+I metodi di accesso ai file includono:
+- **Accesso Sequenziale**: Lettura di byte o record in ordine senza poter saltare o leggere in ordine sparso.
+- **Accesso Causale**: Lettura di byte o record in qualsiasi ordine. Utilizza l'operazione `seek` per impostare la posizione corrente.
 
 ## Attributi dei File
 Ogni file ha un nome e i propri dati, oltre a ulteriori informazioni chiamate attributi (metadati), come la data e l'ora dell'ultima modifica e la dimensione. Gli attributi sono cruciali per:
@@ -40,117 +38,50 @@ Ogni file ha un nome e i propri dati, oltre a ulteriori informazioni chiamate at
 - La gestione efficace dei file nei sistemi operativi. L'elenco degli attributi varia considerevolmente tra i diversi sistemi operativi.
 
 # Directory
-Per tener traccia dei file, i file system normalmente usano le directory (cartelle), che sono anch'esse dei file.
+
+Per tenere traccia dei file, i file system normalmente utilizzano directory o cartelle, che sono anch'esse dei file.
 
 ## Sistemi di Directory a Livello Singolo
-La forma più semplice di sistema di directory consiste in una sola directory contenente tutti i file, chiamata directory principale (root directory). Il vantaggio di questo schema è la semplicità e la rapidità nella localizzazione dei file, dato che c'è un solo posto in cui cercare. Questo tipo di organizzazione è ancora utilizzato nei dispositivi embedded, come fotocamere digitali, lettori MP3 e tecnologie RFID, come carte di credito e tessere di trasporto.
 
-## Sistemi a Directory Gerarchici
-I sistemi a directory gerarchici sono organizzati in una struttura ad albero di directory ramificate. Ogni utente può avere una directory principale privata nella quale può creare un numero arbitrario di sottodirectory per organizzare i propri file e progetti. Questo metodo è ampiamente utilizzato nei network aziendali e in molti file system moderni per fornire agli utenti uno strumento potente di strutturazione del lavoro.
+La forma più semplice di sistema di directory è una sola directory contenente tutti i file, chiamata directory principale (root directory). Questo schema è semplice e permette di localizzare i file rapidamente. Viene spesso usato nei dispositivi embedded come fotocamere digitali o MP3.
 
-## Specificazione dei Nomi dei File
-Quando un file system è organizzato secondo un albero di directory, i nomi dei file possono essere specificati mediante due metodi comuni:
-1. **Percorsi Assoluti:** Specificano il percorso completo del file dalla radice del file system fino al file desiderato. Ad esempio, `/home/utente/progetto/file.txt.`
-2. **Percorsi Relativi:** Specificano il percorso del file in relazione alla directory corrente. Ad esempio, se ci si trova nella directory `/home/utente`, il percorso relativo per accedere a `file.txt`in progetto sarebbe `progetto/file.txt`. Questi due metodi consentono agli utenti di navigare e accedere ai file in modo flessibile e efficace all'interno della struttura gerarchica delle directory.
+## Sistemi di Directory Gerarchici
 
-## Percorso Assoluto
-Il percorso assoluto assegna a ogni file un nome che inizia dalla directory principale e prosegue fino al file specificato. Ad esempio, il percorso `/usr/ast/mailbox` indica che dalla directory principale del file system esiste una sottodirectory `/usr`, che contiene a sua volta una sottodirectory `/ast`, all'interno della quale si trova il file `mailbox`. I nomi di percorso assoluto sono univoci e permettono di identificare esattamente la posizione di un file nella struttura gerarchica delle directory del sistema.
+Un sistema di directory gerarchico è organizzato come un albero di directory. In un ambiente condiviso, ogni utente può avere una directory principale privata per la propria gerarchia. Questo approccio permette agli utenti di creare un numero arbitrario di sottodirectory per organizzare il proprio lavoro. I file system moderni adottano questo schema.
 
-## Percorso Relativo
-Il metodo del nome di percorso relativo è utilizzato insieme al concetto di directory di lavoro, anche chiamata directory corrente. Quando un utente designa una directory come directory di lavoro, tutti i nomi di percorso che non iniziano con la directory principale sono interpretati come relativi alla directory di lavoro. Se l'utente si trova già nella directory `/usr/hjb`, ad esempio, i due comandi seguenti sono equivalenti:
-- `/usr/hjb/progetto/file.txt` (percorso assoluto)
-- `progetto/file.txt` (percorso relativo)
-In UNIX, i componenti del percorso sono separati dal carattere `/`, mentre in Windows è utilizzato il carattere `\`. 
-Nel sistema MULTICS, il separatore era `>`. 
-Molti sistemi operativi che supportano un sistema di directory gerarchico includono due voci speciali in ogni directory:
-- . (punto): Rappresenta la directory corrente.
-- .. (puntopunto): Rappresenta la directory genitore (la directory precedente). Anche nella directory radice, .. fa riferimento alla stessa directory radice. Queste convenzioni facilitano la navigazione e la gestione dei percorsi all'interno della struttura gerarchica delle directory del sistema operativo.
+### Percorso Assoluto
 
-lvnc, [01/07/24 11:27]
-# File System
-Un file system è un componente del sistema operativo che gestisce e organizza i dati su un dispositivo di archiviazione, come un disco rigido, una chiavetta USB o un'unità SSD. Fornisce una struttura per memorizzare, accedere e gestire i file e le directory, consentendo agli utenti e ai programmi di trovare e utilizzare i dati in modo efficiente. I file system più comuni includono NTFS, FAT32, ext4 e APFS.
+Ogni file ha un nome di percorso assoluto che inizia dalla directory principale. Ad esempio, `/usr/ast/mailbox` indica che il file `mailbox` si trova nella directory `ast`, che è una sottodirectory di `usr`, a sua volta sottodirectory della root.
 
-## File
-I file sono meccanismi di astrazione che permettono di salvare e leggere informazioni sul disco, nascondendo i dettagli tecnici all'utente. I file sono identificati da nomi, che possono variare per lunghezza e sensibilità alle maiuscole a seconda del sistema operativo (ad esempio, UNIX distingue tra maiuscole e minuscole, mentre MS-DOS no). Ogni file è solitamente identificato anche da un'estensione, che indica una caratteristica specifica del file (come .jpg per immagini o .c per codice sorgente in C). In alcuni sistemi come UNIX, le estensioni sono convenzionali, mentre in altri come Windows hanno significati specifici e sono associate a programmi particolari. Gli utenti possono registrare le estensioni nel sistema operativo e specificare i programmi associati. Ad esempio, un doppio clic su un file .docx avvia Microsoft Word con quel file, mentre Photoshop non aprirà file con estensione .docx.
+### Percorso Relativo
 
-### Struttura dei File
-I file possono essere strutturati in modi diversi, a seconda delle esigenze del sistema operativo e delle applicazioni.
+Il percorso relativo è usato congiuntamente al concetto di directory di lavoro (o directory corrente). Se un utente è nella directory `/usr/hjb`, il comando `cp mailbox mailbox.bak` è equivalente a `cp /usr/hjb/mailbox /usr/hjb/mailbox.bak`.
 
-- Sequenza non strutturata di byte: I file sono visti dal sistema operativo come una serie non strutturata di byte. Il significato dei dati è determinato dai programmi a livello utente, non dal sistema operativo. Questo approccio, adottato da sistemi come UNIX, Linux, macOS e Windows, offre massima flessibilità.
+### Nomi Speciali
 
-- Sequenza di Record di lunghezza fissa: Un file è una sequenza di record con struttura interna definita e lunghezza fissa, basato storicamente sul modello delle schede perforate a 80 colonne nei mainframe. Le operazioni di lettura e scrittura avvengono a unità di record. Questo modello, prevalente nei mainframe del passato, è meno comune nei sistemi moderni.
+Nei sistemi che supportano directory gerarchiche, ogni directory contiene due voci speciali: 
+- `.` (dot): Si riferisce alla directory corrente.
+- `..` (dotdot): Si riferisce alla directory genitore, tranne nella directory radice.
 
-- File come albero di Record: I file possono essere organizzati come alberi di record con lunghezze variabili e un campo chiave in posizione fissa, consentendo ricerche rapide basate su chiavi specifiche. Questo tipo di organizzazione è utilizzato principalmente nei mainframe per elaborazioni commerciali, come nei DBMS, ed è diverso dalle sequenze non strutturate di UNIX e Windows. Molti sistemi operativi supportano diversi tipi di file.
+## Operazioni sulle Directory
 
-#### Tipi di File
-- File e Directory Normali: Utilizzati in sistemi come UNIX e Windows. I file normali contengono informazioni dell'utente e sono i più comuni. Le directory sono file di sistema che mantengono la struttura del file system.
+Le operazioni principali sulle directory sono:
 
-- File Speciali:
-  - A caratteri: Usati per modellare porte seriali di I/O, come terminali e stampanti.
-  - A blocchi: Usati per modellare dischi.
+1. **create**: Creazione di una directory vuota con le voci `.` e `..`.
+2. **delete**: Eliminazione di una directory vuota.
+3. **opendir**: Apertura di una directory per leggere il suo contenuto.
+4. **closedir**: Chiusura di una directory dopo la lettura per liberare risorse.
+5. **readdir**: Restituisce la prossima voce in una directory aperta senza esporre la struttura interna.
+6. **rename**: Rinomina una cartella, simile al rinomino di un file.
+7. **link**: Crea un hard link, collegando un file esistente a un nuovo percorso condividendo l’i-node.
+8. **unlink**: Rimuove una voce di una directory, cancellando il file se è l’unico link.
 
-- File Normali:
-  - File ASCII: Composti da righe di testo, visualizzabili e stampabili, con variazioni nella terminazione delle righe.
-  - File Binari: Non leggibili come testo, con una struttura interna conosciuta dai programmi che li utilizzano, come file eseguibili o archivi.
-
-- File Eseguibile - Componenti:
-  - Intestazione (Header): Contiene un 'numero magico' per identificare il file come eseguibile, dimensioni delle parti del file, indirizzo di esecuzione iniziale (punto d'ingresso) e vari flag.
-  - Testo e Dati: Parti effettive del programma, da caricare e rilocare in memoria.
-  - Tabella dei simboli: Utilizzata per il debug.
-
-- File di Archivio:
-  - Descrizione: Raccolta di procedure di libreria (moduli) compilate ma non collegate.
-  - Intestazione dei Moduli: Indicano nome, data di creazione, codice di protezione e dimensione.
-  - Carattere Binario: Stampare questi file produrrebbe caratteri incomprensibili.
-
-lvnc, [01/07/24 11:27]
-## Metodi di Accesso ai File
-- Accesso Sequenziale: Nei primi sistemi operativi, il processo poteva leggere tutti i byte o i record in ordine, a partire dall'inizio, senza poter saltare o leggere in ordine sparso. Tuttavia, i file potevano essere riavvolti per ulteriori letture.
-
-- Accesso Causale: Introdotto con l'avvento dei dischi, permette la lettura di byte o record in qualsiasi ordine. Cruciale per applicazioni come i database, dove è necessario accedere rapidamente a record specifici. Ci sono due metodi per specificare la posizione di lettura:
-  - Ogni operazione di lettura fornisce la posizione iniziale.
-  - L'operazione speciale seek imposta la posizione corrente, da cui il file può essere letto sequenzialmente. Questo metodo è usato in UNIX e Windows.
-
-## Attributi dei File
-Ogni file ha un nome e i propri dati, oltre a ulteriori informazioni chiamate attributi (metadati), come la data e l'ora dell'ultima modifica e la dimensione. Gli attributi sono cruciali per:
-- La protezione e il controllo dell'accesso.
-- La gestione efficace dei file nei sistemi operativi. L'elenco degli attributi varia considerevolmente tra i diversi sistemi operativi.
-
-# Directory
-Per tener traccia dei file, i file system normalmente usano le directory (cartelle), che sono anch'esse dei file.
-
-## Sistemi di Directory a Livello Singolo
-La forma più semplice di sistema di directory consiste in una sola directory contenente tutti i file, chiamata directory principale (root directory). Il vantaggio di questo schema è la semplicità e la rapidità nella localizzazione dei file, dato che c'è un solo posto in cui cercare. Questo tipo di organizzazione è ancora utilizzato nei dispositivi embedded, come fotocamere digitali, lettori MP3 e tecnologie RFID, come carte di credito e tessere di trasporto.
-
-## Sistemi a Directory Gerarchici
-I sistemi a directory gerarchici sono organizzati in una struttura ad albero di directory ramificate. Ogni utente può avere una directory principale privata nella quale può creare un numero arbitrario di sottodirectory per organizzare i propri file e progetti. Questo metodo è ampiamente utilizzato nei network aziendali e in molti file system moderni per fornire agli utenti uno strumento potente di strutturazione del lavoro.
-
-## Specificazione dei Nomi dei File
-Quando un file system è organizzato secondo un albero di directory, i nomi dei file possono essere specificati mediante due metodi comuni:
-1. Percorsi Assoluti: Specificano il percorso completo del file dalla radice del file system fino al file desiderato. Ad esempio, /home/utente/progetto/file.txt.
-2. Percorsi Relativi: Specificano il percorso del file in relazione alla directory corrente. Ad esempio, se ci si trova nella directory /home/utente, il percorso relativo per accedere a file.txt in progetto sarebbe progetto/file.txt. Questi due metodi consentono agli utenti di navigare e accedere ai file in modo flessibile e efficace all'interno della struttura gerarchica delle directory.
-
-## Percorso Assoluto
-Il percorso assoluto assegna a ogni file un nome che inizia dalla directory principale e prosegue fino al file specificato. Ad esempio, il percorso /usr/ast/mailbox indica che dalla directory principale del file system esiste una sottodirectory usr, che contiene a sua volta una sottodirectory ast, all'interno della quale si trova il file mailbox. I nomi di percorso assoluto sono univoci e permettono di identificare esattamente la posizione di un file nella struttura gerarchica delle directory del sistema.
-
-lvnc, [01/07/24 11:27]
-## Percorso Relativo
-Il metodo del nome di percorso relativo è utilizzato insieme al concetto di directory di lavoro, anche chiamata directory corrente. Quando un utente designa una directory come directory di lavoro, tutti i nomi di percorso che non iniziano con la directory principale sono interpretati come relativi alla directory di lavoro. Se l'utente si trova già nella directory /usr/hjb, ad esempio, i due comandi seguenti sono equivalenti:
-- /usr/hjb/progetto/file.txt (percorso assoluto)
-- progetto/file.txt (percorso relativo)
-In UNIX, i componenti del percorso sono separati dal carattere /, mentre in Windows è utilizzato il carattere \. Nel sistema MULTICS, il separatore era >. Molti sistemi operativi che supportano un sistema di directory gerarchico includono due voci speciali in ogni directory:
-- . (punto): Rappresenta la directory corrente.
-- .. (puntopunto): Rappresenta la directory genitore (la directory precedente). Anche nella directory radice, .. fa riferimento alla stessa directory radice. Queste convenzioni facilitano la navigazione e la gestione dei percorsi all'interno della struttura gerarchica delle directory del sistema operativo.
-
-lvnc, [01/07/24 13:28]
 # Layout del File System
 ## MBR
-Il MBR (Master Boot Record) è una componente critica nei dischi nel vecchio stile, essenziale per l'avvio del computer.
-Ecco un riassunto delle sue principali funzionalità e componenti:
-1. **Tabella delle partizioni:** Il MBR contiene la tabella delle partizioni del disco. Questa tabella elenca le partizioni presenti sul disco e gli indirizzi di inizio e fine di ciascuna partizione. Inoltre, identifica quale partizione è attiva e da cui avviare il sistema operativo.
-2. **Settore di boot:** Ogni partizione inizia con un settore di boot, che contiene il codice necessario per avviare il sistema operativo. Questo settore è letto e eseguito dal BIOS durante il processo di avvio del computer.
+Il settore 0 del disco, chiamato MBR, è essenziale per l'avvio del computer. Contiene la tabella delle partizioni e identifica la partizione attiva da cui avviare il sistema. Quando il computer si avvia, il BIOS legge ed esegue l'MBR, che localizza la partizione attiva e ne legge il primo blocco, chiamato blocco di boot.
+
 3. **Struttura del file system:** Dopo il MBR e il settore di boot, la struttura del file system varia a seconda del tipo di file system utilizzato (come FAT, NTFS, ext4, etc.). Tuttavia, alcuni elementi generali includono:
-   - **Superblocco:** Contiene parametri chiave del file system, come un "numero magico" per identificarlo univocamente, informazioni sulla dimensione del disco, parametri di configurazione, ecc. Viene letto in memoria all'avvio del computer.
+   - **Superblocco:** Contiene parametri chiave del file system come un numero che lo identifica. Viene letto in memoria all'avvio del computer.
    - **Bitmap o Linked List:** Utilizzati per la gestione dello spazio libero nel disco. 
    - **I-node:** Strutture di dati che rappresentano i file nel file system. Contine etutte le info di un file.
    - **Directory radice:** È il punto di partenza dell'albero della struttura gerarchica del file system.
