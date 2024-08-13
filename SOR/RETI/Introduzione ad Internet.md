@@ -277,11 +277,12 @@ I pacchetti a livello di collegamento sono detti **frame**
 ## Livello fisico
 Ha il compito di trasferire i singoli bit del frame da un nodo ad un nodo successivo. I protocolli di questo livello sono dipendenti dal collegamento e dal mezzo trasmissivo utilizzato, ad esempio Ethernet presenta vari protocolli a livello fisico: uno per il doppino intrecciato, uno per il cavo coassiale, fibra ottica ecc.
 
-![[SOR/RETI/img/img15.png|center|500]]
+![[SOR/RETI/img/img15.png|center|700]]
 
 ## Incapsulamento
 Un protocollo di livello n può essere distribuito tra i sistemi periferici, commutatori di pacchetto ed altri elementi della rete.
 
+![[SOR/RETI/img/img17.png|center|700]]
 
 La figura mostra il percorso dei dati scendendo lungo la pila dei protocolli del sistema mittente, risalendo e scendendo lungo le pile dei protocolli dei commutatori e dei router a livello di collegamento e infine risalendo la pila nel sistema ricevente.
 
@@ -294,6 +295,7 @@ A ciascun livello il pacchetto ha due tipi di campi: **intestazione** e **payloa
 
 ## Modello ISO/OSI
 ![[SOR/RETI/img/img16.png|center|200]]
+
 Nel modello ISO/OSI, lo stack protocollare è a 7 livelli, e aggiunge i livelli di: 
 - *presentazione*: consente alle applicazioni di interpretare il significato dei dati (crittografia, compressione ecc.)
 - *sessione*: implementa le funzioni di sincronizzazione, checkpointing e ripristino dello scambio dei dati.

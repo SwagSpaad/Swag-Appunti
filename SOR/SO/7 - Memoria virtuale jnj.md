@@ -101,60 +101,60 @@ In sintesi, la TLB è essenziale per l'efficienza dei sistemi di memoria virtual
 
 ### Definizione
 
-L'allocazione di memoria globale si riferisce a una politica di gestione della memoria in cui le risorse di memoria sono gestite a livello globale per tutti i processi in esecuzione nel sistema. La memoria può essere allocata a qualsiasi processo in base alle esigenze e alla disponibilità complessiva di memoria.
+La memoria è gestita a livello globale per tutti i processi, con risorse allocate in base alle esigenze e disponibilità complessiva.
 
 ### Caratteristiche
 
-- **Condivisione della Memoria**: La memoria è gestita come una risorsa condivisa tra tutti i processi.
-- **Flessibilità**: Permette al sistema operativo di allocare memoria dove è più necessario in base alla situazione corrente.
-- **Prestazioni**: Ottimizza l'utilizzo della memoria totale del sistema, ma può portare a problemi di contesa delle risorse.
-- **Page Replacement**: Gli algoritmi di sostituzione delle pagine considerano l'intera memoria disponibile.
+- **Condivisione della Memoria**: Risorsa condivisa tra tutti i processi.
+- **Flessibilità**: Allocazione dinamica in base alle necessità.
+- **Prestazioni**: Ottimizza l'uso della memoria totale, ma può causare contesa.
+- **Page Replacement**: Algoritmi considerano tutta la memoria disponibile.
 
 ### Vantaggi
 
-- **Utilizzo Efficiente della Memoria**: La memoria inutilizzata da un processo può essere allocata ad altri processi.
-- **Adattabilità**: Adatta dinamicamente la memoria disponibile alle esigenze dei processi in esecuzione.
+- **Efficiente Utilizzo della Memoria**: La memoria inutilizzata può essere redistribuita.
+- **Adattabilità**: Si adatta dinamicamente alle esigenze dei processi.
 
 ### Svantaggi
 
-- **Contesa delle Risorse**: Può causare contesa della memoria tra processi.
-- **Complessità di Gestione**: Richiede algoritmi complessi per la gestione della memoria a livello globale.
+- **Contesa delle Risorse**: Possibile contesa tra processi.
+- **Complessità di Gestione**: Richiede algoritmi complessi.
 
 ## Allocazione Locale di Memoria
 
 ### Definizione
 
-L'allocazione di memoria locale si riferisce a una politica di gestione della memoria in cui una porzione fissa di memoria è riservata per ciascun processo. Ogni processo ha il proprio pool di memoria e non può utilizzare la memoria riservata per altri processi.
+Ogni processo ha una porzione fissa di memoria, non condivisa con altri processi.
 
 ### Caratteristiche
 
-- **Isolamento della Memoria**: Ogni processo gestisce la propria porzione di memoria, isolata dalle altre.
-- **Limitazioni Fisse**: Ogni processo ha una quantità fissa di memoria disponibile.
-- **Prestazioni**: Previene la contesa delle risorse di memoria, ma può portare a un utilizzo inefficiente della memoria totale.
-- **Page Replacement**: Gli algoritmi di sostituzione delle pagine considerano solo la porzione di memoria del processo corrente.
+- **Isolamento della Memoria**: Ogni processo ha la propria memoria isolata.
+- **Limitazioni Fisse**: Quantità fissa di memoria per processo.
+- **Prestazioni**: Evita la contesa, ma può essere inefficiente.
+- **Page Replacement**: Algoritmi considerano solo la memoria del processo corrente.
 
 ### Vantaggi
 
-- **Isolamento e Sicurezza**: Fornisce isolamento tra i processi, migliorando sicurezza e stabilità.
+- **Isolamento e Sicurezza**: Migliora sicurezza e stabilità.
 - **Semplicità di Gestione**: Ogni processo gestisce solo la propria memoria.
 
 ### Svantaggi
 
-- **Utilizzo Inefficiente della Memoria**: Può portare a un utilizzo inefficiente della memoria totale se alcuni processi non utilizzano tutta la memoria loro assegnata.
-- **Rigidità**: Meno flessibile nell'adattarsi alle esigenze dinamiche dei processi.
+- **Inefficienza**: Possibile spreco di memoria non utilizzata.
+- **Rigidità**: Meno flessibile per esigenze dinamiche.
 
 ## Confronto Riassuntivo
 
-| Caratteristica                | Allocazione Globale                          | Allocazione Locale                                |
-| ----------------------------- | -------------------------------------------- | ------------------------------------------------- |
-| **Gestione della Memoria**    | Condivisa tra tutti i processi               | Riservata per ciascun processo                    |
-| **Flessibilità**              | Alta, adatta dinamicamente le risorse        | Bassa, con limiti fissi per ogni processo         |
-| **Contesa delle Risorse**     | Potenziale contesa tra processi              | Minima, poiché i processi sono isolati            |
-| **Utilizzo della Memoria**    | Potenzialmente più efficiente                | Potenzialmente meno efficiente                    |
-| **Isolamento**                | Minore, con maggiore rischio di interferenza | Maggiore, con maggiore sicurezza e stabilità      |
-| **Algoritmi di Sostituzione** | Considerano la memoria globale               | Considerano solo la memoria del processo corrente |
+| Caratteristica                | Allocazione Globale               | Allocazione Locale                |
+| ----------------------------- | --------------------------------- | --------------------------------- |
+| **Gestione della Memoria**    | Condivisa tra processi            | Riservata per ciascun processo    |
+| **Flessibilità**              | Alta                              | Bassa                             |
+| **Contesa delle Risorse**     | Potenziale contesa                | Minima                            |
+| **Utilizzo della Memoria**    | Potenzialmente più efficiente     | Potenzialmente meno efficiente    |
+| **Isolamento**                | Minore                            | Maggiore                          |
+| **Algoritmi di Sostituzione** | Memoria globale                   | Memoria del processo corrente     |
 
-In sintesi, l'allocazione di memoria globale offre una maggiore flessibilità e potenziale efficienza nell'uso della memoria complessiva del sistema, ma può portare a contese di risorse. L'allocazione locale di memoria offre un maggiore isolamento e semplicità di gestione, ma può risultare in un utilizzo inefficiente della memoria totale disponibile.
+In sintesi, l'allocazione di memoria globale offre flessibilità e efficienza, ma può portare a contese. L'allocazione locale offre isolamento e semplicità, ma può risultare inefficiente.
 
 # Segmentazione
 
