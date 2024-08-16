@@ -19,12 +19,12 @@ In questa architettura il **server** è sempre attivo e risponde alle richieste 
 Il server dispone di un indirizzo IP fisso e noto.
 In un'applicazione client-server un singolo host server non è in grado di rispondere a tutte le richieste dei suoi client, per questo motivo in queste applicazioni sono utilizzati i data center, che ospitano molti host server.
 
-![[Pasted image 20240814114041.png|center|500]]
+![[SOR/RETI/img/img18.png|center|500]]
 # Peer-to-peer
 In questa architettura non è necessario l'utilizzo di un server sempre attivo e per questo si sfrutta la *comunicazione arbitraria tra coppie di host*, chiamati **peer**. 
 Il punto di forza di questa architettura è la **scalabilità**, infatti ogni peer, sebbene generi carico di lavoro richiedendo file, aggiunge anche capacità di servizio al sistema, rispondendo alle richieste di altri peer. 
 
-![[Pasted image 20240814114052.png|center|500]]
+![[SOR/RETI/img/img19.png|center|500]]
 
 # Processi comunicanti
 Prima di costruire un applicazione di rete bisogna anche conoscere come comunicano tra di loro i processi in esecuzione su diversi host.
@@ -48,7 +48,7 @@ Per ciascuna coppia di processi comunicamenti, se ne etichetta una come **client
 Le applicazioni consistono in coppie di processi comunicanti che si scambiano messaggi, che devono passare attraverso la rete. 
 Un processo invia/riceve messaggi alla/dalla rete mediante un'interfaccia software detta **socket**. 
 
-![[Pasted image 20240814115817.png|center|500]]
+![[SOR/RETI/img/img20.png|center|500]]
 
 Dall'immagine vediamo come, il socket è l'interfaccia tra il livello di applicazione e il livello di trasporto.
 
@@ -149,7 +149,7 @@ Facciamo un calcolo per stimare il tempo che intercorre tra la richiesta di un f
 
 **RTT (Round Trip Time)** è il tempo impiegato da un piccolo pacchetto per andare dal client al server e tornare indietro. Questo valore include i vari [[Introduzione ad Internet#Tipi di ritardo|ritardi]] già visti.
 
-![[Pasted image 20240816135039.png|center|500]]
+![[SOR/RETI/img/img21.png|center|500]]
 
 Vediamo cosa succede quando si clicca col mouse su un collegamento ipertestuale:
 - si inizializza la connessione TCP col web server, tramite *handshake a tre vie*: il client invia un piccolo segmento TCP al server che a sua volta manda una conferma. Il client, alla ricezione, manda una conferma indietro al server. 
@@ -178,7 +178,7 @@ La prima linea è detta **riga di richiesta**, quelle successive **righe di inte
 
 Il formato generale della richiesta HTTP è la seguente: 
 
-![[Pasted image 20240816144144.png|center|500]]
+![[SOR/RETI/img/img22.png|center|500]]
 
 #### Metodi di richiesta HTTP
 - Metodo POST: utilizzato quando nella pagina web sono presenti dei form per l'input di dati. Il corpo del messaggio contiene cosa l'utente ha inserito nei campi di input del form
