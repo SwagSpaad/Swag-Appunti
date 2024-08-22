@@ -284,3 +284,48 @@ Introdotti questi valori possiamo valutare l'intervallo del timeout per TCP. Ovv
 
 La soluzione è quello di impostare il timeout a EstimatedRTT più un certo margine, dettato proprio da DevRTT $$\text{TimeoutInterval}=\text{EstimatedRTT}+4\cdot\text{DevRTT}$$
 ## Trasferimento dati affidabile
+TCP crea un servizio di trasporto dati affidabile al di sopra dell'inaffidabile IP, assicurando che il flusso di byte inviato non subisca perdite o alterazioni. Vediamo come.
+
+Supponiamo che l'host A stia inviando un file di grandi dimensioni all'host B. Esistono tre eventi principali relativi alla trasmissione e ritrasmissione, vediamo come si comporta il mittente:
+- **dati provenienti dall'applicazione**: TCP incapsula in un segmento i dati che arrivano dall'applicazione, aggiungendo un numero di sequenza, passandolo ad IP. Se il timer non è già attivoper qualche altro segmento, questo viene attivato
+- **timeout**: ritrasmette il segmento che ha causato il timeout e riavvia il timer
+- **ricezione di un ACK**: Sia $y$ l'ACK ricevuto. Se $y>\text{SendBase}$ aggiorna $\text{SendBase}=y$ e se esistono segmenti senza ACK riavvia il timer
+
+Vediamo nella tabella sotto, come il destinatario genera gli ACK di TCP
+
+
+| Evento                                                                                                           | Azione Mittente                                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Arrivo di segmento con numero di sequenza atteso. Tutti i dati fino al numero di sequenza sono stati riscontrati | ACK ritardato. Attende 500ms per l'arrivo di un altro segmento. Se non arriva viene inviato l'ACK                                  |
+| Arrivo di un segmento con numero di sequenza atteso. Un segmento ordinato è in attesa dell'ACK                   | Invia immediatamente un singolo ACK cumulativo, riscontrando entrambi i segmenti                                                   |
+| Arrivo non ordinato di segmento con numero di sequenza superiore a quello atteso. C'è un buco.                   | Invia immediatamente ACK duplicato, indicando il numero di sequenza del prossimo byte atteso, che è l'estremità inferiore del buco |
+| Arriva un segmento che colma parzialmente o completamente il buco nei dati ricevuti                              | Invia immediatamente un ACK, ammesso che il segmento cominci all'estremità del buco                                                |
+![[Pasted image 20240822120721.png|center|500]]
+![[Pasted image 20240822120740.png|center|300]]
+
+### Ritrasmissione rapida
+Un problema legato alle ritrasmissioni è che il periodo di timeout può rivelarsi molto lungo. Supponiamo che il mittente invii tanti segmenti in pipeline e che venga perso il secondo segmento (c'è un buco). Da questo momento il destinatario risponderà con ACK relativi al primo segmento ricevuto. Il mittente alla ricezione di questi **3 ACK duplicati**, capisce che c'è un buco e viene ritrasmesso il segmento non riscontrato col più piccolo numero di sequenza.
+
+![[Pasted image 20240822121657.png|center|300]]
+
+## Controllo di flusso
+Gli host riservano dei buffer di ricezione in cui vengono posizionati i byte ricevuti, da cui vengono poi letti dall'applicazione associata. Quest'ultimo, però, non legge necessariamente nell'istante in cui arrivano i byte, perché potrebbe essere occupata in altro. Se l'applicazione è lenta nella lettura dei dati può accadere che il mittente, inviando ad una velocità più elevata, mandi in overflow il buffer di ricezione.
+
+TCP offre un **servizio di controllo di flusso** per evitare la saturazione del buffer ricevente, paragonando la frequenza di invio del mittente con quella di lettura del ricevente. TCP realizza il controllo di flusso facendo mantenere una variabile detta **finestra di ricezione**, che fornisce al mittente un'indicazione dello spazio libero nel buffer del destinatario.
+
+Supponiamo che A stia invando un grande file a B. Quest'ultimo alloca un buffer di ricezione, che ha dimensione `RcvBuffer`. Definiamo anche le variabili:
+- `LastByteRead`: numero dell'ultimo byte nel flusso di dati che il processo applicativo in B ha letto dal buffer
+- `LastByteRcvd`: numero dell'ultimo byte che proviene dalla rete che è stato copiato nel buffer di ricezione di B
+Dato che TCP non può mandare in overflow il buffer, deve valere: $$\text{LastByteRcvd - LastByteRead}\leq\text{RcvBuffer}$$La finestra di ricezione, che indichiamo con `rwnd`, viene impostata alla quantità di spazio disponibile nel buffer: $$\text{rwnd}=\text{RcvBuffer - [LastByteRcvd - LastByteRead]}$$
+L'host B comunica all'host A quanto spazio è disponibile nel buffer, scrivendo il valore corrente di `rwnd` (che è dinamico), nal campo *finestra di ricezione* dei segmenti che manda ad A. All'inizio della comunicazione (buffer vuoto) vale che `rwnd = RcvBuffer`
+
+L'host A tiene traccia di due variabili:
+- `LastByteSent`
+- `LastByteAcked`
+Osserviamo che la differenza algebrica delle due variabili indica la quantità di dati spediti da A per cui non si è ricevuto ACK. 
+Per garantire che l'host A non mandi in overflow il buffer di ricezione di B, durante tutta la connessione deve valere $$\text{LastByteSent - LastByteAcked}\leq\text{rwnd}$$
+## Gestione della connessione TCP
+Vediamo come viene stabilita e rilasciata una connessione TCP. Supponiamo che un host client vuole iniziare una connessione con un host server. La connesione viene stabilita mediante **handshaking a 3 vie**, che serve a dimostrare che entrambi gli host sono disponibili alla connessione ed è  necessaria per concordare i parametri di connessione.
+
+1. TCP lato clienti invia un segmento speciale, detto **SYN**, al TCP lato server. Il segmento non contiene dati a livello applicativo, ma il bit SYN nell'intestazione è posto a 1. Inoltre il client sceglie un numero di sequenza casuale e lo pone nell'apposito campo del segmento SYN, incpasula il segmento in un datagramma IP e lo invia al server.
+2. All'arrivo del datagramma IP col segmento SYN al server, questo viene estratto, vengono allocati i buffer e le variabili TCP e invia indietro un segmento di connessione approvata al client TCP.
