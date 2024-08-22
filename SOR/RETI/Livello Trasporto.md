@@ -306,7 +306,7 @@ Vediamo nella tabella sotto, come il destinatario genera gli ACK di TCP
 ### Ritrasmissione rapida
 Un problema legato alle ritrasmissioni è che il periodo di timeout può rivelarsi molto lungo. Supponiamo che il mittente invii tanti segmenti in pipeline e che venga perso il secondo segmento (c'è un buco). Da questo momento il destinatario risponderà con ACK relativi al primo segmento ricevuto. Il mittente alla ricezione di questi **3 ACK duplicati**, capisce che c'è un buco e viene ritrasmesso il segmento non riscontrato col più piccolo numero di sequenza.
 
-![[Pasted image 20240822121657.png|center|300]]
+![[SOR/RETI/img/img68.png|center|300]]
 
 ## Controllo di flusso
 Gli host riservano dei buffer di ricezione in cui vengono posizionati i byte ricevuti, da cui vengono poi letti dall'applicazione associata. Quest'ultimo, però, non legge necessariamente nell'istante in cui arrivano i byte, perché potrebbe essere occupata in altro. Se l'applicazione è lenta nella lettura dei dati può accadere che il mittente, inviando ad una velocità più elevata, mandi in overflow il buffer di ricezione.
@@ -327,5 +327,60 @@ Per garantire che l'host A non mandi in overflow il buffer di ricezione di B, du
 ## Gestione della connessione TCP
 Vediamo come viene stabilita e rilasciata una connessione TCP. Supponiamo che un host client vuole iniziare una connessione con un host server. La connesione viene stabilita mediante **handshaking a 3 vie**, che serve a dimostrare che entrambi gli host sono disponibili alla connessione ed è  necessaria per concordare i parametri di connessione.
 
-1. TCP lato clienti invia un segmento speciale, detto **SYN**, al TCP lato server. Il segmento non contiene dati a livello applicativo, ma il bit SYN nell'intestazione è posto a 1. Inoltre il client sceglie un numero di sequenza casuale e lo pone nell'apposito campo del segmento SYN, incpasula il segmento in un datagramma IP e lo invia al server.
-2. All'arrivo del datagramma IP col segmento SYN al server, questo viene estratto, vengono allocati i buffer e le variabili TCP e invia indietro un segmento di connessione approvata al client TCP.
+![[SOR/RETI/img/img69.png|center|500]]
+1. TCP lato client invia un segmento speciale, detto **SYN**, al TCP lato server. Il segmento non contiene dati a livello applicativo, ma il bit SYN nell'intestazione è posto a 1. Inoltre il client sceglie un numero di sequenza casuale (che chiamiamo `client_isn`) e lo pone nell'apposito campo del segmento SYN, incpasula il segmento in un datagramma IP e lo invia al server.
+2. All'arrivo del datagramma IP col segmento SYN al server, questo viene estratto, vengono allocati i buffer e le variabili TCP e invia indietro un segmento di connessione approvata al client TCP. Questo segmento contiene: il *bit SYN* posto a 1, il campo *ACK* che ottiene il valore `client_isn + 1` e genera il proprio numero di sequenza `server_isn` che pone nel campo numero di sequenza. Il segmento appena creato viene detto **segmento SYNACK**
+3. Alla ricezione del segmento SYNACK, il client alloca il buffer e le variabili di connessione. Il client invia al server un altro segmento in risposta al SYNACK ricevuto. Il client pone i valori `server_isn + 1` nel campo ACK e il bit SYN a 0 dato che la connessione è stabilita.
+
+![[SOR/RETI/img/img70.png|center|500]]
+Per *chiudere la connessione*, client e server chiudono ciascuno il proprio lato della connessione, inviando il segmento TCP con il bit **FIN** posto a 1.
+
+# Principi del controllo della congestione
+Il [[#Controllo di flusso|controllo di flusso]] riguardava la possibilità che un singolo mittente sovraccaricasse il destinatario. La **congestione** sulla rete si verifica quando troppe sorgenti inviano troppi dati ad una velocità elevata per essere gestiti dalla rete.
+
+## Cause e costi della congestione
+Prima di vedere i meccanismi su come reagire o evitarla analizziamo tre diversi scenari, valutando le cause e le conseguenze in termini di utilizzo.
+
+### Scenario 1
+Due host A e B con una connessione che condivide un router intermedio. 
+
+![[SOR/RETI/img/img71.png|center|500]]
+
+Ipotizziamo che un'applicazione nell'host A stia inviando dati sulla connessione ad una frequenza di $\lambda_{in}$ byte/s. L'host B opera in modo simile. I pacchetti dall'host A e dall'host B passano attraverso un router, avente un buffer per memorizzare i pacchetti, e un collegamento condiviso in uscita di capacità $R$. Ipotizziamo che i buffer del router abbiano *dimensione illimitata*.
+
+![[SOR/RETI/img/img72.png]]
+La figura mostra le prestazioni della connessione dell'host A in questo scenario. 
+- Il grafico di sinistra mostra il **throughput per connessione** (ovvero il numero di byte per secondo inviati al ricevente): finché non supera il valore $R/2$ il throughput del ricevente è uguale al tasso di invio del mittente. Ma quando questo valore viene superato, il throughput resta $R/2$. Questo limite è conseguenza della condivisione del collegamento. 
+- Il grafico a destra mostra le **conseguenze** di operare al limite della capacità di collegamento, infatti quando il tasso di invio si avvicina a $R/2$, il ritardo medio cresce molto. Superato questo tasso, il ritardo tende all'infinito.
+In questo scenario vediamo quindi come *quando il tasso di arrivo dei pacchetti si avvicina alla capacità del collegamento, si rilevano lunghi ritardi**
+
+### Scenario 2
+Quando i buffer dei router hanno **dimensione limitata**, i pacchetti che arrivano a un buffer pieno vengono scartati. Se la connessione è affidabile, i pacchetti persi o corrotti vengono ritrasmessi.
+
+Indichiamo con $\lambda_{in}$ il tasso di trasmissione verso le socket e con $\lambda^{'}_{in}$ il tasso di invio dei segmenti da parte del livello di trasporto (**carico offerto**).
+
+![[SOR/RETI/img/img73.png|center|500]]
+![[SOR/RETI/img/img74.png|center|300]]
+
+Se il mittente potesse inviare dati solo quando è a conoscenza che c'è spazio nei router, non ci sarebbero perdite e quindi $\lambda_{in} = \lambda^{'}_{in}$. Il throughput sarebbe pari a $\lambda_{in}$ e la velocità di invio non supererebbe $R/2$.
+
+Realisticamente il mittente non è in grado di conoscere perfettamente lo stato del router, quindi dei pacchetti vanno persi a causa dei buffer pieni ed in questi casi è necessaria la ritrasmissione. Consideriamo quindi il caso in cui il mittente ritrasmette un pacchetto quando è certo della sua perdita. 
+
+![[SOR/RETI/img/img75.png|center|300]]
+
+Le prestazioni avrebbero l'aspetto del grafico. Supponiamo che il carico offerto è $\lambda^{'}_{in}=R/2$. In questo caso il tasso con cui i dati vengono consegnati all'applicazione è $R/3$, quindi su $0.5 \:R$ unità di dati trasmessi, $0.333\: R$ byte/s sono dati originali, mentre $0.166\: R$ byte/s sono quelli ritrasmessi. 
+Un'altro costo relativo alla congestione è quindi la *necessità di effettuare ritrasmissioni per compensare la perdita di pacchetti dovuta all'overflow nei buffer*.
+
+Se un pacchetto subisce ritardi ma non viene perso, il mittente potrebbe ritrasmetterlo inutilmente. Entrambi i pacchetti (originale e ritrasmesso) arrivano al destinatario, che scarta una copia. Il *lavoro del router per instradare la copia ritrasmessa è sprecato*, riducendo l'efficienza.
+
+![[SOR/RETI/img/img76.png|center|300]]
+
+La figura confronta throughput e traffico immesso nella rete nell'ipotesi che ciascun pacchetto venga instradato mediamente due volte. In questo scenario il throughput assumerà asintoticamente il valore $R/4$ quando il carico offerto tende a $R/2$
+
+## Approcci al controllo della congestione
+Consideriamo due casi pratici: 
+- **Controllo di congestione end-to-end**. Il livello di rete non fornisce supporto al livello di trasporto per il controllo della congestione, che deve essere dedotta dagli host in base al comportamento della rete, ovvero osservando la perdita di pacchetti e ritardi che sono indicatori di congestione di rete. 
+- **Controllo di congestione assistito dalla rete**. I componenti a livello di rete (router) forniscono un feedback al mittente sullo stato di congestione della rete, mediante un avviso diretto detto **chokepacket**.
+
+![[SOR/RETI/img/img78.png|center|500]]
+

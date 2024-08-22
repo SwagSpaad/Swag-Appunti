@@ -60,7 +60,7 @@ Il circuito così costruito si chiama D-Latch. Quando CLK = 1 si dice che il lat
 # Flip-flop e registri
 Un D-Latch ci consente di settare il valore di $Q$ quando CLK = 1 e tenerlo in memoria per tutto il tempo in cui CLK = 0. Tuttavia il fatto che il latch è "trasparente" quando CLK = 1 può essere uno svantaggio in alcuni casi. Consideriamo un circuito fatto così
 
-![[img70.png|center|300]]
+![[LRL/img/img70.png|center|300]]
 
 Quando CLK = 0 non c'è nessun problema: il valore in input D sarà uguale al negato dell'output $Q$, ma il valore di $Q$ non cambia perchè il latch è opaco. Nel momento in cui poniamo CLK = 1 però creiamo un "paradosso logico".
 
