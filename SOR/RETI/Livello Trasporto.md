@@ -1,4 +1,4 @@
-zIl livello di trasporto ha il compito di fornire una **comunicazione logica** direttamente ai processi applicativi in esecuzione sui diversi host.
+1zIl livello di trasporto ha il compito di fornire una **comunicazione logica** direttamente ai processi applicativi in esecuzione sui diversi host.
 Con comunicazione logica intendiamo che, dal punto di vista dell'applicazione, tutto funzioni come se gli host che eseguono i processi fossero direttamente connessi tra di loro. 
 
 I protocolli di trasporto sono eseguiti nei sistemi periferici:
@@ -110,7 +110,7 @@ La figura mostra le interfacce del protocollo di trasferimento affidabile. Il la
 ### rdt1.0, canale affidabile
 Il caso più semplice è quello in cui il canale sottostante è completamente affidabile, quindi non si verificano errori nei bit e non avvengono perdite di pacchetti.
 
-![[Pasted image 20240821113404.png|center|500]]
+![[SOR/RETI/img/img41.png|center|500]]
 
 - il mittente accetta i dati dal livello superiore tramite `rdt_send(data)`, crea un  pacchetto contenente i dati con `packet = make_pkt(data)`  e lo invia sul canale `udt_send(packet)`.
 - il ricevente raccoglie i pacchetti dal basso con `rdt_rcv(packet)`, rimuove i dati dai pacchetti con `extract(packet, data)` e li passa al livello superiore con `deliver_data(data)`.
@@ -121,13 +121,13 @@ Questo è possibile mediante un utilizzo di **notifiche positive (ACK) e negativ
 Il mittente invia un pacchetto per volta, attendendo la risposta del destinatario: se il pacchetto arriva al ricevente correttamente, avviene un ACK, mentre se il pacchetto arriva con degli errori, il ricevente comunica un NAK al mittente che procede a ritrasmettere il pacchetto.
 I protocolli basati sulla ritrasmissione sono detti **protocolli ARQ (Automatic Repeat reQuest)**.
 
-![[Pasted image 20240821114858.png|center|500]]
+![[SOR/RETI/img/img42.png|center|500]]
 
 Il **lato mittente** presenta due stati: in quello di sinistra il protocollo attende i dati da raccogliere. Quando si verifica l'evento `rdt_send(data)`, il mittente crea un pacchetto `sndpkt` contenente i dati da inviare ed il checksum (nel caso di pacchetto UDP) e spedisce il pacchetto mediante `udt_send(sndpkt)`. Nello stato di destra il mittente attende un pacchetto ACK o NAK dal destinatario: 
 - se riceve ACK (evento `rdt_rcv(rcvpkt) && isACK(rcvpkt)`), il mittente sa che il pacchetto è stato ricevuto correttamente e torna allo stato di attesa dei dati
 - se riceve NAK (evento `rdt_rcv(rcvpkt) && isNAK(rcvpkt)`), il protocollo ritrasmette l'ultimo pacchetto, attendendo nuovamente una risposta.
 
-![[Pasted image 20240821115520.png|center|500]]
+![[SOR/RETI/img/img43.png|center|500]]
 
 Il **lato ricevente** ha ancora un solo stato. All'arrivo del pacchetto risponde con ACK o NAK se il pacchetto è corrotto o meno.
 - nel caso di pacchetto corrotto (evento `rdt_rcv(rcvpkt) && corrupt(rcvpkt)`), viene creato un pacchetto NAK (`sndpkt=make_pkt(NAK)`) ed inviato al mittente (`udt_send(sndpkt)`). 
@@ -141,16 +141,16 @@ Per gestire gli ACK e i NAK corrotti ci sono tre possibilità:
 - rinviare il pacchetto in caso di ACK/NAK alterati. Introduce **pacchetti duplicati** e il destinatario non sa se l'ACK/NAK è stato ricevuto correttamente, quindi non può sapere se un pacchetto in arrivo contiene dati nuovi o è una ritrasmissione.
 Una soluzione consiste nell'aggiungere un campo al pacchetto dati, obbligando il mittente a numerare i pacchetti con un **numero di sequenza**. Al destinatario basterà controllare questo numero per sapere se rappresenta una ritrasmissione o sono dati nuvovi.
 
-![[Pasted image 20240821120925.png|center|500]]
-![[Pasted image 20240821122805.png|center|500]]
+![[SOR/RETI/img/img44.png|center|500]]
+![[SOR/RETI/img/img45.png|center|500]]
 
 Osserviamo che sia mittente che destinatario hanno il doppio degli stati, in quanto devono riflettere il fatto che il pacchetto in invio o in ricezione abbia numero di sequenza 0 o 1. Notiamo inoltre che le azioni negli stati sono speculari, in quanto l'unica differenza riguarda la gestione del numero di sequenza.  
 
 ### rdt2.2, protocollo senza NAK
 Il funzionamento è lo stesso di rdt2.1, ma utilizzando solamente gli ACK. In questo caso il destinatario invia un ACK per l'ultimo pacchetto ricevuto correttamente, indicando esplicitamente il numero di sequenza del pacchetto con l'ACK, mentre un ACK duplicato inviato al mittente è analogo ad un NAK, quindi il pacchetto viene ritrasmesso. Il protocollo TCP utilizza questo approccio.
 
-![[Pasted image 20240821124618.png|center|500]]
-![[Pasted image 20240821124630.png|center|500]]
+![[SOR/RETI/img/img46.png|center|500]]
+![[SOR/RETI/img/img47.png|center|500]]
 
 ### rdt3.0, canali con errori e perdite
 Negli esempi precedenti abbiamo supposto che il canale di trasmissione danneggiasse solamente i bit. Supponiamo ora che il canale possa anche smarrire i pacchetti. 
@@ -161,14 +161,14 @@ L'approccio utilizzato è quello di scegliere una quantità di tempo per cui la 
 
 Il mittente, non sa se un pacchetto o il relativo ACK sia stato effettivamente perso o se questi pacchetti abbiano subito un ritardo molto lungo. In ogni caso la soluzione è sempre la ritrasmissione. Il meccanismo di ritrasmissione richiede un *contatore* in grado di segnalare la scadenza del tempo impostato. Il mittente quindi, ogni volta che invia un pacchetto, inizializza il timer, eventualmente rispondere all'interrupt generato dal timer con l'azione appropriata e fermare il contatore quando il pacchetto viene trasmesso correttamente.
 
-![[Pasted image 20240821130159.png|center|500]]
+![[SOR/RETI/img/img48.png|center|500]]
 
 
 #### Analisi delle prestazioni rdt3.0
 Il protocollo rdt3.0 è corretto funzionalmente, ma le prestazioni non sono il massimo in quanto si tratta di un protocollo di tipo stop-and-wait. Analizziamo la velocità di trasferimento, considerando questo caso. 
 
 Due host, sulla coste opposte degli Strati Uniti. L'[[Livello Applicazione#Tempi di risposta|RTT]] è circa di 30 ms. Supponiamo che i due sistemi siano connessi da un canale con velocità di trasmissione $R$ di $1$ Gbps ($10^9$ bit al secondo). Con pacchetti di dimensione $L$ di $1000$ byte ($8000$ bit), il tempo richiesto per trasmettere il pacchetto sul collegamento è $$d_{t}=\frac{L}{R}=\frac{8000\text{ bit}}{10^{9}\text{ bit/s}}=8\:\micro s$$
-![[Pasted image 20240821131558.png|center|300]]
+![[SOR/RETI/img/img49.png|center|300]]
 
 Se il mittente inizia ad inviare pacchetti a $t=0$, l'ultimo bit entra nel canale dal lato mittente al tempo $t=\frac{L}{R}=8\:\micro s$. Il pacchetto effettua poi un viaggio di $15$ ms e l'ultimo bit giunge al destinatario a $t=\frac{RTT}{2}+ \frac{L}{R}=15.008$ ms. Di conseguenza l'ACK giunge al mittente all'istante $t=RTT+ \frac{L}{R}=30.008$ ms. Dopo questo lasso di tempo, il mittente puù trasmettere il messaggio successivo, quindi in un arco di $30.008$ ms il mittente ha trasmesso per soli $0.008$ ms. Definiamo ora l'utilizzo del mittente come la frazione di tempo in cui il mittente è stato effettivamente occupato nell'invio di bit $$U_\text{mittente}=\frac{L/R}{RTT+L/R}=\frac{0.008}{30.008}=0.00027$$
 Il mittente è stato attivo per soli 2.7 centesimi dell'1% di tempo, con un throughput effettivo di $$U_\text{mittente}\cdot R=267\text{ kbps}$$ nonostante fosse disponibile un collegamento da $1$ Gbps. Il protocollo di tipo stop-and-wait limita quindi notevolmente le prestazioni del canale. 
@@ -176,7 +176,7 @@ Il mittente è stato attivo per soli 2.7 centesimi dell'1% di tempo, con un thro
 ### Protocolli per il trasferimento dati affidabile con pipeline 
 La soluzione al problema delle prestazioni di rdt3.0 è quella di consentire al mittente di inviare più pacchetti senza aspettare gli ACK.
 
-![[Pasted image 20240821132756.png|center|500]]
+![[SOR/RETI/img/img50.png|center|500]]
 
 Se si consente al mittente di trasmettere tre pacchetti, l'utilizzo viene triplicato. Le conseguenze di utilizzo di un protocollo di trasferimento con pipeline sono:
 - incremento dei numeri di sequenza disponibili
@@ -185,37 +185,102 @@ Se si consente al mittente di trasmettere tre pacchetti, l'utilizzo viene tripli
 #### Go-Back-N (GBN)
 In un **protocollo GBN**, il mittente può trasmettere più pacchetti senza attendere acknowledge, ma non può avere più di un numero massimo consentito $N$ di pacchetti in attesa di ACK nella pipeline. 
 
-![[Pasted image 20240821135640.png|center|500]]
+![[SOR/RETI/img/img51.png|center|500]]
 
 Nella *window size* abbiamo i pacchetti inviati ma non ancora riscontrati e quelli pronti per l'invio. IL campo *base* indica il numero di sequenza del pacchetto più vecchio che non ha ricevuto ACK, mentre *nextseqnum* indica il numero di sequenza del prossimo pacchetto da inviare.
 
-![[Pasted image 20240821142017.png|center|500]]
+![[SOR/RETI/img/img52.png|center|500]]
 Il mittente GBN deve rispondere a tre tipi di evento:
 - **invocazione dall'alto**. Alla chiamata `rdt_send()`, per prima cosa il mittente controlla se nella finestra ci siano $N$ pacchetti in sospeso. In caso negativo, crea e invia un nuovo pacchetto. Se la finestra è piena il mittente restituisce i dati al livello superiore e ritenterà più tardi. A livello implementativo i dati venono memorizzati in un buffer o viene implementato un meccanismo di sincronizzazione che consente la chiamata `rdt_send()` solo quando la finestra non è piena
 - **ricezione di un ACK**. L'ACK con numero di sequenza $n$ è considerato un **ACK cumulativo**, che indica che tutti i pacchetti con numero di sequenza minore o uguale ad $n$ sono stati correttametne ricevuti
 - **evento di timeout**. Si usa un contatore per il problema di pacchetti o ACK persi. Quando si verifica un timeout, il mittente invia nuovamente **tutti** i pacchetti con numero di sequenza maggiore uguale ad $n$ (ultimo ACK ricevuto).
 
-![[Pasted image 20240821142044.png|center|500]]
+![[SOR/RETI/img/img53.png|center|500]]
 
 Nel lato destinatario, se un pacchetto con numero di sequenza $n$ viene ricevuto correttamente ed è in ordine (ha numero di sequenza progressivo), viene inviato un ACK per il pacchetto e consegna i dati a livello superiore, memorizzando `rcv_base`, che indica l'ultimo numero di sequenza ottenuto . Se riceve uin pacchetto fuori sequenza può scartarlo e rimandare un ACK per il apcchetto con il numero di sequenza più alto
 
 #### Ripetizione selettiva
 I **protocolli a ripetizione selettiva** evitano le ritrasmissioni non necessarie facendo ritrasmettere al mittente solo i pacchetti su cui esistono alterazioni o smarrimenti. Questo obbliga il destinatario a mandare ACK specifici per i pacchetti ricevuti in modo corretto. Si utilizza nuovamente un'ampiezza di finestra pari a $N$ per limitare il numero di pacchetti senza ACK, ma a differenza di GBN, il mittente avrà già ricevuto gli ACK di qualche pacchetto nella finestra.
 
-![[Pasted image 20240821143315.png|center|500]]
+![[SOR/RETI/img/img54.png|center|500]]
 
 Il mittente svolge le seguenti operazioni in base agli aventi:
 - **dati ricevuti dall'alto**. Alla ricezione di dati, il mittente controlla il succesisvo numero di sequenza disponibile per il pacchetto. Se è all'interno della finestra del mittente, i dati vengono impacchettati e inviati, altrimenti sono salvati in un buffer o restituiti al livello superiore
 - **timeout**. Utilizza ancora i contatori per la perdita di pacchetti, anche se ora ogni pacchetto ha un proprio timer logico dato che viene ritrasmesso un solo pacchetto
 - **ACK ricevuto**. Alla ricezione, il mittente etichietta il pacchetto $n$ come ricevuto. Se $n$ è il numero di sequenza più piccolo, la base della finestra avanza al successivo numero di sequenza del pacchetto non riscontrato.
 
-![[Pasted image 20240821143742.png|center|500]]
+![[SOR/RETI/img/img55.png|center|500]]
 
 Il ricevente si comporta nel seguente modo:
 - **il pacchetto con n nella sequenza $[\text{rcv\_base, rcv\_base+N-1}]$ viene ricevuto correttamente**. In questo caso il pacchetto riceevuto è nella finestra del ricevente e viene restituito un ACK al mittente. Se il pacchetto non era già stato ricevuto viene inserito nel buffer. Se ha numero di sequenza uguale a `rcv_base` allora il pacchetto e i pacchetti nel buffer con numeri conescutivi a `rcv_base` vengono consegnati al livello superiore. Ad esempio quando si riceve un pacchetot con numero di sequenza `rcv_base=2` è possibile consegnarlo a livello superiore con i pacchetti 3, 4, e 5
 - **si riceve il pacchetto con $n$ nella sequenza $[\text{rcv\_base-N, rcv\_base-1}]$**. In questo caso si genera un ACK, anche se il pacchetto è già stato riscontrato. Questo evento significa che gli ACK dei pacchetti già consegnati all'applicazione, non sono stati ricevuti dal mittente
 - si ignora il pacchetto in ogni altro caso
 
-![[Pasted image 20240821144557.png|center|500]]
+![[SOR/RETI/img/img57.png|center|500]]
 
 # TCP
+TCP è il protocollo di trasporto affidabile e orientato alla connessione che utilizza molti dei principi visti in precedenza, come rilevazione degli errori, ritrasmissioni, acknowledgment cumulativi ecc.
+TCP è detto *orientato alla connessione* in quanto prima dello scambio dei dati, i processi che intendono farlo devono effettuare l'handshake. 
+La connessione TCP offre un servizio **full-duplex**, quindi i dati possono fluire in entrambe le direzione nello stesso momento. Inoltre, la connessione è **point-to-point**, ovvero ha luogo tra un singolo mittente e un singolo destinatario, senza possibilità di *multicast*.
+
+Dopo aver instaurato la connessione TCP mediante **handshake a tre vie**, i due processi possono scambiarsi dati. 
+Consideriamo l'invio di dati dal client al server
+
+![[SOR/RETI/img/img58.png|center|500]]
+
+Il primo manda un flusso di dati attraverso il socket, che una volta attraversato sono nelle mani di TCP, che dirige i dati al **buffer di invio**.
+La quantità massima di dati prelevabili e posizionabili in un segmento è detta **dimensione massima di segmento (MSS)** ed è un valore che viene impostato determinando prima la lunghezza del frame più grande che può essere inviato a livello di collegamento (**unità trasmissiva massima MTU**) e poi scegliendo un MSS tale che il segmento TCP stia all'interno di un singolo frame a livello di collegamento considerando anche la lunghezza dell'intestazione. 
+
+![[SOR/RETI/img/img59.png|center|500]]
+
+
+TCP accoppia ogni blocco di dati a una intestazione TCP, andando a formare dei **segmenti TCP**, che vengono passati al livello di rete, incapsulati in datagrammi IP e immessi nella rete. Quando all'altro capo giunge un segmento, i dati bengono memorizzati nel **buffer di ricezione TCP** e vengono poi inviati all'applicazione tramite il socket.
+## Struttura dei segmenti TCP
+Il segmento TCP consiste di campi *Intestazione* e del campo *Dati* provenienti dall'applicazione. La MSS limita la dimensione massima del campo Dati, infatti quando TCP invia un file di grandi dimensioni, questo è frammentato in porzioni di dimensioni MSS.
+
+In figura possiamo vedere la struttura dei segmenti TCP.
+
+![[SOR/RETI/img/img60.png|center|500]]
+
+Come per [[#UDP]] questa contiene i **numeri di porta di origine e destinazione** e il campo **checksum**. Inoltre comprende i seguenti campi:
+- **Numero di sequenza** e **numero di ACK**: utilizzati dal mittente e destinatario per il trasferimento dati affidabile
+- **Finestra di ricezione**: utilizzato per il controllo di flusso. Indica il numero di byte che il destinatario può accettare
+- **Lunghezza dell'intestazione**
+- **Opzioni**: facolatativo e di lunghezza variabile. 
+- **Flag**: 
+	- il bit **ACK** indica che il segmento contiene un ACK per un segmento ricevuto correttamente
+	- **RST, SYN, FIN** utilizzati per impostare e chiudere la connessione
+	- **CWR, ECE** utilizzati nel controllo della congestione
+	- **PSH**: se ha valore 1 il destinatario dovrebbe inviare immediatamente i dati al livello superiore
+	- **URG** indica la presenza di dati che il mittente ha marcato come urgenti
+
+### Numeri di sequenza e numeri di ACK
+I numeri di sequenza e di ACK sono tra i campi più importanti dell'intestazione TCP e rappresentano una parte critica del servizio di trasferimento dati affidabile di TCP. 
+TCP vede i dati come un flusso di byte ordinati e applica i numeri di sequenza al flusso di byte trasmessi e non alla serie di segmenti. 
+Il **numero di sequenza per un segmento** è il numero nel flusso di byte del primo byte del segmento.
+
+Supponiamo che A vuole inviare un file (flusso di dati) da 500.000 byte, che l'MSS valga 1000 byte e che il primo byte del flusso sia numerato con 0. TCP costruisce quindi $500.000/1000=500$ segmenti per il flusso, applicando al primo segmento il numero 0, al secondo 1000 e così via
+
+![[SOR/RETI/img/img61.png|center|500]]
+
+Il **numero di ACK** che l'host A scrive nei propri segmenti, è il *numero di sequenza* del prossimo byte atteso. Se trasmetto i primi 10 byte (quindi ho un segmento con numero di sequenza = 0 che contiene 10 byte) il numero di ACK sarà 10 (perché dopo aver ricevuto i byte da 0 a 9, attendo l'arrivo del byte 10)
+
+![[SOR/RETI/img/img62.png|center|500]]![[SOR/RETI/img/img63.png|center|500]]
+
+## Timeout e stima dell'RTT
+TCP utilizza un meccanismo di timeout e ritrasmissione per recuperare i segmenti persi. Nonostante il meccanismo di timeout risulti semplice, l'implementazione in TCP crea alcuni problemi. Il problema più grande è la durata degli intervalli di timeout, che deve necessariamente essere maggiore dell'RTT, ma quanto maggiore deve essere?
+
+Consideriamo come il protocollo stimi l'RTT. Denotiamo con *SampleRTT* la misura dell'RTT di un segmento, ovvero il tempo che passa tra l'invio del segmento e la ricezione dell'ACK. Questo valore può variare in base alla congestione nei router e al carico sugli host e a causa di questo il valore di SampleRTT può essere atipico. 
+
+Possiamo effettuare una stima calcolando una media dei valori di SampleRTT. Ogni volta che si ottiene un nuovo SampleRTT, si aggiorna la stima nel seguente modo $$\text{EstimatedRTT}=(1-\alpha)\cdot\text{EstimatedRTT}+\alpha\cdot\text{SampleRTT}$$
+Questo tipo di stima attribuisce maggiore importanza ai campioni recenti rispetto a quelli vecchi, il che è migliore in quanto quelli più recenti riflettono meglio la congestione della rete. 
+
+![[SOR/RETI/img/img65.png|center|500]]
+
+Oltre alla stima dell'RTT è importante possedere la misura della sua variabilità, che è la stima di quanto SampleRTT si discosta da EstimatedRTT $$\text{DevRTT}=(1-\beta)\cdot\text{DevRTT}+\beta\cdot\Big|\text{SampleRTT}-\text{EstimatedRTT}\Big|$$
+Se i valori dell'RTT presentano fluttuazioni limitate, allora DevRTT sarà piccolo.
+
+Introdotti questi valori possiamo valutare l'intervallo del timeout per TCP. Ovviamente il timeout non può essere inferiore al valore di EstimatedRTT, altrimenti si verificano ritrasmissioni non necessarie, ma allo stesso tempo non può essere molto maggiore di EstimatedRTT altrimenti i segmenti non sarebbero ritrasmessi rapidamente, comportando gravi ritardi.
+
+La soluzione è quello di impostare il timeout a EstimatedRTT più un certo margine, dettato proprio da DevRTT $$\text{TimeoutInterval}=\text{EstimatedRTT}+4\cdot\text{DevRTT}$$
+## Trasferimento dati affidabile
