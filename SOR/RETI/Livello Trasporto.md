@@ -451,7 +451,7 @@ ECN è la forma di controllo di congestione *assistita dalla rete*.
 
 Vengono utilizzati due bit nel campo Type of Service nell'intestazione IP. Se un router è congestionato, imposta i bit e invia il pacchetto IP al destinatario, che a sua volta informa il mittente. Quando un destinatario riceve un indicazione di congestione ECN, informa il mittente TCP impostando il bit ECE all'interno di un segmento ACK ed il mittente reagisce dimezzando la finestra di congestione.
 
-![[v.png|center|500]]
+![[SOR/RETI/img/img83.png|center|500]]
 
 ## TCP Fairness
 Consideriamo $K$ connessioni TCP, ciascuna con differente percorso end-to-end, ma che passano attraverso lo stesso collegamento con capacità trasmissiva di $R$ bps, che costituisce il bottleneck del sistema.
