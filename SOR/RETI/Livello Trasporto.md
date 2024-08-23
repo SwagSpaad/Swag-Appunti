@@ -384,3 +384,89 @@ Consideriamo due casi pratici:
 
 ![[SOR/RETI/img/img78.png|center|500]]
 
+## Controllo di congestione TCP
+Nella variante classica, TCP utilizza il controllo della congestione end-to-end e consiste nell'imporre a ciascun mittente un limite al tasso di invio sulla propria connessione in funzione della congestione di rete percepita.
+
+Il mittente può aumentare la velocità di trasmissione fino a quando non si verifica la perdita di pacchetti, sintomo di congestione; in questo caso inizia a diminuire la velocità di invio.
+
+Il meccanismo di controllo di congestione TCP fa tenere traccia agli host della variabile **finestra di congestione**, indicata con `cwnd`, che pone un limite alla velocità di immissione di traffico sulla rete da parte del mittente.
+In particolare, la quantità di dati che non hanno ancora ricevuto ACK, non può superare il minimo tra i valori di `cwnd` e `rwnd` $$\text{LastByteSent - LastByteAcked}\leq\min\{\text{cwnd, rwnd}\}$$Assumendo che il buffer di ricezione sia sufficientemente grande, possiamo trascurare il vincolo di `rwnd`.
+Il valore di `cwnd` viene regolato dinamicamente in risposta alla congestione della rete osservata.
+
+Il mittente TCP percepisce la presenza di congestione sul percorso mediante gli *eventi di perdita*, quindi al verificarsi di timeout o alla ricezione di tre ACK duplicati dal destinatario. In presenza di congestione, i router sul percorso vanno in overflow, eliminando i datagrammi che non possono accedere al buffer.
+
+L'approccio del controllo di congestione TCP è quello dell'**incremento additivo e dell'incremento moltiplicativo (AIMD)** . Formalmente, quando non vengono rilevate perdite, la velocità di invio viene aumentata di 1 MSS ogni RTT, mentre ad ogni evento di perdita la velocità viene dimezzata.
+
+![[SOR/RETI/img/img80.png|center|500]]
+
+Vediamo i dettagli dell'algoritmo di controllo di congestione TCP, che presenta tre fasi principali:
+1. slow start
+2. congestion avoidance
+3. fast recovery
+Le prime 2 sono componenti obbligatorie di TCP, mentre l'ultima è suggerita, ma non obbligatoria.
+
+### Slow start
+Quando si stabilisce la connessione TCP, il valore di `cwnd` viene inizializzato ad 1 MSS, che comporta una velocità di invio iniziale di circa $MSS/RTT$. 
+
+>**Es.**
+>Se $MSS=500$ byte e $RTT=200$ ms, la velocità iniziale è di circa $20$ kbps.
+
+Dato che la banda disponibile alla connessione può essere molto più grande del valore $MSS/RTT$, il mittente TCP vuole scoprire questa larghezza di banda. Durante la fase iniziale, il valore di `cwnd` parte da 1 MSS, aumentando di 1 ogni volta che un segmento riceve ACK.
+
+Nel dettaglio: TCP invia il primo segmento nella rete. Se ottiene indietro un ACK prima della verifica di un evento di perdita, incrementa `cwnd` di 1 MSS ed invia due segmenti di dimensione massima. Se riceve entrambi gli ACK, aumenta di 1 MSS per ogni segmento inviato, portando la velocitò a 4 MSS e così via. Quindi la velocità parte lentamente, ma cresce in modo esponenziale durante la fase di slow start. 
+
+![[SOR/RETI/img/img79.png|center|300]]
+
+La crescita esponenziale quando dovrebbe terminare?
+1. Se c'è un evento di perdita indicato da un timeout, il mittente pone il valore di `cwnd` pari a 1 e inizia nuovamente il processo di slow start. Inoltre pone una variabile di stato `ssthresh = cwnd/2`, ovvero metà del valore che aveva la finestra di congestione quando è stata rilevata la congestione.
+2. Poiché il valore di `ssthresh` è impostato alla metà del valore di `cwnd` all'ultimo rilievo della connessione, è inutile continuare a raddoppiare il valore di `cwnd` quando raggiunge o sorpassa il valore di `ssthresh`. Quindi la *fase di slow start termina* quando il valore di `cwnd` è pari a quello di `ssthresh`, entrando in fase di **congestion avoidance**.
+
+### Congestion avoidance
+Quando TCP entra nello stato di congestion avoidance, il valore di `cwnd` è la metà di quello che aveva l'ultima volta in cui è stata rilevata la congestione, quindi invece di raddoppiare il suo valore, lo incrementa di 1 MSS ogni RTT. 
+
+Quando si verifica un timeout, l'algoritmo di congestion avoidance si comporta allo stesso modo di slow start: pone a 1 MSS il valore di `cwnd` e il valore di `ssthresh` viene impostato alla metà del valore di `cwnd` al momento del timeout ed entra nello stato di fast recovery.
+
+### Fast recovery
+Durante questa fase, il valore di `cwnd` è aumentato di 1 MSS per ogni ACK duplicato ricevuto relativamente al segmento perso che ha causato l'entrata di TCP nello stato di fast recovery. Quando *arriva un ACK per il segmento perso*, TCP entra nello stato di congestion avoidance dopo aver ridotto il valore di `cwnd`. Se si verifica un *timeout*, avviene una transizione dallo stato di fast recoevery a quello di slow start. La versione di TCP più recente, ovvero **TCP Reno** adotta la fase di fast recovery. 
+
+### TCP CUBIC
+L'approccio AIMD è una strategia che dimezza la velocità di invio al verificarsi di un evento di perdita e la aumenta piuttosto lentamente nel tempo. Ci chiediamo se esiste un modo migliore di AIMD per sondare la larghezza di banda utilizzabile. 
+
+Se lo stato del collegamento congestionato deove si è verificata la perdita non è cambiato, è meglio aumentare la velocità di invio rapidamente per avvicinarsi alla velocità pre-perdita per sondare meglio la larghezza di banda. Questa intuizione è al centro della versione **TCP CUBIC**, che differisce da TCP Reno pricipalmente nella fase di congestion avoidance.
+
+Sia $W_{max}$ la dimensione della `cwnd` nell'istante in cui viene rilevata la perdita. Sia $K$ l'istante futuro in cui la `cwnd` raggiungerà nuovamente il valore $W_{max}$. TCP CUBIC *incrementa maggiormente* la dimensione di `cwnd` quando è lontano dal valore $K$ (e quindi quando il valore di `cwnd` è lontano dal valore $W_{max}$), mentre *decrementa lentamente* in prossimità di $W_{max}$, e solo in questo momento esamina con maggior cautela la larghezza di banda.
+
+![[SOR/RETI/img/img81.png|center|500]]
+
+### Controllo di congestione basato su RTT
+TCP, sia CUBIC che classico, rilevano la congestione primariamente con la perdita di pacchetti. Tuttavia la congestione può essere rilevata in altri modi, ad esempio analizzando l'RTT. Infatti, se ho un router congestionato, inviando sempre più dati aumenterà anche l'RTT perché questi dati finiscono nella coda, aumentando il tempo di accodamento e di conseguenza aumentando l'RTT.
+
+Misurando l'RTT, posso indiciduare il valore $RTT_{min}$, ovvero il minimo delle misurazioni degli RTT, che si misura quando il percorso non è congestionato. Il thruoghput massimo varrà allora $t_{max}=\text{cwnd}/RTT_{min}$. 
+L'idea di TCP Vegas (basato su misura dell'RTT) è la seguente:
+- se il throughput effettivo ($\text{cwnd}/RTT$) è vicino al valore di $t_{max}$, allora non c'è congestione e posso aumentare la velocità di invio.
+- se il throughput effettivo è inferiore rispetto a $t_{max}$ allora il percorso è congestionato e viene ridotta la velocità di invio per far svuotare la coda ed evitare congestione.
+
+## ECN (Explicit Congestion Notification)
+ECN è la forma di controllo di congestione *assistita dalla rete*. 
+
+Vengono utilizzati due bit nel campo Type of Service nell'intestazione IP. Se un router è congestionato, imposta i bit e invia il pacchetto IP al destinatario, che a sua volta informa il mittente. Quando un destinatario riceve un indicazione di congestione ECN, informa il mittente TCP impostando il bit ECE all'interno di un segmento ACK ed il mittente reagisce dimezzando la finestra di congestione.
+
+![[v.png|center|500]]
+
+## TCP Fairness
+Consideriamo $K$ connessioni TCP, ciascuna con differente percorso end-to-end, ma che passano attraverso lo stesso collegamento con capacità trasmissiva di $R$ bps, che costituisce il bottleneck del sistema.
+
+Si dice che un meccanismo di controllo di congestione è equo se la velocità di trasmissione di ciascuna connessione è circa $R/K$.
+TCP è fair sotto le seguenti assunzioni: le connessioni TCP hanno tutte lo stesso RTT e il numero di sessioni in congestion avoidance è fisso.
+
+# Evoluzione delle funzionalità del livello di trasporto
+TCP e UDP sono i principali protocolli di trasporto Internet, ma nel tempo sono state sviluppate diverse varianti di TCP per scenari specifici.
+
+![[SOR/RETI/img/img82.png|center|500]]
+
+Se i servizi offerti da UDP e TCP non sono adatti ai servizi del livello di trasporto richiesto da un'applicazione, è possibile utilizzare un proprio protocollo. Un applicazione potrebbe necessitare di funzionalità specifiche fornite da TCP e necessità più servizi di quelli forniti da UDP.
+
+**QUIC (Quick UDP Internet Connections)** è un protocollo a livello di applicazione progettato per migliorare le prestazioni a livello di trasporto per HTTP. Le sue caratteristiche sono:
+- **orientato alla connessione e sicuro**: utilizza un handshake che incorpora la crittografia dei dati, riducendo il tempo necessario per stabilire una connessione crittografata tra due end point
+- **flussi**: consente il multiplexing di diversi flussi a livello di applicazione attraverso una singola connessione QUIC, consentendo di inviare e ricevere dati in parallelo
+- **trasferimento dati affidabile e con controllo di congestione**: gli algoritmo di controllo di congestione e di trasferimento dati sono simili a quelli usati da TCP
