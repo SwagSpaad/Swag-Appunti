@@ -147,7 +147,7 @@ http://www.someschool.edu/someDepartment/home.index
 ##### Tempi di risposta
 Facciamo un calcolo per stimare il tempo che intercorre tra la richiesta di un file HTML da parte del client e il momento in cui il file viene ricevuto. 
 
-**RTT (Round Trip Time)** è il tempo impiegato da un piccolo pacchetto per andare dal client al server e tornare indietro. Questo valore include i vari [[Introduzione ad Internet#Tipi di ritardo|ritardi]] già visti.
+**RTT (Round Trip Time)** è il tempo impiegato da un piccolo pacchetto per andare dal client al server e tornare indietro. Questo valore include i vari [[Capitolo 0 - Introduzione ad Internet#Tipi di ritardo|ritardi]] già visti.
 
 ![[SOR/RETI/img/img21.png|center|500]]
 
