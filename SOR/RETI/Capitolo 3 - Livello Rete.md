@@ -17,7 +17,7 @@ di inoltro. In questo esempio l' algoritmo di routing è implementato in ogni ro
 
 ## Piano di controllo: approccio SDN
 L' approccio menzionato sopra è quello più tradizionalmente utilizzzato dalle aziende produttrici di router, almeno fino a poco tempo fa.
-![[img_reti2.jpg | center | 800]]
+![[img_reti2.jpg|center|800]]
 In questa immagine viene mostrato un metodo alternativo che utilizza un controller remoto per calcolare e distribuire le tabelle di inoltro a tutti i router.
 Il controller remoto potrebbe essere implementato in un data center remoto e gestito da isp o da terze parti.
 Come comunicherebbero però i router e i controller remoti? Scambiandosi messaggi contententi le tabelle di inoltro e altre informazioni di instradamento. Questo metodo viene chiamato **SDN (Software-Defined Netwoking)** nel quale la rete è gestita da un software perchè il controller che calcola le tabelle di inoltro e interagisce con i router è implementato in software.

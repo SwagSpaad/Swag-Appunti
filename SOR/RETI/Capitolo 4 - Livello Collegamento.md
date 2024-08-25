@@ -63,3 +63,39 @@ Nonostante questo, lo schema può solamente rilevare (ma non correggere) qualsia
 ![[SOR/RETI/img/img108.png|center|500]]
 
 ## Checksum
+Nelle tecniche che utilizzano il checksum i $d$ bit di dati sono trattati come una sequenza di numeri interi da $k$ bit. 
+Il mittente suddivide i dati in sequenze da 16 bit, sommandole tra di loro in complemento a 1, invertendo tutti i bit del risultato finale, ottenendo la checksum, che invio al destinatario insieme al messaggio. Il destinatario esegue nuovamente la somma in complemento a 1, includendo anche la checksum. Se il risultato è costituito da 16 bit a 1, vuol dire che non sono stati rilevati errori, altrimenti si.
+
+Il metodo di checksum fornisce una protezione agli errori deboli rispetto alle tecniche CRC, utilizzate nel livello di collegamento. La motivazione per cui il checksum è utilizzato a livello di trasporto è a causa dell'implementazione lato software che richiede una tecnica di rilevazione di errore semplice e veloce per non intaccare le prestazioni. 
+Nello strato di collegamento, la rilevazione dell'errore è implementata direttamente nell'hardware, consentendo di effettuare rapidamente le operazioni per il controllo dell'errore.
+
+## CRC, Controllo a Ridondanza Ciclica
+Una tecnica largamente utilizzata è basata sui codici di controllo a ridondanza ciclica, anche detti codici polinomiali, in quanto la stringa dei bit può essere vista come un polinomio con coefficienti 0 e 1.
+
+Per capire il funzionamento dei codici CRC consideriamo $d$ bit che costituiscono i dati $D$ da trasmettere, e che sorgente e destinatario si siano accordate su una stringa di $r+1$ bit, detta **generatore**, che indichiamo con $G$, in cui *è necessario che il bit più significativo sia 1*.
+
+![[Pasted image 20240825160024.png|center|500]]
+
+Dato $D$, il mittente sceglie $r$ bit, detti $R$, e li concatena a $D$, ottenendo una stringa di lunghezza $d+r$ che sia divisibile esattamente per $G$ interpretato come numero. Il ricevente, per controllare la presenza di errori, effettua la divisione $(d+r)/G$ che *se ha resto diverso da 0 significa che si è verificato un errore*.
+
+I calcoli di CRC sono eseguiti senza riporti o prestiti nelle addizioni e sottrazioni, rendendole praticamente operazioni identiche e che entrambe equivalgono allo XOR sui bit. Le moltiplicazioni e le divisioni sono eseguite in base 2, ma anche qui, le addizioni e le sottrazioni non hanno riporti. 
+
+Dobbiamo capire come il trasmittente calcoli $R$, ricordando che dobbamo calcolarlo in modo che $D\times2^{r} \text{ XOR }R$ sia perferramente divisibile per $G$ (quindi deve essere G stesso o un suo multiplo) $$D\times2^{r} \text{ XOR }R=nG$$
+Se eseguiamo lo XOR di R con entrambi i membri dell'espressione sopra otteniamo $$\begin{align*}
+&D\times2^{r} \text{ XOR }R\text{ XOR }R=nG\text{ XOR }R=\\
+&=D\times2^{r}\text{ XOR }(R\text{ XOR }R)=nG\text{ XOR }R=\\
+&= D\times2^{r}\text{ XOR }0=nG\text{ XOR }R=\\
+&= D\times2^{r}=nG\text{ XOR }R\\
+\end{align*}$$
+L'ultima uguaglianza ci dice che se dividiamo $D\times 2^R$ per $G$, il valore del resto è precisamente $R$, quindi possiamo calcolare $R$ come $$R=\text{resto di }\bigg(\frac{D\times2^{r}}{G}\bigg)$$
+
+>**Es.**
+>Vediamo il calcolo per $D=101110$, $d=6$, $G=1001$, $r=3$. I bit trasmessi in questo caso sono $\underbrace{101110}_\text{D}\:\underbrace{011}_\text{R}$.
+>Il mittente calcola quindi $R$ prendendo il resto della divisione di $\frac{D\times2^{3}}{G}$, che vediamo in figura 
+>![[Pasted image 20240825170311.png|center|300]]
+
+CRC può rilevare errori a burst inferiori a $r+1$ bit, quindi saranno rilevati gli errori con un burst di lunghezza $\leq r$. 
+
+# Protocolli di accesso multiplo
+Esistono due tipi di collegamento di rete: 
+- il **collegamento punto punto**

@@ -11,14 +11,12 @@ Analizziamo come il servizio di trasporto da host ad host fornito dal livello di
 
 Nell'host destinatario, il livello di trasporto, che riceve i segmenti dal livello di rete, ha il compito di consegnare i dati al processo applicativo appropriato. Supponiamo che siamo al computer, abbiamo richiesto una pagina web (sessione HTTP) e contemporaneamente abbiamo in esecuzione una sessione FTP e due Telnet. Il livello di trasporto, quando riceve i dati dal livello di rete, deve indirizzali ai processi corretti. Vediamo come.
 
-Ricordiamo che un processo può gestire uno o più socket, attraverso cui entrano/escono dati, quindi il livello di trasporto nell'host ricevente trasferisce i dati ad un socket, che fa da intermediario. Ogni socket avrà un ID unico, il cui formato dipende dal fatto che si tratti di UDP o TCP.
+Ogni processo gestisce uno o più socket, ciascuno con un ID unico. Il formato dell'ID dipende dal protocollo usato (TCP o UDP). Il demultiplexing consiste nel dirigere i segmenti al socket corretto in base ai campi presenti nel segmento stesso.
 
-- Lato ricevente: il livello di trasporto esamina i campi del segmento per identificare il socket di ricezione, a cui dirige il segmento. Il compito di trasportare i segmenti verso il socket corretto è detto **demultiplexing**.
-- Lato mittente: il livello di trasporto raduna i frammenti di dati da diversi socket sull'host origine e li incapsula, creando dei segmenti da passare al livello di rete. L'operazione è detta **multiplexing**
+- - **Multiplexing:** Lato mittente, il livello di trasporto raccoglie i dati da vari socket e li incapsula in segmenti da inviare al livello di rete.
+- **Demultiplexing:** Lato ricevente, il livello di trasporto esamina i campi del segmento (es. numero di porta) e lo invia al socket appropriato.
 
-Vediamo nel dettagli come funziona il demultiplexing e il multiplexing. Il multiplexing a livello di trasporto richiede che i socket abbiano indentificatori unico e che ciascun segmento presenti dei campi che indicano il socket a cui va consegnato. I campi in questione sono il **numero di porta di origine e di destinazione**. I numeri di porta sono di 16 bit e vanno da 0 a 65535, quelli da 0 a 1023 sono *riservati* per i protocolli applicativi noti, come HTTP (80) FTP (21).
-
-Quindi per il demultiplexing, ogni socket deve avere un numero di porta e, quando l'host riceve il datagramma, esamina il numero di porta di destinazione e dirige il segmento verso il corrispondente socket. 
+Vediamo nel dettagli come funziona il demultiplexing e il multiplexing. Il multiplexing a livello di trasporto richiede che i socket abbiano indentificatori unico, il **numero di porta di origine e di destinazione** che indicano il socket a cui va consegnato il segmento. I numeri di porta sono di 16 bit e vanno da 0 a 65535, quelli da 0 a 1023 sono *riservati* per i protocolli applicativi noti, come HTTP (80) FTP (21).
 
 ## Demultiplexing senza connessione
 Quando si crea un socket, per specificare un numero di porta si utilizza il metodo `bind()`, altrimenti viene assegnato automaticamente un numero di porta tra 1024 e 65535: 
@@ -26,20 +24,19 @@ Quando si crea un socket, per specificare un numero di porta si utilizza il meto
 mySocket = socket(AF_INET, SOCK_DGRAM) #crea un socket UDP
 mySocket.bind(('',9157)) #assegnata la porta 9157
 ```
-Dopo la creazione, quando si crea il datagramma da inviare al socket, si deve specificare l'indirizzo IP ed il numero di porta del destinatario. Il segmento viene passato poi al livello di rete che effettua un tentativo best-effort di consegna all'host di destinazione. Quando il segmento arriva all'host destinatario, il livello di trasporto esamina il numero di porta di destinazione e invia il segmento UDP al socket relativo con quel numero di porta.
-Osserviamo che un socket UDP viene identificato da una coppia (IP, numero di porta) quindi, due segmenti UDP che hanno diversi indirizzi IP e/o differenti numeri di porta di origine, ma hanno lo stesso IP e lo stesso numero di porta di destinazione, vengono diretti allo stesso processo di destinazione tramite lo stesso socket.
+Dopo la creazione, quando si crea il datagramma da inviare al socket, si deve specificare l'indirizzo IP ed il numero di porta del destinatario. Il segmento viene passato poi al livello di rete che effettua un tentativo best-effort di consegna all'host di destinazione. Quando il segmento arriva all'host destinatario, il livello di trasporto esamina il numero di porta di destinazione e invia il segmento UDP al socket relativo con quel numero di porta. 
+In UDP, un socket è identificato da una coppia (indirizzo IP, numero di porta). Due segmenti con stesso IP e porta di destinazione, ma diversi IP o porte di origine, sono diretti allo stesso socket.
+
 
 ![[SOR/RETI/img/img35.png|center|500]]
 
 ## Demultiplexing orientato alla connessione
-Per comprendere il demultiplexing TCP, bisogna analizzare le differenze tra socket TCP e socket UDP.
 Il socket TCP è identificato da quattro parametri:
 - indirizzo IP di origine
 - numero di porta di origine
 - indirizzo IP destinatario
 - numero di porta destinatario
-Quando un segmento TCP giunge dalla rete in un host, questo utilizza i quattro valori per dirigere il segmento verso il socket corretto.
-A differenza di UDP, due segmenti TCP in arrivo, con IP di origine o numero di porta di origine diversi, vengono diretti a due socket differenti, anche se hanno indirizzo IP e porta di destinazione uguali. 
+A differenza di UDP, segmenti TCP con IP o porta di origine diversi vengono indirizzati a socket differenti, anche se condividono lo stesso IP e porta di destinazione.
 
 Consideriamo un esempio:
 - l'applicazione server TCP ha un socket di benvenuto che attende delle richieste di connessione dai client TCP sulla porta 12000
@@ -102,9 +99,8 @@ Il servizio offre l'astrazione (sinistra) di un canale affidabile in cui, durant
 
 ![[SOR/RETI/img/img40.png|center|500]]
 
-Il compito di un protocollo di trasferimento dati affidabile (destra) è l'implementazione dell'astrazione del servizio. Questo obiettivo è reso complicato dall'inaffidabilità del livello al di sotto del protocollo di trasferimento. Ad esempio TCP è un protocollo di trasferimento dati affidabile implementato appoggiandosi ad un livello di rete (IP) che non è affidabile end-to-end. La complessità di un protocollo di trasferimento dati affidabile dipende dalle caratteristiche del canale inaffidabile.
 
-La figura mostra le interfacce del protocollo di trasferimento affidabile. Il lato mittente del protocollo è invocato mediante una chiamata a `rdt_send()`, che trasferisce i dati da consegnare al livello superiore del destinatario.  La chiamata `udt_send()` è utilizzata da `rdt` per trasferire il pacchetto al ricevente tramite il canale inaffidabile. Quando un pacchetto raggiunge il lato ricevente, viene chiamata `rdt_rcv()` e quando il protocollo vuole consegnare i dati al livello superiori, chiama `deliver_data()`.
+Un protocollo di trasferimento dati affidabile, come TCP, garantisce la consegna corretta dei dati nonostante l'inaffidabilità del livello di rete sottostante (es. IP). Il lato mittente invia i dati con `rdt_send()`, che utilizza `udt_send()` per trasmettere il pacchetto tramite il canale inaffidabile. Il lato ricevente, alla ricezione di un pacchetto, invoca `rdt_rcv()` e, dopo aver verificato l'integrità dei dati, utilizza `deliver_data()` per consegnarli al livello superiore. L'obiettivo del protocollo è assicurare la consegna affidabile dei dati gestendo le inaffidabilità del canale.
 
 ## Costruzione protocollo di trasferimento dati affidabile
 ### rdt1.0, canale affidabile
@@ -293,15 +289,14 @@ Supponiamo che l'host A stia inviando un file di grandi dimensioni all'host B. E
 
 Vediamo nella tabella sotto, come il destinatario genera gli ACK di TCP
 
-
 | Evento                                                                                                           | Azione Mittente                                                                                                                    |
 | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Arrivo di segmento con numero di sequenza atteso. Tutti i dati fino al numero di sequenza sono stati riscontrati | ACK ritardato. Attende 500ms per l'arrivo di un altro segmento. Se non arriva viene inviato l'ACK                                  |
 | Arrivo di un segmento con numero di sequenza atteso. Un segmento ordinato è in attesa dell'ACK                   | Invia immediatamente un singolo ACK cumulativo, riscontrando entrambi i segmenti                                                   |
 | Arrivo non ordinato di segmento con numero di sequenza superiore a quello atteso. C'è un buco.                   | Invia immediatamente ACK duplicato, indicando il numero di sequenza del prossimo byte atteso, che è l'estremità inferiore del buco |
 | Arriva un segmento che colma parzialmente o completamente il buco nei dati ricevuti                              | Invia immediatamente un ACK, ammesso che il segmento cominci all'estremità del buco                                                |
-![[Pasted image 20240822120721.png|center|500]]
-![[Pasted image 20240822120740.png|center|300]]
+![[SOR/RETI/img/img66.png|center|500]]
+![[SOR/RETI/img/img67.png|center|300]]
 
 ### Ritrasmissione rapida
 Un problema legato alle ritrasmissioni è che il periodo di timeout può rivelarsi molto lungo. Supponiamo che il mittente invii tanti segmenti in pipeline e che venga perso il secondo segmento (c'è un buco). Da questo momento il destinatario risponderà con ACK relativi al primo segmento ricevuto. Il mittente alla ricezione di questi **3 ACK duplicati**, capisce che c'è un buco e viene ritrasmesso il segmento non riscontrato col più piccolo numero di sequenza.
