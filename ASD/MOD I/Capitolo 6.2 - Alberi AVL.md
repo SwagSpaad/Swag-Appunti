@@ -111,7 +111,7 @@ Questo caso è più complesso e richiede l'applicazione di una doppia rotazione.
 
 - L'altezza di $T(v)=h+3$, l'altezza di $T(z)=h+2$, l'altezza di $T_1=h$, l'altezza di $T_4=h$ e l'altezza di $T(w)=h+1\implies\beta(v)=2$ e $\beta(z)=-1$ cioè lo sbilanciamento è provocato dal sottoalbero destro di z.
 
-![[img113.png|center|300]]
+![[ASD/MOD I/img/img113.png|center|300]]
 
 ![[ASD/MOD I/img/img114.png|center|700]]
 
