@@ -1,4 +1,5 @@
-1zIl livello di trasporto ha il compito di fornire una **comunicazione logica** direttamente ai processi applicativi in esecuzione sui diversi host.
+
+Il livello di trasporto ha il compito di fornire una **comunicazione logica** direttamente ai processi applicativi in esecuzione sui diversi host.
 Con comunicazione logica intendiamo che, dal punto di vista dell'applicazione, tutto funzioni come se gli host che eseguono i processi fossero direttamente connessi tra di loro. 
 
 I protocolli di trasporto sono eseguiti nei sistemi periferici:
@@ -13,7 +14,7 @@ Nell'host destinatario, il livello di trasporto, che riceve i segmenti dal livel
 
 Ogni processo gestisce uno o più socket, ciascuno con un ID unico. Il formato dell'ID dipende dal protocollo usato (TCP o UDP). Il demultiplexing consiste nel dirigere i segmenti al socket corretto in base ai campi presenti nel segmento stesso.
 
-- - **Multiplexing:** Lato mittente, il livello di trasporto raccoglie i dati da vari socket e li incapsula in segmenti da inviare al livello di rete.
+- **Multiplexing:** Lato mittente, il livello di trasporto raccoglie i dati da vari socket e li incapsula in segmenti da inviare al livello di rete.
 - **Demultiplexing:** Lato ricevente, il livello di trasporto esamina i campi del segmento (es. numero di porta) e lo invia al socket appropriato.
 
 Vediamo nel dettagli come funziona il demultiplexing e il multiplexing. Il multiplexing a livello di trasporto richiede che i socket abbiano indentificatori unico, il **numero di porta di origine e di destinazione** che indicano il socket a cui va consegnato il segmento. I numeri di porta sono di 16 bit e vanno da 0 a 65535, quelli da 0 a 1023 sono *riservati* per i protocolli applicativi noti, come HTTP (80) FTP (21).

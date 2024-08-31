@@ -200,3 +200,106 @@ Se il nodo che riceve il token non ha pacchetti da inviare, lo inoltra al nodo s
 Anche questo protocollo non è privo di problemi:
 - **singolo punto di rottura**
 
+# LAN 
+Le **Local Area Network** sono delle reti che coprono un'area limitata (abitazione, dipartimento ecc.). Le tecnologie principali, che approfondiremo in seguito, sono *Ethernet e Wireless*.
+
+## Indirizzi a livello di collegamento
+Host e router, oltre ad un indirizzo IP utile a livello di rete, hanno anche indirizzi a livello di collegamento. Nello specifico sono le interfacce dei nodi a possedere degli indirizzi, detti **indirizzi MAC**.
+
+L'indirizzo MAC è lungo 6 byte ($2^{48}$ indirizzi possibili), espressi in esadecimale. 
+
+>**Oss.**
+>Non esistono due schede di rete con stesso indirizzo MAC. Questo è  possibile perché la IEEE sorintende alla gestione degli indirizzi MAC, garantendo questa proprietà.
+
+Gli indirizzi MAC di una scheda di rete non cambia mai, indipendentemente dal luogo in cui il computer è utilizzato (a differenza degli indirizzi IP)
+
+Quando una scheda di rete vuole spedire un frame, inserisce l'indirizzo MAC di destinazione e lo immette nella LAN. A volte gli switch possono effettuare il broadcast di un frame in ingresso, inviandolo a tutte le interfacce in uscita, quindi una scheda di rete può ricevere un frame non indirizzato a lei. Ogni scheda di rete controlla se l'indirizzo MAC di destinazione corrisponde al proprio. In caso affermativo passa il frame a livello superiore, altrimenti lo scarta.
+
+Se la volontà della scheda di rete è quella di inviare il frame in modalità broadcost, inserisce un **indirizzo MAC broadcast** (tutti i 48 bit a 1, quindi FF-FF-FF-FF-FF-FF).
+
+## Protocollo risoluzione degli indirizzi
+La domanda che ci poniamo è quella di come determinare l'indirizzo MAC di un interfaccia conoscendo il suo indirizzo IP. Questo è il compito del **protocollo di risoluzione degli indirizzi (ARP)**. 
+
+Ogni nodo salva in RAM una **tabella ARP** in cui ogni record contiene la mappatura IP - MAC e un campo TTL, che indica quando eliminare la voce dalla tabella. 
+
+Supponiamo che il nodo A deve scoprire l'indirizzo MAC di B, che non è presente nella tabella ARP di A. In questo caso il nodo A utilizza ARP per trovare la mappatura, spedendo un **pacchetto ARP** che tra i suoi vari campi comprende anche quelli degli indirizzi IP e MAC di chi spedisce e riceve, inviandolo in broadcast specificando solamente l'indirzzo IP di B. Ogni nodo riceve la richiesta ARP, ma solo quello che ha l'IP corrispondente risponde ad A inviando un frame di risposta col suo indirizzo MAC, che provvederà ad inserire la mappatura nella propria tabella ARP. 
+
+### Inviare un datagramma ad un nodo esterno alla sottorete
+
+![[SOR/RETI/img/img115.png|center|500]]
+
+In figura è illustrata una rete costituita da due sottoreti interconnesse da un router. Osserviamo che R possiede due indirizzi IP sulle sue due interfacce, il primo (111.111.111.110) relativo alla prima sottorete (quella di A) mentre il secondo relativo alla seconda sottorete (quella di B). 
+
+Supponiamo che A vuole inviare un datagramma a B, passando per R. Supponiamo inoltre che A conosca l'indirizzo IP di B e gli indirizzi IP e MAC dell'interfaccia di R nella propria sottorete. 
+Per l'invio A crea un datagramma IP con sorgente A e destinazione B, che incapsula in un frame a livello di collegamento che avrà come indirizzo MAC di destinazione, *l'indirizzo MAC dell'interfaccia di R della propria sottorete*, questo perché A, sapendo di appartenere ad una sottorete /24, confronta i 24 bit più significativi del proprio indirizzo con quelli dell'IP di B, capendo che B si trova in una diversa sottorete.
+Quando il frame viene ricevuto da R, lo passa a livello di rete e capisce di non essere il destinatario dall'indirizzo IP, determina quindi l'interfaccia di uscita e passa il datagramma a livello di collegamento. R crea quindi il frame contenente il nuovo indirizzo MAC di destinazione, quello di B, inoltrando il frame a quest'ultimo. 
+
+## Ethernet
+Ethernet è la tecnologia più diffusa per le reti LAN cablate. Nel corso del tempo ci sono state diverse topologie per l'utilizzo di Ethernet: 
+- **struttura a bus**: un cavo coassiale che passava per tutte le schede di rete (bus). Se si rompeva il cavo, tutta la rete crollava
+- **topologia a stella con hub**: tutti gli host erano interconnessi da un hub, un dispositivo che rigenera il segnale in entrata nell'interfaccia e lo inoltra a tutte le interfacce diverse dall'interfaccia di entrata. Se un hub riceve dei frame da due diverse interfacce contemporaneamente si verifica una collisione
+- **topologia a stella con switch**: l'hub centrale viene sostituito da uno switch, che è privo di collisione.
+
+### Struttura dei frame internet
+L'interfaccia trasmittente incapsula il datagramma IP in un frame Ethernet e lo passa a livello fisico. 
+
+![[SOR/RETI/img/img116.png|center|500]]
+
+- **Preambolo**: 8 byte con valori fissi, i primi 7 hanno valore 10101010 mentre l'ottavo ha valore 10101011. I primi 7 byte servono per sincronizzare il clock dell'adattatore ricevente con quello del mittente
+- **Indirizzo di destinazione/sorgente**: contiene l'indirizzo MAC della scheda del destinatario/mittente
+- **Tipo**: specifica il protocollo dello strato superiore a cui consegnare il campo dati
+- **Dati**: contiene il datagramma IP. Ha una lunghezza minima di 46 byte.
+- **CRC**: consente alla scheda di rete ricevente di rilevare errori nel frame
+
+Ethernet è un protocollo **senza connessione**, ciò vuol dire che quando una scheda di rete vuole inviare un datagramma ad un host nella rete, non fa altro che incapsularlo in un frame Ethernet e immetterlo nella LAN, *senza handashake con la NIC destinataria*. Inoltre Ethernet non fornisce un **servizio affidabile a livello di rete**, infatti le schede riceventi non inviano ACK o NAK alle schede mittenti; i dati vengono recuperati solo se si utilizza un protocollo trasferimento dati affidabile a livello superiore (es. TCP). 
+
+## Switch a livello di collegamento
+Lo switch è un **commutatore di pacchetti a livello di collegamento** ed il suo ruolo è quello di ricevere i frame in ingresso e inoltrarli sui collegamenti in uscita. Inoltre uno switch è invisibile agli host, infatti ogni nodo indirizza un frame ad un altro nodo invece che indirizzarlo allo switch. 
+
+Lo switch ha le funzionalità di **filtraggio e inoltro**. La prima è quella che *determina se un frame debba essere inoltrato su un'interfaccia o scartato*, mentre la seconda consiste nell'*individuare l'interfaccia verso la quale il frame deve essere diretto*.
+Queste operazioni sono eseguite mediante una tabella di commutazione composta dalle seguenti voci:
+- indirizzo MAC del nodo
+- l'interfaccia dello switch rivolta verso il nodo
+- time stamp
+
+![[SOR/RETI/img/img117.png|center|500]]
+
+Questa tabella viene costruita automaticamente in **autoapprendimento**, vediamo come.
+
+Quando uno switch riceve un frame, registra l'indirizzo MAC e il numero di collegamento del mittente e cerca nella tabella l'interfaccia di uscita tramite l'indirizzo MAC di destinazione:
+- se la destinazione è sull'interfaccia dalla quale è arrivato il frame, questo viene scartato
+- altrimenti il frame viene inoltrato sull'interfaccia indicata nella tabella
+Se, invece, la voce non viene trovata, allora lo switch esegue il **flood**, ovvero inoltra il frame a tutte le interfacce eccetto quella da cui è arrivato.
+
+### Confronto tra switch e router
+**Lavorano entrambi in store-and-forward**:
+- router: esamino l'intestazione a livello di rete
+- switch: esaminano l'intestazione a livello di collegamento
+
+**Entrambi hanno delle tabelle di inoltro**:
+- router: calcolano le tabelle mediante algoritmi di instradamento ed utilizzano gli indirizzi IP
+- switch: costruiscono le tabelle con l'autoapprendimento ed il flooding, utilizzando gli indirizzi MAC
+
+**Topologia della rete**:
+- router: nonostante la presenza di cicli nella topologia, gli algoritmi di instradamento possono trovare percorsi senza cicli. Il decremento del TTL permette di scartare pacchetti incastrati a causa di errori di configurazione
+- switch: devono essere connessi ad albero per evitare che il traffico broadcast resti in circolazione per sempre
+
+**Isolamento del traffico**:
+- router: inoltrano i pacchetti in accordo ai percorsi determinati dalla funzione di instradamento
+- switch: inviano in broadcast i frame con indirizzo MAC sconosciuto, con un effetto a valanga in caso di molti switch interconnessi.
+
+## VLAN
+Una LAN tradizionale presenta vari inconvenienti tra cui: 
+- **mancanza di isolamento del traffico**: in una LAN il traffico broadcast deve attraversare tutta la rete, anche quando non è necessario e degradando le prestazioni e causando problemi dal punto di vista della privacy
+- **gestione degli utenti**: supponiamo di avere due LAN (una nel dipartimento di Informatica e una in quella di Ingegeneria). Se un utente vuole spostarsi da Informatica e Ingegneria, si connette fisicamente allo switch di Ingegneria, ma vuole rimanere comunque logicamente connesso ad Informatica.
+Questi vari problemi sono risolti dagli switch che supportano l'utilizzo di **Virtual Local Area Network (VLAN)**. Gli host di una VLAN comunicano tra di loro come se fossero gli unici connessi allo switch. 
+In una VLAN basata sulle porte, le interfacce dello switch vengono suddivise in gruppi, ognuno dei quali costituisce una VLAN. In foto vediamo uno swtich con 16 porte: le porte 2-8 appartengono alla VLAN di ingegneria mentre quelle 9-15 appartengono alla VLAN di informatica
+
+![[SOR/RETI/img/img118.png|center|500]]
+
+Questo, di fatto, permette ad un singolo switch di operare come più switch virtuali, infatti i frame da/verso le porte 2-8 possono raggiungere solo quelle.
+
+Se le VLAN sono implementate su più switch è necessario l'utilizzo di una porta **trunk** per far comunicare le VLAN. 
+
+![[SOR/RETI/img/img119.png|center|500]]
+

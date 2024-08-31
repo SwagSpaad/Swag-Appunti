@@ -125,9 +125,9 @@ L'inserimento avviene in 3 passi:
 2. Si ricalcolano i fattori di bilanciamento che sono mutati in seguito all'inserimento. Sia r la radice dell'albero AVL. Osserviamo che solo i fattori di bilanciamento dei nodi nel cammino da r ad u possono cambiare.
 3. Se nel cammino da r ad u appare un fattore di bilanciamento pari a $\pm 2$, esegui una rotazione opportuna su v.
 
-![[img115.png|center|400]]
-![[img116.png|center|400]]
-![[img117.png|center|400]]
+![[ASD/MOD I/img/img115.png|center|400]]
+![[ASD/MOD I/img/img116.png|center|400]]
+![[ASD/MOD I/img/img117.png|center|400]]
 
 #### Delete(elem e)
 
@@ -140,8 +140,8 @@ Anche la cancellazione avviene in 3 passi:
 >[!info]- Osservazione
 >Potrebbero essere necessarie $O(log(n))$ rotazioni, infatti, eventuali diminuzioni di altezza indotte dalle rotazioni, possono propagare lo sbilanciamento verso l'alto nell'albero (l'altezza del sottoalbero in cui è avvenuta la rotazione **diminuisce di 1** rispetto a quella che aveva **prima della cancellazione**)
 
-![[img118.png|center|400]]
-![[img119.png|center|400]]
+![[ASD/MOD I/img/img118.png|center|400]]
+![[ASD/MOD I/img/img119.png|center|400]]
 ![[img120.png|center|400]]
 ![[img121.png|center|400]]
 
