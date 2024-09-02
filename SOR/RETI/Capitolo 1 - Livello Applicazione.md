@@ -17,11 +17,11 @@ In questa architettura il **server** è sempre attivo e risponde alle richieste 
 >I client non comunicano direttamente tra di loro.
 
 Il server dispone di un indirizzo IP fisso e noto.
-In un'applicazione client-server un singolo host server non è in grado di rispondere a tutte le richieste dei suoi client, per questo motivo in queste applicazioni sono utilizzati i data center, che ospitano molti host server.
+In un'applicazione client-server un singolo host server non è in grado di rispondere a tutte le richieste dei client, per questo motivo sono utilizzati i data center, che ospitano più host server.
 
 ![[SOR/RETI/img/img18.png|center|500]]
 # Peer-to-peer
-In questa architettura non è necessario l'utilizzo di un server sempre attivo e per questo si sfrutta la *comunicazione arbitraria tra coppie di host*, chiamati **peer**. 
+In questa architettura non è necessario l'utilizzo di un server sempre attivo e si sfrutta la *comunicazione arbitraria tra coppie di host*, chiamati **peer**. 
 Il punto di forza di questa architettura è la **scalabilità**, infatti ogni peer, sebbene generi carico di lavoro richiedendo file, aggiunge anche capacità di servizio al sistema, rispondendo alle richieste di altri peer. 
 
 ![[SOR/RETI/img/img19.png|center|500]]
@@ -54,10 +54,9 @@ Dall'immagine vediamo come, il socket è l'interfaccia tra il livello di applica
 
 ## Indirizzamento
 Per ricevere messaggi, un processo necessita di un identificatore. 
-In internet, gli host sono identificati attraverso gli indirizzi IP, un numero a 32 bit. Oltre a conoscere l'indirizzo dell'host a cui è destinato il messaggio, è necessario identificare il *processo destinatario*, ovvero lil socket che deve ricevere il messaggio. Questa è un'informazione *necessaria* in quanto sullo stesso host potrebbero essere in esecuzione più processi. Il *numero di porta di destinazione* risolve questo problema, infatti alle applicazioni più note sono assegnati numeri di porta specifici, come la porta 80 per i web server. 
-
+In internet, gli host sono identificati attraverso gli indirizzi IP, un numero a 32 bit ed il **numero di porta di destinazione** che identifica il socket a cui consegnare il messaggio.
 ## Servizi di trasporto per le applicazioni
-Il socket è l'interfaccia tra un processo applicativo e il protocollo a livello di trasporto. L'applicazione lato mittente invia i messaggi tramite il socket, mentre dal lato del ricevente, il protocollo a livello di trasporto consegna i messaggi al socket del processo ricevente. 
+L'applicazione lato mittente invia i messaggi tramite il socket, mentre dal lato del ricevente, il protocollo a livello di trasporto consegna i messaggi al socket del processo ricevente. 
 
 I protocolli di trasporto sono molteplici e nella progettazione di un'applicazione bisogna sceglierne uno, valutando i servizi che i protocolli offrono e scegliendo quelli che fanno al caso proprio. 
 
@@ -116,13 +115,11 @@ Tratteremo per prima cosa il web, in quanto il suo protocollo a livello di appli
 Una pagina web è costituita da oggetti indirizzabili tramite un URL (file HTML, immagine JPEG, uno script JS ecc.), ognuno dei quali è memorizzato in un web server differente. La maggioranza delle pagine web consiste di un file HTML principale e di diversi oggetti referenziati da esso.
 
 ## HTTP
-**HTTP** è il protocollo a livello di applicazione del web e ne costituisce il cuore. Questo protocollo è implementato in due programmi, client e server, in esecuzione su sistemi perifierici diversi che comunicano tra loro scambiandosi messaggi HTTP. 
+**HTTP** è il protocollo a livello di applicazione del web e ne costituisce il cuore consentendo ai client di richiedere pagine ai server tramite lo scambio di messaggi HTTP. 
 
-Il protocollo definisce il modo in cui i client web richiedono le pagine ai web server e come questi ultimi le trasferiscono ai client.
 Quando un utente richiede una pagina web, il browser invia al server dei *messaggi di richiesta HTTP* per gli oggetti della pagina, il server riceve la richiesta e risponde con dei *messaggi di risposta HTTP*.
 
-HTTP utilizza TCP come protocollo di trasporto. Il client HTTP per prima cosa inizializza una connessione TCP col server creando i socket con cui processi client e server accedono a TCP e tramite cui inviano e ricevono messaggi HTTP.
-
+HTTP utilizza TCP come protocollo di trasporto. 
 Il server che invia i file richiesti al client non memorizza alcuna informazione di stato riguardo il client, infatti HTTP è un protocollo *stateless*, ovvero non mantiene informazioni sulle richieste del client, quindi, in caso di un'ulteriore richiesta dello stesso oggetto da parte dello stesso client, anche nel giro di pochi secondi, il server invierà nuovamente l'oggetto richiesto.
 
 ### Connessioni HTTP
@@ -226,7 +223,7 @@ I codici più comuni sono:
 - **505 HTTP Version Not Supported**: il server non ha la versione di protocollo HTTP richiesta
 
 ### Mantenere stato utente/server con i cookie
-Come abbiamo visto HTTP è stateless. Tuttavia è utile che i server possano autenticare gli utenti, ad esempio per limitare l'accessl da parte di essi o per fornire contenuti in funzione della loro identità. Per questo scopo sono utilizzati i **cookie**, che consentono ai server di tenere traccia degli utenti.
+Come abbiamo visto HTTP è stateless. Tuttavia è utile che i server possano autenticare gli utenti, ad esempio per limitare l'accesso da parte di essi o per fornire contenuti in funzione della loro identità. Per questo scopo sono utilizzati i **cookie**, che consentono ai server di tenere traccia degli utenti.
 
 La tecnologia dei cookie presenta 4 componenti:
 - riga di intestazione nel messaggio di risposta HTTP
@@ -248,13 +245,11 @@ I cookie sono utilizzati con vari scopi:
 I cookie sono spesso oggetto di controversie legate alla violazione della privacy, in quanto mediante una combinazione di informazioni fornite dall'utente e l'utilizzo di cookie, un sito web può imparare molto sull'utente.
 
 ### Web Cache
-Una *web cache* (o *proxy server*) è un entità di rete che soddisfa richieste HTTP al posto del web server effettivo. Essa ha una propria memoria su disco locale in cui conserva copie di oggetti richiesti recentemente.
+Una *web cache* (o *proxy server*) memorizza copie di oggetti richiesti recentemente per ridurre i tempi di risposta.
 Il browser può essere configurato in modo che tutte le richieste HTTP vengano dirette al proxy server: 
 - se l'oggetto è nella cache, allora la cache fornisce l'oggetto al client
 - altirimenti la cache richiede l'oggetto al server d'origine, lo memorizza nella cache e lo invia al client
 Osserviamo che la cache opera sia da client (quando richiede al server) che da server (quando fornisce al client d'origine).
-
-Questa tecnica è utilizzata per ridurre i tempi di risposta alle richieste dei client, in quanto la cache è più vicina ai client e perché riduce il traffico sul collegamento di accesso ad internet.
 
 Per comprendere i benefici del web caching consideriamo l'esempio nell'immagine sottostante
 
