@@ -483,31 +483,24 @@ Le decisioni principali che Alice deve prendere sono:
 1. **Quali chunk richiedere:** Alice adotta la strategia **rarest first**, richiedendo per primi i chunk più rari tra quelli mancanti, ovvero i chunk con il minor numero di copie ripetute tra i peer vicini e richiederli per primi, in modo da ridistribuirli più velocemente.
 2. **A quali vicini inviare chunk:** BitTorrent usa un algoritmo di scambio **tit-for-tat**. Alice assegna priorità ai peer che le inviano dati alla velocità più alta, selezionando quattro **peer unchoked** a cui inviare chunk. La velocità viene ricalcolata ogni 10 secondi e ogni 30 secondi viene scelto un nuovo vicino **optimistically unchoked** per testare nuove connessioni. Se entrambi i peer trovano vantaggioso lo scambio, continueranno a inviarsi dati fino a trovare partner migliori.
 
-# Streaming video
-Lo streaming video costituisce circa l'80% del traffico Internet. Nei video registrati, il contenuto è una sequenza di immagini mostrate a 24 o 30 fotogrammi al secondo. Ogni immagine è rappresentata da un array di pixel codificati per luminanza e crominanza. I video possono essere compressi, bilanciando qualità video e bitrate: un bitrate più alto corrisponde a una qualità migliore.
+### Streaming Video
 
-## Streaming HTTP e DASH
-Nello streaming HTTP, il video è memorizzato su un server come file con un URL. Quando un utente avvia la riproduzione, il client stabilisce una connessione TCP e invia una richiesta GET. Il server invia il video, che viene memorizzato in un buffer sul lato client. Quando il buffer supera una certa soglia, il video inizia la riproduzione.
+Lo streaming video rappresenta circa l'80% del traffico Internet. Nei video registrati, ogni fotogramma è una sequenza di immagini codificate in array di pixel, con luminanza e crominanza. I video possono essere compressi, bilanciando qualità e bitrate: un bitrate più alto garantisce una qualità migliore.
 
-Lo svantaggio dello streaming HTTP tradizionale è che tutti i client ricevono la stessa versione del video, indipendentemente dalla larghezza di banda disponibile. Per risolvere questo problema, è stato introdotto lo **streaming dinamico adattivo su HTTP (DASH)**.
-In DASH, i video sono codificati in più versioni con diversi bitrate e qualità. Il client seleziona automaticamente i chunk appropriati in base alla larghezza di banda disponibile. I video sono memorizzati su server HTTP come chunk, ciascuno con un URL differente, e un **manifest file** elenca gli URL e i bitrate delle varie versioni.
-Quando un client richiede un video, scarica prima il manifest file per conoscere le opzioni disponibili, poi misura la banda e seleziona il chunk successivo di conseguenza.
+#### Streaming HTTP e DASH
+- **Streaming HTTP tradizionale**: Il video è memorizzato su un server e trasmesso ai client tramite una connessione TCP. I video sono bufferizzati sul lato client prima della riproduzione.
+- **DASH (Dynamic Adaptive Streaming over HTTP)**: I video sono disponibili in diverse versioni con bitrate e qualità variabili. Il client seleziona dinamicamente i chunk più adatti in base alla larghezza di banda disponibile, migliorando l'esperienza di visualizzazione.
 
-## Reti per la distribuzione di contenuti
-L'approccio più diretto per la distribuzione di video a milioni di utenti è quello di costruire un enorme data center, memorizzarne i video all'interno e inviarli in streaming. Questo però porta parecchi problemi: 
-- se il client è lontano dal ldata center, i pacchetti devono percorrere un lungo tragitto prima di arrivare al client. Inoltre se uno dei collegamenti ha un throughput basso, anche quello totale end-to-end ne risente, causando all'utente dei blocchi nel video. 
-- un singolo data center rappresenta un singolo punto di rottura. Se il data center dovesse rompersi, i video non potrebbero essere più distribuiti.
-Per superare queste problematiche, le aziende di video streming utilizzano le **CDN (reti di distribuzione di contenuti)**, chememorizzano più copie dello stesso video in più siti geograficamente distribuiti.
-Le CDN adottano due politiche di dislocazione dei server:
-- **enter deep**: installare server della CDN all'interno delle reti di accesso con l'obiettivo di essere vicino agli utenti finali in modo da migliorare il throughput e il ritardo percepito.
-- **bring home**: costruire cluster in pochi punti chiave ed interconnetterli tramite una rete privata ad alta velocità. I cluster sono posti negli IXP invece che negli ISP di accesso
+#### Reti di Distribuzione di Contenuti (CDN)
+Per distribuire video a milioni di utenti, si utilizzano le **CDN**, che memorizzano copie dei video in server geograficamente distribuiti. Esistono due strategie di dislocazione:
+- **Enter Deep**: Server CDN collocati vicino agli utenti finali nelle reti di accesso per ridurre ritardi e migliorare il throughput.
+- **Bring Home**: Cluster di server in pochi punti strategici, interconnessi tramite una rete ad alta velocità, solitamente posizionati negli IXP.
 
-### Funzionamento di una CDN
-Supponiamo che un fornitore di contenuti, NetCinema, utilizzi una CDN di terze parti, KingCDN, per distribuire i video. Supponiamo che il nostro utente richieda il video con l'URL http://video.netcinema.com/6Y7B23V.
-Vengono copiuti 6 passi:
-- l'utente visita la pagina web di NetCinema
-- l'utente seleziona il link http://video.netcinema.com/6Y7B23V ed il suo host invia una query DNS a vide.netcinema.com
-- il DNS server locale, invia la query a un DNS server autoritativo per NetCinema, che osserva la stringa video nel nome dell'host. Il DNS server autoritativo per NetCinema, per passare l'interrogazione DNS a KingCDN, invece di restituire un IP, restituisce al local DNS il nome di un host nel dominio di KingCDN, per esempio a1105.kingcdn.com
-- il sistema DNS di KingCDN fornisce l'IP del nodo CDN più vicino all'utente. 
-- Il DNS locale inoltra l'IP del nodo CDN che fornirà il contenuto all'host dell'utente
-- Una volta ricevuto l'IP, il client stabilisce una connessione TCP col server a quell'indirizzo IP, inviandogli una richiesta GET HTTP per il video. Nel caso venga impiegato DASH, il server invierà per primo il manifest file, e il client selezionerà in modo dinamico i blocchi dalle differenti versioni
+#### Funzionamento di una CDN
+Quando un utente richiede un video da un fornitore che utilizza una CDN, come NetCinema con KingCDN, il processo include:
+1. L'utente visita il sito web e seleziona un video.
+2. Il client invia una query DNS per l'URL del video.
+3. Il DNS server locale invia la query al DNS autoritativo di NetCinema, che lo reindirizza al DNS di KingCDN.
+4. KingCDN fornisce l'IP del nodo CDN più vicino all'utente.
+5. Il DNS locale invia l'IP al client.
+6. Il client stabilisce una connessione TCP al nodo CDN e richiede il video, ricevendo eventualmente il manifest file per lo streaming dinamico con DASH.
