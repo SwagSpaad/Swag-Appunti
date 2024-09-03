@@ -321,54 +321,44 @@ Anche le richieste HTTP sono suddivise in frame ed intervallate.
 HTTP/2 su una singola connessione TCP significa che il recupero dalla perdita di pacchetti blocca tutte le trasmissioni di oggetti e noin c'è nessuna sicurezza su una connessione TCP semplice. HTTP/3 aggiunge sicurezza, controllo degli errori e congestione su UDP
 
 # Posta elettronica in Internet
-La posta elettronica è stata da sempre l'applicazione più diffusa in Internet. 
+La posta elettronica è una delle applicazioni più diffuse in Internet. 
 
 ![[SOR/RETI/img/img26.png|center|500]]
 
-In figura possiamo vedere una rappresentazione del sistema postale di Internet. Si individuano tre componenti principali: 
-- **user agent** (gmail, outlook ecc.): permettono all'utente di leggere, rispondere, inoltrare, salvare e comporre i messaggi, 
-- **mail server**: costituisce la casella di posta personale di ogni utente, che gestisce e contiene i messaggi a lui inviati. Se il server non può consegnare un messaggio, lo trattiene in una *coda dei messaggi* e cerca di trasferirlo in un secondo momento
-- **protocollo SMTP**
+In figura vediamo i componenti principali di un sistema postale in Internet: 
+- **User Agent**: Applicazioni come Gmail o Outlook che permettono agli utenti di leggere, rispondere, inoltrare, salvare e comporre messaggi.
+- **Mail Server**: Gestisce la casella di posta personale di ogni utente e conserva i messaggi inviati e ricevuti. Se un messaggio non può essere consegnato immediatamente, viene messo in una coda per un tentativo successivo.
+- **Protocollo SMTP**: Protocollo a livello applicativo usato per l'invio di email.
 ## SMTP
-SMTP è il protocollo a livello applicativo per la posta elettronica. Utilizza TCP per il trasferimento affidabile da client a server sulla porta 25.
-Nonostante sia ancora utilizzato come protocollo per l'invio di mail su Internet, presenta delle caratteristiche abbastanza vecchie, come l'utilizzo di testo ASCII a 7 bit per il corpo dei messaggi, in passato molto utile per la bassa velocità di trasferimento, ma oggi piuttosto penalizzante in quanto file multimediali vanno codificati in ASCII.
+SMTP (Simple Mail Transfer Protocol) utilizza TCP per trasferire in modo affidabile i messaggi dal client al server sulla porta 25. Anche se ancora ampiamente utilizzato, SMTP è piuttosto datato, utilizzando testo ASCII a 7 bit per il corpo dei messaggi, che richiede la codifica di file multimediali.
 
-Vediamo come SMTP opera. Supponiamo che un utente mittente (Alice) voglia inviare ad un destinatario (Bob) una mail:
-- Alice usa il suo user agent di posta elettronica, fornisce l'indirizzo mail di Bob, scrive il messaggio e chiede allo user agent di inviarlo
-- Lo user agenti di Alice invia il messaggio al server mail di riferimento e il messaggio viene inserito in una coda dei messaggi
-- Il lato client di SMTP, eseguito sul server di Alice, vede il messaggio in coda ed apre una connessione TCP verso il server SMTP di Bob
-- Dopo l'handshaking SMTP, il client SMTP invia il messaggio di Alice sulla connessione TCP
-- Il lato server di SMTP, il mail server di Bob, riceve il messaggio e lo colloca nella mailbox di Bob
-- Bob ora, quando vuole, può utilizzare il suo user agent per leggere il messaggio
+**Operazione di SMTP**:
+
+1. Il mittente (Alice) compone un'email e inserisce l'indirizzo del destinatario (Bob).
+2. Il messaggio viene inviato al server mail di Alice e messo in coda.
+3. Il client SMTP sul server di Alice apre una connessione TCP con il server SMTP di Bob.
+4. Dopo l'handshaking, il messaggio viene inviato al server SMTP di Bob.
+5. Il server di Bob riceve il messaggio e lo inserisce nella mailbox di Bob, che potrà leggerlo quando desidera.
 
 ![[SOR/RETI/img/img27.png|center|500]]
 
 ### Confronto con HTTP
-Entrambi i protocolli sono utilizzati per trasferire file da un host ad un altro, ma mentre HTTP è utilizzato per trasferire oggetti da un web server a un web client, SMTP trasferisce messaggi di posta elettronica da un mail server ad un altro.
-
-Durante il trasferimento, sia HTTP che SMTP utilizzano connessioni persistenti, quindi presentano caratteristiche comuni, ma anche qualche differenza. 
-Innanzitutto HTTP è un protocollo PULL, ovvero gli utenti utilizzano HTTP per attirare a sé (pull) gli oggetti sul web server, mentre SMTP è un protocollo push, ovvero il mail server di invio spinge i file al mail server di ricezione.
-
-SMTP deve comporre l'intero messaggio in ASCII a 7 bit, anche se il messaggio contiene caratteri non appartenenti ad ASCII a 7 bit (ad esempio lettere accentate) tramite codifica. HTTP non impone questo vincolo.
-
-Inoltre HTTP incapsula ogni oggettoi nel proprio messaggio di risposta HTTP, mentre SMTP trasmette più oggetto in un unico messaggio.
+Entrambi i protocolli trasferiscono file tra host, ma HTTP è un protocollo **PULL** (gli utenti richiedono oggetti), mentre SMTP è un protocollo **PUSH** (il server invia file al server di destinazione). Inoltre, SMTP richiede che tutto il contenuto sia codificato in ASCII a 7 bit, mentre HTTP non ha questa restrizione. HTTP invia oggetti separati in messaggi distinti, mentre SMTP invia più oggetti in un unico messaggio.
 
 ### Formato dei messaggi di posta elettronica
-Un messaggio mail è costituito da una serie di linee di intestazione e dal corpo del messaggio, separate da una riga vuota. 
-Come per HTTP ogni linea è formata da una parola chiave seguita dai due punti, con alcune parole chiave obbligatorie (From: e To:) e altre facoltative (Subject: ). 
+Un'email è composta da linee di intestazione e dal corpo del messaggio, separati da una riga vuota. 
+Come per HTTP, ogni linea è formata da una parola chiave seguita dai due punti, con alcune parole chiave obbligatorie (From: e To:) e altre facoltative (Subject: ). 
 Dopo l'intestazione del messaggio, segue una linea vuota e poi il corpo del messaggio, che si chiude con un punto.
 
 ### Protocolli di accesso alla posta
-SMTP è usato principalmente per trasferire i messaggi dal server del mittente al server del destinatario, ma è anche usato per trasferire messaggi da un programma di posta del mittente alla sua casella di posta sul server di posta elettronica. Non consente però di trasferire messaggi dalla mailbox dell'utente al suo programma di posta elettronica. 
+SMTP è usato principalmente per trasferire i messaggi tra server, ma non per trasferirli dalla mailbox dell'utente al suo programma di posta elettronica. Per questo, esistono altri protocolli come:
 
-Esistono vari protocolli di accesso alla posta, tra cui:
-- POP3
-- IMAP: consente di recuperare, cancellare e archiviare i messaggi memorizzati sul server
-- HTTP: consente un interfaccia web sopra a SMTP per l'invio e IMAP (o POP) per il recupero delle mail
-
+- **POP3**
+- **IMAP**: Permette di recuperare, cancellare e archiviare i messaggi sul server.
+- **HTTP**: Utilizzato per l'accesso web alle email, spesso integrato con SMTP e IMAP (o POP) per l'invio e il recupero delle email.
 # DNS
-Gli host Internet sono identificati dall'indirizzo IP, ma più comunemente da nomi in quanto più facili da ricordare. Per le persone l'utilizzo di nomi è preferibile, ma i router prediliggono gli indirizzi IP.
-Per conciliare i due approcci è necessario utilizzare un servizio per tradurre i nomi degli host nei loro indirizzi IP e questo è compito del **DNS**.
+Gli host Internet sono identificati dall'indirizzo IP, ma più comunemente da nomi in quanto più facili da ricordare.
+Il **DNS** traduce i nomi degli host in indirizzi IP per il routing su Internet.
 
 DNS è sia un database distribuito implementato in una gerarchia di DNS server, sia un protocollo a livello di applicazione che permette agli host di interrogare il database per la traduzione nome-indirizzo. 
 
@@ -376,11 +366,11 @@ DNS utilizza UDP e la porta 53, ma se la risposta del server DNS supera i 512 by
 
 Oltre alla traduzione degli hostname in indirizzi IP, DNS mette a disposizione altri servizi tra cui:
 - **Alias degli hostname**: l'hostname www.informatica.uniroma2.it ha l'alias www.cs.uniroma2.it. In questo caso www.informatica.uniroma2.it è detto *hostname canonico*
-- **Mail server aliasing**: anche gli indirizzi di posta elettronica devono essere semplici da ricordare, ad esempio, con un account hotmail, l'indirizzo di posta sarà user@yahoo.com, ma l'hostname del server di posta Hotmail potrebbe avere come nome canonico relay1.west-coast.yahoo.com. Un'applicazione di posta può invocare DNS per ottenere il nome canonico di un alias fornito e il suo indirizzo IP.
-- **Distribuzione del carico**: DNS svolge anche la funzione di distribuire il carico dei dati copiati su più server web. I server web più visitati sono copiati infatti su server detti *mirror* ciascuno dei quali ha un indirizzo IP differente. In questo caso per ogni hostname canonico, il DNS memorizza un gruppo di indirizzi IP. Quando i client inviano una richiesta al DNS per avere l'indirizzo di un server web mirror, DNS risponde inviando l'insieme di indirizzi IP, ma ad ogni nuova richiesta ruota l'ordine degli indirizzi, siccome ogni richiesta è inviata al primo indirizzo IP elencato nell'insieme.
+- **Mail server aliasing**: facilita la gestione degli indirizzi di posta con nomi semplici, risolvendo alias in nomi canonici.  Ad esempio, l'indirizzo di posta user@yahoo.com potrebbe avere come nome canonico relay1.west-coast.yahoo.com.
+- **Distribuzione del carico**: Distribuisce il traffico tra server web mirror, restituendo IP differenti ad ogni richiesta.
 
 ## Funzionamento del DNS
-Supponiamo che una certa applicazione in esecuzione sull'host di un utente debba tradurre un hostname in indirizzo IP. L'applicazione invocherà il lato client del DNS specificando l'hostname da tradurre e il DNS sull'host prende il controllo inviando una query DNS sulla rete, all'interno di *datagrammi UDP diretti alla porta 53*. Dopo un ritardo, il client DNS riceve un messaggio di risposta contenente la corrispondenza desiderata, che viene poi passata all'applicazione richiedente. 
+Quando un’applicazione richiede la traduzione di un hostname, il DNS client invia una query UDP sulla porta 53 al DNS server, contenente l'hostname da tradurre e riceve in risposta l’indirizzo IP corrispondente. Il DNS è un sistema gerarchico distribuito in tre livelli:
 
 Il DNS dal punto di vista dell'applicazione è una black-box che traduce in modo semplice e diretto, ma in pratica la black-box è cotstituita da un gran numero di server DNS distribuiti nel mondo e dal protocollo applicativo che specifica la comunicazione tra DNS server e host richiedenti. 
 Un primo approccio è quello di utilizzare un DNS server che contiene tutte le corrispondenze a cui tutti i client invierebbero le richieste. Questo approccio però è inappropriato a causa di varie problematiche: 
@@ -399,9 +389,10 @@ Vediamo un esempio per capire la relazione tra le classi. Supponiamo che un clie
 ![[SOR/RETI/img/img28.png|center|500]]
 
 Analizziamo da vicino le classi di DNS server:
-- **root server**: forniscono gli indirizzi IP dei TLD server. Quando un server DNS non è in grado di risolvere un nome di dominio, il root server è raggiunto come ultimo tentativo di risoluzione. Se questo non ha informazioni sul dominio richiesto, fornirà informazioni su quale TLD server contattare per ricercare il nome
+- **root server**: forniscono gli indirizzi IP dei TLD server. 
 - **TLD server**: si occupano dei domini .com, .org, .net e dei domini locali di alto livello come .uk, .fr, .jp ecc.
 - **DNS server autoritativi**: sono DNS server propri di ogni organizzazione, che forniscono i mapping ufficiali da hostname a IP per gli host dell'organizzazione.
+
 Esiste anche il DNS server locale, che non appartiene alla gerarchia di server, ma è centrale nell'architettura DNS. Ciascun ISP (università, residenziale ecc.) ha un DNS server locale. Quando un host si connette ad un ISP, questo gli fornisce un indirizzo IP tratto da uno o più dei suoi DNS server locali tramite DHCP. Quando un host effettua una richiesta DNS, questa viene inviata al DNS server locale che opera da proxy e inoltre la query al DNS server.
 Supponiamo che l'host cse.nyu.edu voglia l'indirizzo IP di gaia.cs.umass.edu e supponiamo che il DNS server locale per cse.nyu.edu sia dns.nyu.edu, mentre un server autoritativo per gaia.cs.umass.edu sia dns.umass.edu.
 
@@ -411,8 +402,7 @@ Come possiamo vedere in figura, l'host richiedente invia un messaggio di richies
 Osserviamo che sono stati inviati otto messaggi DNS per ottenere la mappatura, vedremo come il DNS caching riduce questo traffico
 
 ## DNS caching
-Ogni volta che un qualsiasi name server impara la mappatura di un hostname, la salva nela cache e restituisce immediatamente il mapping nella cache in risposta ad una query. Il caching migliora i tempi di risposta ed inoltre le voci della cache vanno in timeout (scompaiono) dopo un certo periodo di tempo (TTL). I server TLD sono generalmente memorizzati nella cache dei DNS server locali. 
-Tuttavia le voci nella cache potrebbereo essere obsolete, infatti se l'host cambia il suo indirizzo IP, questo potrebbe non essere conosciuto su internet fino alla scadenza di tutti i TTL.
+Il caching DNS migliora le prestazioni, memorizzando temporaneamente i risultati delle query. Tuttavia, le voci nella cache possono diventare obsolete se l’indirizzo IP cambia prima della scadenza del TTL.
 
 ## Record DNS
 I server che implementano il database distribuito, memorizzano i **record di risorsa (RR)**. Ogni messaggio di risposta DNS trasporta uno o più RR. Un record di risorsa ha il seguente formato: `(name, value, type, ttl)`.
@@ -441,7 +431,7 @@ L'intestazione è costituita dai primi 12 byte e ha 6 campi:
 - sezione aggiuntiva: contiene record aggiuntivi, ad esempio il campo risposte in un messaggio di risposta a una richiesta MX conterrà il nome di un server di posta associato con il nome alias. La sezione aggiuntiva conterrà un record di tipo A che fornisce l'indirizzo IP per il nome canonico del mail server.
 
 ## Inserire record nel database DNS
-Supponiamo di aver fondato una società chiamata Network Utopia. Per registrare il nome di dominio dobbiamo farlo presso un *registrar*, un ente di registrazione, che verifica l'unicità del nome di dominio e lo inserisce nel database DNS. Per registrare il nome networkutopia.com dobbiamo fornire al registrar il *nome e gli indirizzi IP* dei server autoritativi ed il registrar procede inserendo due RR nel TLD server.com:
+Per registrare un dominio, si forniscono al registrar i nomi e gli indirizzi IP dei server autoritativi, che vengono inseriti nel TLD server con i relativi RR.
 ```
 (networkutopia.com, dns1.networkutopia.com, NS)
 (dns1.networkutopia.com, 212.212.212.1, A)
