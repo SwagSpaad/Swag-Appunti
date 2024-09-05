@@ -1,33 +1,33 @@
 
-Il livello di trasporto ha il compito di fornire una **comunicazione logica** direttamente ai processi applicativi in esecuzione sui diversi host.
-Con comunicazione logica intendiamo che, dal punto di vista dell'applicazione, tutto funzioni come se gli host che eseguono i processi fossero direttamente connessi tra di loro. 
+Il livello di trasporto fornisce **comunicazione logica** ai processi applicativi su diversi host, facendoli sembrare connessi direttamente.
 
 I protocolli di trasporto sono eseguiti nei sistemi periferici:
-- lato mittente: converte i messaggi ricevuti dal processo applicativo in **segmenti**, suddividendo i messaggi applicativi in parti più piccole e aggiungendo un'intestazione di trasporto, passandolo infine al livello di rete, dove viene incapsulato in un datagramma.
+- lato mittente: converte i messaggi in arrivo dal livello applicativo in **segmenti**, suddividendoli in parti più piccole e aggiungendo un'intestazione di trasporto e li passa al livello di rete, dove viene incapsulato in un datagramma.
  - lato ricevente: il livello di rete estrae il segmento dal datagramma, lo passa al livello di trasporto, che elabora il segmento ricevuto rendendo disponibili all'applicazione i dati del segmento.
 I protocolli di trasporto più utilizzati sono TCP e UDP.
 
 # Multiplexing e Demultiplexing
-Analizziamo come il servizio di trasporto da host ad host fornito dal livello di rete, può diventare un servizio di trasporto da processo a processo per le applicazioni in esecuzione sugli host.
+Il servizio di trasporto da host a host diventa un servizio **da processo a processo** grazie a multiplexing e demultiplexing. 
 
-Nell'host destinatario, il livello di trasporto, che riceve i segmenti dal livello di rete, ha il compito di consegnare i dati al processo applicativo appropriato. Supponiamo che siamo al computer, abbiamo richiesto una pagina web (sessione HTTP) e contemporaneamente abbiamo in esecuzione una sessione FTP e due Telnet. Il livello di trasporto, quando riceve i dati dal livello di rete, deve indirizzali ai processi corretti. Vediamo come.
+Nell'host destinatario, il livello di trasporto, che riceve i segmenti dal livello di rete, ha il compito di consegnare i dati al processo applicativo appropriato. 
 
-Ogni processo gestisce uno o più socket, ciascuno con un ID unico. Il formato dell'ID dipende dal protocollo usato (TCP o UDP). Il demultiplexing consiste nel dirigere i segmenti al socket corretto in base ai campi presenti nel segmento stesso.
+I processi comunicano tramite **socket** con un ID unico, e il trasporto assegna i segmenti ai socket corretti in base ai campi del segmento.
 
-- **Multiplexing:** Lato mittente, il livello di trasporto raccoglie i dati da vari socket e li incapsula in segmenti da inviare al livello di rete.
-- **Demultiplexing:** Lato ricevente, il livello di trasporto esamina i campi del segmento (es. numero di porta) e lo invia al socket appropriato.
+- **Multiplexing**: il trasporto lato mittente raccoglie dati da vari socket e li invia tramite segmenti.
+- **Demultiplexing**: il trasporto lato ricevente esamina i segmenti ricevuti e li consegna ai socket appropriati.
 
 Vediamo nel dettagli come funziona il demultiplexing e il multiplexing. Il multiplexing a livello di trasporto richiede che i socket abbiano indentificatori unico, il **numero di porta di origine e di destinazione** che indicano il socket a cui va consegnato il segmento. I numeri di porta sono di 16 bit e vanno da 0 a 65535, quelli da 0 a 1023 sono *riservati* per i protocolli applicativi noti, come HTTP (80) FTP (21).
 
 ## Demultiplexing senza connessione
-Quando si crea un socket, per specificare un numero di porta si utilizza il metodo `bind()`, altrimenti viene assegnato automaticamente un numero di porta tra 1024 e 65535: 
+In UDP, i socket sono identificati da una coppia **(indirizzo IP, numero di porta)**. Il livello di trasporto associa il numero di porta alla destinazione, utilizzando il metodo `bind()` per assegnare una porta specifica, altrimenti viene assegnato un numero di porta tra 1024 e 65535:
+
 ```Python
 mySocket = socket(AF_INET, SOCK_DGRAM) #crea un socket UDP
 mySocket.bind(('',9157)) #assegnata la porta 9157
 ```
-Dopo la creazione, quando si crea il datagramma da inviare al socket, si deve specificare l'indirizzo IP ed il numero di porta del destinatario. Il segmento viene passato poi al livello di rete che effettua un tentativo best-effort di consegna all'host di destinazione. Quando il segmento arriva all'host destinatario, il livello di trasporto esamina il numero di porta di destinazione e invia il segmento UDP al socket relativo con quel numero di porta. 
-In UDP, un socket è identificato da una coppia (indirizzo IP, numero di porta). Due segmenti con stesso IP e porta di destinazione, ma diversi IP o porte di origine, sono diretti allo stesso socket.
 
+Dopo la creazione, si specifica l'indirizzo IP e la porta del destinatario. Il segmento viene poi passato a livello di rete che effettua un tentativo di consegna. Lato ricevente, all'arrivo del segmento, vengono analizzati i numeri di porta di destinazione e inviati al socket relativo.
+In UDP, un socket è identificato da una coppia (indirizzo IP, numero di porta). Due segmenti con stesso IP e porta di destinazione, ma diversi IP o porte di origine, sono diretti allo stesso socket.
 
 ![[SOR/RETI/img/img35.png|center|500]]
 
@@ -113,30 +113,33 @@ Il caso più semplice è quello in cui il canale sottostante è completamente af
 - il ricevente raccoglie i pacchetti dal basso con `rdt_rcv(packet)`, rimuove i dati dai pacchetti con `extract(packet, data)` e li passa al livello superiore con `deliver_data(data)`.
 
 ### rdt2.0, canale con errori su bit
-Un modello più realistico è quello del canale in cui i bit di un pacchetto possono essere corrotti. La sfida è dunque capire come recuperare gli errori. 
-Questo è possibile mediante un utilizzo di **notifiche positive (ACK) e negative (NAK)** ed un invio di tipo *stop and wait*. 
-Il mittente invia un pacchetto per volta, attendendo la risposta del destinatario: se il pacchetto arriva al ricevente correttamente, avviene un ACK, mentre se il pacchetto arriva con degli errori, il ricevente comunica un NAK al mittente che procede a ritrasmettere il pacchetto.
-I protocolli basati sulla ritrasmissione sono detti **protocolli ARQ (Automatic Repeat reQuest)**.
+Il modello rdt2.0 affronta il problema di un canale in cui i bit di un pacchetto possono essere corrotti. La soluzione consiste nell'uso di **notifiche positive (ACK)** e **negative (NAK)**, insieme a un invio di tipo **stop-and-wait**. Il mittente invia un pacchetto e attende la risposta del destinatario:
+
+- **ACK**: il pacchetto è stato ricevuto correttamente.
+- **NAK**: il pacchetto è corrotto e viene ritrasmesso.
+
+Questo tipo di protocollo è noto come **ARQ (Automatic Repeat reQuest)**.
 
 ![[SOR/RETI/img/img42.png|center|500]]
 
-Il **lato mittente** presenta due stati: in quello di sinistra il protocollo attende i dati da raccogliere. Quando si verifica l'evento `rdt_send(data)`, il mittente crea un pacchetto `sndpkt` contenente i dati da inviare ed il checksum (nel caso di pacchetto UDP) e spedisce il pacchetto mediante `udt_send(sndpkt)`. Nello stato di destra il mittente attende un pacchetto ACK o NAK dal destinatario: 
-- se riceve ACK (evento `rdt_rcv(rcvpkt) && isACK(rcvpkt)`), il mittente sa che il pacchetto è stato ricevuto correttamente e torna allo stato di attesa dei dati
-- se riceve NAK (evento `rdt_rcv(rcvpkt) && isNAK(rcvpkt)`), il protocollo ritrasmette l'ultimo pacchetto, attendendo nuovamente una risposta.
+Il mittente ha due stati:
+1. **Attesa di dati**: quando arriva un dato da inviare (`rdt_send(data)`), viene creato un pacchetto con i dati e il checksum, e inviato al destinatario.
+2. **Attesa di ACK/NAK**: Se riceve un ACK, torna a raccogliere i dati. Se riceve un NAK, ritrasmette il pacchetto.
 
 ![[SOR/RETI/img/img43.png|center|500]]
 
-Il **lato ricevente** ha ancora un solo stato. All'arrivo del pacchetto risponde con ACK o NAK se il pacchetto è corrotto o meno.
-- nel caso di pacchetto corrotto (evento `rdt_rcv(rcvpkt) && corrupt(rcvpkt)`), viene creato un pacchetto NAK (`sndpkt=make_pkt(NAK)`) ed inviato al mittente (`udt_send(sndpkt)`). 
-- nel caso di pacchetto senza errori (evento `rdt_rcv(rcvpkt) && notcorrupt(rcvpkt)`), rimuove i dati dai pacchetti con `extract(packet, data)` e li passa al livello superiore con `deliver_data(data)`, creando `sndpkt=make_pkt(ACK)` e inviando `udt_send(sndpkt)` un pacchetto ACK.
-Questo metodo sembra funionale, ma ha un grave difetto: non possiamo sapere se i pacchetti ACK o NAK sono alterati anch'essi. 
+Il ricevente ha un solo stato:
+- Se il pacchetto è corrotto, invia un **NAK** al mittente.
+- Se il pacchetto è corretto, estrae i dati e invia un **ACK**.
+Questo metodo ha un limite: *non possiamo sapere se i pacchetti ACK o NAK sono alterati*, rendendo il protocollo incompleto.
 
 ### rdt2.1, gestione di ACK/NAK alterati
-Per gestire gli ACK e i NAK corrotti ci sono tre possibilità:
-- introduzione di un nuovo tipo di pacchetto dal mittente al destinatario, che viene inviato in caso di corruzione del pacchetto ACK/NAK, per comunicare che il messaggio ricevuto non era comprensibile. Non è una soluzione perché anche il messaggio di conferma può essere corrotto.
-- aggiunta di un bit di checksum, ma risolve il problema di pacchetti danneggiati e non sui pacchetti persi
-- rinviare il pacchetto in caso di ACK/NAK alterati. Introduce **pacchetti duplicati** e il destinatario non sa se l'ACK/NAK è stato ricevuto correttamente, quindi non può sapere se un pacchetto in arrivo contiene dati nuovi o è una ritrasmissione.
-Una soluzione consiste nell'aggiungere un campo al pacchetto dati, obbligando il mittente a numerare i pacchetti con un **numero di sequenza**. Al destinatario basterà controllare questo numero per sapere se rappresenta una ritrasmissione o sono dati nuvovi.
+Per affrontare il problema di ACK e NAK corrotti, sono state valutate diverse soluzioni:
+1. **Introduzione di un nuovo pacchetto**: il mittente invia un messaggio aggiuntivo in caso di corruzione di un ACK o NAK. Questa soluzione non è efficace, perché anche il nuovo pacchetto inviato potrebbe essere corrotto.
+2. **Aggiunta di un bit di checksum**: questa soluzione può rilevare pacchetti danneggiati, ma non risolve il problema dei pacchetti persi.
+3. **Ritrasmissione in caso di ACK/NAK alterati**: se il mittente non riceve una risposta chiara, ritrasmette il pacchetto. Tuttavia, questo introduce il problema dei **pacchetti duplicati**, poiché il destinatario non può sapere se sta ricevendo un nuovo pacchetto o una ritrasmissione.
+
+La soluzione adottata consiste nell'aggiungere un **numero di sequenza** ai pacchetti. Il mittente assegna a ogni pacchetto un numero (0 o 1) e il destinatario utilizza questo numero per distinguere tra pacchetti nuovi e ritrasmissioni.
 
 ![[SOR/RETI/img/img44.png|center|500]]
 ![[SOR/RETI/img/img45.png|center|500]]
@@ -150,13 +153,13 @@ Il funzionamento è lo stesso di rdt2.1, ma utilizzando solamente gli ACK. In qu
 ![[SOR/RETI/img/img47.png|center|500]]
 
 ### rdt3.0, canali con errori e perdite
-Negli esempi precedenti abbiamo supposto che il canale di trasmissione danneggiasse solamente i bit. Supponiamo ora che il canale possa anche smarrire i pacchetti. 
-Il protocollo deve quindi preoccuparsi di rilevare lo smarrimento e cosa fare quando questo avviene, introducendo un nuovo meccanismo.
-Supponiamo che il mittente spedisca un pacchetto dati e che questo o l'ACK corrispondente vengano perduti. In questi casi, il mittente non riceverà alcuna risposta dal destinatario. Per essere certo dello smarrimento del pacchetto, il mittente deve essere disposto ad aspettare un tempo sufficiente dopo il quale ritrasmetterà il pacchetto di dati. 
-Il problema sta nello scegliere adeguatamente il tempo da attendere. L'idea è quella di attendere un tempo che è la somma del ritardo tra andata e ritorno più il tempo necessario all'elaborazione, ma questo ritardo è difficile da stimare nel caso peggiore. 
-L'approccio utilizzato è quello di scegliere una quantità di tempo per cui la perdita di pacchetti risulti probabile: se non si riceve un ACK in questo periodo di tempo, il pacchetto viene ritrasmesso. Notiamo che, il mittente potrebbe ritrasmettere un pacchetto che supera la quantità di tempo ammessa, anche se né il pacchetto stesso né l'ACK sono stati smarriti. Questo porta alla possibilità di **pacchetti duplicati**, ma questo è risolto grazie ai *numeri di sequenza*. 
+**rdt3.0** affronta il problema dei pacchetti persi e corrotti. Oltre a gestire i bit danneggiati, questo protocollo si occupa della perdita di pacchetti introducendo un meccanismo di **ritrasmissione basato su timer**.
 
-Il mittente, non sa se un pacchetto o il relativo ACK sia stato effettivamente perso o se questi pacchetti abbiano subito un ritardo molto lungo. In ogni caso la soluzione è sempre la ritrasmissione. Il meccanismo di ritrasmissione richiede un *contatore* in grado di segnalare la scadenza del tempo impostato. Il mittente quindi, ogni volta che invia un pacchetto, inizializza il timer, eventualmente rispondere all'interrupt generato dal timer con l'azione appropriata e fermare il contatore quando il pacchetto viene trasmesso correttamente.
+- **Rilevamento delle perdite:** Se il mittente invia un pacchetto ma non riceve un ACK entro un certo tempo, ritrasmette il pacchetto. Il tempo di attesa è difficile da stimare, quindi si sceglie un valore prudente che copra il ritardo andata-ritorno.
+- **Pacchetti duplicati:** Se un pacchetto o ACK viene ritrasmesso, potrebbe causare duplicati. I **numeri di sequenza** aiutano il destinatario a distinguere tra pacchetti nuovi e duplicati.
+- **Timer:** Il mittente avvia un timer ogni volta che invia un pacchetto. Se scade senza ricevere un ACK, ritrasmette il pacchetto.
+
+Questo protocollo garantisce la consegna affidabile dei dati anche in presenza di perdite e duplicati.
 
 ![[SOR/RETI/img/img48.png|center|500]]
 
@@ -312,7 +315,7 @@ TCP offre un **servizio di controllo di flusso** per evitare la saturazione del 
 Supponiamo che A stia invando un grande file a B. Quest'ultimo alloca un buffer di ricezione, che ha dimensione `RcvBuffer`. Definiamo anche le variabili:
 - `LastByteRead`: numero dell'ultimo byte nel flusso di dati che il processo applicativo in B ha letto dal buffer
 - `LastByteRcvd`: numero dell'ultimo byte che proviene dalla rete che è stato copiato nel buffer di ricezione di B
-Dato che TCP non può mandare in overflow il buffer, deve valere: $$\text{LastByteRcvd - LastByteRead}\leq\text{RcvBuffer}$$La finestra di ricezione, che indichiamo con `rwnd`, viene impostata alla quantità di spazio disponibile nel buffer: $$\text{rwnd}=\text{RcvBuffer - [LastByteRcvd - LastByteRead]}$$
+Dato che TCP non può mandare in overflow il buffer, deve valere: $$\text{LastByteRcvd - LastByteRead}\leq\text{RcvBuffer}$$La finestra di ricezione, che indichiamo con `rwnd`, viene impostata alla quantità di spa zio disponibile nel buffer: $$\text{rwnd}=\text{RcvBuffer - [LastByteRcvd - LastByteRead]}$$
 L'host B comunica all'host A quanto spazio è disponibile nel buffer, scrivendo il valore corrente di `rwnd` (che è dinamico), nal campo *finestra di ricezione* dei segmenti che manda ad A. All'inizio della comunicazione (buffer vuoto) vale che `rwnd = RcvBuffer`
 
 L'host A tiene traccia di due variabili:
