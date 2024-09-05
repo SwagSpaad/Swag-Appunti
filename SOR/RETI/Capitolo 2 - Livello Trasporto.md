@@ -182,42 +182,43 @@ Se si consente al mittente di trasmettere tre pacchetti, l'utilizzo viene tripli
 - incremento dei numeri di sequenza disponibili
 - memorizzare in un buffer più di un pacchetto. Il mittente dovrà memorizzare i pacchetti trasmessi il cui ACK non è stato ricevuto. 
 
-#### Go-Back-N (GBN)
-In un **protocollo GBN**, il mittente può trasmettere più pacchetti senza attendere acknowledge, ma non può avere più di un numero massimo consentito $N$ di pacchetti in attesa di ACK nella pipeline. 
+### Go-Back-N (GBN)
+
+Nel **protocollo GBN**, il mittente può inviare più pacchetti senza attendere un ACK, ma non può avere più di $N$ pacchetti non riscontrati nella pipeline.
 
 ![[SOR/RETI/img/img51.png|center|500]]
 
-Nella *window size* abbiamo i pacchetti inviati ma non ancora riscontrati e quelli pronti per l'invio. IL campo *base* indica il numero di sequenza del pacchetto più vecchio che non ha ricevuto ACK, mentre *nextseqnum* indica il numero di sequenza del prossimo pacchetto da inviare.
+La *window size* rappresenta i pacchetti inviati e in attesa di ACK. Il campo *base* indica il pacchetto più vecchio senza ACK, mentre *nextseqnum* rappresenta il prossimo pacchetto da inviare.
 
 ![[SOR/RETI/img/img52.png|center|500]]
-Il mittente GBN deve rispondere a tre tipi di evento:
-- **invocazione dall'alto**. Alla chiamata `rdt_send()`, per prima cosa il mittente controlla se nella finestra ci siano $N$ pacchetti in sospeso. In caso negativo, crea e invia un nuovo pacchetto. Se la finestra è piena il mittente restituisce i dati al livello superiore e ritenterà più tardi. A livello implementativo i dati venono memorizzati in un buffer o viene implementato un meccanismo di sincronizzazione che consente la chiamata `rdt_send()` solo quando la finestra non è piena
-- **ricezione di un ACK**. L'ACK con numero di sequenza $n$ è considerato un **ACK cumulativo**, che indica che tutti i pacchetti con numero di sequenza minore o uguale ad $n$ sono stati correttametne ricevuti
-- **evento di timeout**. Si usa un contatore per il problema di pacchetti o ACK persi. Quando si verifica un timeout, il mittente invia nuovamente **tutti** i pacchetti con numero di sequenza maggiore uguale ad $n$ (ultimo ACK ricevuto).
+
+Il mittente GBN risponde a tre eventi:
+1. **Invocazione dall'alto:** Controlla se ci sono $N$ pacchetti in sospeso prima di inviare un nuovo pacchetto.
+2. **Ricezione di un ACK:** Gli ACK sono **cumulativi**, riconoscono tutti i pacchetti fino al numero $n$.
+3. **Timeout:** Il mittente ritrasmette **tutti** i pacchetti non riscontrati in caso di timeout.
 
 ![[SOR/RETI/img/img53.png|center|500]]
 
-Nel lato destinatario, se un pacchetto con numero di sequenza $n$ viene ricevuto correttamente ed è in ordine (ha numero di sequenza progressivo), viene inviato un ACK per il pacchetto e consegna i dati a livello superiore, memorizzando `rcv_base`, che indica l'ultimo numero di sequenza ottenuto . Se riceve uin pacchetto fuori sequenza può scartarlo e rimandare un ACK per il apcchetto con il numero di sequenza più alto
+Il ricevitore invia ACK solo per pacchetti in ordine. Se un pacchetto è fuori sequenza, lo scarta e invia un ACK per il pacchetto più recente.
 
-#### Ripetizione selettiva
-I **protocolli a ripetizione selettiva** evitano le ritrasmissioni non necessarie facendo ritrasmettere al mittente solo i pacchetti su cui esistono alterazioni o smarrimenti. Questo obbliga il destinatario a mandare ACK specifici per i pacchetti ricevuti in modo corretto. Si utilizza nuovamente un'ampiezza di finestra pari a $N$ per limitare il numero di pacchetti senza ACK, ma a differenza di GBN, il mittente avrà già ricevuto gli ACK di qualche pacchetto nella finestra.
+### Ripetizione Selettiva
+
+Il protocollo **a ripetizione selettiva** evita le ritrasmissioni inutili, facendo ritrasmettere solo i pacchetti persi o corrotti. Il ricevitore invia ACK specifici per ciascun pacchetto corretto.
 
 ![[SOR/RETI/img/img54.png|center|500]]
 
-Il mittente svolge le seguenti operazioni in base agli aventi:
-- **dati ricevuti dall'alto**. Alla ricezione di dati, il mittente controlla il succesisvo numero di sequenza disponibile per il pacchetto. Se è all'interno della finestra del mittente, i dati vengono impacchettati e inviati, altrimenti sono salvati in un buffer o restituiti al livello superiore
-- **timeout**. Utilizza ancora i contatori per la perdita di pacchetti, anche se ora ogni pacchetto ha un proprio timer logico dato che viene ritrasmesso un solo pacchetto
-- **ACK ricevuto**. Alla ricezione, il mittente etichietta il pacchetto $n$ come ricevuto. Se $n$ è il numero di sequenza più piccolo, la base della finestra avanza al successivo numero di sequenza del pacchetto non riscontrato.
+Eventi per il mittente:
+1. **Dati ricevuti dall'alto:** Il pacchetto viene inviato se il numero di sequenza è all'interno della finestra.
+2. **Timeout:** Ogni pacchetto ha un timer, e viene ritrasmesso solo quello scaduto.
+3. **ACK ricevuto:** Il mittente avanza la finestra se il pacchetto $n$ è ricevuto.
 
 ![[SOR/RETI/img/img55.png|center|500]]
 
-Il ricevente si comporta nel seguente modo:
-- **il pacchetto con n nella sequenza $[\text{rcv\_base, rcv\_base+N-1}]$ viene ricevuto correttamente**. In questo caso il pacchetto riceevuto è nella finestra del ricevente e viene restituito un ACK al mittente. Se il pacchetto non era già stato ricevuto viene inserito nel buffer. Se ha numero di sequenza uguale a `rcv_base` allora il pacchetto e i pacchetti nel buffer con numeri conescutivi a `rcv_base` vengono consegnati al livello superiore. Ad esempio quando si riceve un pacchetot con numero di sequenza `rcv_base=2` è possibile consegnarlo a livello superiore con i pacchetti 3, 4, e 5
-- **si riceve il pacchetto con $n$ nella sequenza $[\text{rcv\_base-N, rcv\_base-1}]$**. In questo caso si genera un ACK, anche se il pacchetto è già stato riscontrato. Questo evento significa che gli ACK dei pacchetti già consegnati all'applicazione, non sono stati ricevuti dal mittente
-- si ignora il pacchetto in ogni altro caso
+Il ricevente può:
+- Accettare e bufferizzare pacchetti nella finestra. Se il pacchetto ha numero di sequenza uguale a `rcv_base`, lo consegna insieme ai pacchetti consecutivi nel buffer.
+- Inviare un ACK per pacchetti già ricevuti ma di cui non è stato confermato l'ACK.
 
 ![[SOR/RETI/img/img57.png|center|500]]
-
 # TCP
 TCP è il protocollo di trasporto affidabile e orientato alla connessione che utilizza molti dei principi visti in precedenza, come rilevazione degli errori, ritrasmissioni, acknowledgment cumulativi ecc.
 TCP è detto *orientato alla connessione* in quanto prima dello scambio dei dati, i processi che intendono farlo devono effettuare l'handshake. 
