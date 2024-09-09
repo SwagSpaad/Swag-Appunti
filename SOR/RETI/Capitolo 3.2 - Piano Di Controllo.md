@@ -1,29 +1,36 @@
 # Introduzione
-In questo piano, il router ha il compito di determinare quale percorso viene seguito dai pacchetti dalla sorgente alla destinazione.
-Esistono 2 metodi per eseguire quersto compito:
-- _Controllo per router_: Ogni router ha una componente di instradamento che comunica con le componenti di instradamento degli altri router per calcolare la propria tabella di inoltro (protocolli OSFP e BGP).
-- _Controllo logicamente centralizzato (SDN)_: Controller logicamente centralizzato calcola e distribuisce le tabelle di inoltro che devono essere utilizzate da ogni router.
-
+Nel piano di controllo, il router determina il percorso seguito dai pacchetti dalla sorgente alla destinazione. Esistono due metodi principali per questo compito: 
+- **Controllo per router**: Ogni router comunica con gli altri per calcolare la propria tabella di inoltro (es. protocolli OSPF e BGP). 
+- **Controllo logicamente centralizzato (SDN)**: Un controller centralizzato calcola e distribuisce le tabelle di inoltro a ciascun router.
 # Algoritmi di Instradamento
-L'obiettivo di tali algoritmi è di determinare percorsi (sequenze di router) o cammini "buoni", di solito quelli di costo minimo tra le sorgenti e i destinatari attraverso la rete dei router.
-Per analizzare il problema dell'instradamento, consideriamo un grafo $G = (V,E)$ non orientato, dove $V$ è l'insieme dei nodi che nel contesto rappresentano i router e $E$ insieme degli archi, ovvero i collegamenti fisici tra router.
-![[PianoControllo_1.png | center | 700]]
+Gli algoritmi di instradamento mirano a trovare percorsi ottimali tra sorgenti e destinatari in una rete di router. Consideriamo un grafo $G = (V,E)$, dove $V$ sono i nodi (router) ed $E$ gli archi (collegamenti fisici tra router).
+
+![[PianoControllo_1.png | center | 500]]
+
 Per ogni arco $(x,y)$ tra i nodi denotiamo con $c(x,y)$ il costo di tale arco. Poniamo $c(x,y) = +\infty$ se l'arco $(x,y) \notin E$.
 L'obiettivo è quello di trovare il percorso minimo tra due nodi.
-- Un **algoritmo di instradamento centralizzato** calcola il percorso a costo minimo tra una sorgente e una destinazione avendo una conoscenza globale e completa della rete. In altre parole, l’algoritmo riceve in ingresso tutti i collegamenti tra i nodi e i loro costi. Questi algoritmi sono detti **algoritmi link-state**.
-- In un **algoritmo di instradamento decentralizzato** il percorso a costo minimo viene calcolato in modo distribuito e iterativo. Nessun nodo possiede informazioni complete sul costo di tutti i collegamenti di rete. Inizialmente i nodi conoscono soltanto i costi dei collegamenti a loro incidenti. Questi algoritmi sono detti **algoritmi distance-vector**.
+- **Algoritmi di instradamento centralizzato**: Calcolano il percorso a costo minimo avendo una conoscenza globale della rete. Questi algoritmi sono chiamati **link-state**. 
+- **Algoritmi di instradamento decentralizzato**: Calcolano il percorso a costo minimo in modo distribuito e iterativo. Nessun nodo possiede informazioni complete sui collegamenti di rete. Questi algoritmi sono chiamati **distance-vector**.
 
 ## Instradamento "Link-State" - Dijkstra
-In un instradamento link-state la topologia di rete e tutti i costi dei collegamenti sono noti, ossia disponibili in input all’algoritmo. Ciò si ottiene facendo inviare a ciascun nodo pacchetti sullo stato dei suoi collegamenti a tutti gli altri nodi della rete. Questi pacchetti contengono identità e costi dei collegamenti connessi al nodo che li invia.
-L’algoritmo di calcolo dei percorsi che presentiamo associato all’instradamento link-state è noto come **algoritmo di Dijkstra**. (Vedi lezione algoritmi!!!)
+Nell'instradamento link-state, la topologia della rete e i costi dei collegamenti sono noti. Ogni nodo invia pacchetti contenenti l'identità e il costo dei collegamenti ai nodi della rete. L'**algoritmo di Dijkstra** calcola i percorsi minimi.
+
 Patologia: Quando i costi dei collegamenti dipendono dal volume di traffico, sono possibili oscillazioni dei percorsi.
 
 ## Instradamento "Distance-Vector" - Bellman Ford
 
-Distance-vector è iterativo, asincrono e distribuito.
-- Distribuito nel senso che ciascun nodo riceve parte dell’informazione da uno o più dei suoi vicini direttamente connessi, a cui, dopo aver effettuato il calcolo, restituisce i risultati.
-- Iterativo nel senso che questo processo si ripete fino a quando non avviene ulteriore scambio informativo tra vicini. Aspetto interessante, l’algoritmo è anche auto-terminante: non vi è alcun segnale che il calcolo debba fermarsi, semplicemente si blocca.
-- Asincrono nel senso che non richiede che tutti i nodi operino al passo con gli altri.
+L'algoritmo distance-vector è iterativo, asincrono e distribuito. 
+- **Distribuito**: Ogni nodo riceve informazioni dai vicini e aggiorna i propri risultati. 
+- **Iterativo**: Il processo si ripete fino al termine del calcolo. 
+- **Asincrono**: Non richiede che tutti i nodi operino sincronizzati. 
+
+L'algoritmo utilizza la formula di Bellman-Ford: $d_{x}(y) = \min_{v} \{ c(x,v) + d_{v}(y) \}$
+
+|                 | Complessità                              | Convergenza                          | Robustezza                                                                                             |
+| --------------- | ---------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| Link-State      | $O(n^{2})$ messaggi inviati              | $O(n^{2})$                           | Può comunicare in broadcast un costo sbagliato, propria tabella dei costi                              |
+| Distance-Vector | Scambio di messaggi tra router adiacenti | Potrebbe convergere molto lentamente | Può comunicare in broadcast percosi a costo minimi errati, la tabella di router è usata anche da altri |
+
 
 Sia $d_{x}(y)$ il costo del percorso minimo tra nodo $x$ a $y$. Allora i costi minimi sono correlati dalla formula di Bellman Ford: $d_{x}(y)= min_{v} \ c(x,v) + d_{v}(y)$.
 L'idea di base è: Ciascun nodo con $D_{x}(y)$, una stima del costo del percorso a costo minimo da sè stesso a $y$, per per tutti i nodi in $V$. Sia $D_{x} = [D_{x}(y) \in V]$ il vettore delle distanze del nodo $x$, che è il vettore delle stime dei costi da $x$ a tutti gli atri nodi $y$, in $V$.
@@ -32,11 +39,6 @@ Con l'algoritmo di Bellman Ford, ciascun nodo mantiene le seguenti informazioni:
 - Il vettore delle distanze $D_{x} = [ D_{x} ( y ) ∈ V ]$.
 - I vettori delle distanze di ciascun vicino $D_{v} = [ D_{v} ( y ) ∈ V ] .$
 Dunque, di tanto in tanto, ogni nodo invia ai vicini il proprio vettore delle distanze stimate. Quando $x$ riceve un "distance vector" da un qualsiasi vicino, aggiorna il proprio "distance vector" utilizzando l'equazione di Bellman-Ford. $D_{x} ( y ) = min_{v} \ c ( x , v ) + D_{v} ( y ) \ ∀ y ∈ V$ Di questo passo, sotto certi condizioni minori e natulari, la stima $D_{x} ( y )$ converge verso l'effettivo costo minimi $d_{x} ( y )$.
-
-|                 | Complessità                              | Convergenza                          | Robustezza                                                                                             |
-| --------------- | ---------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| Link-State      | $O(n^{2})$ messaggi inviati              | $O(n^{2})$                           | Può comunicare in broadcast un costo sbagliato, propria tabella dei costi                              |
-| Distance-Vector | Scambio di messaggi tra router adiacenti | Potrebbe convergere molto lentamente | Può comunicare in broadcast percosi a costo minimi errati, la tabella di router è usata anche da altri |
 
 ## OSFP e BGP
 Fino adesso abbiamo visto la rete come un insieme di router interconnessi tra loro. Ciascun router distinguibile dagli altri. Ora invece proviamo a ragrupparli come segue.
