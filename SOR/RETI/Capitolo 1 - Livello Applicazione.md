@@ -384,7 +384,7 @@ Per ovviare ai problemi sopra, il DNS utilizza un grande numero di server distri
 Vediamo un esempio per capire la relazione tra le classi. Supponiamo che un client DNS vuole determinare l'indirizzo IP dell'hostname www.amazon.com: 
 - il client contatta uno dei root server, che gli restituisce uno o più indirizzi IP relativi al TLD server per il dominio *com*.
 - Il client contatta uno di questi TLD server, che gli restituisce uno o più indirizzi IP del server autoritativo *amazon.com*
-- infine contatta uno dei server autoritativi di amazon.com che gli restituisce l'IP dell'hostname www.amazon.com+
+- infine contatta uno dei server autoritativi di amazon.com che gli restituisce l'IP dell'hostname www.amazon.com
 
 ![[SOR/RETI/img/img28.png|center|500]]
 

@@ -220,121 +220,80 @@ Il ricevente può:
 
 ![[SOR/RETI/img/img57.png|center|500]]
 # TCP
-TCP è il protocollo di trasporto affidabile e orientato alla connessione che utilizza molti dei principi visti in precedenza, come rilevazione degli errori, ritrasmissioni, acknowledgment cumulativi ecc.
-TCP è detto *orientato alla connessione* in quanto prima dello scambio dei dati, i processi che intendono farlo devono effettuare l'handshake. 
-La connessione TCP offre un servizio **full-duplex**, quindi i dati possono fluire in entrambe le direzione nello stesso momento. Inoltre, la connessione è **point-to-point**, ovvero ha luogo tra un singolo mittente e un singolo destinatario, senza possibilità di *multicast*.
+TCP è un protocollo di trasporto affidabile e orientato alla connessione, che utilizza vari meccanismi come la rilevazione degli errori, le ritrasmissioni e gli acknowledgment cumulativi. Essendo orientato alla connessione, prima dello scambio di dati è necessario un handshake iniziale. La connessione TCP è **full-duplex** (dati possono fluire in entrambe le direzioni) e **point-to-point** (coinvolge solo un mittente e un destinatario).
 
-Dopo aver instaurato la connessione TCP mediante **handshake a tre vie**, i due processi possono scambiarsi dati. 
-Consideriamo l'invio di dati dal client al server
+Una volta stabilita la connessione tramite **handshake a tre vie**, i due processi possono scambiarsi dati.
 
 ![[SOR/RETI/img/img58.png|center|500]]
 
-Il primo manda un flusso di dati attraverso il socket, che una volta attraversato sono nelle mani di TCP, che dirige i dati al **buffer di invio**.
-La quantità massima di dati prelevabili e posizionabili in un segmento è detta **dimensione massima di segmento (MSS)** ed è un valore che viene impostato determinando prima la lunghezza del frame più grande che può essere inviato a livello di collegamento (**unità trasmissiva massima MTU**) e poi scegliendo un MSS tale che il segmento TCP stia all'interno di un singolo frame a livello di collegamento considerando anche la lunghezza dell'intestazione. 
+## Buffer di Invio e Segmenti TCP
+Il mittente invia un flusso di dati attraverso il socket. I dati vengono messi nel **buffer di invio** TCP. La quantità massima di dati inseribili in un segmento è detta **MSS** (Maximum Segment Size). Il TCP accoppia i dati con un'intestazione per formare un **segmento TCP**, inviato poi tramite IP.
 
 ![[SOR/RETI/img/img59.png|center|500]]
 
-
-TCP accoppia ogni blocco di dati a una intestazione TCP, andando a formare dei **segmenti TCP**, che vengono passati al livello di rete, incapsulati in datagrammi IP e immessi nella rete. Quando all'altro capo giunge un segmento, i dati bengono memorizzati nel **buffer di ricezione TCP** e vengono poi inviati all'applicazione tramite il socket.
-## Struttura dei segmenti TCP
-Il segmento TCP consiste di campi *Intestazione* e del campo *Dati* provenienti dall'applicazione. La MSS limita la dimensione massima del campo Dati, infatti quando TCP invia un file di grandi dimensioni, questo è frammentato in porzioni di dimensioni MSS.
-
-In figura possiamo vedere la struttura dei segmenti TCP.
+## Struttura dei Segmenti TCP
+I segmenti TCP contengono un'intestazione e i dati. La MSS limita la dimensione del campo dati.
 
 ![[SOR/RETI/img/img60.png|center|500]]
 
-Come per [[#UDP]] questa contiene i **numeri di porta di origine e destinazione** e il campo **checksum**. Inoltre comprende i seguenti campi:
-- **Numero di sequenza** e **numero di ACK**: utilizzati dal mittente e destinatario per il trasferimento dati affidabile
-- **Finestra di ricezione**: utilizzato per il controllo di flusso. Indica il numero di byte che il destinatario può accettare
+Oltre ai campi già visti nel protocollo UDP, l'intestazione TCP include:
+- **Numeri di sequenza** e **numeri di ACK**
+- **Finestra di ricezione** (per il controllo di flusso)
 - **Lunghezza dell'intestazione**
-- **Opzioni**: facolatativo e di lunghezza variabile. 
-- **Flag**: 
-	- il bit **ACK** indica che il segmento contiene un ACK per un segmento ricevuto correttamente
-	- **RST, SYN, FIN** utilizzati per impostare e chiudere la connessione
-	- **CWR, ECE** utilizzati nel controllo della congestione
-	- **PSH**: se ha valore 1 il destinatario dovrebbe inviare immediatamente i dati al livello superiore
-	- **URG** indica la presenza di dati che il mittente ha marcato come urgenti
+- **Opzioni** 
+- Vari **flag**:
+	- il bit **ACK** indica che il segmento contiene un ACK relativo ad un segmento
+	- **RST, SYN, FIN** sono usati per impostare la connessione
+	- **CWR, ECE** utili nel controllo della congestione
 
-### Numeri di sequenza e numeri di ACK
-I numeri di sequenza e di ACK sono tra i campi più importanti dell'intestazione TCP e rappresentano una parte critica del servizio di trasferimento dati affidabile di TCP. 
-TCP vede i dati come un flusso di byte ordinati e applica i numeri di sequenza al flusso di byte trasmessi e non alla serie di segmenti. 
-Il **numero di sequenza per un segmento** è il numero nel flusso di byte del primo byte del segmento.
-
-Supponiamo che A vuole inviare un file (flusso di dati) da 500.000 byte, che l'MSS valga 1000 byte e che il primo byte del flusso sia numerato con 0. TCP costruisce quindi $500.000/1000=500$ segmenti per il flusso, applicando al primo segmento il numero 0, al secondo 1000 e così via
+### Numeri di Sequenza e Numeri di ACK
+I numeri di sequenza e di ACK sono fondamentali per garantire il trasferimento dati affidabile. Il numero di sequenza di un segmento rappresenta il numero del primo byte nel flusso di dati. Ad esempio, un file di 500.000 byte con MSS di 1000 byte richiede 500 segmenti, ciascuno con un numero di sequenza crescente.
 
 ![[SOR/RETI/img/img61.png|center|500]]
+![[SOR/RETI/img/img62.png|center|500]]
+![[SOR/RETI/img/img63.png|center|500]]
 
-Il **numero di ACK** che l'host A scrive nei propri segmenti, è il *numero di sequenza* del prossimo byte atteso. Se trasmetto i primi 10 byte (quindi ho un segmento con numero di sequenza = 0 che contiene 10 byte) il numero di ACK sarà 10 (perché dopo aver ricevuto i byte da 0 a 9, attendo l'arrivo del byte 10)
-
-![[SOR/RETI/img/img62.png|center|500]]![[SOR/RETI/img/img63.png|center|500]]
-
-## Timeout e stima dell'RTT
-TCP utilizza un meccanismo di timeout e ritrasmissione per recuperare i segmenti persi. Nonostante il meccanismo di timeout risulti semplice, l'implementazione in TCP crea alcuni problemi. Il problema più grande è la durata degli intervalli di timeout, che deve necessariamente essere maggiore dell'RTT, ma quanto maggiore deve essere?
-
-Consideriamo come il protocollo stimi l'RTT. Denotiamo con *SampleRTT* la misura dell'RTT di un segmento, ovvero il tempo che passa tra l'invio del segmento e la ricezione dell'ACK. Questo valore può variare in base alla congestione nei router e al carico sugli host e a causa di questo il valore di SampleRTT può essere atipico. 
-
-Possiamo effettuare una stima calcolando una media dei valori di SampleRTT. Ogni volta che si ottiene un nuovo SampleRTT, si aggiorna la stima nel seguente modo $$\text{EstimatedRTT}=(1-\alpha)\cdot\text{EstimatedRTT}+\alpha\cdot\text{SampleRTT}$$
-Questo tipo di stima attribuisce maggiore importanza ai campioni recenti rispetto a quelli vecchi, il che è migliore in quanto quelli più recenti riflettono meglio la congestione della rete. 
+## Timeout e Stima dell'RTT
+TCP usa un meccanismo di timeout per ritrasmettere i segmenti persi. Il timeout viene impostato in base all'**RTT stimato** (round-trip time) e alla sua **variabilità** (DevRTT).
 
 ![[SOR/RETI/img/img65.png|center|500]]
 
-Oltre alla stima dell'RTT è importante possedere la misura della sua variabilità, che è la stima di quanto SampleRTT si discosta da EstimatedRTT $$\text{DevRTT}=(1-\beta)\cdot\text{DevRTT}+\beta\cdot\Big|\text{SampleRTT}-\text{EstimatedRTT}\Big|$$
-Se i valori dell'RTT presentano fluttuazioni limitate, allora DevRTT sarà piccolo.
-
-Introdotti questi valori possiamo valutare l'intervallo del timeout per TCP. Ovviamente il timeout non può essere inferiore al valore di EstimatedRTT, altrimenti si verificano ritrasmissioni non necessarie, ma allo stesso tempo non può essere molto maggiore di EstimatedRTT altrimenti i segmenti non sarebbero ritrasmessi rapidamente, comportando gravi ritardi.
-
-La soluzione è quello di impostare il timeout a EstimatedRTT più un certo margine, dettato proprio da DevRTT $$\text{TimeoutInterval}=\text{EstimatedRTT}+4\cdot\text{DevRTT}$$
-## Trasferimento dati affidabile
-TCP crea un servizio di trasporto dati affidabile al di sopra dell'inaffidabile IP, assicurando che il flusso di byte inviato non subisca perdite o alterazioni. Vediamo come.
-
-Supponiamo che l'host A stia inviando un file di grandi dimensioni all'host B. Esistono tre eventi principali relativi alla trasmissione e ritrasmissione, vediamo come si comporta il mittente:
-- **dati provenienti dall'applicazione**: TCP incapsula in un segmento i dati che arrivano dall'applicazione, aggiungendo un numero di sequenza, passandolo ad IP. Se il timer non è già attivoper qualche altro segmento, questo viene attivato
-- **timeout**: ritrasmette il segmento che ha causato il timeout e riavvia il timer
-- **ricezione di un ACK**: Sia $y$ l'ACK ricevuto. Se $y>\text{SendBase}$ aggiorna $\text{SendBase}=y$ e se esistono segmenti senza ACK riavvia il timer
-
-Vediamo nella tabella sotto, come il destinatario genera gli ACK di TCP
+## Trasferimento Dati Affidabile
+TCP garantisce il trasferimento dati affidabile con tre eventi principali:
+1. **Dati provenienti dall'applicazione**: vengono segmentati e inviati.
+2. **Timeout**: ritrasmissione del segmento scaduto.
+3. **ACK ricevuto**: aggiornamento del numero di base.
 
 | Evento                                                                                                           | Azione Mittente                                                                                                                    |
 | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Arrivo di segmento con numero di sequenza atteso. Tutti i dati fino al numero di sequenza sono stati riscontrati | ACK ritardato. Attende 500ms per l'arrivo di un altro segmento. Se non arriva viene inviato l'ACK                                  |
-| Arrivo di un segmento con numero di sequenza atteso. Un segmento ordinato è in attesa dell'ACK                   | Invia immediatamente un singolo ACK cumulativo, riscontrando entrambi i segmenti                                                   |
-| Arrivo non ordinato di segmento con numero di sequenza superiore a quello atteso. C'è un buco.                   | Invia immediatamente ACK duplicato, indicando il numero di sequenza del prossimo byte atteso, che è l'estremità inferiore del buco |
-| Arriva un segmento che colma parzialmente o completamente il buco nei dati ricevuti                              | Invia immediatamente un ACK, ammesso che il segmento cominci all'estremità del buco                                                |
+| Arrivo di segmento con numero di sequenza atteso. Tutti i dati fino al numero di sequenza sono stati riscontrati | ACK ritardato (fino a 500 ms)                                                                                                      |
+| Arrivo di un segmento con numero di sequenza atteso. Un segmento ordinato è in attesa dell'ACK                   | Invia un ACK cumulativo                                                                                                            |
+| Arrivo di segmento fuori sequenza superiore a quello atteso (buco)                                               | ACK duplicato con il numero del prossimo byte atteso                                                                               |
+| Segmento che colma il buco nei dati ricevuti                                                                     | Invia immediatamente un ACK                                                                                                        |
+
 ![[SOR/RETI/img/img66.png|center|500]]
 ![[SOR/RETI/img/img67.png|center|300]]
 
-### Ritrasmissione rapida
-Un problema legato alle ritrasmissioni è che il periodo di timeout può rivelarsi molto lungo. Supponiamo che il mittente invii tanti segmenti in pipeline e che venga perso il secondo segmento (c'è un buco). Da questo momento il destinatario risponderà con ACK relativi al primo segmento ricevuto. Il mittente alla ricezione di questi **3 ACK duplicati**, capisce che c'è un buco e viene ritrasmesso il segmento non riscontrato col più piccolo numero di sequenza.
+### Ritrasmissione Rapida
+Quando il mittente riceve **3 ACK duplicati**, ritrasmette immediatamente il segmento non riscontrato con il numero di sequenza più piccolo.
 
 ![[SOR/RETI/img/img68.png|center|300]]
 
-## Controllo di flusso
-Gli host riservano dei buffer di ricezione in cui vengono posizionati i byte ricevuti, da cui vengono poi letti dall'applicazione associata. Quest'ultimo, però, non legge necessariamente nell'istante in cui arrivano i byte, perché potrebbe essere occupata in altro. Se l'applicazione è lenta nella lettura dei dati può accadere che il mittente, inviando ad una velocità più elevata, mandi in overflow il buffer di ricezione.
+## Controllo di Flusso
+TCP regola la velocità di trasmissione del mittente per evitare il sovraccarico del buffer del ricevente tramite la **finestra di ricezione** (rwnd). Questo garantisce che la quantità di dati non riscontrati dal mittente sia sempre gestibile dal destinatario.
 
-TCP offre un **servizio di controllo di flusso** per evitare la saturazione del buffer ricevente, paragonando la frequenza di invio del mittente con quella di lettura del ricevente. TCP realizza il controllo di flusso facendo mantenere una variabile detta **finestra di ricezione**, che fornisce al mittente un'indicazione dello spazio libero nel buffer del destinatario.
+## Gestione della Connessione TCP
 
-Supponiamo che A stia invando un grande file a B. Quest'ultimo alloca un buffer di ricezione, che ha dimensione `RcvBuffer`. Definiamo anche le variabili:
-- `LastByteRead`: numero dell'ultimo byte nel flusso di dati che il processo applicativo in B ha letto dal buffer
-- `LastByteRcvd`: numero dell'ultimo byte che proviene dalla rete che è stato copiato nel buffer di ricezione di B
-Dato che TCP non può mandare in overflow il buffer, deve valere: $$\text{LastByteRcvd - LastByteRead}\leq\text{RcvBuffer}$$La finestra di ricezione, che indichiamo con `rwnd`, viene impostata alla quantità di spa zio disponibile nel buffer: $$\text{rwnd}=\text{RcvBuffer - [LastByteRcvd - LastByteRead]}$$
-L'host B comunica all'host A quanto spazio è disponibile nel buffer, scrivendo il valore corrente di `rwnd` (che è dinamico), nal campo *finestra di ricezione* dei segmenti che manda ad A. All'inizio della comunicazione (buffer vuoto) vale che `rwnd = RcvBuffer`
-
-L'host A tiene traccia di due variabili:
-- `LastByteSent`
-- `LastByteAcked`
-Osserviamo che la differenza algebrica delle due variabili indica la quantità di dati spediti da A per cui non si è ricevuto ACK. 
-Per garantire che l'host A non mandi in overflow il buffer di ricezione di B, durante tutta la connessione deve valere $$\text{LastByteSent - LastByteAcked}\leq\text{rwnd}$$
-## Gestione della connessione TCP
-Vediamo come viene stabilita e rilasciata una connessione TCP. Supponiamo che un host client vuole iniziare una connessione con un host server. La connesione viene stabilita mediante **handshaking a 3 vie**, che serve a dimostrare che entrambi gli host sono disponibili alla connessione ed è  necessaria per concordare i parametri di connessione.
+La connessione TCP viene stabilita tramite **handshake a tre vie**:
+1. Il client invia un segmento **SYN**.
+2. Il server risponde con un **SYNACK**.
+3. Il client conferma con un segmento di ACK.
 
 ![[SOR/RETI/img/img69.png|center|500]]
-1. TCP lato client invia un segmento speciale, detto **SYN**, al TCP lato server. Il segmento non contiene dati a livello applicativo, ma il bit SYN nell'intestazione è posto a 1. Inoltre il client sceglie un numero di sequenza casuale (che chiamiamo `client_isn`) e lo pone nell'apposito campo del segmento SYN, incpasula il segmento in un datagramma IP e lo invia al server.
-2. All'arrivo del datagramma IP col segmento SYN al server, questo viene estratto, vengono allocati i buffer e le variabili TCP e invia indietro un segmento di connessione approvata al client TCP. Questo segmento contiene: il *bit SYN* posto a 1, il campo *ACK* che ottiene il valore `client_isn + 1` e genera il proprio numero di sequenza `server_isn` che pone nel campo numero di sequenza. Il segmento appena creato viene detto **segmento SYNACK**
-3. Alla ricezione del segmento SYNACK, il client alloca il buffer e le variabili di connessione. Il client invia al server un altro segmento in risposta al SYNACK ricevuto. Il client pone i valori `server_isn + 1` nel campo ACK e il bit SYN a 0 dato che la connessione è stabilita.
+
+La connessione viene chiusa con un segmento **FIN** inviato da entrambe le parti.
 
 ![[SOR/RETI/img/img70.png|center|500]]
-Per *chiudere la connessione*, client e server chiudono ciascuno il proprio lato della connessione, inviando il segmento TCP con il bit **FIN** posto a 1.
-
 # Principi del controllo della congestione
 Il [[#Controllo di flusso|controllo di flusso]] riguardava la possibilità che un singolo mittente sovraccaricasse il destinatario. La **congestione** sulla rete si verifica quando troppe sorgenti inviano troppi dati ad una velocità elevata per essere gestiti dalla rete.
 
@@ -379,13 +338,13 @@ La figura confronta throughput e traffico immesso nella rete nell'ipotesi che ci
 
 ## Approcci al controllo della congestione
 Consideriamo due casi pratici: 
-- **Controllo di congestione end-to-end**. Il livello di rete non fornisce supporto al livello di trasporto per il controllo della congestione, che deve essere dedotta dagli host in base al comportamento della rete, ovvero osservando la perdita di pacchetti e ritardi che sono indicatori di congestione di rete. 
-- **Controllo di congestione assistito dalla rete**. I componenti a livello di rete (router) forniscono un feedback al mittente sullo stato di congestione della rete, mediante un avviso diretto detto **chokepacket**.
+- **Controllo di congestione end-to-end**. Il controllo della congestione è gestito solo dagli host, che deducono la congestione attraverso segnali come la perdita di pacchetti o l'aumento dei ritardi.
+- **Controllo di congestione assistito dalla rete**. La rete stessa invia segnali di congestione, come i _chokepacket_, per indicare agli host di ridurre la velocità di trasmissione.
 
 ![[SOR/RETI/img/img78.png|center|500]]
 
 ## Controllo di congestione TCP
-Nella variante classica, TCP utilizza il controllo della congestione end-to-end e consiste nell'imporre a ciascun mittente un limite al tasso di invio sulla propria connessione in funzione della congestione di rete percepita.
+TCP utilizza il controllo della congestione end-to-end e impone a ciascun mittente un limite al tasso di invio sulla propria connessione in funzione della congestione di rete percepita.
 
 Il mittente può aumentare la velocità di trasmissione fino a quando non si verifica la perdita di pacchetti, sintomo di congestione; in questo caso inizia a diminuire la velocità di invio.
 
@@ -395,7 +354,9 @@ Il valore di `cwnd` viene regolato dinamicamente in risposta alla congestione de
 
 Il mittente TCP percepisce la presenza di congestione sul percorso mediante gli *eventi di perdita*, quindi al verificarsi di timeout o alla ricezione di tre ACK duplicati dal destinatario. In presenza di congestione, i router sul percorso vanno in overflow, eliminando i datagrammi che non possono accedere al buffer.
 
-L'approccio del controllo di congestione TCP è quello dell'**incremento additivo e dell'incremento moltiplicativo (AIMD)** . Formalmente, quando non vengono rilevate perdite, la velocità di invio viene aumentata di 1 MSS ogni RTT, mentre ad ogni evento di perdita la velocità viene dimezzata.
+L'approccio del controllo di congestione TCP è quello dell'**incremento additivo e dell'incremento moltiplicativo (AIMD)**:
+- La velocità di invio aumenta linearmente quando non ci sono perdite.
+- Quando c'è congestione, il tasso di invio viene dimezzato.
 
 ![[SOR/RETI/img/img80.png|center|500]]
 
@@ -432,14 +393,14 @@ Durante questa fase, il valore di `cwnd` è aumentato di 1 MSS per ogni ACK dupl
 ### TCP CUBIC
 L'approccio AIMD è una strategia che dimezza la velocità di invio al verificarsi di un evento di perdita e la aumenta piuttosto lentamente nel tempo. Ci chiediamo se esiste un modo migliore di AIMD per sondare la larghezza di banda utilizzabile. 
 
-Se lo stato del collegamento congestionato deove si è verificata la perdita non è cambiato, è meglio aumentare la velocità di invio rapidamente per avvicinarsi alla velocità pre-perdita per sondare meglio la larghezza di banda. Questa intuizione è al centro della versione **TCP CUBIC**, che differisce da TCP Reno pricipalmente nella fase di congestion avoidance.
+Migliora AIMD aumentando rapidamente la velocità di invio quando si è lontani dalla soglia di congestione, e rallenta l'incremento vicino al valore massimo di `cwnd`.
 
 Sia $W_{max}$ la dimensione della `cwnd` nell'istante in cui viene rilevata la perdita. Sia $K$ l'istante futuro in cui la `cwnd` raggiungerà nuovamente il valore $W_{max}$. TCP CUBIC *incrementa maggiormente* la dimensione di `cwnd` quando è lontano dal valore $K$ (e quindi quando il valore di `cwnd` è lontano dal valore $W_{max}$), mentre *decrementa lentamente* in prossimità di $W_{max}$, e solo in questo momento esamina con maggior cautela la larghezza di banda.
 
 ![[SOR/RETI/img/img81.png|center|500]]
 
 ### Controllo di congestione basato su RTT
-TCP, sia CUBIC che classico, rilevano la congestione primariamente con la perdita di pacchetti. Tuttavia la congestione può essere rilevata in altri modi, ad esempio analizzando l'RTT. Infatti, se ho un router congestionato, inviando sempre più dati aumenterà anche l'RTT perché questi dati finiscono nella coda, aumentando il tempo di accodamento e di conseguenza aumentando l'RTT.
+TCP, sia CUBIC che classico, rilevano la congestione primariamente con la perdita di pacchetti. Tuttavia la congestione può essere rilevata in altri modi, ad esempio analizzando l'RTT.
 
 Misurando l'RTT, posso indiciduare il valore $RTT_{min}$, ovvero il minimo delle misurazioni degli RTT, che si misura quando il percorso non è congestionato. Il thruoghput massimo varrà allora $t_{max}=\text{cwnd}/RTT_{min}$. 
 L'idea di TCP Vegas (basato su misura dell'RTT) è la seguente:
