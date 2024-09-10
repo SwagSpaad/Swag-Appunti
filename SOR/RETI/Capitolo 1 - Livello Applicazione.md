@@ -343,7 +343,7 @@ SMTP (Simple Mail Transfer Protocol) utilizza TCP per trasferire in modo affidab
 ![[SOR/RETI/img/img27.png|center|500]]
 
 ### Confronto con HTTP
-Entrambi i protocolli trasferiscono file tra host, ma HTTP è un protocollo **PULL** (gli utenti richiedono oggetti), mentre SMTP è un protocollo **PUSH** (il server invia file al server di destinazione). Inoltre, SMTP richiede che tutto il contenuto sia codificato in ASCII a 7 bit, mentre HTTP non ha questa restrizione. HTTP invia oggetti separati in messaggi distinti, mentre SMTP invia più oggetti in un unico messaggio.
+Entrambi i protocolli trasferiscono file tra host, ma HTTP è un protocllo **PULL** (gli utenti richiedono oggetti), mentre SMTP è un protocollo **PUSH** (il server invia file al server di destinazione). Inoltre, SMTP richiede che tutto il contenuto sia codificato in ASCII a 7 bit, mentre HTTP non ha questa restrizione. HTTP invia oggetti separati in messaggi distinti, mentre SMTP invia più oggetti in un unico messaggio.
 
 ### Formato dei messaggi di posta elettronica
 Un'email è composta da linee di intestazione e dal corpo del messaggio, separati da una riga vuota. 
@@ -405,15 +405,19 @@ Osserviamo che sono stati inviati otto messaggi DNS per ottenere la mappatura, v
 Il caching DNS migliora le prestazioni, memorizzando temporaneamente i risultati delle query. Tuttavia, le voci nella cache possono diventare obsolete se l’indirizzo IP cambia prima della scadenza del TTL.
 
 ## Record DNS
-I server che implementano il database distribuito, memorizzano i **record di risorsa (RR)**. Ogni messaggio di risposta DNS trasporta uno o più RR. Un record di risorsa ha il seguente formato: `(name, value, type, ttl)`.
-**TTL** indica l'intervallo di tempo prima che il record venga rimosso dalla cache. I significati dei campi `name` e `value` dipendono dal campo `type`:
-- se `type=A` allora `name` indica l'hostname e `value` indica l'indirizzo IP
-- se `type=NS` allora `name` indica il dominio (es. foo.com) e `value` indica l'hostname del server autoritativo del dominio
-- se `type=CNAME` allora `name` indica il nome alias di qualche nome canonico e `value` indica il nome canonico
--  se `type=MX` allora `value` è il nome di un mail server associato a `name.` Questo tipo di record permette ai nomi dei server di posta di avere alias.
+I **record di risorsa (RR)** in un server DNS contengono informazioni per la risoluzione dei nomi di dominio. Ogni record ha la struttura: `(name, value, type, ttl)`, dove il **TTL** definisce per quanto tempo il record è valido.
+
+Il campo **type** del record determina il significato di `name` e `value`:
+
+- **type=A**: `name` rappresenta un hostname e `value` è il suo indirizzo IP.
+- **type=NS**: `name` è un dominio (es. foo.com) e `value` è l'hostname del server  autoritativo che gestisce quel dominio.
+- **type=CNAME**: `name` è un alias di un altro nome (detto "canonico") e `value` è il nome canonico.
+- **type=MX**: `value` è l'hostname di un mail server associato a `name`, che permette ai server di posta di avere alias per semplificare la gestione delle email.
+
+Questi record vengono usati per instradare richieste DNS, facilitando la conversione di nomi di dominio in indirizzi IP o indirizzando le email ai server corretti.
 
 ## Messaggi DNS
-I messaggi di richiesta e risposta DNS hanno lo stesso formato illustrato in figura,.
+I messaggi di richiesta e risposta DNS hanno lo stesso formato illustrato in figura.
 
 ![[SOR/RETI/img/img31.png|center|500]]
 
@@ -469,18 +473,14 @@ Anche in questo caso $NF$ aumenta linearmente in $N$, ma la sommatoria sotto lim
 ![[SOR/RETI/img/img33.png|center|500]]
 
 ## BitTorrent
-BitTorrent è un protocollo P2P per la distribuzione di file. Nel gergo di BitTorrent, l'insieme di peer che partecipano alla distribuzione di file è detto **torrent**. I peer in un torrent scaricano **chunk (parti)** del file di uguale dimensione, con una dimensione tipica di 256 kB. Quando un peer entra a far parte di un torrent, non ha chunk del file, ma col passare del tempo accumula sempre più chunk che, mentre scarica, invia ad altri. Una volta che il peer ha acquisito l'intero file, può lasciare il torrent o rimanere per continuare ad inviare chunk ad altri peer.
+BitTorrent è un protocollo P2P per la distribuzione di file. Un gruppo di peer che condividono un file è chiamato **torrent**. I peer scaricano e condividono **chunk** (parti) del file, solitamente di 256 kB. I peer accumulano chunk man mano che scaricano e, contemporaneamente, li inviano ad altri peer. Dopo aver scaricato l'intero file, un peer può restare nel torrent per continuare a condividere.
 
-Ciascun torrent ha un nodo di infrastruttura detta **tracker**. Quando un peer entra a far parte di un torrent, si registra presso il tracker, informandolo periodicamente che è ancora all'interno del torrent. In questo modo il tracker tiene traccia dei peer che stanno partecipando al torrent.
+Ogni torrent ha un **tracker**, che tiene traccia dei peer attivi. Quando un peer si unisce, il tracker fornisce un elenco di altri peer con cui può connettersi tramite TCP.
 
 ![[SOR/RETI/img/img34.png|center|500]]
 
-In figura vediamo che Alice entra a far parte di un torrent. Il tracker le invia un sottoinsieme di peer partecipanti, fornendo i loro indirizzi IP. Alice tenta di stabilire connessioni TCP con questi peer, che, se stabilite, diventano suoi *peer vicini*. Il numero di peer vicini varia nel tempo, in quanto i peer possono lasciare il torrent o stabilire una connessione TCP con Alice .
-
-Ogni peer possiede un sottoinsieme dei chunk di un file, che differisce tra peer. Alice richiede periodicamente ai suoi vicini la lista dei chunk che possiedono e invia richieste per i chunk mancanti.
-
-Le decisioni principali che Alice deve prendere sono:
-1. **Quali chunk richiedere:** Alice adotta la strategia **rarest first**, richiedendo per primi i chunk più rari tra quelli mancanti, ovvero i chunk con il minor numero di copie ripetute tra i peer vicini e richiederli per primi, in modo da ridistribuirli più velocemente.
+Le due decisioni principali che un peer deve prendere sono:
+1. **Quali chunk richiedere**: Il peer usa la strategia **rarest first**, richiedendo i chunk meno disponibili tra i suoi vicini.
 2. **A quali vicini inviare chunk:** BitTorrent usa un algoritmo di scambio **tit-for-tat**. Alice assegna priorità ai peer che le inviano dati alla velocità più alta, selezionando quattro **peer unchoked** a cui inviare chunk. La velocità viene ricalcolata ogni 10 secondi e ogni 30 secondi viene scelto un nuovo vicino **optimistically unchoked** per testare nuove connessioni. Se entrambi i peer trovano vantaggioso lo scambio, continueranno a inviarsi dati fino a trovare partner migliori.
 
 ### Streaming Video
