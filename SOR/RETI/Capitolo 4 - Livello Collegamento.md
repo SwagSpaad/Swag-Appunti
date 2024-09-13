@@ -6,11 +6,11 @@ Nella figura vediamo come un host wireless voglia inviare un datagramma a uno de
 Per ogni collegamento, il nodo trasmittente incapsula il datagramma in un **frame del livello di collegamento**.
 
 # Servizi del livello di collegamento
-Il servizio base del livello di collegamento è quello del trasporto di datagrammi tra nodi adiacenti lungo un singolo canale di comunicazione. Inoltre i vari protocolli a livello di collegamento possono anche offrire diversi servizi:
-- **framing**: la maggioranza dei protocolli incapsulano i datagrammi all'interno di frame prima di trasmetterli. I frame sono costituiti da un campo dati e un'intestazione.
-- **accesso al collegamento**: un protocollo che controlla l'accesso al mezzo trasmissivo (protocollo di tipo **MAC, Medium Access Control**) specifica le regole con cui immettere i frame nel collegamento.
-- **consegna affidabile**: questo servizio è spesso *utilizzato per i collegamenti soggetti a elevati tassi di errore*, ad esempio quelli wireless. L'idea è quello di correggere localmente l'errore, piuttosto che ritrasmettere i dati dalla sorgente alla destinazione. 
-- **rilevazione e correzione degli errori**: gli errori nei bit sono causati dall'attenuazione di segnale e dai disturbi elettromagnetici. Per far sì che il trasferimento sia affidabile, è necessario rilevare gli errori, perché non è utile inviare datagrammi con errori. 
+Il servizio principale del livello di collegamento è il trasporto di datagrammi tra nodi adiacenti su un singolo canale di comunicazione. Alcuni protocolli offrono servizi aggiuntivi, tra cui:
+- **Framing**: I datagrammi vengono incapsulati in frame, che includono un campo dati e un'intestazione.
+- **Accesso al collegamento**: I protocolli **MAC** (Medium Access Control) gestiscono le regole per inserire i frame nel collegamento.
+- **Consegna affidabile**: Utilizzato su collegamenti con* tassi di errore elevati*, come quelli wireless, per correggere gli errori localmente invece di ritrasmettere i dati.
+- **Rilevazione e correzione degli errori**: Necessario per evitare la trasmissione di datagrammi con errori.
 
 # Dov'è implementato il livello di rete
 Il livello di rete è implementato in un adattatore di rete, detto **scheda di rete (NIC)**. Il cuore della scheda di rete è il controller a livello di collegamento, un chip dedicato che implementa i servizi visti precedentemente.
@@ -24,11 +24,7 @@ Il livello di rete è implementato in un adattatore di rete, detto **scheda di r
 In figura vediamo uno scenario di rilevazione e correzione degli errori.
 
 ![[SOR/RETI/img/img102.png|center|500]]
-
-Il nodo trasmittente, aggiunge dei bit $ECD$ ai dati $D$, che comprendono i datagrammi, ma anche l'intestazione del protocollo dello stato di collegamento. I dati D e i bit ECD sono inviati in un frame al nodo ricevente, che legge una sequenza $D^{'}$ ed $ECD^{'}$ che può essere diversa dall'originale, a causa di qualche errore di trasmissione. 
-Il compito del ricevente è quello di determinare se $D^{'}=D$, potendo contare solo su $D^{'}$ e $ECD^{'}$.
-
-Tuttavia anche con l'uso di ECD, c'è una possibilita che ci siano errori non rilevati, causando un invio di informazioni errate al livello di rete. In genere per limitare le probabilità che accadano questi eventi, ci sono tecniche più sofisticate che necessitano di calcoli più  complessi e la trasmissione di molti bit aggiuntivi.
+Il nodo trasmittente aggiunge bit di controllo degli errori (EDC) ai dati (D), che includono datagrammi e intestazioni. Il nodo ricevente riceve una sequenza $D^{'}$ ed $EDC^{'}$ che potrebbe differire dall'originale a causa di errori di trasmissione. Il ricevente deve determinare se $D^{'} = D$ utilizzando solo $D^{'}$ ed $EDC^{'}$. Anche con EDC, c'è la possibilità di errori non rilevati, per cui vengono impiegate tecniche più sofisticate.
 
 Vedremo tre tecniche per rilevare errori nei dati trasmessi: 
 - controllo di parità, per la base della rilevazione e correzione di errori
@@ -40,31 +36,28 @@ Questa è la forma più semplice di rilevamento degli errori, che utilizza un si
 Supponiamo che i dati $D$ da inviare siano costituite da $d$ bit. In uno schema di *parità pari*, si aggiunge un bit addizionale scegliendo il suo valore in modo da rendere pari il numero di bit 1 (includendo anche il bit di parità) nei bit trasmessi.  
 In uno schema di *parità dispari* il valore del bit di parità è scelto in modo che ci sia un numero dispari di bit 1.
 
+Il **controllo di parità** è la forma più semplice di rilevamento degli errori, basato su un **bit di parità**. Nel caso di *parità pari*, si aggiunge un bit in modo che il numero di bit 1 sia pari, mentre per *parità dispari* si assicura che il numero di bit 1 sia dispari. 
+
 ![[SOR/RETI/img/img103.png|center|500]]
 
-Con un solo bit di parità, il ricevente deve semplicemente contare il numero di bit 1 tra quelli ricevuti. Se trova un numero dispari di bit 1, in uno scenario di parità pari, sa che si è verificato almeno un errore (o meglio un numero *dispari* di errori) in un bit.
-Cosa succede se si verifica un numero pari di errori? In questo caso ci troviamo in presenza di un errore non rilevato. 
-
-Se la probabilità di errori nei bit è bassa e si può assumere che gli errori siano indipendenti, allora l'eventualità di errori multipli in un singolo pacchetto è ridotta e un solo bit di parità è sufficiente. Ma nella realtà gli errori tendono a verificarsi a gruppi di bit consecutivi (*burst*) e la probabilità che non vengano rilevati errori a burst in un frame protetto da un solo bit si avvicina al 50%. A questo scopo è necessario adottare una strategia migliore per la rilevazione degli errori. 
+Questo metodo rileva errori singoli, ma nella realtà gli errori tendono a verificarsi a gruppi di bit consecutivi (burst), per cui è necessario utilizzare una strategia diversa.
 
 ![[SOR/RETI/img/img104.png|center|500]]
 
 In figura osserviamo una generalizzazione bidimensionale dello schema di parità con un bit. In questo caso i $d$ bit del dato $D$ sono suddivise in $i$ righe e $j$ colonne, per ognuna delle quali viene calcolato un bit di parità (sia di riga che di colonna). 
 I risultanti $i+j+1$ bit di parità contengono i bit per la rilevazione dell'errore del frame del link dati. 
 
+
 ![[SOR/RETI/img/img105.png|center|500]]
 
-Supponiamo che si verifichi un solo errore nei $d$ bit originali (in figura a sinistra). Con questo schema di **parità bidimensionale** i bit di parità della colonna e della riga contenenti il bit errato, individueranno l'errore, permettendo al ricevente, oltre alla *rilevazione dell'errore*, di *identificare il bit alterato e correggerlo*. 
-
-Nonostante questo, lo schema può solamente rilevare (ma non correggere) qualsiasi combinazione di due o più errori. *Il controllo di parità è adatto quando la probabilità di errori nei bit è bassa e gli errori sono indipendenti*
+Un'estensione bidimensionale del controllo di parità permette sia la *rilevazione che la correzione di errori singoli*, ma **non è in grado di correggere errori multipli**.
 
 ![[SOR/RETI/img/img106.png|center|500]]
 ![[SOR/RETI/img/img107.png|center|500]]
 ![[SOR/RETI/img/img108.png|center|500]]
 
 ## Checksum
-Nelle tecniche che utilizzano il checksum i $d$ bit di dati sono trattati come una sequenza di numeri interi da $k$ bit. 
-Il mittente suddivide i dati in sequenze da 16 bit, sommandole tra di loro in complemento a 1, invertendo tutti i bit del risultato finale, ottenendo la checksum, che invio al destinatario insieme al messaggio. Il destinatario esegue nuovamente la somma in complemento a 1, includendo anche la checksum. Se il risultato è costituito da 16 bit a 1, vuol dire che non sono stati rilevati errori, altrimenti si.
+Il **checksum** tratta i dati come una sequenza di numeri. Il mittente somma i blocchi di dati in complemento a 1 e inverte il risultato per ottenere il checksum, che invia insieme al messaggio. Il destinatario effettua nuovamente la somma, verificando la correttezza dei dati. Il checksum è una tecnica semplice, usata soprattutto a livello di trasporto.
 
 Il metodo di checksum fornisce una protezione agli errori deboli rispetto alle tecniche CRC, utilizzate nel livello di collegamento. La motivazione per cui il checksum è utilizzato a livello di trasporto è a causa dell'implementazione lato software che richiede una tecnica di rilevazione di errore semplice e veloce per non intaccare le prestazioni. 
 Nello strato di collegamento, la rilevazione dell'errore è implementata direttamente nell'hardware, consentendo di effettuare rapidamente le operazioni per il controllo dell'errore.
@@ -117,7 +110,7 @@ Idealmente un protocollo ad accesso multiplo per un canale con la velocità di $
 ## Protocolli a suddivisione del canale
 Abbiamo già visto nell'introduzione che il [[Capitolo 0 - Introduzione ad Internet#Commutazione di circuito#TDM (Time Division Multiplexing)|multiplexing a divisione di tempo]] e quello a [[Capitolo 0 - Introduzione ad Internet#FDM (Frequency Division Multiplexing)|divisione di frequenza]], sono due tecniche utilizzate per suddividere la larghezza di banda di un canale broadcast.
 
-Supponiamo che il canale broadcast supporti $N$ nodi e che abbia una velocità di $R$ bps. TDM suddivide il tempo in intervalli di tempo e poi divide ciascun intervallo in $N$ **slot temporali** e li assegna ad ogni nodo. Ogni volta che un nodo vuole trasmettere, lo fa durante lo slot di tempo ad esso assegnato. Le dimensioni del frame vengono scelte in modo tale da consentire la trasmessione di un singolo pacchetto. *Inoltre gli slot di tempo inutilizzati restano inutilizzati*. 
+Supponiamo che il canale broadcast supporti $N$ nodi e che abbia una velocità di $R$ bps. TDM suddivide il tempo in intervalli di tempo e poi divide ciascun intervallo in $N$ **slot temporali** e li assegna ad ogni nodo. Ogni volta che un nodo vuole trasmettere, lo fa durante lo slot di tempo ad esso assegnato.
 Il TDM elimina le collisioni ed ottiene una velocità di trasmissione dedicata di $R/N$ bps durante il frame di tempo, ha però degli svantaggi:
 - un nodo, anche se è l'unico ha frame da inviare, trasmette alla velocità di $R/N$ bps.
 - un nodo per trasmettere deve attendere il suo turno anche se è l'unico che ha frame da spedire
@@ -176,9 +169,10 @@ Vediamo però prima di tutto le operazioni dal punto di vista di una scheda di r
 3. Durante la trasmissione verifica la presenza di eventuali segnali provenienti dalle altre schede di rete presenti sul canale (controllo della collisione)
 4. Se non rileva energia di segnale allora la trasmissione è stata eseguita con successo. Al contrario interrompe immediatamente la trasmissione del frame
 5. Dopo aver annullato la trasmissione, la scheda di rete aspetta un tempo casuale e torna al passo 2
-Resta da chiarire qual è il tempo di attesa casuale opportuno da scegliere, detto **tempo di backoff**.
-Se il numero di nodi che collidono è piccolo e l'intervallo è grande, allora i nodi rimarranno fermi per troppo tempo prima di ripetere la trasmissione. Se il numero di nodi che collidono è grande e l'intervallo di tempo è piccolo allora la probabilità di collisioni aumenta. 
-L'algoritmo di **binary exponential backoff** risolve questo problema. Quano il trasmettitore riceve l'$n-$esima collisione durante la trasmissione, stabilisce casualmente un valore $K$ tra $\{0,1,2,\dots,2^{n}-1\}$. Più è alto il numero di collisioni e maggiore sarà l'intervallo da cui scegliere $K$.
+
+Il tempo di attesa casuale dopo una collisione è chiamato **tempo di backoff**. Un algoritmo chiamato **binary exponential backoff** gestisce questo processo: 
+- Se il trasmettitore rileva la $n$-esima collisione, sceglie un valore casuale $K$ da $\{0, 1, 2, \dots, 2^n - 1\}$. 
+- Aumentando il numero di collisioni, aumenta l'intervallo da cui scegliere $K$, riducendo la probabilità di collisioni successive.
 
 ![[SOR/RETI/img/img114.png|center|500]]
 
@@ -201,44 +195,34 @@ Anche questo protocollo non è privo di problemi:
 - **singolo punto di rottura**
 
 # LAN 
-Le **Local Area Network** sono delle reti che coprono un'area limitata (abitazione, dipartimento ecc.). Le tecnologie principali, che approfondiremo in seguito, sono *Ethernet e Wireless*.
+Le **Local Area Network (LAN)** coprono un'area limitata, come abitazioni o dipartimenti. Le tecnologie principali includono **Ethernet** e **Wireless**.
 
 ## Indirizzi a livello di collegamento
-Host e router, oltre ad un indirizzo IP utile a livello di rete, hanno anche indirizzi a livello di collegamento. Nello specifico sono le interfacce dei nodi a possedere degli indirizzi, detti **indirizzi MAC**.
-
-L'indirizzo MAC è lungo 6 byte ($2^{48}$ indirizzi possibili), espressi in esadecimale. 
-
->**Oss.**
->Non esistono due schede di rete con stesso indirizzo MAC. Questo è  possibile perché la IEEE sorintende alla gestione degli indirizzi MAC, garantendo questa proprietà.
-
-Gli indirizzi MAC di una scheda di rete non cambia mai, indipendentemente dal luogo in cui il computer è utilizzato (a differenza degli indirizzi IP)
-
-Quando una scheda di rete vuole spedire un frame, inserisce l'indirizzo MAC di destinazione e lo immette nella LAN. A volte gli switch possono effettuare il broadcast di un frame in ingresso, inviandolo a tutte le interfacce in uscita, quindi una scheda di rete può ricevere un frame non indirizzato a lei. Ogni scheda di rete controlla se l'indirizzo MAC di destinazione corrisponde al proprio. In caso affermativo passa il frame a livello superiore, altrimenti lo scarta.
-
-Se la volontà della scheda di rete è quella di inviare il frame in modalità broadcost, inserisce un **indirizzo MAC broadcast** (tutti i 48 bit a 1, quindi FF-FF-FF-FF-FF-FF).
+Ogni host e router possiede, oltre all'indirizzo IP, un **indirizzo MAC** a livello di collegamento. Gli indirizzi MAC sono univoci, lunghi 6 byte (48 bit), e gestiti dalla IEEE.
+- Gli indirizzi MAC non cambiano mai, a differenza degli indirizzi IP. 
+- Quando una scheda trasmette un frame, inserisce l'indirizzo MAC di destinazione e lo invia nella LAN. Ogni scheda di rete controlla se l'indirizzo MAC di destinazione corrisponde al proprio. In caso affermativo passa il frame a livello superiore, altrimenti lo scarta.
+- Per inviare in modalità broadcast, si utilizza l'indirizzo **MAC broadcast** (FF-FF-FF-FF-FF-FF).
 
 ## Protocollo risoluzione degli indirizzi
-La domanda che ci poniamo è quella di come determinare l'indirizzo MAC di un interfaccia conoscendo il suo indirizzo IP. Questo è il compito del **protocollo di risoluzione degli indirizzi (ARP)**. 
+Il protocollo **ARP** risolve l'associazione tra indirizzo IP e indirizzo MAC. Ogni nodo mantiene una **tabella ARP** con mappature IP-MAC e un campo TTL che indica la validità della riga nella tabella. 
 
-Ogni nodo salva in RAM una **tabella ARP** in cui ogni record contiene la mappatura IP - MAC e un campo TTL, che indica quando eliminare la voce dalla tabella. 
-
-Supponiamo che il nodo A deve scoprire l'indirizzo MAC di B, che non è presente nella tabella ARP di A. In questo caso il nodo A utilizza ARP per trovare la mappatura, spedendo un **pacchetto ARP** che tra i suoi vari campi comprende anche quelli degli indirizzi IP e MAC di chi spedisce e riceve, inviandolo in broadcast specificando solamente l'indirzzo IP di B. Ogni nodo riceve la richiesta ARP, ma solo quello che ha l'IP corrispondente risponde ad A inviando un frame di risposta col suo indirizzo MAC, che provvederà ad inserire la mappatura nella propria tabella ARP. 
+Se un nodo A deve trovare l'indirizzo MAC di B: 
+1. A invia un **pacchetto ARP** in broadcast, specificando l'indirizzo IP di B. 
+2. Ogni nodo riceve la richiesta ARP, ma solo quello con l'indirizzo specificato (B) risponde con il proprio indirizzo MAC. 
+3. A aggiorna la sua tabella ARP.
 
 ### Inviare un datagramma ad un nodo esterno alla sottorete
 
 ![[SOR/RETI/img/img115.png|center|500]]
 
-In figura è illustrata una rete costituita da due sottoreti interconnesse da un router. Osserviamo che R possiede due indirizzi IP sulle sue due interfacce, il primo (111.111.111.110) relativo alla prima sottorete (quella di A) mentre il secondo relativo alla seconda sottorete (quella di B). 
-
-Supponiamo che A vuole inviare un datagramma a B, passando per R. Supponiamo inoltre che A conosca l'indirizzo IP di B e gli indirizzi IP e MAC dell'interfaccia di R nella propria sottorete. 
-Per l'invio A crea un datagramma IP con sorgente A e destinazione B, che incapsula in un frame a livello di collegamento che avrà come indirizzo MAC di destinazione, *l'indirizzo MAC dell'interfaccia di R della propria sottorete*, questo perché A, sapendo di appartenere ad una sottorete /24, confronta i 24 bit più significativi del proprio indirizzo con quelli dell'IP di B, capendo che B si trova in una diversa sottorete.
-Quando il frame viene ricevuto da R, lo passa a livello di rete e capisce di non essere il destinatario dall'indirizzo IP, determina quindi l'interfaccia di uscita e passa il datagramma a livello di collegamento. R crea quindi il frame contenente il nuovo indirizzo MAC di destinazione, quello di B, inoltrando il frame a quest'ultimo. 
+Se A vuole inviare un datagramma a B in un'altra sottorete, A invia il datagramma al **router** R. A crea un datagramma IP con destinazione B, incapsulato in un frame con l'indirizzo MAC dell'interfaccia di R. R inoltra il datagramma a B dopo averlo passato a livello di rete.
 
 ## Ethernet
-Ethernet è la tecnologia più diffusa per le reti LAN cablate. Nel corso del tempo ci sono state diverse topologie per l'utilizzo di Ethernet: 
-- **struttura a bus**: un cavo coassiale che passava per tutte le schede di rete (bus). Se si rompeva il cavo, tutta la rete crollava
-- **topologia a stella con hub**: tutti gli host erano interconnessi da un hub, un dispositivo che rigenera il segnale in entrata nell'interfaccia e lo inoltra a tutte le interfacce diverse dall'interfaccia di entrata. Se un hub riceve dei frame da due diverse interfacce contemporaneamente si verifica una collisione
-- **topologia a stella con switch**: l'hub centrale viene sostituito da uno switch, che è privo di collisione.
+
+**Ethernet** è la tecnologia più diffusa per le LAN cablate. Le topologie Ethernet includono: 
+- **Struttura a bus**: un singolo cavo che connette tutte le schede di rete. 
+- **Topologia a stella con hub**: l'hub inoltra i segnali ricevuti a tutte le interfacce. 
+- **Topologia a stella con switch**: sostituisce l'hub con uno switch, eliminando le collisioni.
 
 ### Struttura dei frame internet
 L'interfaccia trasmittente incapsula il datagramma IP in un frame Ethernet e lo passa a livello fisico. 
@@ -251,7 +235,7 @@ L'interfaccia trasmittente incapsula il datagramma IP in un frame Ethernet e lo 
 - **Dati**: contiene il datagramma IP. Ha una lunghezza minima di 46 byte.
 - **CRC**: consente alla scheda di rete ricevente di rilevare errori nel frame
 
-Ethernet è un protocollo **senza connessione**, ciò vuol dire che quando una scheda di rete vuole inviare un datagramma ad un host nella rete, non fa altro che incapsularlo in un frame Ethernet e immetterlo nella LAN, *senza handashake con la NIC destinataria*. Inoltre Ethernet non fornisce un **servizio affidabile a livello di rete**, infatti le schede riceventi non inviano ACK o NAK alle schede mittenti; i dati vengono recuperati solo se si utilizza un protocollo trasferimento dati affidabile a livello superiore (es. TCP). 
+Ethernet è un protocollo **senza connessione** e **non affidabile**: non usa handshake né invia ACK/NAK. L'affidabilità è garantita dai protocolli di livello superiore (es. TCP).
 
 ## Switch a livello di collegamento
 Lo switch è un **commutatore di pacchetti a livello di collegamento** ed il suo ruolo è quello di ricevere i frame in ingresso e inoltrarli sui collegamenti in uscita. Inoltre uno switch è invisibile agli host, infatti ogni nodo indirizza un frame ad un altro nodo invece che indirizzarlo allo switch. 
@@ -264,12 +248,9 @@ Queste operazioni sono eseguite mediante una tabella di commutazione composta da
 
 ![[SOR/RETI/img/img117.png|center|500]]
 
-Questa tabella viene costruita automaticamente in **autoapprendimento**, vediamo come.
-
-Quando uno switch riceve un frame, registra l'indirizzo MAC e il numero di collegamento del mittente e cerca nella tabella l'interfaccia di uscita tramite l'indirizzo MAC di destinazione:
-- se la destinazione è sull'interfaccia dalla quale è arrivato il frame, questo viene scartato
-- altrimenti il frame viene inoltrato sull'interfaccia indicata nella tabella
-Se, invece, la voce non viene trovata, allora lo switch esegue il **flood**, ovvero inoltra il frame a tutte le interfacce eccetto quella da cui è arrivato.
+La tabella è costruita tramite **autoapprendimento**. Quando lo switch riceve un frame, salva il MAC e l'interfaccia di collegamento del mittente e cerca l'interfaccia di uscita.
+- Se l'indirizzo di destinazione è noto, il frame viene inoltrato. 
+- Se non è noto, lo switch esegue un **flood** inviando il frame a tutte le interfacce.
 
 ### Confronto tra switch e router
 **Lavorano entrambi in store-and-forward**:

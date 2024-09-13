@@ -163,7 +163,6 @@ Questo protocollo garantisce la consegna affidabile dei dati anche in presenza d
 
 ![[SOR/RETI/img/img48.png|center|500]]
 
-
 #### Analisi delle prestazioni rdt3.0
 Il protocollo rdt3.0 è corretto funzionalmente, ma le prestazioni non sono il massimo in quanto si tratta di un protocollo di tipo stop-and-wait. Analizziamo la velocità di trasferimento, considerando questo caso. 
 
@@ -311,7 +310,7 @@ Ipotizziamo che un'applicazione nell'host A stia inviando dati sulla connessione
 La figura mostra le prestazioni della connessione dell'host A in questo scenario. 
 - Il grafico di sinistra mostra il **throughput per connessione** (ovvero il numero di byte per secondo inviati al ricevente): finché non supera il valore $R/2$ il throughput del ricevente è uguale al tasso di invio del mittente. Ma quando questo valore viene superato, il throughput resta $R/2$. Questo limite è conseguenza della condivisione del collegamento. 
 - Il grafico a destra mostra le **conseguenze** di operare al limite della capacità di collegamento, infatti quando il tasso di invio si avvicina a $R/2$, il ritardo medio cresce molto. Superato questo tasso, il ritardo tende all'infinito.
-In questo scenario vediamo quindi come *quando il tasso di arrivo dei pacchetti si avvicina alla capacità del collegamento, si rilevano lunghi ritardi**
+In questo scenario vediamo quindi come *quando il tasso di arrivo dei pacchetti si avvicina alla capacità del collegamento, si rilevano lunghi ritardi*
 
 ### Scenario 2
 Quando i buffer dei router hanno **dimensione limitata**, i pacchetti che arrivano a un buffer pieno vengono scartati. Se la connessione è affidabile, i pacchetti persi o corrotti vengono ritrasmessi.
@@ -354,7 +353,7 @@ Il valore di `cwnd` viene regolato dinamicamente in risposta alla congestione de
 
 Il mittente TCP percepisce la presenza di congestione sul percorso mediante gli *eventi di perdita*, quindi al verificarsi di timeout o alla ricezione di tre ACK duplicati dal destinatario. In presenza di congestione, i router sul percorso vanno in overflow, eliminando i datagrammi che non possono accedere al buffer.
 
-L'approccio del controllo di congestione TCP è quello dell'**incremento additivo e dell'incremento moltiplicativo (AIMD)**:
+L'approccio del controllo di congestione TCP è quello dell'**incremento additivo e decremento moltiplicativo (AIMD)**:
 - La velocità di invio aumenta linearmente quando non ci sono perdite.
 - Quando c'è congestione, il tasso di invio viene dimezzato.
 

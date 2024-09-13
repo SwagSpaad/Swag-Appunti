@@ -10,12 +10,12 @@ Gli algoritmi di instradamento mirano a trovare percorsi ottimali tra sorgenti e
 Per ogni arco $(x,y)$ tra i nodi denotiamo con $c(x,y)$ il costo di tale arco. Poniamo $c(x,y) = +\infty$ se l'arco $(x,y) \notin E$.
 L'obiettivo è quello di trovare il percorso minimo tra due nodi.
 - **Algoritmi di instradamento centralizzato**: Calcolano il percorso a costo minimo avendo una conoscenza globale della rete. Questi algoritmi sono chiamati **link-state**. 
-- **Algoritmi di instradamento decentralizzato**: Calcolano il percorso a costo minimo in modo distribuito e iterativo. Nessun nodo possiede informazioni complete sui collegamenti di rete. Questi algoritmi sono chiamati **distance-vector**.
+- **Algoritmi di instradamento decentralizzato**: Calcolano il percorso a costo minimo in modo distribuito e iterativo, basandosi sullo scambio di informazioni tra nodi vicini. Questi algoritmi sono chiamati **distance-vector**.
 
 ## Instradamento "Link-State" - Dijkstra
-Nell'instradamento link-state, la topologia della rete e i costi dei collegamenti sono noti. Ogni nodo invia pacchetti contenenti l'identità e il costo dei collegamenti ai nodi della rete. L'**algoritmo di Dijkstra** calcola i percorsi minimi.
+Nell'instradamento link-state, la topologia della rete e i costi dei collegamenti sono noti. Ogni nodo invia pacchetti contenenti l'identità e il costo dei collegamenti ai nodi della rete. L'**algoritmo di Dijkstra** calcola i percorsi minimi da un nodo a tutti gli altri.
 
-Patologia: Quando i costi dei collegamenti dipendono dal volume di traffico, sono possibili oscillazioni dei percorsi.
+Patologia: Quando i costi dei collegamenti dipendono dal volume di traffico, sono possibili variazioni dei percorsi.
 
 ## Instradamento "Distance-Vector" - Bellman Ford
 
@@ -24,13 +24,12 @@ L'algoritmo distance-vector è iterativo, asincrono e distribuito.
 - **Iterativo**: Il processo si ripete fino al termine del calcolo. 
 - **Asincrono**: Non richiede che tutti i nodi operino sincronizzati. 
 
-L'algoritmo utilizza la formula di Bellman-Ford: $d_{x}(y) = \min_{v} \{ c(x,v) + d_{v}(y) \}$
+L'algoritmo utilizza la formula di Bellman-Ford, $d_{x}(y)$ è il costo del percorso minimo da x ad y $$d_{x}(y) = \min_{v} \big\{ c(x,v) + d_{v}(y) \big\}$$ il minimo è calcolato su tutti i nodi $v$ vicini di $x$ ed è la somma del costo del collegamento diretto tra $x$ e $v$ sommato al costo del cammino minimo tra $v$ ed $y$.
 
 |                 | Complessità                              | Convergenza                          | Robustezza                                                                                             |
 | --------------- | ---------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | Link-State      | $O(n^{2})$ messaggi inviati              | $O(n^{2})$                           | Può comunicare in broadcast un costo sbagliato, propria tabella dei costi                              |
 | Distance-Vector | Scambio di messaggi tra router adiacenti | Potrebbe convergere molto lentamente | Può comunicare in broadcast percosi a costo minimi errati, la tabella di router è usata anche da altri |
-
 
 Sia $d_{x}(y)$ il costo del percorso minimo tra nodo $x$ a $y$. Allora i costi minimi sono correlati dalla formula di Bellman Ford: $d_{x}(y)= min_{v} \ c(x,v) + d_{v}(y)$.
 L'idea di base è: Ciascun nodo con $D_{x}(y)$, una stima del costo del percorso a costo minimo da sè stesso a $y$, per per tutti i nodi in $V$. Sia $D_{x} = [D_{x}(y) \in V]$ il vettore delle distanze del nodo $x$, che è il vettore delle stime dei costi da $x$ a tutti gli atri nodi $y$, in $V$.
@@ -40,38 +39,58 @@ Con l'algoritmo di Bellman Ford, ciascun nodo mantiene le seguenti informazioni:
 - I vettori delle distanze di ciascun vicino $D_{v} = [ D_{v} ( y ) ∈ V ] .$
 Dunque, di tanto in tanto, ogni nodo invia ai vicini il proprio vettore delle distanze stimate. Quando $x$ riceve un "distance vector" da un qualsiasi vicino, aggiorna il proprio "distance vector" utilizzando l'equazione di Bellman-Ford. $D_{x} ( y ) = min_{v} \ c ( x , v ) + D_{v} ( y ) \ ∀ y ∈ V$ Di questo passo, sotto certi condizioni minori e natulari, la stima $D_{x} ( y )$ converge verso l'effettivo costo minimi $d_{x} ( y )$.
 
-## OSFP e BGP
-Fino adesso abbiamo visto la rete come un insieme di router interconnessi tra loro. Ciascun router distinguibile dagli altri. Ora invece proviamo a ragrupparli come segue.
+## OSPF e BGP
+Fino adesso abbiamo visto la rete come un insieme di router identici ed interconessi tra loro. Nella realtà non è così, infatti internet è una rete di reti, costituita da moltissimi router e miliardi di destinazioni, per questo ogni router non può memorizzare tutte le destinazioni all'interno di una tabella di routing, perché la tabella sarebbe troppo grande e lo scambio di queste ingolferebbe i collegamenti. Inoltre ogni amministratore di rete vuole controllare l'instradamento all'interno della propria rete. 
 
-Possiamo organizzare i router in **sistemi autonomi (AS, Autonomous System)**, generalmente composti da gruppi di router posti sotto lo stesso controllo amministrativo.
+I router sono quindi organizzati in **sistemi autonomi (AS, Autonomous System)**, dei gruppi di router posti sotto lo stesso controllo amministrativo.
 Un ISP può costituire un unico AS oppure essere partizionato in più AS.
-- **Intra-AS protocol:** Algoritmo di instradamento in esecuzione in un AS. I router di un AS eseguono lo stesso algoritmo di instradamento e gli uni hanno informazioni sugli altri. Sul bordo dell'AS si trovao i router di **gateway**. Il protocollo più usato è OSFP.
-- **Inter-AS protocol:** Algoritmo di instradamento tra AS. I router gateway effettuano l'instradamento inter-AS oltre a quello intra-AS. Uno dei più importanti protocolli di rete è BGP.
-Ciò che comporta la suddivisione di Internet in vari AS e che risolve il problema della scalabilità è che negli algoritmi link-state e distance-vector l’invio delle informazioni sullo stato della rete o sulle distanze è limitato all’AS in questione!
-Ciò comporta tabelle più piccole e maggiore velocità di convergenza. Come detto ogni sistema autonomo può usare il proprio algoritmo di instradamento, e affinché non sia isolato dagli altri AS è necessaria la presenza del router gateway. I gateway partecipano sia all’instradamento inter-AS che a quello intra-AS.
+- **Intra-AS protocol:** Algoritmo di instradamento interno all'AS. I router di un AS eseguono lo stesso algoritmo di instradamento e gli uni hanno informazioni sugli altri. Sul bordo dell'AS si trovano i router di **gateway**, che connettono i diversi AS. Il protocollo più usato è OSPF.
+- **Inter-AS protocol:** Algoritmo di instradamento tra AS. Uno dei più importanti protocolli di rete è BGP.
 
-### OSFP (Open Shortest Path First)
-OSPF è un protocollo link-state che utilizza il flooding (inondazione) per inviare in broadcast le informazioni riguardo lo stato dei collegamenti e l’algoritmo di Dijkstra per la determinazione del percorso a costo minimo. In OSPF, un router costruisce una mappa topologica, cioè un grafo, dell’intero sistema autonomo e manda in esecuzione (locale) l’algoritmo di Dijkstra per determinare un albero dei cammini minimi verso tutte le sottoreti (albero in cui il router stesso rappresenta il nodo radice).
+La suddivisione di Internet in vari AS risolve il problema della scalabilità perchè negli algoritmi link-state e distance-vector l’invio delle informazioni sullo stato della rete o sulle distanze è limitato all’AS in questione!
+Ciò comporta tabelle più piccole e maggiore velocità di convergenza. Come detto ogni sistema autonomo può usare il proprio algoritmo di instradamento, e affinché non sia isolato dagli altri AS è necessaria la presenza del router gateway.
+
+### OSPF (Open Shortest Path First)
+OSPF è un protocollo link-state in cui ciascuin router utilizza il flooding (inondazione) per inviare in broadcast le informazioni sullo stato dei collegamenti e l’algoritmo di Dijkstra per la determinazione del percorso a costo minimo. In OSPF, ogni router ha piena conoscenza della tipologia di rete ed utilizza l’algoritmo di Dijkstra per determinare la tabella di inoltro.
 
 **Vantaggi:**
-- _Sicurezza_: Tutti i messaggi OSFP sono autenticati per preventire intrusioni dannose.
+- _Sicurezza_: Tutti i messaggi OSPF sono autenticati per preventire intrusioni dannose.
 - _Percorsi con lo stesso costo_: Se ci sono più percorsi con lo stesso costo, OSPF consente di usarli senza dover sceglierne uno particolare.
 - _Gerarchia a due livelli_: Una AS può essere stutturata in due aree, **locale** e **dorsale (backbone**).
 
 ### BGP
 Il **border gateway protocol (BGP)**, rappresenta l’attuale standard de facto dei protocolli di instradamento tra sistemi autonomi in Internet.
 BGP offre a ciascun router un modo per:
+- ottenere informazioni sulla raggiungibilità delle sottoreti da parte dei sistemi confinanti
+- determinare le rotte verso delle reti sulla base delle informazioni sulla raggiungibilità
+- propagara le informazioni di raggiungibilità ai router interni dell'AS
+- annunciare alle reti confinanti la raggiungibilità delle destinazioni.
 
-#### Ottenere informazioni sulla raggiungibilità dei prefissi di sottorete da parte dei sistemi confinanti.
 Supponiamo ora di avere questa rete formata da 3 AS:
-![[PianoControllo_2.png | center | 800]]
-Una **Sessione BGP** consiste di due router BGP che si scambiano messaggi BGP attraverso una connessione TCP. Nel caso in cui questa coinvolga due sistemi autonomi viene detta sessione BGP esterna (sessione eBGP), mentre quella tra router dello stesso sistema autonomo è chiamata sessione BGP interna (sessione iBGP). I messaggi BGP sono:
+![[PianoControllo_2.png | center | 600]]
+In una **Sessione BGP**, due router BGP si scambiano messaggi BGP attraverso una connessione TCP per annunciare all'altro i percorsi *disponibili* verso altre sottoreti. Se la sessione coinvolge due router di AS distinti viene detta *sessione BGP* esterna (sessione eBGP), mentre quella tra router dello stesso AS è chiamata sessione BGP interna (sessione iBGP). 
+In un messaggio BGP, ad esempio il router 3a può comunicare al router 2c che tramite il suo router può effettuare il percorso con destinazione X. 
+I messaggi BGP sono:
 - **OPEN**: apre una connessione TCP e autentica il mittente BGP
 - **UPDATE**: annuncia un nuovo percorso
 - **KEEPALIVE**: mantiene in vita la connessione
 - **NOTIFICATION**: segnala gli errori nel messaggio precedente; usato anche per chiudere la connessione
 
-#### Determinare i percorsi "ottimi" verso le sottoreti.
+#### Comunicazione percorsi BGP
+Vediamo come vengono annunciati i percorsi da BGP
+
+![[Pasted image 20240913125104.png|center|500]]
+
+- Il router 3a in AS3 comunica al 2c in AS2 il percorso disponibile verso X. 
+- Il router 2c accetta il percorso AS3, X e lo propaga internamente (iBGP) ai router di AS2
+- in questo modo il router 2a di AS2 può comunicare al vicino 1c di AS1 il percorso AS2, AS3, X
+
+Un router gateway può anche ricevere percorsi multipli come possiamo vedere nella prossima foto.
+
+![[Pasted image 20240913125401.png|center|500]]
+Lo scenario è identico al precedente, con la distinzione che il router 3a di AS3 comnunica il percorso AS3, X al router 1c di AS1.
+In questo caso, il router 1c deve scegliere quale percorso accettare tra AS2, AS3, X e AS3, X. In questo caso è più conveniente passare per un solo router gateway, quindi sceglie AS3, X e lo comunica internamente tramite iBGP.
+
 - **AS-PATH**: elenco degli AS attraverso i quali è passato l'annuncio del prefisso.
 - **NEXT-HOP**: indirizzo IP dell'interfaccia del router che inzia l'AS-PATH.
 - **Instradamento a patata bollente**: L'algoritmo sceglie il gateway locale che ha il minimo costo INTRA-AS.
@@ -83,22 +102,24 @@ Il router inolte, può conoscere più di un percorso verso l'AS di destinazione,
 - Indentificatori BGP1
 
 ## SDN (Software-Defined Networking)
-- Controller SDN
+Il controller SDN calcola e distribuisce le tabelle di inoltro nei router. La scelta di un piano di controllo centralizzato permette una gestione più semplice della rete, perché evita errori di configurazione sui router. Inoltre le tabelle di inoltro calcolate centralmente è più semplice da realizzare rispetto ad un calcolo delle tabelle basato sul risultato di un algoritmo implementato in ogni router.
 
-![[PianoControllo_4.png | center | 800]]
-Mantiene le informazioni sullo stato della rete. Interagisce con le applicazioni di controllo della rete "in alto" tramite API "northbound". Interagisce con gli switch di rete "in basso" tramite AP "southbound". È implementato come sistema distribuito per garantire prestazioni, scalabilità, tolleranza ai guasti, robustenzza e sicurezza.
-- Applicazzioni di controllo
-Implementano le funzioni di controllo utilizzando servizi di livello inferiore attraverso API fornite dal controller SDN.
+![[PianoControllo_4.png | center | 600]]
 
+Il controller SDN mantiene informazioni sullo stato della rete. Interagisce con le applicazioni di controllo della rete mediante *API northbound* e con gli switch di rete tramite *API southbound*. 
+
+Nel piano di dati gli switch utilizzati sono semplici e veloci ed implementano l'inoltro nell'hardware. La tabella di inoltro è calcolata ed inbstallata sotto la supervisione del controllore SDN. Le API per il controllo degli switch è basato su delle tabelle e viene definito un protocollo di comunicazione col controller (es. OpenFlow).
+
+Le applicazioni di controllo implementano le funzioni di controllo sulla rete.
 ### OpenFlow
-Il protocollo OpenFlow opera tra un controller SDN e uno switch o un altro dispositivo che implementi le API OpenFlow del piano di dati. Il protocollo opera su TCP con numero di porta 6653. Alcuni dei principali messaggi del protocollo inviati dal controller allo switch controllato sono i seguenti:
-- **Configuration**: Questo messaggio permette al controller di interrogare e im- postare i parametri di configurazione di uno switch
+Il protocollo OpenFlow opera tra un controller SDN e uno switch. Il protocollo usa TCP per lo scambio di messaggi con numero di porta 6653. Alcuni dei principali messaggi del protocollo inviati dal controller allo switch controllato sono i seguenti:
+- **Configuration**: Questo messaggio permette al controller di interrogare e impostare i parametri di configurazione di uno switch
 - **Modify-State**: Aggiungere, eliminare, modificare voci di flusso nelle tabelle OpenFlow
 - **Read-State**: Il controllore interroga le caratteristiche dello switch, lo switch risponde
 - **Send-Packet**: Questo messaggio è usato dal controller per inviare un pacchetto specifico fuori da una specifica porta dello switch.
 - **Packed-in**: Trasferire il pacchetto (e il relativo controllo) al controllore. Vedere il messaggio packet-out dal controllore.
 - **Flow-Removed**: Questo messaggio informa il controller che un’occorrenza della tabella dei flussi è stata cancellata.
-- **Port-status**Questo messaggio è usato dallo switch per informare il controller di un cambiamento nello stato di una porta.
+- **Port-status:** Questo messaggio è usato dallo switch per informare il controller di un cambiamento nello stato di una porta.
 
 **Esempio di interazione tra piano dati e piano di controllo:**
 ![[PianoControllo_5.png |center|600]]
@@ -112,6 +133,13 @@ Il protocollo OpenFlow opera tra un controller SDN e uno switch o un altro dispo
 ## ICMP (Internet Message Control Protocol)
 Il protocollo **ICMP (Internet Control Message Protocol)** viene usato da host e router per scambiarsi informazioni a livello di rete: il suo uso più tipico è la notifica degli errori.
 ICMP è spesso considerato parte di IP, ma dal punto di vista dell’architettura si trova esattamente sopra IP, dato che i suoi messaggi vengono trasportati nei datagrammi IP: ossia, i messaggi ICMP vengono trasportati come payload di IP, esattamente come i segmenti TCP o UDP. Allo stesso modo, se un host riceve un datagramma IP, che specifica ICMP come protocollo di livello superiore, allora effettua il demultiplexing dei contenuti del datagramma a ICMP, esattamente come farebbe per contenuti TCP o UDP.
+
+![[Pasted image 20240913133924.png]]
+
+Il tipo ed il codice dei messaggi comportano una tipologia di messaggio differente:
+![[Pasted image 20240913134013.png|center|300]]
+
+Nel caso dei messaggi con tipo 3 quelli con codice 2 e 3 sono inviati dall'host di destinazione, ad esempio nel caso in cui il protocollo relativo e la porta non sono attivi. Gli altri tipi di messaggi sono invece inviati dai router lungo il percorso, nel caso di irraggiungibilità della rete o nel non trovare una rotta idonea.
 
 ## Gestione della rete
 - **Sistema autonomo (rete)**: migliaia di componenti hardware e software che interagiscono tra loro.

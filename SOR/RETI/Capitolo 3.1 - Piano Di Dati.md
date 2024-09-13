@@ -2,11 +2,13 @@ Il livello di rete è il 3 layer della pila OSI, ha il compito di trasmettere ar
 
 # Inoltro e instradamento: piano dei dati e piano di controllo
 Per far si che i pacchetti vengano trasferiti da un host a un altro si utilizzano 2 funzioni importanti:
-- *Inoltro:* Quando un router riceve un pacchetto, lo deve trasferire sull' appropiato collegamento di uscita.
+- *Inoltro:* Quando un router riceve un pacchetto, lo deve trasferire sull'appropiato collegamento di uscita.
 - *Instradamento:* Il livello di rete deve determinare il percorso che i pacchetti devono seguire tramite **algoritmi di instradamento** (algoritmi di routing)
-Quindi con *inoltro* faremo riferimento all'azione locale con cui il router trasferisce i pacchetti da un' interfaccia di ingresso a quella di uscita, con *instradamento* invece, indichiamo i percorsi che un pacchetto effettua dalla sorgente alla destinazione
-![[img_rete1.jpg| center | 800]]
-Per inoltrare i pacchetti, i router estraggono da uno o più campi dell' intestazione i loro valori che utilizzano come indice nella **tabella di inoltro**, un elemento cruciale di qualsiasi router. Il risultato indica a quale interfaccia di uscita il pacchetto debba essere diretto.
+Quindi con *inoltro* faremo riferimento all'azione locale con cui il router trasferisce i pacchetti da un'interfaccia di ingresso a quella di uscita, con *instradamento* invece, indichiamo i percorsi che un pacchetto effettua dalla sorgente alla destinazione
+
+![[img_rete1.jpg| center | 600]]
+
+Per inoltrare i pacchetti, i router estraggono da uno o più campi dell'intestazione i loro valori che utilizzano come indice nella **tabella di inoltro**, un elemento cruciale di qualsiasi router. Il risultato indica a quale interfaccia di uscita il pacchetto debba essere diretto.
 >Ex: Il pacchetto 0110 giunge ad un router e viene inoltrato nell' uscita 2 tramite la tabella di inoltro.
 
 ## Piano di controllo: approccio tradizionale
@@ -32,9 +34,9 @@ Il livello di rete di internet fornisce solo il servizio *Best-Effort*, senza ga
 - **Porte di uscita:** Trasmettono i pacchetti dalla struttura di commutazione. 
 - **Processore di instradamento:** Nei router tradizionali esegue funzioni di controllo e gestisce le tabelle di inoltro. Nei router SDN è responsabile della comunicazione col controller remoto
 
-## Inoltro basato sull' indirizzo di destinazione
+## Inoltro basato sull'indirizzo di destinazione
 Le porte di ingresso determinano la porta di uscita a cui dirigere un pacchetto. Vediamo in che modo. 
-Nel caso più semplice, l'inoltro è basato sul contropllo dell'intero indirizzo IP di destinazione. 
+Nel caso più semplice, l'inoltro è basato sul controllo dell'intero indirizzo IP di destinazione. 
 
 ![[img_reti4.png | center | 500]]
 
