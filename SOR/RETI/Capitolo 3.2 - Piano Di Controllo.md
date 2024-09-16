@@ -62,8 +62,8 @@ OSPF è un protocollo link-state in cui ciascuin router utilizza il flooding (in
 Il **border gateway protocol (BGP)**, rappresenta l’attuale standard de facto dei protocolli di instradamento tra sistemi autonomi in Internet.
 BGP offre a ciascun router un modo per:
 - ottenere informazioni sulla raggiungibilità delle sottoreti da parte dei sistemi confinanti
-- determinare le rotte verso delle reti sulla base delle informazioni sulla raggiungibilità
-- propagara le informazioni di raggiungibilità ai router interni dell'AS
+- determinare le rotte verso altre reti sulla base delle informazioni sulla raggiungibilità
+- propagare le informazioni di raggiungibilità ai router interni dell'AS
 - annunciare alle reti confinanti la raggiungibilità delle destinazioni.
 
 Supponiamo ora di avere questa rete formata da 3 AS:
@@ -79,7 +79,7 @@ I messaggi BGP sono:
 #### Comunicazione percorsi BGP
 Vediamo come vengono annunciati i percorsi da BGP
 
-![[Pasted image 20240913125104.png|center|500]]
+![[SOR/RETI/img/img120.png|center|500]]
 
 - Il router 3a in AS3 comunica al 2c in AS2 il percorso disponibile verso X. 
 - Il router 2c accetta il percorso AS3, X e lo propaga internamente (iBGP) ai router di AS2
@@ -87,7 +87,7 @@ Vediamo come vengono annunciati i percorsi da BGP
 
 Un router gateway può anche ricevere percorsi multipli come possiamo vedere nella prossima foto.
 
-![[Pasted image 20240913125401.png|center|500]]
+![[SOR/RETI/img/img121.png|center|500]]
 Lo scenario è identico al precedente, con la distinzione che il router 3a di AS3 comnunica il percorso AS3, X al router 1c di AS1.
 In questo caso, il router 1c deve scegliere quale percorso accettare tra AS2, AS3, X e AS3, X. In questo caso è più conveniente passare per un solo router gateway, quindi sceglie AS3, X e lo comunica internamente tramite iBGP.
 
@@ -102,13 +102,13 @@ Il router inolte, può conoscere più di un percorso verso l'AS di destinazione,
 - Indentificatori BGP1
 
 ## SDN (Software-Defined Networking)
-Il controller SDN calcola e distribuisce le tabelle di inoltro nei router. La scelta di un piano di controllo centralizzato permette una gestione più semplice della rete, perché evita errori di configurazione sui router. Inoltre le tabelle di inoltro calcolate centralmente è più semplice da realizzare rispetto ad un calcolo delle tabelle basato sul risultato di un algoritmo implementato in ogni router.
+Il controller SDN calcola e distribuisce le tabelle di inoltro nei router. La scelta di un piano di controllo centralizzato permette una gestione più semplice della rete, perché evita errori di configurazione sui router. Inoltre le tabelle di inoltro calcolate centralmente sono più semplici da realizzare rispetto ad un calcolo delle tabelle basato sul risultato di un algoritmo implementato in ogni router.
 
 ![[PianoControllo_4.png | center | 600]]
 
 Il controller SDN mantiene informazioni sullo stato della rete. Interagisce con le applicazioni di controllo della rete mediante *API northbound* e con gli switch di rete tramite *API southbound*. 
 
-Nel piano di dati gli switch utilizzati sono semplici e veloci ed implementano l'inoltro nell'hardware. La tabella di inoltro è calcolata ed inbstallata sotto la supervisione del controllore SDN. Le API per il controllo degli switch è basato su delle tabelle e viene definito un protocollo di comunicazione col controller (es. OpenFlow).
+Nel piano di dati gli switch utilizzati sono semplici e veloci ed implementano l'inoltro nell'hardware. La tabella di inoltro è calcolata ed installata sotto la supervisione del controllore SDN. Le API per il controllo degli switch sono basate su delle tabelle e viene definito un protocollo di comunicazione col controller (es. OpenFlow).
 
 Le applicazioni di controllo implementano le funzioni di controllo sulla rete.
 ### OpenFlow
@@ -134,10 +134,10 @@ Il protocollo OpenFlow opera tra un controller SDN e uno switch. Il protocollo u
 Il protocollo **ICMP (Internet Control Message Protocol)** viene usato da host e router per scambiarsi informazioni a livello di rete: il suo uso più tipico è la notifica degli errori.
 ICMP è spesso considerato parte di IP, ma dal punto di vista dell’architettura si trova esattamente sopra IP, dato che i suoi messaggi vengono trasportati nei datagrammi IP: ossia, i messaggi ICMP vengono trasportati come payload di IP, esattamente come i segmenti TCP o UDP. Allo stesso modo, se un host riceve un datagramma IP, che specifica ICMP come protocollo di livello superiore, allora effettua il demultiplexing dei contenuti del datagramma a ICMP, esattamente come farebbe per contenuti TCP o UDP.
 
-![[Pasted image 20240913133924.png]]
+![[SOR/RETI/img/img122.png]]
 
 Il tipo ed il codice dei messaggi comportano una tipologia di messaggio differente:
-![[Pasted image 20240913134013.png|center|300]]
+![[SOR/RETI/img/img123.png|center|300]]
 
 Nel caso dei messaggi con tipo 3 quelli con codice 2 e 3 sono inviati dall'host di destinazione, ad esempio nel caso in cui il protocollo relativo e la porta non sono attivi. Gli altri tipi di messaggi sono invece inviati dai router lungo il percorso, nel caso di irraggiungibilità della rete o nel non trovare una rotta idonea.
 

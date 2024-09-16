@@ -142,12 +142,12 @@ Anche la cancellazione avviene in 3 passi:
 
 ![[ASD/MOD I/img/img118.png|center|400]]
 ![[ASD/MOD I/img/img119.png|center|400]]
-![[img120.png|center|400]]
-![[img121.png|center|400]]
+![[ASD/MOD I/img/img120.png|center|400]]
+![[ASD/MOD I/img/img121.png|center|400]]
 
 ##### Cancellazione con rotazioni a cascata
 
-![[img122.png|center|500]]
+![[ASD/MOD I/img/img122.png|center|500]]
 
 ### Costo delle operazioni
 
@@ -157,7 +157,7 @@ Tutte le operazioni hanno costo $O(log(n))$, poichè l'altezza dell'albero è $O
 
 Vediamo la struttura di una possibile classe di alberi AVL, derivata dalla classe base AlberoBinarioDiRicerca. L'unica informazione aggiuntiva che un albero AVL ha in più rispetto ai nodi di un BST è il fattore di bilanciamento. 
 
-![[img123.png|center|500]]
+![[ASD/MOD I/img/img123.png|center|500]]
 
 **Oss.**
 Nell'analisi della complessità dell'operazione di insert/delete abbiamo implicitamente usato le seguenti tre proprietà:
