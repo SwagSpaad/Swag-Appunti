@@ -1,0 +1,8 @@
+1) Potenza(A,B)
+2) Gli algoritmi di ordinamento: bubblesort, insertionsort, heapsort e mergesort.
+3) 8 regine
+4) Smallest: dato un albero,determinare l'elemento più piccolo.
+5) Determinare se un insieme è un set-of
+6) Lo scacciapensieri
+7) Intersezione fra 2 sottoalberi comuni con il bag-of
+8) esercizio contrario del Delroot: mantenere un albero binario di ricerca cancellandone la radice (sostituendola opportunamente con una delle foglie)
