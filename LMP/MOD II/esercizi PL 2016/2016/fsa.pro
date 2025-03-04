@@ -1,4 +1,5 @@
 
+
 finale(s3).
 
 tran(s1,s2,a).
