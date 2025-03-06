@@ -54,7 +54,7 @@ Il problema Union-find è quello di avere una struttura dati che mantenga una co
 - *union(A, B)*: unisce gli insiemi A e B in un unico insieme, detto A, e distrugge i vecchi insiemi A e B
 - *find(x)*: restituisce il nome dell'insieme contenente l'elemento x
 
-![[Pasted image 20250306091755.png|center|600]]
+![[ASD/MOD II/img/img26.png|center|600]]
 
 L'obiettivo è progettare una struttura dati per implementare le operazioni di union find in modo efficiente.
 
@@ -63,7 +63,7 @@ L'idea è quella di rappresentare gli insiemi disgiunti con una foresta. Ogni in
 ## Alberi QuickFind
 Per rappresentare gli insiemi vengono utilizzati degli alberi di *altezza 1*, la cui radice rappresenta il *nome dell'insieme*, mentre le *foglie sono gli elementi*, incluso anche l'elemento rappresentativo.
 
-![[Pasted image 20250306092516.png|center|600]]
+![[ASD/MOD II/img/img27.png|center|600]]
 
 Con questa struttura dati la complessità di ogni operazione vale:
 - *makeSet(x)*: $O(1)$
@@ -72,14 +72,14 @@ Con questa struttura dati la complessità di ogni operazione vale:
 
 La find e la makeSet hanno costo costante, ma sequenze di *union* possono essere molto inefficienti. 
 
-![[Pasted image 20250306093330.png|center|500]]
+![[ASD/MOD II/img/img28.png|center|500]]
 
 In questo caso vengono svolte $\sum\limits_{i=1}^{n}i$ cambi di puntatori, quindi risulterà un costo per tutte le operazioni $\Theta(n^{2})$.
 
 ### Union by size
 L'idea per migliorare l'operazione di union è quella di eseguire la union spostando i puntatori dell'albero con il numero di elementi minore, cambiando eventualmente la radice dell'albero ottenuto.
 
-![[Pasted image 20250306094334.png|center|500]]
+![[ASD/MOD II/img/img29.png|center|500]]
 
 In questo caso la union ha costo $O(n)$ nel caso peggiore, ma costo $O(\log n)$ nell'analisi ammortizzata.
 Il costo $O(\log n)$ viene fuori considerando quante volte un nodo può cambiare padre. La risposta a questa domanda è *al più $\log n$*, questo perché dalla costruzione della union by size, ogni volta che un nodo cambia padre, la cardinalità dell'insieme al quale appartiene è almeno doppia rispetto a quella precedente: 
@@ -96,7 +96,7 @@ Se eseguiamo $n$ makeSet, $m$ find e al più $n-1$ union, il tempo richiesto dal
 ## Alberi QuickUnion
 Per rappresentare gli insiemi vengono utilizzati degli alberi di *altezza anche maggiore di 1*, la cui radice rappresenta il *nome dell'insieme*, mentre i restanti *nodi sono gli elementi*, escluso l'elemento rappresentativo.
 
-![[Pasted image 20250306095827.png|center|700]]
+![[ASD/MOD II/img/img30.png|center|700]]
 
 Con questa struttura dati la complessità di ogni operazione vale:
 - *makeSet(x)*: $O(1)$
@@ -108,7 +108,7 @@ In questo caso, particolari sequenze di Union possono generare un albero di alte
 ### Union by size
 Anche in questo caso, se applichiamo l'euristica dell'union by size, riusciamo ad ottenere degli alberi di altezza "piccola". 
 
-![[Pasted image 20250306100658.png|center|700]]
+![[ASD/MOD II/img/img31.png|center|700]]
 
 
 **Lemma**
