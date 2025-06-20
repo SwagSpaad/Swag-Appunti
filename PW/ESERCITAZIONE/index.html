@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercitazione</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LOGO</h1>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </header>
+        <main>
+            <div class="box1">
+                <ul>
+
+                </ul>
+            </div>
+            <div class="box2">
+                <h2>Dettagli</h2>
+                <p>Seleziona una persona dalla lista per vedere i dettagli</p>
+                <button class="colorButton">Aggiorna Colori</button>
+            </div>
+        </main>
+        <footer>
+
+        </footer>
+    </div>
+    <script>
+    fetch("http://localhost:3000/persone")
+     .then(response => {
+        if(!response.ok){
+            throw new Error("Fetch error")
+        }
+        return response.json()
+     })
+     .then(data => {
+        const ul = document.querySelector(".box1 ul")
+        data.message.forEach(element => {
+            const li = document.createElement("li")
+            li.textContent = `${element.nome} ${element.cognome}`
+            ul.appendChild(li)  
+
+            li.addEventListener("click", () => {
+                alert(`Nome: ${element.nome} ${element.cognome}, Età: ${element.età}`)
+            })
+        });
+     })
+
+     const bottone = document.querySelector(".colorButton")
+     bottone.addEventListener("click", () => {
+        const body = document.querySelector("html body")
+        body.style.backgroundColor = "#00796b"
+        const a = document.querySelectorAll("a")
+        a.forEach(element => {
+            element.style.color = "#313131"
+        })
+     })
+    </script>
+</body>
+</html>

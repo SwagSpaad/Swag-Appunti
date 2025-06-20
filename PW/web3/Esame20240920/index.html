@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame 20-09-2024</title>
+
+    <style>
+        header{
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 20px;
+        }
+
+        footer{
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main{
+            background-color: #f0f0f0;
+            display:grid;
+            grid-template-columns: 300px 300px;
+        }
+
+        button{
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+        }
+
+        .card{
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card button{
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+
+        }
+
+        @media (max-width: 600px){
+            main{
+                display: flex;
+                flex-direction: column;
+            }
+
+            .card{
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lista Attività</h1>
+    </header>
+    <main>
+        
+    </main>
+    <footer>
+        <p>@ 2024 Lista Attività - Esame</p>
+    </footer>
+
+    <script>
+        fetch('http://localhost:3000/task')
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("Errore nella fetch");
+            }
+            return response.json();
+        })
+        .then(data =>{
+            const main = document.querySelector("main");
+            data.data.forEach(element => {
+                const card = document.createElement("div");
+                card.classList.add('card'); // serve a specificare che div è di classe "card"
+                if(element.completed == true){
+                    card.innerHTML = `<h2 style="color:grey;"><s>${element.text}</s></h2>
+                    <button style="background-color: grey;"><s>Completa</s></button>
+                    `;
+                }
+                else{
+                    card.innerHTML = `
+                    <h2>${element.text}</h2>
+                    <button>Completa</button>
+                    `;
+                }
+                main.appendChild(card);
+                const id = element.id;
+                const button = card.querySelector("button");
+                
+                button.addEventListener("click", () => {
+                    fetch(`http://localhost:3000/tasks/complete/${id}`, {
+                        method: "POST",
+                    })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Errore nella fetch");
+                        }
+                        return response.json();
+                    })
+                    .then((updatedData) => {
+                        
+                        const updatedTask = updatedData.data.find((task) => task.id === id);
+                        card.innerHTML = `
+                            <h2 style="color:grey;"><s>${updatedTask.text}</s></h2>
+                            <button style="background-color: grey;" disabled><s>Completa</s></button>
+                        `;
+                        
+                    })
+                    .catch((error) => {
+                        console.error("Errore:", error);
+                        alert("Si è verificato un errore durante l'aggiornamento dell'attività.");
+                    });
+                    location.reload();
+                });
+
+        })
+    })
+    </script>
+</body>
+</html>

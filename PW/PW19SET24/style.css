@@ -1,0 +1,71 @@
+body {
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+}
+
+main {
+    background-color: #f0f0f0;
+    display: grid;
+    padding: 100px;
+    grid-template-columns: 350px;
+    justify-content: center;
+    align-items: center;
+}
+
+main div {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    position: relative; /*per spostare il bottone tutto a destra*/
+}
+
+
+.completeFalse {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    position: absolute; /*per spostare il bottone a destra*/
+    right: 10px;
+}
+
+.completeTrue {
+    background-color: grey;
+    padding: 10px;
+    color: #fff;
+    pointer-events: none; /*disabilita il pulsante*/
+    position: absolute;
+    right: 10px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #888
+}
+
+@media(min-width: 600px) {
+    main {
+        grid-template-columns: 350px 350px; /*per mettere le attivita su due colonne*/
+    }
+}

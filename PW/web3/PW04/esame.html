@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        html,body{
+            margin: 0 auto; /* viene centrato orizzontalmente*/
+        }
+        .container{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            min-width: 400px;
+        }
+
+        header,main,footer{
+            border: 1px solid;
+        }
+
+        main{
+            height: 80vh; /* altezza del main è l'80% dell'altezza della viewport*/
+            position: relative; 
+        }
+
+        h1, footer{
+            margin: 0 auto;
+            padding-top:10px;
+            padding-bottom: 10px;
+        }
+
+        header,footer{
+            text-align: center;
+            background-color: #f1f1f1;
+            margin: 0 auto;
+            padding-top:10px;
+            padding-bottom: 10px;
+        }
+
+        @media(min-width:1000px){
+            html,body{
+                width:800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class = "container">
+        <header><h1>Esame del 18 luglio</h1></header>
+
+        <main>
+            
+        </main>
+
+        <footer>
+            <p>Copyright</p>
+        </footer>
+    </div>
+
+    <script>
+        let vettore_globale;
+        fetch("http://localhost:3000/dati")
+        .then(response=>{ // la prima parte della richiesta sono metadati
+            if(!response.ok)
+            {
+                throw new Error("errore nella fetch");
+            }
+            return response.json(); // response.json() permette di passare 
+        })
+        .then(resp_data=>{
+            vettore_globale = (resp_data).dati;
+            vettore_globale.forEach(element => {
+                console.log(element);
+            });
+        })
+
+        /*--------------------------------------------*/
+        
+        const titolo = document.querySelector("h1"); // l'evento è  definito sul click del titolo
+        titolo.addEventListener("click",()=>{
+            const main = document.querySelector("main"); // i quadrati verranno generati nel main, metto riferimento alla variabile
+            vettore_globale.forEach(element=>{ // per ogni elemento dell'array
+
+                let new_div = document.createElement("div");
+                new_div.style.width = '10%';
+                new_div.style.height = '10%';
+                new_div.style.backgroundColor = element.colore;
+                new_div.style.position = 'absolute'; // il posizionamento del div è rispetto al main
+                new_div.style.left = element.pos_orizz+'%';
+                new_div.style.top = element.pos_vert+'%';
+
+                main.appendChild(new_div); // aggiungo il div al main 
+            })
+            funzione(); // i div vengono generati da questo tratto di codice 
+            // l'evento cancellazione avviene solo quando i div esistono
+            // e avviene tramite la chiamata di funzione 
+        })
+
+        /*--------------------------------------------*/
+
+        function funzione(){
+            const div = document.querySelectorAll("main div");  // prelevo tutti i div del main (in un vettore)
+            div.forEach(quadrato=>{                             // aggiungo un evento click per ogni elemento del vettore 
+                quadrato.addEventListener("click",()=>{         // creazione evento
+                    quadrato.style.opacity = 0;                 
+                })
+            })
+        }
+    </script>
+</body>
+</html>

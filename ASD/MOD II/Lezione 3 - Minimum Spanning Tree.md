@@ -107,11 +107,11 @@ L'implementazione dell'algoritmo di Kruskal usa la stuttura [[Lezione 2 - Union-
 #### Correttezza
 Quando l'algoritmo decide di aggiungere l'arco $(x,y)$ alla soluzione, dal momento che considera gli archi in ordine crescente di costo, allora l'arco che aggiunge è quello di costo minimo nel taglio. 
 
-![[Pasted image 20250311232009.png|center|700]]
+![[ASD/MOD II/img/img38.png|center|700]]
 
 Quando invece decide di rimuovere l'arco $(x,y)$, siccome gli archi sono in ordine crescente di costo, allora l'arco considerato è quello di costo massimo che forma un ciclo nella soluzione. 
 
-![[Pasted image 20250311232150.png|center|700]]
+![[ASD/MOD II/img/img39.png|center|700]]
 
 #### Costo temporale
 Per il ordinare in modo crescente gli archi utilizziamo un algoritmo di sorting che costa $O(m\log n)$. Eseguiremo poi: 
@@ -124,19 +124,25 @@ Se utilizziamo la [[Lezione 2 - Union-Find#Alberi QuickFind|Quick find]] con eur
 Utilizzando la [[Lezione 2 - Union-Find#Alberi QuickUnion|quick union]] con euristica *union by size* il costo risulta $$O(m\log n+m\log n+n)=O(m\log n)$$
 quindi il costo dell'algoritmo di Kruskal è $O(m\log n)$.
 ### Algoritmo di Prim
-#### Implementazione
-Utilizziamo una coda con priorità come con Dijkstra e creiamo un insieme $S$ che conterrà i nodi esplorati. Analogamente a Dijkstra dobbiamo decidere come scegliere il prossimo nodo da aggiungere il prossimo nodo $v$ da aggiungere ad $S$. Per ogni nodo inseplorato salviamo il costo di collegamento $a(v)$, che rappresenta il costo minimo di un arco $v$ verso un nodo in $S$. 
+Partendo da un noto sorgente $s$, ad ogni iterazione si aggiunge all'MST l'arco di costo minore dal taglio attuale (alla prima iterazione contiene solo $s$), inserendo l'altra estremità dell'arco al taglio $S$.
 
-![[ASD/MOD II/img/img8.png|center|500]]
+La complessità di una semplice soluzione risulta inefficiente, infatti, per n-1 volte, viene ricercato l'arco che attraversa il cut in tempo $O(m)$, per cui il tempo totale di esecuzione risulta $O(mn)$, che risulta lento per $m$ grande.
+#### Implementazione
+Un'implementazione più efficace è quella di:
+- mantenere un insieme S di nodi esplorati
+- utilizzare una coda con priorità per mantenere i nodi inesplorati
+- per ogni nodo inesplorato $v$, definiamo la *priorità* come il costo minimo dell'arco che da $v$ si collega ad un nodo all'interno del cut.
+
+![[ASD/MOD II/img/img40.png|center|800]]
 
 #### Correttezza
 Inizializziamo S = qualsiasi nodo (taglio). Applichiamo la cut property ad $S$, aggiungiamo il costo minimo nel cutset $D(S)$ a $T$ e aggiungiamo un nuovo nodo esplorato $u$ ad $S$.
 Notiamo che ad ogni step, un nuovo nodo **inesplorato** viene inserito in S. Quindi ad ogni passo del while, $|S|$ aumenta di 1: $S_0=\{u_{1}\},\: \dots,\: S_t=\{u_{1},\:\dots,\: u_{t}\}, \:\dots,\: S_{n-1}=V$ .
 
 #### Complessità
-La complessità varia in base alla struttura dati scelta: 
+L'algoritmo ha complessità $O(m+n)$ sommato al costo delle operazioni sulla coda con priorità, ovvero $n$ insert, $n$ deleteMin ed $m$ decreaseKey.
+In base alla struttura dati scelta, abbiamo costo: 
 - $O(n^{2})$ utilizzando un array
 - $O(m\log(n))$ utilizzando un heap binario
-
-Per ogni nodo visitato $u\in V$, aggiorna $O(deg(u))$ chiavi in Q $\implies$ $\sum_{u} deg(u) = O(m)$. Ogni aggiornamento ha costo $O(\log(n))$ utilizzando gli heap, da qui $O(m\log(n))$. 
+- $O(m+\log n)$ con un heap di Fibonacci
 

@@ -1,0 +1,3 @@
+GET http://localhost:3000/events
+###
+GET http://localhost:3000/events/participate/55

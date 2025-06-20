@@ -1,0 +1,89 @@
+body {
+  background-color: #e0f7fa;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 10px auto;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 2px solid #00796b;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #00796b;
+  padding: 10px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+nav a {
+  margin-left: 10px;
+  color: #004d40;
+  text-decoration: none;
+}
+
+.hamburger {
+  display: none;
+}
+
+main {
+  display: flex;
+  margin: 20px auto;
+}
+
+.left {
+  width: 30%;
+  border: 1px solid #00796b;
+  padding: 10px;
+}
+
+.right {
+  width: 70%;
+  border: 1px solid #00796b;
+  padding: 10px;
+}
+
+#aggiornaColori {
+    background-color: #00796b;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+footer {
+  height: 80px;
+  border-top: 2px solid #00796b;
+  text-align: center;
+  padding-top: 20px;
+}
+
+/* Responsive - desktop first */
+@media (max-width: 1000px) {
+  .container {
+    width: 700px;
+  }
+
+  nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+.hamburger div {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}

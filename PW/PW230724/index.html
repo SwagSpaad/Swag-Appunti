@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame 230724</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LOGO</h1>
+            <div class="menu">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+            </div>
+        </header>
+        <main>
+            <h2>Articoli</h2>
+            <div class="zonaArticoli">
+
+            </div>
+        </main>
+        <footer>
+            <p>Footer</p>
+        </footer>
+    </div>
+    <script>
+        fetch('http://127.0.0.1:3000/articoli')
+        .then(response => {
+            if(!response.ok) {
+                console.error("Errore nella fetch")
+            } else {
+                return response.json()
+            }
+        })
+        .then(data => {
+            const articoli = document.querySelector(".zonaArticoli")
+            data.dati.forEach(element => {
+                const articolo = document.createElement("div")
+                articolo.classList.add('box')
+                articolo.innerHTML = `<h2>${element.titolo}`
+            });
+        })
+    </script>
+</body>
+</html>

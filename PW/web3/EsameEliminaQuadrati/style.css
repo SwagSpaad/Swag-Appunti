@@ -1,0 +1,44 @@
+/* Base layout */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  margin: 20px auto;
+  min-width: 400px;
+  border: 1px solid #000;
+}
+
+header, main, footer {
+  border: 1px solid #000;
+}
+
+header, footer {
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 10px 0;
+}
+
+main {
+  height: 80vh;
+  position: relative;
+}
+
+/* Responsive (mobile-first) */
+.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 600px) {
+  .container {
+    width: 500px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .container {
+    width: 800px;
+  }
+}
