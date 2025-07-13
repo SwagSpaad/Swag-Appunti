@@ -1,0 +1,25 @@
+html body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    width: 960px;
+    padding: 20px;
+}
+
+header{
+    display: flex;
+    border-bottom: 2px solid #333;
+}
+
+.menu {
+    margin-left: 67%;
+    margin-top: 5vh;
+}
+
+footer {
+    text-align: center;
+    border-top: 2px solid #333;
+}

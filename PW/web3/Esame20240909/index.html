@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame 09-09-2024</title>
+    <style>
+        html, body{
+            margin: 0 auto;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        header{
+            text-align: center;
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        h1{
+            margin-top: 0;
+        }
+
+        a{
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        ul{
+            list-style: none;
+        }
+
+        li{
+            margin: 5px;
+            display: inline; /*mette gli elementi in riga senza usare tutto lo spazio*/
+        }
+
+        footer{
+            display: flex;
+            align-items: center;
+            justify-content: center; /*centra in altezza*/
+            height: 80px;
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        .hamburger{
+            display: none; /*nascondo il menu*/
+            margin: 0 auto;
+        }
+
+        main{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .prima_riga button{
+            width: 100px;
+            padding: 0;
+        }
+
+        .seconda_riga button{
+            width: 200px;
+            margin: 10px;
+        }
+
+        button{
+            color: #007bff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        @media(max-width: 600px){
+            .hamburger{
+                display: block; /*mostro il menu*/
+            }
+
+            .menu{
+                display: none;
+            }
+
+            header{
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .prima_riga{
+                display: flex;
+                flex-direction: column;
+            }
+
+            .prima_riga button{
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Contatore - Esame</h1>
+        <div class = "menu">
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+        </div>
+        <div class="hamburger">
+            <div style="width: 35px; height: 5px; background-color: black; margin: 6px"></div>
+            <div style="width: 35px; height: 5px; background-color: black; margin: 6px"></div>
+            <div style="width: 35px; height: 5px; background-color: black; margin: 6px"></div>
+        </div>
+    </header>
+    <main>
+        <h2>Contatore</h2>
+        <h1> </h1>
+        <div class="prima_riga">
+            <button class="sinistra">- Diminuisci</button>
+            <button class="destra">+ Aumenta</button>
+        </div>
+        <div class="seconda_riga">
+            <button>Cambia colori</button>
+        </div>
+    </main>
+    <footer>
+        <p> @ 2024 Contatore Esame </p>
+    </footer>
+
+    <script>
+        let c;
+
+        fetch("http://localhost:3000/counter")
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("Errore nella fetch");
+            }
+            return response.json();
+        })
+        .then(data=>{
+            c = data.counter;
+            const h1 = document.querySelector("main h1");
+            h1.textContent = c;
+        })
+
+        const b1 = document.querySelector(".sinistra");
+        b1.addEventListener("click", ()=>{
+            fetch("http://localhost:3000/decrease", { //inoltro richiesta al server 
+                method: 'POST',   //specifico tipo di richiesta, in questo caso invio dati
+                headers: {   //pacchetto dati formato da (header, dati)
+                    'Content-Type': 'application/json'   //l'header specifica il formato dei dati
+                },
+                body: JSON.stringify(c),  //il contatore invece rappresenta il dato da inviare, che sarà gestito dal server
+            })
+            .then(response=>{  //il server risponde in base ai dati inviati
+                if(!response.ok){
+                    throw new Error("Errore nella fetch");
+                }
+                return response.json();
+            })
+            .then(data=>{
+                c = data.counter;
+                const h1 = document.querySelector("main h1");
+                h1.textContent = c;
+                location.reload();
+            })
+        })
+
+        const b2 = document.querySelector(".destra");
+        b2.addEventListener("click", ()=>{
+            fetch("http://localhost:3000/increase", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(c),
+            })
+            .then(response=>{
+                if(!response.ok){
+                    throw new Error("Errore nella fetch");
+                }
+                return response.json();
+            })
+            .then(data=>{
+                c = data.counter;
+                const h1 = document.querySelector("main h1");
+                h1.textContent = c;
+                location.reload(); //riaggiorna la pagina
+            })
+        })
+
+        let b3 = document.querySelector(".seconda_riga button");
+        b3.addEventListener("click", ()=>{
+            fetch("http://localhost:3000/colors")
+            .then(response=>{
+                if(!response.ok){
+                    throw new Error("Errore nella fetch");
+                }
+                return response.json();
+            })
+            .then(data => {
+                const header = document.querySelector("header");
+                const footer = document.querySelector("footer");
+
+                header.style.backgroundColor = data.background;
+                header.style.color = data.text;
+                footer.style.backgroundColor = data.background;
+                footer.style.color = data.text;
+            })
+        })
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame gennaio</title>
+    <style>
+        html, body{
+            margin: 0 auto;
+            min-width: 400px;
+            max-width: 1000px;
+            margin: 20px;
+        }
+
+        .container{
+            margin: 20px;
+        }
+
+        header, footer{
+            height: 80px;
+            font-family: Arial, Helvetica, sans-serif;
+            border: 1px solid #a1a1a1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        button{
+            background-color: #d45a1d;
+            color:white;
+            font-weight: bold;
+            border-radius: 5px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-left: 30px;
+            padding-right: 30px;
+            margin: 5px;
+        }
+
+        .box{
+            min-height: 110px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 5px;
+        }
+
+        main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }    
+
+        .parte_box{
+            width:100%;
+            flex-wrap: wrap;
+            display: flex;
+        }
+
+        @media(min-width: 680px) and (max-width: 1020px){
+            .box{
+                width: 48%;
+            }
+        }
+
+        @media(min-width: 1020px){
+            .box{
+                width: 32%;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p>Intestazione della pagina</p>
+        </header>
+        <main>
+            <button>
+                Inverti ordine
+            </button>
+            <div class="parte_box"></div>
+        </main>
+        <footer>
+            <p>Footer della pagina</p>
+        </footer>
+    </div>
+
+    <script>
+        let ordineInverso = false;
+
+        fetch("http://localhost:3000/boxers")
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("Errore nella fetch");
+            }
+            return response.json();
+        })
+        .then(data=>{
+            const main = document.querySelector(".parte_box");
+            data.dati.forEach(element => {
+                const box = document.createElement("div");
+                box.classList.add('box');
+                box.style.backgroundColor = element.colore;
+                box.textContent = element.titolo;
+                box.style.color = "white";
+                box.style.fontWeight = "bold";
+                box.style.fontSize = "26px";
+                main.appendChild(box);
+            });
+        })
+
+        /*function invertiOrdine(){
+            let vettore_box = document.querySelectorAll(".box");
+            vettore_box.forEach(elem=>)
+        }*/
+
+        let button = document.querySelector("button");
+        button.addEventListener('click', ()=>{
+            ordineInverso = !ordineInverso;
+            button.style.backgroundColor = ordineInverso ?  '#0056b3':'#d45a1d';
+            //invertiOrdine();
+        })
+    </script>
+</body>
+</html>

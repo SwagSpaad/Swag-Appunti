@@ -1,0 +1,7 @@
+GET http://localhost:3000/counter
+###
+POST http://localhost:3000/decrease
+###
+POST http://localhost:3000/increase
+###
+GET http://localhost:3000/colors

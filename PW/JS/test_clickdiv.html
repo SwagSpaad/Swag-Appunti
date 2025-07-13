@@ -1,0 +1,67 @@
+e<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Div Dinamico</title>
+  <style>
+    #miaBox {
+      width: 150px;
+      height: 100px;
+      background-color: lightblue;
+      text-align: center;
+      line-height: 100px;
+      cursor: pointer;
+      border-radius: 10px;
+      position: absolute; /* necessario per il movimento */
+    }
+
+    body {
+      height: 100vh;
+      margin: 0;
+      overflow: hidden; /* evita scroll se va fuori */
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="miaBox">Cliccami!</div>
+
+  <script>
+    const box = document.getElementById("miaBox");
+
+    // Mostra alert al click
+    box.addEventListener("click", function() {
+      alert("Hai cliccato sul div!");
+    });
+
+    // Genera un colore random
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // Sposta il div in una posizione casuale
+    function spostaDiv() {
+      const maxLeft = window.innerWidth - box.offsetWidth;
+      const maxTop = window.innerHeight - box.offsetHeight;
+
+      const randomLeft = Math.random() * maxLeft;
+      const randomTop = Math.random() * maxTop;
+
+      box.style.left = `${randomLeft}px`;
+      box.style.top = `${randomTop}px`;
+
+      box.style.backgroundColor = getRandomColor();
+    }
+
+    // Sposta il div ogni 2 secondi
+    setInterval(spostaDiv, 500);
+  </script>
+
+</body>
+</html>

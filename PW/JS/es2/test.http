@@ -1,0 +1,22 @@
+GET http://127.0.0.1:8080/
+
+###
+GET http://127.0.0.1:8080/contact
+
+###
+POST http://127.0.0.1:8080/contact
+Content-Type: application/x-www-form-urlencoded
+
+user=nicolò&id=20
+
+###
+GET http://127.0.0.1:8080/users/21/aula/16
+
+### 
+POST http://127.0.0.1:8080/users/login
+Content-Type: application/json
+
+{"user": "Nicolò"}
+
+###
+GET http://127.0.0.1:8080/users/logout

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Contatore - Esame</h1>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+        </div>
+    </header>
+    <main>
+        <h2>Contatore</h2>
+        <h1></h1>
+        <div class="container1">
+            <button class="dim">- Diminuisci</button>
+            <button class="add">+ Aumenta</button>
+        </div>
+        <div class="container2">
+            <button class="col">Cambia Colori</button>
+        </div>
+    </main>
+    <footer>
+        <p>© 2024 Contatore Esame</p>
+    </footer>
+    <script>
+        fetch("http://localhost:3000/counter")
+        .then(response => {
+            if(!response.ok) {
+                throw new Error("Errore fetch")
+            }
+            return response.json()
+        })
+        .then(data => {
+            const h1 = document.querySelector("main h1")
+            h1.textContent = JSON.parse(data.counter);
+        })
+
+        const dimButton = document.querySelector(".dim")
+        dimButton.addEventListener("click", () => {
+            fetch("http://localhost:3000/decrease", {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: "POST" })
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error("Errore fetch")
+                }
+                return response.json()
+            })
+            .then(data => {
+                const h1 = document.querySelector("main h1")
+                h1.textContent = JSON.parse(data.counter);
+            })
+        })
+        
+        const addButton = document.querySelector(".add")
+        addButton.addEventListener("click", () => {
+            fetch("http://localhost:3000/increase", {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: "POST" })
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error("Errore fetch")
+                }
+                return response.json()
+            })
+            .then(data => {
+                const h1 = document.querySelector("main h1")
+                h1.textContent = JSON.parse(data.counter);
+            })
+        })
+
+        const cambiaColBut = document.querySelector(".col")
+        cambiaColBut.addEventListener("click", () => {
+            fetch('http://localhost:3000/colors')
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error("Errore fetch")
+                }
+                return response.json()
+            })
+            .then(data => {
+                const header = document.querySelector("body header")
+                const footer = document.querySelector("body footer")
+                header.style.backgroundColor = data.background
+                footer.style.backgroundColor = data.background
+                header.style.color = data.text
+                footer.style.color = data.text
+            })
+        })
+    </script>
+</body>
+</html>

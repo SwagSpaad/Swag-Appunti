@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PW00</title>
+
+    <style>
+        body, html{
+            width:900px;
+            margin: 0 auto;
+        }
+
+        h1{
+            border: 1px solid gray;
+            padding: 5px;
+        }
+
+        ul{
+            display: flex;
+            list-style: none;
+        }
+
+        li{
+            padding:10px;
+            border: solid 1px gray;
+            width:25%;
+        }
+        
+        .parte_articolata{
+            display:flex;
+        }
+
+        article{
+            width: 33%;
+        }
+
+        footer{
+            border: 1px solid gray;
+            padding-left: 5px;
+        }
+
+        @media(max-width: 1000px){
+            body, html{
+                width:400px;
+                margin: 0 auto;
+            }
+
+            ul{
+                flex-wrap: wrap;
+                list-style: none;
+            }
+
+            li{
+                width:55%; /*essendo ogni elemento largo più della metà del div, flex-wrap:wrap porrà ogni <li> su una riga diversa*/
+                margin: 2px;
+            }
+
+            .parte_articolata{
+                flex-wrap: wrap;
+            }
+            article{
+                width:100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Example.com</h1>
+    <div class="menu">
+        <h3>MENU</h3>
+        <ul>
+            <li><a href="">Home page</a></li>
+            <li><a href="">Informazioni</a></li>
+            <li><a href="">Prodotti</a></li>
+            <li><a href="">Contatti</a></li>
+        </ul>
+    </div>
+    
+    <div class="Contenuto">
+        <h2>Articoli</h2>
+        <div class="parte_articolata"></div>
+    </div>
+    <footer>
+        <p><a href="">Copyright - Example.com</a></p>
+    </footer>
+    <script>
+        fetch("http://localhost:3000/dati")
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("Errore nella fetch")
+            }
+            return response.json();
+        })
+        .then(data=>{
+            const parte_articolata = document.querySelector(".parte_articolata");
+            data.dati.forEach(element => {
+                const articolo = document.createElement("article");
+
+                const h3 = document.createElement("h3");
+                h3.textContent = element.titolo;
+
+                const p = document.createElement("p");
+                p.textContent = element.contenuto;
+
+                articolo.appendChild(h3);
+                articolo.appendChild(p);
+                parte_articolata.appendChild(articolo);
+            });
+        })
+
+        let controllo = true;
+        const menu = document.querySelector(".menu h3");
+        menu.addEventListener("click", ()=>{
+            if(window.innerWidth < 1000){
+                scomparsa();
+            }
+        })
+
+        function scomparsa(){
+            controllo = !controllo;
+            const ul = document.querySelector("ul");
+            if(!controllo){
+                menu.style.color = "blue";
+                ul.style.opacity = 0;
+            }
+            else{
+                menu.style.color = "black";
+                ul.style.opacity = 1;
+            }
+        }
+
+        const a = document.querySelector(".Contenuto h2");
+        a.addEventListener("click", ()=>{   
+            let vettore_articoli = Array.from(document.querySelectorAll("article"));
+            shuffle(vettore_articoli);
+            const parte_articolata = document.querySelector(".parte_articolata");
+            parte_articolata.innerHTML = " ";
+            vettore_articoli.forEach(element=>{
+                parte_articolata.appendChild(element);
+            })
+        })
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        }
+
+    </script>
+</body>
+</html>

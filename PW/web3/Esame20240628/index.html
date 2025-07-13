@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame 28-06-2024</title>
+
+    <style>
+        html body{
+            background-color: #e0f7fa;
+        }
+
+        .hamburger{
+            display: none;
+        }
+
+        .container{
+            margin: 0 auto;
+            max-width: 960px;
+            background-color: #ffffff;
+            border: 1px solid #00796b;
+            font-family: Arial, sans-serif;
+        }
+
+        .container a{
+            color: #004d40;
+            padding: 10px;
+        }
+
+        header ul{
+            list-style: none;
+            display: flex;
+            right: 5px;
+        }
+
+        li{
+            margin: 5px;
+        }
+
+        header{
+            display: flex;
+            border-bottom: 1px solid #00796b;
+            padding: 10px;
+            height: 60px;
+        }
+
+        h1{
+            margin: 5px;
+        }
+
+        main{
+            display: flex;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .colonna1{
+            width: 30%;
+            border: 1px solid #00796b;
+            padding: 10px;
+        }
+
+        .colonna2{
+            width: 70%;
+            border: 1px solid #00796b;
+            padding: 10px;
+        }
+
+        .menu{
+            margin-left: 50%;
+        }
+
+        footer{
+            border-top: 1px solid #00796b;
+            padding: 10px;
+            height: 80px;
+        }
+
+        button{
+            background-color: #00796b;
+            color: white;
+        }
+
+        @media(max-width: 1000px){
+            html body{
+                width: 700px;
+                margin: 0 auto;
+            }
+            .hamburger{
+                display: block;
+                margin-left: 80%;
+            }
+
+            .menu{
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Logo</h1>
+            <div class="menu">
+                <ul>
+                    <li><a href>Home</a></li>
+                    <li><a href>About</a></li>
+                    <li><a href>Services</a></li>
+                    <li><a href>Contact</a></li>
+                </ul>
+            </div>
+            <div class="hamburger">
+                <div style="width: 35px; height: 5px; background-color: black; margin: 6px"></div>
+                <div style="width: 35px; height: 5px; background-color: black; margin: 6px"></div>
+                <div style="width: 35px; height: 5px; background-color: black; margin: 6px"></div>
+            </div>
+        </header>
+        <main>
+            <div class="colonna1">
+                <ul>
+
+                </ul>
+            </div>
+            <div class="colonna2">
+                <h1>Dettagli</h1>
+                <p>Seleziona una persona dalla lista per vedere i dettagli</p>
+                <button>Aggiorna colori</button>
+            </div>
+        </main>
+        <footer>
+    
+        </footer>
+    </div>
+
+    <script>
+        fetch("http://localhost:3000/persone")
+        .then(response=>{
+            if(!response.ok){
+                throw new Error("Errore nella fetch")
+            }
+            return response.json();
+        })
+        .then(data =>{
+            const ul = document.querySelector(".colonna1 ul");
+            data.dati.forEach(element => {
+                const li = document.createElement("li");
+                li.textContent = element.nome +" "+element.cognome;
+                ul.appendChild(li);
+
+                li.addEventListener("click", ()=>{
+                    alert("Nome:"+element.nome+" "+element.cognome+" Età:"+element.età);
+                })
+            });
+        })
+
+        const bottone = document.querySelector(".colonna2 button");
+        bottone.addEventListener("click",()=>{
+            const body = document.querySelector("html body");
+            body.style.backgroundColor = "#00796b";
+            const link = document.querySelectorAll(".menu a");
+            link.forEach(element=>{
+                element.style.color = "#313131";
+            })
+        })
+    </script>
+</body>
+</html>

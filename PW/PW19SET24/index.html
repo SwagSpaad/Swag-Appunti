@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame 19 set</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Lista Attività</h1>
+    </header>
+    <main class="listaAttività">
+
+    </main>
+    <footer>
+        <p>2024 Lista Attività - Esame</p>
+    </footer>
+    <script>
+        fetch('http://localhost:3000/tasks')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Fetch error")
+                }
+                return response.json()
+            })
+            .then(data => {
+                const main = document.querySelector(".listaAttività")
+                data.message.forEach(element => {
+                    const div = document.createElement('div')
+                    const p = document.createElement('p')
+                    const button = document.createElement('button')
+                    p.innerText = element.text
+                    button.innerText = "Completa"
+                    if (element.completed == true) {
+                        p.className = "completed"
+                        button.className = "completeTrue"
+                    } else {
+                        button.className = "completeFalse"
+                    }
+                    div.appendChild(p)
+                    div.appendChild(button)
+                    main.appendChild(div)
+
+                    const id = element.id
+                    const completeButton = div.querySelector("button")
+
+                    completeButton.addEventListener("click", () => {
+                        fetch(`http://localhost:3000/tasks/complete/${id}`, {
+                            method: "POST",
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error("Fetch error")
+                                }
+                                return response.json()
+                            })
+                            .then(() => {
+                                p.className = "completed"
+                                button.className = "completeTrue"
+                            })
+                    })
+                });
+            }) 
+    </script>
+</body>
+
+</html>

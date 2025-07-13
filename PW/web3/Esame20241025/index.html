@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame 25-10-2024</title>
+
+    <style>
+        html, body{
+            background-color: #f0f0f0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .parte_box{
+            display:grid;
+            grid-template-columns: 400px 400px;
+        }
+
+        header{
+            background-color: #333;
+            color: #fff;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer{
+            background-color: #333;
+            color:#fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .box{
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+
+        .box button{
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px; /*12px*/
+            border-radius: 5px;
+            display: flex;
+        }
+
+        main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media(max-width: 800px){
+            main{
+                display: flex;
+                flex-direction: column;
+            }
+
+            .box{
+                width: 300px;
+            }
+
+            .parte_box{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Gestione Eventi</h1>
+    </header>
+    <main>
+        <button id="b" style="background-color: #28a745; padding: 12px 25px; border-radius: 5px; color:white; font-size: 120%; margin:20px;">
+            Eventi futuri
+        </button>
+
+        <div class="parte_box">
+
+        </div>
+    </main>
+    <footer>
+        <p>@ 2024 Gestione Eventi - Esame</p>
+    </footer>
+
+    <script>
+        // Seleziono gli elementi principali della pagina
+        const eventsContainer = document.querySelector('.parte_box'); // Contenitore dove verranno mostrati gli eventi
+        const toggleButton = document.getElementById('b'); // Pulsante per alternare tra tutti gli eventi e quelli futuri
+        let allEvents = []; // Array per memorizzare tutti gli eventi ricevuti dal server
+        let showFutureEvents = false; // Variabile per tracciare lo stato del filtro (mostrare tutti o solo gli eventi futuri)
+    
+        // Funzione per ottenere la lista degli eventi dal server
+        async function fetchEvents() {
+            try {
+                // Invio una richiesta GET al server per ottenere gli eventi
+                const response = await fetch('http://localhost:3000/events');
+                const data = await response.json(); // Converto la risposta in formato JSON
+    
+                // Controllo se la risposta è corretta
+                if (data.status === 'corretto') {
+                    allEvents = data.dati; // Memorizzo gli eventi nella variabile globale
+                    renderEvents(); // Visualizzo gli eventi sulla pagina
+                } else {
+                    console.error(data.message); // Mostro un errore se la risposta non è corretta
+                }
+            } catch (error) {
+                // Gestione degli errori nella richiesta al server
+                console.error('Errore durante la richiesta:', error);
+            }
+        }
+    
+        // Funzione per mostrare gli eventi sulla pagina
+        function renderEvents() {
+            // Filtro gli eventi se il filtro "futuri" è attivo
+            const eventsToDisplay = showFutureEvents
+                // Il metodo .filter() è usato per creare un nuovo array contenente solo gli elementi che soddisfano una certa condizione.
+                // new Date() senza argomenti restituisce la data e l'ora corrente.
+                ? allEvents.filter(event => new Date(event.date) > new Date()) // Mostro solo eventi futuri
+                : allEvents; // Mostro tutti gli eventi
+    
+            // Svuoto il contenitore prima di aggiungere gli eventi aggiornati
+            eventsContainer.innerHTML = '';
+    
+            // Creo dinamicamente il contenuto per ogni evento
+            eventsToDisplay.forEach(event => {
+                // Creo un contenitore per ogni evento
+                const eventBox = document.createElement('div');
+                eventBox.className = 'box'; // Applico lo stile definito per i box
+    
+                // Creo il titolo dell'evento
+                const eventTitle = document.createElement('h3');
+                eventTitle.textContent = event.title; // Imposto il titolo
+                if (event.participated) {
+                    // Se l'evento è già partecipato, applico uno stile speciale
+                    eventTitle.style.textDecoration = 'line-through'; // Barrato
+                    eventTitle.style.color = '#888'; // Colore grigio
+                }
+    
+                // Aggiungo la data dell'evento
+                const eventDate = document.createElement('p');
+                eventDate.textContent = `Data: ${event.date}`; // Mostro la data dell'evento
+    
+                // Creo il pulsante per partecipare all'evento
+                const participateButton = document.createElement('button');
+                participateButton.textContent = event.participated ? 'Partecipato' : 'Partecipa'; // Testo del pulsante
+                participateButton.disabled = event.participated; // Disabilito il pulsante se l'evento è già partecipato
+                if (event.participated) {
+                    // Cambia il colore del pulsante se disabilitato
+                    participateButton.style.backgroundColor = 'grey';
+                }
+                // Aggiungo un listener al pulsante per gestire la partecipazione
+                participateButton.addEventListener('click', () => participateEvent(event.id));
+    
+                // Aggiungo il titolo, la data e il pulsante al box dell'evento
+                eventBox.appendChild(eventTitle);
+                eventBox.appendChild(eventDate);
+                eventBox.appendChild(participateButton);
+    
+                // Aggiungo il box dell'evento al contenitore principale
+                eventsContainer.appendChild(eventBox);
+            });
+        }
+    
+        // Funzione per contrassegnare un evento come partecipato
+        async function participateEvent(eventId) {
+            try {
+                // Invio una richiesta GET al server per aggiornare lo stato dell'evento
+                const response = await fetch(`http://localhost:3000/events/participate/${eventId}`);
+                const data = await response.json(); // Converto la risposta in formato JSON
+    
+                // Controllo se l'operazione è stata completata con successo
+                if (data.status === 'Tutto ok') {
+                    // Aggiorno lo stato dell'evento nell'array globale
+                    allEvents = allEvents.map(event =>
+                        event.id === eventId ? { ...event, participated: true } : event
+                    );
+                    renderEvents(); // Rendo di nuovo gli eventi aggiornati
+                } else {
+                    console.error(data.message); // Mostro un errore se l'ID non è valido
+                }
+            } catch (error) {
+                // Gestione degli errori nella richiesta al server
+                console.error('Errore durante la richiesta:', error);
+            }
+        }
+    
+        // Funzione per alternare la visualizzazione degli eventi
+        toggleButton.addEventListener('click', () => {
+            showFutureEvents = !showFutureEvents; // Cambio lo stato del filtro
+            toggleButton.textContent = showFutureEvents ? 'Tutti gli eventi' : 'Eventi futuri'; // Modifico il testo del pulsante
+            renderEvents(); // Aggiorno la visualizzazione degli eventi
+        });
+    
+        // Inizializzazione: carico gli eventi al caricamento della pagina
+        fetchEvents();
+    </script>
+    
+</body>
+</html>

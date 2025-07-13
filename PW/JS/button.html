@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <p>
+            <button class="myButton">Cliccami dioporco!!!!</button>
+        </p>
+        <p class="result">
+
+        </p>
+    </main>
+</body>
+<script>
+    const myButton = document.querySelector(".myButton");
+    const resultP = document.querySelector(".result")
+
+    const buttonResolver = function(resolve, reject){
+        myButton.addEventListener('click', resolve);
+        setTimeout(reject, 5000);
+    }
+
+
+
+    new Promise(buttonResolver).then(function(){
+        resultP.innerHTML="Hai vinto diocane!!!"
+    }).catch(function(){
+        resultP.innerHTML="Hai perso porcodio!!!"
+    })
+</script>
+</html>
