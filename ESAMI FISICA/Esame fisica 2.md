@@ -129,12 +129,12 @@ $$\Delta\Phi_{B} = B\cdot Lv\Delta{t}$$
 da cui:
 $$\frac{\Delta\Phi_{B}}{\Delta{t}} = BLv$$
 Per la legge di Faraday-Neumann, quindi, mentre la sbarra si muove si genera una F.E.M indotta nel circuito da:
-$$\xi = -\frac{d\Phi_{B}}{dt} = -BLv = -(0,350T)(0,25m)(0,55\frac{m}{s}) \simeq -0,048125V$$
+$$\mathcal{E} = -\frac{d\Phi_{B}}{dt} = -BLv = -(0,350T)(0,25m)(0,55\frac{m}{s}) \simeq -0,048125V$$
 Per la legge di Lens, la corrente deve circolare in senso orario per compensare l'aumento del flusso concatenato.
 
 ### b) $I$ indotta
 Se la resistenza della sbarra é $R = 18\Omega$ e se le rotaie hanno resistenza trascurabile, la resistenza complessiva del circuito é $R$, per cui la corrente indotta nel circuito é:
-$$I = \frac{|\xi|}{R} = \frac{0,048125V}{18\Omega}\simeq 2,6736\cdot 10^{-3}A = 2,6736mA$$
+$$I = \frac{|\mathcal{E}|}{R} = \frac{0,048125V}{18\Omega}\simeq 2,6736\cdot 10^{-3}A = 2,6736mA$$
 ### c) Potenza elettrica dissipata
 La potenza elettrica dissipata dalla sbarra é quindi:
-$$P_{d} = \frac{\xi^{2}}{R} = \frac{(0,048125V)^{2}}{18\Omega} \simeq 1,286675\cdot 10^{-4}W = 0,1287mW$$
+$$P_{d} = \frac{\mathcal{E}^{2}}{R} = \frac{(0,048125V)^{2}}{18\Omega} \simeq 1,286675\cdot 10^{-4}W = 0,1287mW$$
