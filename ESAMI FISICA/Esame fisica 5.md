@@ -45,7 +45,7 @@ Per la seconda equazione cardinale della dinamica dei sistemi abbiamo $$I_{z}\al
 otteniamo $$\frac{2}{5}\cancel{M}R^{\cancel2}\alpha=\mu_{d}\cancel{M}g\implies  \frac{2}{5}R \alpha=\mu_{d}g $$ da cui $$\alpha=\frac{5\mu_{d}g}{2R}$$
 A partire da $t=0$ la velocità angolare istantanea varia nel tempo secondo la legge $$\omega(t)=\omega(0)+\alpha t= \frac{5\mu_{d}g}{2R}t$$
 
-La palla inizierà a rotolare senza strisciare nell'istante $t^{*}$ quando sarà verificata la relazione di rotolamento $$R\omega(t^{*})=V_{CM}(t^{*})\implies \cancel{R} \frac{5\mu_{d}g}{2\cancel{R}}t^{*}=V_{0}-\mu_{d}gt$$
+La palla inizierà a rotolare senza strisciare nell'istante $t^{*}$ quando sarà verificata la relazione di rotolamento $$R\omega(t^{*})=V_{CM}(t^{*})\implies \cancel{R} \frac{5\mu_{d}g}{2\cancel{R}}t^{*}=V_{0}-\mu_{d}gt^{*}$$
 da cui otteniamo $$V_{0}=\frac{5}{2} \mu_{d} gt^{*}+\mu_{d}g t^{*}=\mu_{d}gt^{*}\bigg(\frac{5}{2}+1\bigg)\implies V_{0}=\frac{7}{2}\mu_{d}gt^*$$
 ricaviamo quindi $t^{*}$ $$t^{*}=\frac{2V_{0}}{7 \mu_{d}g }=\frac{2\cdot\bigg(2 \frac{m}{s}\bigg)}{7\cdot0.1\cdot9.81 \frac{m}{s^{2}}}\simeq 0.582s$$
 ## c.) A partire da $t^{*}$ il moto del centro di massa è accelerato?

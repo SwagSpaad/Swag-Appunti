@@ -9,9 +9,7 @@ sostituendo i valori otteniamo $$a_{x}=\left(9.81 \frac{m}{s^{2}}\right)\cdot\si
 Il moto è rettilineo uniformemente accelerato.  La velocità istantanea in funzione del tempo è $$V_{x}(t)=V_{x_0}+a_{x}t$$La legge oraria del moto è $$x(t)=x_{0}+V_{x_{0}}t+ \frac{1}{2}a_{x}t^{2}$$
 ## b.)Accelerazione e forza con $v_{x}(t)=kt^{2}$ 
 L'accelerazione è la derivata della velocità istantanea quindi $$a_{x}(t)=V_{x}'(t)=2kt$$
-La forza risultante agente sul punto materiale è $$\begin{align}F_{tot_{x}}(t)&=ma_{x}(t)\implies (m \overrightarrow{g})_{x}+F_{x}(t)=ma_{x}(t)\\\\&\implies mg\sin\Theta+F_{x}(t)=ma_x(t)\\\\&\implies F_{x}(t)=m[a_x(t)-g\sin\Theta]\\\\ &\implies F_{x}(t)=m[2kt-g\sin\Theta]\end{align}
-$$
-
+La forza risultante agente sul punto materiale è $$\begin{align}F_{tot_{x}}(t)&=ma_{x}(t)\implies (m \overrightarrow{g})_{x}+F_{x}(t)=ma_{x}(t)\\\\&\implies mg\sin\Theta+F_{x}(t)=ma_x(t)\\\\&\implies F_{x}(t)=m[a_x(t)-g\sin\Theta]\\\\ &\implies F_{x}(t)=m[2kt-g\sin\Theta]\end{align}$$
 
 ## c.) Distanza percorsa $D$ tra $t_{i}=0s$ e $t_{f}=10s$ 
 Le condizioni sono quelle del punto b.), quindi con la legge $$V_{x}(t)=kt^{2} \qquad k=2 \frac{m}{s^{3}}$$ la distanza percorsa tra $t_{i}=0s$ e $t_{f}=10s$ è $$\begin{align}D&=\int_0^{t_{f}}V_{x}(t)dt=\int_0^{t_{f}}kt^{2}dt=k\int_0^{t_{f}}t^{2}dt=k \frac{t^{3}}{3}\Bigg|_{0}^{t_{f}}=\frac{1}{3}k(t_{f})^{3}=\\\\&=\frac{1}{3}\cdot 2 \frac{m}{s^{3}} \cdot(10 s)^{3}=666.6 m\end{align}$$
@@ -27,7 +25,7 @@ Durante la rotazione di $90°$ il centro dell'asta si abbassa di un tratto di lu
 Il momento di inerzia dell'asta rispetto l'asse di rotazione considerato è $$I_{z}=\frac{1}{3}ML^{2}$$
 Possiamo scrivere $$\begin{align}E_{f}=E_{i}\implies \frac{1}{2}I_{z}\omega_{1}^{2}= \frac{1}{2}MgL\\\\
 \cancel{\frac{1}{2}}I_{z}\omega_{1}^{2}=\cancel{\frac{1}{2}} MgL \end{align}$$
-sostituendo $I_{z}= \frac{1}{2}ML^{2}$ otteniamo  $$\begin{align}\cancel{\frac{1}{2}}\cdot\frac{1}{3}\cancel{M}{L^{\cancel2}} \omega_{1}^{2}= \cancel {\frac{1}{2}}\cancel{M}g\cancel{L}\implies \frac{1}{3}\omega_{1}^{2}L=g\\\\
+sostituendo $I_{z}= \frac{1}{3}ML^{2}$ otteniamo  $$\begin{align}\cancel{\frac{1}{2}}\cdot\frac{1}{3}\cancel{M}{L^{\cancel2}} \omega_{1}^{2}= \cancel {\frac{1}{2}}\cancel{M}g\cancel{L}\implies \frac{1}{3}\omega_{1}^{2}L=g\\\\
 \implies \omega_{1}^{2}=\frac{3g}{L}\implies \omega_{1}=\sqrt{\frac{3g}{L}} \end{align}$$
 sostituendo numericamente otteniamo $$\omega_{1}=\sqrt{\frac{3\cdot\bigg(9.81 \frac{m}{s^{2}}\bigg)}{5m}}\simeq 2.426 \frac{rad}{s}$$
 ## b.) Urto con la pallina
