@@ -120,3 +120,103 @@ Per individuare il padre di un nodo $v$ è necessario effettuare $\lfloor \frac{
 - solo per alberi completi o quasi
 - tempo per individuare il padre di un nodo $O(1)$
 - tempo per individuare il figlio di un nodo $O(1)$
+
+### Visite di alberi
+#### Visita in profondità DFS $O(n)$ 
+![[Pasted image 20250805153459.png|500]]
+
+![[Pasted image 20250805162434.png|center|500]]
+
+Ogni nodo viene inserito ed estratto dalla pila una sola volta. Le azioni su ogni nodo (pop, visita, push) hanno tutte tempo costante $O(1)$. Il numero di nodi inseriti/estratti è lineare nella quantità di nodi dell'albero $O(n)$, quindi il ciclo while viene eseguito $n$ volte. 
+
+La complessità è quindi $O(n)$
+
+#### Visita in ampiezza BFS $O(n)$
+![[Pasted image 20250805163245.png|500]]
+
+![[Pasted image 20250805163515.png|500]]
+
+Come per la visita DFS il tempo speso per ogni nodo è costante, e il numero di nodi inseriti/estratti è lineare in $n$, quindi la complessità è $O(n)$
+
+### Calcolo altezza $O(n)$
+![[Pasted image 20250805163729.png|500]]
+
+### Calcolo numero di foglie $O(n)$
+![[Pasted image 20250805163802.png|500]]
+### Calcola grado medio $O(n)$
+![[Pasted image 20250805164714.png|500]]
+![[Pasted image 20250805164725.png|500]]
+
+### Cerca elemento $O(n)$
+![[Pasted image 20250805165328.png|500]]
+
+### Alberi binari di ricerca BST
+Le operazioni hanno tutte costo $O(h)$, quindi in caso di alberi sbilanciati (ad esempio in un BST linearizzato), le operazioni arrivano ad avere costo lineare $O(n)$ 
+- ogni nodo dell'albero contiene un elemento ed una chiave. 
+- per ogni nodo $v$ vale che
+	- le chiavi nel sottoalbero sinistro di v sono $\le$ chiave(v)
+	- le chiavi nel sottoalbero destro sono $>$ chiave(v)
+
+![[Pasted image 20250805185406.png|center|500]]
+
+La visita simmetrica in profondità di un BST (sottoalbero sin, radice, sottoalbero des) permette la visita in ordine crescente di chiave.
+#### Search $O(h)$
+Sfrutta la proprietà di ordinamento dei nodi $v$ per decidere se proseguire nel sottoalbero destro o sinistro
+
+![[Pasted image 20250805190640.png|center|500]]
+#### Insert $O(h)$
+- Crea un nuovo nodo $u$ con $elem(u) = e$  e $chiave(u) = k$ 
+- Cerca la chiave $k$ nell'albero, identificando il nodo $v$ che diventerà padre di $u$
+- Appendi $u$ come figlio destro/sinistro in modo che sia mantenuta la proprietà di ricerca
+
+![[Pasted image 20250805191013.png]]
+
+#### max/min $O(h)$
+![[Pasted image 20250805191034.png]]
+la procedura $min$ è analoga. Per la proprietà dell'albero il minimo è la foglia più a sinistra della radice
+#### Predecessore/successore $O(h)$
+- il predecessore di un nodo $u$ è il nodo $v$ avente massima chiave $\le$ chiave(u)
+- il successore di un nodo $u$ è il nodo $v$ avente minima chiave $\ge$ chiave(u)
+
+![[Pasted image 20250805191729.png|500]]
+
+#### Delete $O(h)$
+- caso foglia: rimuovi semplicemente il nodo
+- il nodo ha un solo figlio: il parent del figlio diventa il parent del nodo da rimuovere
+- **il nodo ha due figli**: sostituisci il nodo con il suo predecessore/successore e rimuovi il predecessore/successore con al più un figlio (primo o secondo caso)
+
+### Alberi AVL
+Gli alberi AVL fanno in modo che l'altezza dell'albero sia sempre $O(\log{n})$.
+Questo è possibile mediante un fattore di bilanciamento $$\beta(v)=\text{altezza sottoalbero sinistro di v - altezza sottoalbero destro di v}$$
+Un albero si dice bilanciato in altezza se $|\beta(v)|\le1$ per ogni nodo $v$.
+
+![[Pasted image 20250806160417.png]]
+
+#### Altezza degli AVL $O(\log{n})$
+Tra tutti gli alberi si considerano quelli più sbilanciati, ovvero gli alberi di Fibonacci. Se gli alberi di Fibonacci hanno altezza $O(\log n)$ allora tutti gli AVL hanno altezza $O(\log n)$
+
+![[Pasted image 20250806162444.png]]
+
+**Lemma**
+Sia $T_{h}$ un albero di Fibonacci di altezza $h$ e sia $n_{h}$ il numero dei suoi nodi. Allora $h=\Theta(\log{n_{h}})$
+
+**Dim.**
+Per costruzione di $T_{h}$ risulta $n_{h}=1+n_{h-1}+n_{h-2}$ che ricorda l'equazione di Fibonacci $F_{i}=F_{i-1}+F_{i-2}$. Dimostriamo per induzione che $$n_{h}=F_{h+3}-1$$
+Per $h=0$ risulta $n_{0}=1=F_{3}-1=2-1$ che è corretto. Assumiamo per ipotesi induttiva che $n_{k}=F_{k+3}-1$ per ogni $k<h$ ed utilizzando le uguaglianze relative a $n_{h}$ e $F_{i}$ abbiamo $$\begin{align}
+n_{h}&=1+n_{h-1}+n_{h-2}=1+(F_{h-1+3}-1)+(F_{h-2+3}-1)\\\\
+&=1+F_{h+2}-1+F_{h+1}-1=F_{h+2}+F_{h+1}-1\\\\
+&=F_{h+3}-1
+\end{align}$$
+Osservando che $F_{h}=\Theta(\phi^{h})$ dove $\phi\approx 1.618$ è la sezione aurea, l'altezza ed il numero di nodi di $T_{h}$ sono esponenzialmente correlate e quindi $$F_{h+3}=\Theta(\phi^{h+3})\implies n_{h}=\Theta(\phi^{h+3})=\Theta(\phi^{h})$$
+prendendo il logaritmo di entrambi i membri abbiamo $$\log{n_{h}}=\Theta(\log{\phi^{h}})\implies \log{n_{h}}=\Theta(h \cdot\log{\phi})$$
+essendo $\log{\phi}$ una costante vale $$\log{n_{h}}=\Theta(h)\implies h=\Theta(\log n_{h})\qquad \square$$
+
+**Corollario**
+Un albero AVL di $n$ nodi ha altezza $O(\log n)$
+
+**Dim.**
+La dimostrazione viene dal lemma. Sia $h$ l'altezza dell'albero AVL. Per dimostrare che $h=O(\log n)$ consideriamo l'albero di Fibonacci di altezza $h$, che ha $n_{h}$ nodi. Per definizione di albero di Fibonacci $n_{h}\le n$. Dato che dal Lemma $h=\Theta(\log n_{h})$ e $n_{h}\le n$ allora $h=O(\log n).\:\: \square$ 
+
+#### Search $O(\log n)$ come per [[#Search $O(h)$|BST]]
+#### Insert $O(\log n)$
+
