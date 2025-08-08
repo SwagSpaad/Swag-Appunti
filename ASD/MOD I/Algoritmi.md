@@ -218,5 +218,43 @@ Un albero AVL di $n$ nodi ha altezza $O(\log n)$
 La dimostrazione viene dal lemma. Sia $h$ l'altezza dell'albero AVL. Per dimostrare che $h=O(\log n)$ consideriamo l'albero di Fibonacci di altezza $h$, che ha $n_{h}$ nodi. Per definizione di albero di Fibonacci $n_{h}\le n$. Dato che dal Lemma $h=\Theta(\log n_{h})$ e $n_{h}\le n$ allora $h=O(\log n).\:\: \square$ 
 
 #### Search $O(\log n)$ come per [[#Search $O(h)$|BST]]
+#### Ribilanciamento tramite rotazioni
+L'operazione di insert (e delete) va a modificare i fattori di bilanciamento di $\pm1$. Per mantenere il bilanciamento si effettuano delle rotazioni sui nodi sbilanciati che richiedono tempo $O(1)$. 
+
+![[Pasted image 20250808124254.png|center|500]]
+
+Sia $v$ un nodo con $\beta(v) \pm 2$, allora esiste un sottoalbero $T$ di $v$ che lo sbilancia. A seconda della posizione di $T$ rispetto a $v$ si hanno 4 casi
+
+![[Pasted image 20250808124057.png|center|500]]
+
+##### Caso SS 
+Sia $h$ l'altezza del sottoalbero destro di $v$. L'altezza di $T(v)=h+3$, l'altezza di $T(u)=h+2$, l'altezza di $T_{1}=h+1$. Calcolando i fattori di bilanciamento otteniamo $\beta(v)=+2$, per cui lo sbilanciamento è provocato da $T_1$ 
+
+![[Pasted image 20250808130652.png|center|500]]
+
+Per ribilanciarlo è sufficiente effettuare una rotazione verso destra su $v$
+
+![[Pasted image 20250808130732.png|center|500]]
+
+##### Caso SD
+Sia $h$ l'altezza del sottoalbero destro di $v$. L'altezza di $T(w)=h+1$. Lo sbilanciamento è provocato dal sottoalbero destro di $z$
+
+![[Pasted image 20250808151508.png|center|500]]
+
+Per ribilanciarlo si effettuano due rotazioni semplici, una verso sinistra sul figlio sinistro del nodo critico (nodo $z$) e in seguito una verso destra sul nodo critico (nodo v).
+
+![[Pasted image 20250808151607.png|center|500]]
+
 #### Insert $O(\log n)$
+- Crea un nuovo nodo $u$ con $elem=e$ e $chiave=k$
+- Inserisci il nodo $u$ come per i [[#Insert $O(h)$|BST]]
+- Ricalcola i fattori di bilanciamento dei nodi nel cammino dalla radice al nodo $u$. Denotiamo con $v$ il più profondo nodo con $\beta(v)=\pm2$ (nodo critico)
+- Esegui opportune rotazioni su $v$
+#### Delete $O(\log n)$
+- Cancella il nodo come per i [[#Delete $O(h)$|BST]]
+- Ricalcola il fattore di bilanciamento del padre del nodo eliminato, ed esegui una opportuna rotazione
+- Ripeti il secondo punto fino ad arrivare eventualmente alla radice
+	- L'ultimo passo termina quando l'altezza del sottoalbero appena ribilanciato resta uguale a quella che aveva prima della cancellazione, altrimenti se l'altezza diminuisce si deve effettuare il ribilanciamento
+**Oss.**
+Nel caso peggiore sono necessarie $O(\log n)$ rotazioni, infatti il caso peggiore si ha quando è necessario ribilanciare tutti i nodi nel cammino dal nodo cancellato alla radice (altezza dell'albero).
 
