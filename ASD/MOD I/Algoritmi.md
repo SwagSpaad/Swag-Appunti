@@ -258,3 +258,126 @@ Per ribilanciarlo si effettuano due rotazioni semplici, una verso sinistra sul f
 **Oss.**
 Nel caso peggiore sono necessarie $O(\log n)$ rotazioni, infatti il caso peggiore si ha quando è necessario ribilanciare tutti i nodi nel cammino dal nodo cancellato alla radice (altezza dell'albero).
 
+## Coda con Priorità
+![[Pasted image 20250813135842.png|500]]
+![[Pasted image 20250813135852.png|500]]
+
+### Implementazione
+#### Array non ordinato
+Array sovradimensionato con variabile d'appoggio per tenere traccia del numero $n$ di elementi
+- FindMin $\Theta(n)$ (devo guardare tutti gli elementi)
+- Insert $O(1)$ (inserisco in coda)
+- Delete $O(1)$ (ho il riferimento diretto all'elemento da cancellare, e lo sovrascrivo con l'ultimo elemento aggiunto nella posizione della variabile d'appoggio)
+- DeleteMin $\Theta(n)$ (find min + delete)
+#### Array ordinato
+Array sovradimensionato in ordine **decrescente** con variabile d'appoggio per il numero di elementi
+- FindMin $O(1)$ (elemento in fondo all' array)
+- Insert $O(n)$ (ricerca binaria $O(\log n)$ + spostamenti $O(n)$ )
+- Delete $O(n)$ (devo fare $O(n)$ spostamenti)
+- DeleteMin $O(1)$ (cancello l'elemento in fondo all'array, non ho bisogno di spostamenti)
+#### Lista non ordinata
+Lista bidirezionale
+- FindMin $\Theta(n)$ (devo guardare tutti gli elementi)
+- Insert $O(1)$ (inserisco in coda)
+- Delete $O(1)$ (ho il riferimento diretto all'elemento da cancellare, lo cancello agendo sui puntatori in $O(1)$)
+- DeleteMin $\Theta(n)$ (find min + delete)
+#### Lista ordinata
+Lista bidirazionale ordinata in ordine **crescente**
+- FindMin $O(1)$ (elemento in testa alla lista)
+- Insert $O(n)$ (ricerca $O(n)$ + inserimento in $O(1)$ )
+- Delete $O(1)$ (ho il riferimento, basta agire sui puntatori)
+- DeleteMin $O(1)$ (faccio puntare la testa al secondo elemento della lista)
+![[Pasted image 20250813141335.png|500]]
+
+#### d-heap
+Albero radicato d-ario con le seguenti proprietà:
+- completo fino al penultimo livello, le foglie sull'ultimo livello compattate a sinistra
+- ogni nodo $v$ contiene un elemento $elem(v)$ e una chiave $chiave(v)$ 
+- ordinamento a min-heap: per ogni nodo $v$ diverso dalla radice $chiave(v)\ge chiave(parent(v))$ 
+
+![[Pasted image 20250813141624.png|center|500]]
+
+- Un d-heap di $n$ nodi ha altezza $\Theta(\log_{d}{n})$ 
+- La radice contiene l'elemento con chiave minima
+- Rappresentabile tramite [[#Vettore posizionale|vettore posizionale]]
+##### Ripristinare ordinamento
+![[Pasted image 20250813142657.png|center|500]]
+##### findMin $O(1)$
+![[Pasted image 20250813142738.png|center|500]]
+##### Insert $O(\log_{d}{n})$ 
+- Crea un nuovo nodo $v$ con elemento $e$ e chiave $k$
+- Inseriscilo come foglia sull'ultimo livello
+- Ripristina la proprietà di ordinamento a heap spingendo in alto il nodo $v$
+$T(n)=O(\log_{d}{n})$ per l'esecuzione di muoviAlto
+
+##### delete e deleteMin $O(d\log_{d}{n})$ 
+- Scambia il nodo $v$ contenente l'elemento $e$ da cancellare con una foglia sull'ultimo livello di $T$ ed eliminalo.
+- Ripristina l'ordinamento spingendo il nodo $v$ verso la posizione corretta tramite muoviAlto o muoviBasso
+$T(n)=O(\log_{d}{n}) \: o\: O(d\log_{d}{n})$ in base all'esecuzione di muoviAlto o muoviBasso.
+##### decreaseKey $O(\log_{d}{n})$
+- decrementa il valore della chiave del nodo $v$ della quantità $d$
+- Ripristina la proprietà di ordinamento spingendo in alto il nodo $v$
+##### increaseKey $O(d\log_{d}{n})$
+- aumenta il valore della chiave del nodo $v$ della quantità $d$
+- ripristina l'ordinamento spingendo in basso il nodo $v$
+##### merge $O(n)$
+###### costruire da zero
+Genero un nuovo heap d-ario contenente tutti gli elementi in $c_{1}$ e $c_{2}$
+
+- heapify ricorsivo e chiamo muovi basso sulla radice 
+$$T(n)=dT(n/d)+O(d\log_{d}{n})$$
+dal th. master otteniamo $T(n)=\Theta(n)$
+###### inserimenti ripetuti
+Inseriamo uno ad uno tutti gli elementi della coda più piccola nella coda più grande
+$k=\min\{|c_{1}|, |c_{2}|\}$.  Eseguiamo $k$ inserimenti nella coda più grande $$O(k\log_{d}{n})$$
+#### heap binomiali
+Un albero binomiale $B_{i}$ è definito ricorsivamente nel seguente modo:
+- $B_{0}$ consiste di un solo nodo
+- per $i>0$ $B_{i+1}$ è ottenuto fondendo due alberi binomiali $B_{i}$ ponendo la radice di uno come figlia della radice dell'altro
+![[Pasted image 20250813151322.png|center|500]]
+
+![[Pasted image 20250813151419.png]]
+
+Un **heap binomiale** è una foresta di alberi binomiali che gode delle seguenti proprietà: 
+- **unicità**: per ogni $i\ge0$ esiste al più un $B_{i}$ nella foresta
+- ogni nodo $v$ contiene un elemento $e$ ed una chiave $v$ 
+- per ogni nodo $v$ diverso da una delle radici $chiave(v)\ge chiave(parent(v)$ 
+
+![[Pasted image 20250813151752.png|center|500]]
+
+Dalla proprietà di unicità, un heap binomiale di $n$ elementi è formato dagli alberi binomiali $B_{i_{0}},B_{i_{1}},\dots,B_{i_{h}}$ dove $i_{0}, i_{1},\dots,i_{h}$ sono le posizioni degli 1 nella rappresentazione in base 2 di $n$.
+Ne consegue che in un heap binomiale con $n$ nodi ci sono al più $\lceil\log{n}\rceil$ alberi binomiali, ciascuno con grado ed altezza $O(\log{n})$
+
+![[Pasted image 20250813152028.png|center|500]]
+
+##### ristruttura $O(\log{n})$ 
+Ripristina la proprietà di unicità dell'heap binomiale
+
+![[Pasted image 20250813153654.png|center|500]]
+
+$T(n)$: lineare nel numero di alberi binomiali (al più $\lceil\log_{n}\rceil$)
+
+![[Pasted image 20250813153945.png]]
+
+##### findMin $O(\log{n})$
+
+![[Pasted image 20250813154004.png|center|500]]
+##### insert $O(\log{n})$
+
+![[Pasted image 20250813154133.png|center|500]]
+##### deleteMin $O(\log{n})$
+
+![[Pasted image 20250813154147.png|center|500]]
+##### decreaseKey $O(\log{n})$
+
+![[Pasted image 20250813154238.png|center|500]]
+##### delete $O(\log{n})$
+
+![[Pasted image 20250813154300.png|center|500]]
+
+##### increaseKey $O(\log{n})$
+
+![[Pasted image 20250813160037.png|center|500]]
+##### merge $O(\log{n})$
+
+![[Pasted image 20250813160101.png|center|500]]
