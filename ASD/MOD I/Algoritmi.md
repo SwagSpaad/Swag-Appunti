@@ -458,3 +458,46 @@ Un albero BFS:
 - costo con liste di adiacenza: $O(m+n)$
 - costo con matrice di adiacenza $O(n^2)$
 
+#### Applicazioni visita in profondità 
+A volte è utile tenere il tempo di scoperta e di abbandono di ogni nodo
+
+![[Pasted image 20250818162706.png|center|500]]
+
+##### Riconoscere tipi di arco
+Utilizziamo i tempi di visita per riconoscere il tipo di un generico arco.
+Per ogni coppia di nodi $(u,v)$ gli intervalli $[pre(u), post(u)], [pre(v),post(v)]$ sono o disgiunti o l'uno è contenuto dell'altro
+
+![[Pasted image 20250818162949.png|center|500]]
+
+#### Riconoscere la presenza di un ciclo
+Visita DFS e verifica se c'è un arco all'indietro.
+
+**Prop.**
+Un grafo $G$ ha un ciclo se la visita DFS rivela un arco all'indietro
+
+
+#### Grafi che ammettono ordinamento topologico
+**Def.**
+Un grafo diretto aciclico (**DAG**) è un grafo diretto che non contiene cicli
+
+**Def.**
+Un ordinamento topologico di un grafo diretto $G$ è una funzione $\sigma:V\to\{1,2,\dots,n\}$ tale che per ogni arco $(u,v)\in E$ allora $\sigma(u)<\sigma(v)$ 
+
+**Th.**
+Un grafo diretto $G$ ammette un ordinamento topologico $\iff$ $G$ è un DAG
+![[Pasted image 20250818170414.png]]
+#### Componenti fortemente connesse
+**Def.**
+Una componente fortemente connessa di un grafo $G$ è un insieme **massimale** di vertici $C\subseteq V$ tale che, per ogni coppia $(u,v)\in C$, $u$ è raggiungibile da $v$ e $v$ è
+
+**Proprietà**
+1. Se si esegue la visita DFS a partire da un nodo $u$, la procedura termina dopo che tutti i nodi raggiungibili da $u$ sono stati visistati
+2. Se $C$ e $C'$ sono due componenti e c'è un arco in $C$ verso un nodo in $C'$ allora il più grande valore $post()$ in $C$ è maggiore del più alto valore $post()$ in $C'$
+3. Il nodo che riceve da una visista DFS il più grande valore $post()$ è un nodo **sorgente** (solo archi uscenti)
+
+Per calcolare le componenti fortemente connesse di un grafo, l'idea è quella di eseguire una DFS a partire da una componente **pozzo** (solo archi entranti), eliminarla e ripetere la visita.
+
+Per trovare una componente pozzo, dalla proprietà 3 è sufficiente invertire tutti gli archi, in questo modo tutte le componenti **sorgenti** diventeranno componenti **pozzo**.
+
+![[Pasted image 20250818172950.png|center|500]]
+
