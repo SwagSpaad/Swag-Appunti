@@ -381,3 +381,80 @@ $T(n)$: lineare nel numero di alberi binomiali (al più $\lceil\log_{n}\rceil$)
 ##### merge $O(\log{n})$
 
 ![[Pasted image 20250813160101.png|center|500]]
+# Grafi
+Un grafo $G=(V,E)$ consiste in: 
+- un insieme $V$ di nodi 
+- un insieme $E$ di coppie di nodi, detti archi. Se le coppie sono ordinate, allora si parla di **grafo diretto**
+Con $n$ si indica il numero di nodi di un grafo, con $m$ il numero di archi. 
+
+Sommando i gradi di ogni nodo di un grafo **non diretto** otteniamo $$\sum\limits_{v\in V}\delta(v)=2m$$
+Sommando i gradi uscenti/entranti di ogni nodo in un grafo **diretto** otteniamo $$\sum\limits_{v\in V}\delta_{in}(v)=\sum\limits_{v\in V}\delta_{out}(v)=m$$
+- un **cammino** è una sequenza di nodi connessi da archi
+- la **lunghezza di un cammino** è il numero di archi del cammino
+- la **distanza** tra due vertici è la lunghezza del cammino più corto tra i due vertici
+- un grafo $G$ si dice **connesso** se per ogni coppia di nodi esiste un cammino
+- un **ciclo** è un cammino da un vertice a se stesso
+- il **diametro** è la massima distanza fra due nodi
+Un grafo pesato è un grafo $G=(V,E,w)$ dove ad ogni arco viene associato un valore $w$ detto peso. 
+
+Un **grafo completo** è un grafo in cui per ogni coppia di nodi esiste un arco che li collega. Il grafo completo con $n$ vertici si indica con $K_{n}$
+Un grafo di $n$ nodi può avere al più $m$ archi, dove $m=n\cdot \frac{n-1}{2}=\Theta(n^2)$  
+Un **albero** è un grafo connesso e aciclico. 
+
+Un albero $T=(V,E)$ ha $|E|=|V|-1$ 
+**Dim.**
+- caso base $|V|=1$ è un grafo con un solo nodo, che non ha archi $\implies |E|=0=|V|-1$ 
+- caso induttivo $|V|>1$. Sia $n$ il numero di nodi di $T$. Poichè $T$ è un albero, per definizione è connesso ed aciclico, quindi ha almeno una foglia. Se rimuoviamo quella foglia otteniamo un albero di $n-1$ nodi, che per ipotesi induttiva ha $n-2$ archi, quindi $T$ ha $n-1$ archi. $\square$ 
+
+Un **ciclo/cammino Euleriano** è un ciclo/cammino di $G$ che passa per tutti gli archi di $G$ una sola volta
+
+Un grafo ammette un **ciclo Euleriano** $\iff$ tutti i nodi hanno grado pari
+Un grafo ammette un **cammino Euleriano** $\iff$ tutti i nodi hanno grado pari tranne due (gli estremi del cammino)
+
+![[Pasted image 20250816141001.png|center|500]]
+
+Esempi di problemi:
+- trovare numero max di compiti eseguibili insieme. Corrisponde al **massimo insieme indipendente** ovvero un insieme $X$ di nodi, di cardinalità massima, tale che per ogni coppia $(u,v) \in X$ allora $u$ e $v$ non sono adiacenti $\implies \not\exists (u,v)\in E$ 
+- trovare numero min di gruppi tale che i compiti nello stesso gruppo possono essere svolti insieme. Corrisponde alla **colorazione** di un grafo, ovvero colorare i nodi del grafo usando il numero minimo $\chi$ di colori, in modo che due nodi adiacenti non abbiano lo stesso colore.
+## Rappresentazione di grafi
+### Matrice di adiacenza
+Si crea una matrice dove le colonne e le righe sono i nodi del grafo e la cella $(u,v)=1$ se $(u,v)\in E$, altrimenti è $0$
+![[Pasted image 20250817154710.png|center|500]]
+
+## Liste di adiacenza
+Si creano delle liste che rappresentano i nodi e per ogni nodo si hanno dei puntatori ai nodi direttamente collegati.
+![[Pasted image 20250817154815.png|center|500]]
+
+### Operazioni a confronto
+- Elenco archi incidenti/uscenti in v
+	- mat. adiacenza: $O(n)$
+	- liste adiacenza: $O(\delta(v))$ 
+- Esiste un arco $(u,v)$?
+	- mat. adiacenza: $O(1)$
+	- liste adiacenza: $O(\min\{\delta(u),\delta(v)\})$ ($\delta(u)$ nel caso di grafi diretti)
+
+## Visita di grafi 
+Permettono di scoprire quali parti del grafo posso raggiungere da un determinato nodo. 
+Generano un albero di visita.
+### Visita in ampiezza
+Dato un grafo $G$ non pesato e un nodo $s$, trova i cammini minimi da $s$ verso ogni altro nodo $v$. 
+
+![[Pasted image 20250817155339.png|center|500]]
+
+- Matrice di adiacenza: $O(n^{2})$ perché il while estrae per una volta tutti i nodi del grafo $O(n)$, mentre l'elenco degli archi incidenti richiede $O(n)$ per ogni nodo.
+- Lista di adiacenza: $O(m+n)$ perché il while incoda ed estrae i nodi del grafo una sola volta $O(n)$, mentre il costo per elencare tutti gli archi è $\sum\limits_{v}\delta(v)=2m=O(m)$
+Per $m=o(n^{2})$ la rappresentazione mediante liste di adiacenza è più efficace temporalmente
+
+**Th.**
+Per ogni nodo $v$, il livello di $v$ nell'albero BFS è pari alla distanza di $v$ dalla sorgente $s$.
+
+Un albero BFS:
+- contiene tutti i nodi raggiungibili dalla sorgente 
+- fornisce i cammini minimi da $s$ a tutti gli altri nodi  
+### Visita in profondità
+
+![[Pasted image 20250817190630.png|center|500]]
+
+- costo con liste di adiacenza: $O(m+n)$
+- costo con matrice di adiacenza $O(n^2)$
+

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esame</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="white-theme">
+
+    <header>
+        <h1>Lista Attività</h1>
+        <ul>
+            <li>Chiaro</li>
+            <li>|</li>
+            <li>Scuro</li>
+        </ul>
+
+        <button id="btnTutti">Mostra Tutti</button>
+        <button id="btnCompletati">Solo Completati</button>
+    </header>
+    <main class="listaAttività">
+    </main>
+    <footer>
+        <p>2024</p>
+    </footer>
+    
+
+    <script>
+        fetch("http://localhost:3000/items")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Errore fetch")
+                }
+                return response.json()
+            })
+            .then(data => {
+                const main = document.querySelector(".listaAttività")
+                data.data.forEach(element => {
+                    const div = document.createElement('div')
+                    const p = document.createElement('p')
+                    const button = document.createElement('button')
+                    p.innerText = element.testo
+                    if (element.completato == true) {
+                        p.className = "completed"
+                        button.className = "completeTrue"
+                        button.innerText = "Completata"
+                    } else {
+                        button.innerText = "Completa"
+                        button.className = "completeFalse"
+                    }
+                    div.appendChild(p)
+                    div.appendChild(button)
+                    main.appendChild(div)
+                });
+
+                const btnTutti = document.querySelector("#btnTutti")
+                const btnCompletati = document.querySelector("#btnCompletati")
+
+                btnTutti.addEventListener("click", () => {
+                    location.reload()
+                })
+
+                btnCompletati.addEventListener("click", () => {
+                    fetch("http://localhost:3000/items-complete")
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error("Errore fetch")
+                            }
+                            return response.json()
+                        })
+                        .then(data => {
+                            const main = document.querySelector(".listaAttività")
+                            const divDaRim = document.querySelectorAll(".listaAttività div")
+                            divDaRim.forEach(rim => {
+                                main.removeChild(rim)
+                            })
+                            data.data.forEach(element => {
+                                const div = document.createElement('div')
+                                const p = document.createElement('p')
+                                const button = document.createElement('button')
+                                p.innerText = element.testo
+                                p.className = "completed"
+                                button.className = "completeTrue"
+                                button.innerText = "Completata"
+                                div.appendChild(p)
+                                div.appendChild(button)
+                                main.appendChild(div)
+                            });
+                        })
+                })
+
+                const themeBtn = document.querySelectorAll("li")
+                const body = document.querySelector("body")
+
+                themeBtn[0].addEventListener("click", () => {
+                    body.className = "white-theme"
+                })
+
+                themeBtn[2].addEventListener("click", () => {
+                    body.className = "dark-theme"
+                })
+            })
+    </script>
+</body>
+
+</html>

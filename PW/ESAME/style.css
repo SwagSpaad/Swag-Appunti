@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px auto;
+    min-width: 400px;
+    max-width: 800px;
+}
+
+.white-theme {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+
+.dark-theme {
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+header,
+footer {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.dark-theme header,
+.dark-theme footer {
+    background-color: #333;
+}
+
+.dark-theme main div {
+    background-color: #444;
+    border: 1px solid white;
+}
+
+.dark-theme main {
+    background-color: #333;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header ul {
+    list-style: none;
+    display: flex;
+    padding-left: 0px;
+
+}
+
+header ul li {
+    margin: 10px
+}
+
+main {
+    padding: 10px;
+    background-color: #fff;
+}
+
+main div {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid lightslategrey;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+}
+
+.completeFalse {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    right: 10px;
+}
+
+.completeTrue {
+    background-color: grey;
+    padding: 10px;
+    color: #fff;
+    pointer-events: none;
+    /*disabilita il pulsante*/
+    right: 10px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #888
+}
+
+
+@media(min-width: 600px) {
+    main div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid lightslategrey;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        position: relative;
+        /*per spostare il bottone tutto a destra*/
+    }
+
+
+    .completeFalse {
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 10px;
+        position: absolute;
+        /*per spostare il bottone a destra*/
+        right: 10px;
+    }
+
+    .completeTrue {
+        background-color: grey;
+        padding: 10px;
+        color: #fff;
+        pointer-events: none;
+        /*disabilita il pulsante*/
+        position: absolute;
+        right: 10px;
+    }
+
+    .completed {
+        text-decoration: line-through;
+        color: #888
+    }
+}

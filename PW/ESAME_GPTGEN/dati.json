@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nome": "Andrea", "cognome": "Blu", "età": 31 },
+  { "id": 2, "nome": "Chiara", "cognome": "Verde", "età": 26 },
+  { "id": 3, "nome": "Marco", "cognome": "Nero", "età": 40 },
+  { "id": 4, "nome": "Lucia", "cognome": "Grigia", "età": 29 },
+  { "id": 5, "nome": "Stefano", "cognome": "Viola", "età": 34 },
+  { "id": 6, "nome": "Francesca", "cognome": "Arancio", "età": 23 }
+]

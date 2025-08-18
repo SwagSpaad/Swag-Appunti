@@ -1,0 +1,39 @@
+header{
+    background-color: ;
+    color: ;
+    text-align: ;
+    padding: ;
+    margin: ;
+
+}
+
+.hamburger{
+    display:none;
+}
+
+main{
+    background-color: ;
+    color: ;
+    text-align: ;
+    padding: ;
+    margin: ;
+}
+
+footer{
+    background-color: ;
+    color: ;
+    text-align: ;
+    padding: ;
+    margin: ;
+}
+
+@media(min-width: 1000px){
+    .menu{
+        display: none;
+    }
+    
+    .hamburger{
+        display:block;
+    }
+
+}
