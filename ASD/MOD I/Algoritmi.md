@@ -501,3 +501,32 @@ Per trovare una componente pozzo, dalla proprietà 3 è sufficiente invertire tu
 
 ![[Pasted image 20250818172950.png|center|500]]
 
+## Cammini minimi
+Un **cammino minimo** tra due vertici $x$ ed $y$ è un cammino avente costo **minore o uguale** a quello di ogni altro cammino tra gli stessi vertici.
+La distanza tra due nodi $(u,v)$ è il costo di un qualsiasi cammino minimo da $u$ a $v$.
+
+I cammini minimi possono non esistere:
+- se non esiste nessun cammino da $u$ a $v$: $d(u,v)=+\infty$ 
+- se c'è un cammino che contiene un ciclo di costo negativo: $d(u,v)=-\infty$
+
+Ogni sottocammino di un cammino minimo è anch'esso un cammino minimo
+
+![[Pasted image 20250819160018.png|center|500]]
+
+### Calcolo dei cammini minimi a singola sorgente
+Dato $G=(V,E,w)$ e $s\in V$ calcolare l'albero dei cammini minimi di $G$ radicato in $s$.
+
+**Def.**
+$T$ è un **albero dei cammini minimi** (**SPT**) con sorgente $s$ di un grafo $G=(V,E,w)$ se:
+- $T$ è un albero radicato in $s$
+- per ogni $v\in V$ vale che $d_{T}(s,v)=d_{G}(s,v)$
+
+![[Pasted image 20250819160333.png|center|200]]
+
+In grafi non pesati, lo SPT radicato in $s$ corrisponde all'albero BFS radicato in $s$.
+
+#### Algoritmo di Dijkstra $O(m+n\log{n})$
+Si assume che tutti gli archi del grafo abbiano peso non negativo, quindi per ogni arco $(u,v)$ il loro peso $w(u,v)\ge0$
+
+![[Pasted image 20250819162247.png|center|500]]
+
